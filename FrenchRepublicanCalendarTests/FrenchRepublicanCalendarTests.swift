@@ -32,7 +32,10 @@ class FrenchRepublicanCalendarTests: XCTestCase {
             
             date.addTimeInterval(3600 * 24)
         }
-        print(FrenchRepublicanDate(date: Date()).toLongString())
+    }
+    
+    func testCurrentDate() throws {
+        print(FrenchRepublicanDate(date: Date()))
     }
 
 //    func testPerformanceExample() throws {
