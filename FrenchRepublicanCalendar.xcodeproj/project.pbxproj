@@ -18,6 +18,8 @@
 		20418BD92412F3EC00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BD82412F3EC00E0EE6E /* Assets.xcassets */; };
 		20418BDC2412F3EC00E0EE6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */; };
 		20418BEC2412F52500E0EE6E /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
+		20E3E3F8244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3F7244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift */; };
+		20E3E3FD244CC215009ECB37 /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,10 +79,20 @@
 		20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20418BDD2412F3EC00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrenchRepublicanDate.swift; sourceTree = "<group>"; };
+		20E3E3F5244CC149009ECB37 /* FrenchRepublicanCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrenchRepublicanCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		20E3E3F7244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrenchRepublicanCalendarTests.swift; sourceTree = "<group>"; };
+		20E3E3F9244CC14A009ECB37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		20418BC82412F3EB00E0EE6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		20E3E3F2244CC149009ECB37 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -95,6 +107,7 @@
 			children = (
 				20418BC02412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App */,
 				20418BCF2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension */,
+				20E3E3F6244CC149009ECB37 /* FrenchRepublicanCalendarTests */,
 				20418BB92412F3E700E0EE6E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,6 +118,7 @@
 				20418BB82412F3E700E0EE6E /* FrenchRepublicanCalendar.app */,
 				20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App.app */,
 				20418BCB2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex */,
+				20E3E3F5244CC149009ECB37 /* FrenchRepublicanCalendarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,6 +154,15 @@
 				20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		20E3E3F6244CC149009ECB37 /* FrenchRepublicanCalendarTests */ = {
+			isa = PBXGroup;
+			children = (
+				20E3E3F7244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift */,
+				20E3E3F9244CC14A009ECB37 /* Info.plist */,
+			);
+			path = FrenchRepublicanCalendarTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,13 +219,30 @@
 			productReference = 20418BCB2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
 		};
+		20E3E3F4244CC149009ECB37 /* FrenchRepublicanCalendarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 20E3E3FC244CC14A009ECB37 /* Build configuration list for PBXNativeTarget "FrenchRepublicanCalendarTests" */;
+			buildPhases = (
+				20E3E3F1244CC149009ECB37 /* Sources */,
+				20E3E3F2244CC149009ECB37 /* Frameworks */,
+				20E3E3F3244CC149009ECB37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FrenchRepublicanCalendarTests;
+			productName = FrenchRepublicanCalendarTests;
+			productReference = 20E3E3F5244CC149009ECB37 /* FrenchRepublicanCalendarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		20418BB22412F3E700E0EE6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Snowy_1803;
 				TargetAttributes = {
@@ -214,6 +254,9 @@
 					};
 					20418BCA2412F3EB00E0EE6E = {
 						CreatedOnToolsVersion = 11.3;
+					};
+					20E3E3F4244CC149009ECB37 = {
+						CreatedOnToolsVersion = 11.4.1;
 					};
 				};
 			};
@@ -233,6 +276,7 @@
 				20418BB72412F3E700E0EE6E /* FrenchRepublicanCalendar */,
 				20418BBB2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App */,
 				20418BCA2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension */,
+				20E3E3F4244CC149009ECB37 /* FrenchRepublicanCalendarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -263,6 +307,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		20E3E3F3244CC149009ECB37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -275,6 +326,15 @@
 				20418BD72412F3EB00E0EE6E /* ComplicationController.swift in Sources */,
 				20418BD12412F3EB00E0EE6E /* ContentView.swift in Sources */,
 				20418BD52412F3EB00E0EE6E /* ExtensionDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		20E3E3F1244CC149009ECB37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				20E3E3FD244CC215009ECB37 /* FrenchRepublicanDate.swift in Sources */,
+				20E3E3F8244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +589,44 @@
 			};
 			name = Release;
 		};
+		20E3E3FA244CC14A009ECB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
+				INFOPLIST_FILE = FrenchRepublicanCalendarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		20E3E3FB244CC14A009ECB37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
+				INFOPLIST_FILE = FrenchRepublicanCalendarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -564,6 +662,15 @@
 			buildConfigurations = (
 				20418BE92412F3EC00E0EE6E /* Debug */,
 				20418BEA2412F3EC00E0EE6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		20E3E3FC244CC14A009ECB37 /* Build configuration list for PBXNativeTarget "FrenchRepublicanCalendarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				20E3E3FA244CC14A009ECB37 /* Debug */,
+				20E3E3FB244CC14A009ECB37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
