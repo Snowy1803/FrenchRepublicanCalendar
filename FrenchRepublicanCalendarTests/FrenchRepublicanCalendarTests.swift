@@ -18,12 +18,12 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
+    func testDateLinearity() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         var date = Date(timeIntervalSince1970: -5594191200)
         var prev: Int?
-        for _ in 0..<100000 {
+        for _ in 0..<1000000 {
             let frd = FrenchRepublicanDate(date: date)
             if prev != nil {
                 XCTAssert(frd.dayInYear - prev! == 1 || frd.dayInYear == 1, "Invalid \(date) = \(frd.toLongString())")
@@ -32,6 +32,7 @@ class FrenchRepublicanCalendarTests: XCTestCase {
             
             date.addTimeInterval(3600 * 24)
         }
+        print(FrenchRepublicanDate(date: Date()).toLongString())
     }
 
 //    func testPerformanceExample() throws {

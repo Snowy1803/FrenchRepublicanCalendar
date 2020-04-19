@@ -69,14 +69,13 @@ class FrenchRepublicanDate {
         if year.isSextil && (gregorian.month! < 9 || (gregorian.month == 9 && gregorian.day! < 22)) {
             dayAdding(dayOfYear: &dayOfYear, year: &year)
         }
-        if gregorian.year! >= 1800 {
+        var y = 1800
+        while gregorian.year! >= y {
             dayRemoval(dayOfYear: &dayOfYear, year: &year)
-        }
-        if gregorian.year! >= 1900 {
-            dayRemoval(dayOfYear: &dayOfYear, year: &year)
-        }
-        if gregorian.year! >= 2100 {
-            dayRemoval(dayOfYear: &dayOfYear, year: &year)
+            y += 100
+            if y % 400 == 0 {
+                y += 100
+            }
         }
         self.components = DateComponents(year: year, month: dayOfYear / 30 + 1, day: dayOfYear % 30 + 1, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond, weekday: dayOfYear % 10 + 1, quarter: dayOfYear / 120 + 1, weekOfMonth: dayOfYear % 30 / 10 + 1, weekOfYear: dayOfYear / 10 + 1, yearForWeekOfYear: year)
     }
