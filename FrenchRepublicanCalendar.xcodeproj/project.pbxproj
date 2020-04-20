@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		20024496244DD70E00A89D79 /* FavoriteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20024495244DD70E00A89D79 /* FavoriteList.swift */; };
+		20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20024497244DE3EC00A89D79 /* ContactsList.swift */; };
 		201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A51C1244D2C8800C9867B /* DateDetails.swift */; };
 		20418BBD2412F3E700E0EE6E /* Calendrier républicain.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* Calendrier républicain.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20418BC32412F3E700E0EE6E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC12412F3E700E0EE6E /* Interface.storyboard */; };
@@ -68,6 +69,7 @@
 
 /* Begin PBXFileReference section */
 		20024495244DD70E00A89D79 /* FavoriteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteList.swift; sourceTree = "<group>"; };
+		20024497244DE3EC00A89D79 /* ContactsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsList.swift; sourceTree = "<group>"; };
 		201A51C1244D2C8800C9867B /* DateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20418BB82412F3E700E0EE6E /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20418BBC2412F3E700E0EE6E /* Calendrier républicain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calendrier républicain.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +144,7 @@
 			children = (
 				20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */,
 				20418BD02412F3EB00E0EE6E /* ContentView.swift */,
+				20024497244DE3EC00A89D79 /* ContactsList.swift */,
 				20024495244DD70E00A89D79 /* FavoriteList.swift */,
 				201A51C1244D2C8800C9867B /* DateDetails.swift */,
 				20418BD22412F3EB00E0EE6E /* HostingController.swift */,
@@ -327,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */,
 				20024496244DD70E00A89D79 /* FavoriteList.swift in Sources */,
 				20418BEC2412F52500E0EE6E /* FrenchRepublicanDate.swift in Sources */,
 				20418BD32412F3EB00E0EE6E /* HostingController.swift in Sources */,

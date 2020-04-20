@@ -26,6 +26,8 @@
 	<array>
 		<string>CLKComplicationFamilyUtilitarianSmallFlat</string>
 	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>Pour convertir les dates de naissance de vos contacts</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>

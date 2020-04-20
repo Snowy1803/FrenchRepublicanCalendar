@@ -48,6 +48,12 @@ struct ContentView: View {
                     Text("Mes favoris")
                 }
             }
+            NavigationLink(destination: ContactsList()) {
+                VStack {
+                    Image(systemName: "person.2.fill")
+                    Text("Mes contacts")
+                }
+            }
         }.navigationBarTitle("Calendrier républicain")
     }
 }
@@ -79,7 +85,7 @@ struct MyDateComponents {
 
 extension Date {
     var toMyDateComponents: MyDateComponents {
-        let comp = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+        let comp = Calendar.current.dateComponents([.day, .month, .year], from: self)
         return MyDateComponents(day: comp.day!, month: comp.month!, year: comp.year!)
     }
 }

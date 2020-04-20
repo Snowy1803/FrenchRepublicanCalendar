@@ -17,35 +17,12 @@ struct FavoriteList: View {
                 Text("Aucun favori")
             } else {
                 List(favs.reversed(), id: \.self) { fav in
-                    self.contentView(fav: fav)
+                    DateRow(date: self.toDate(fav: fav), frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
                 }
             }
         }.onAppear {
             self.favs = UserDefaults.standard.array(forKey: "favorites") as? [String] ?? [String]()
         }.navigationBarTitle("Favoris")
-    }
-    
-    func contentView(fav: String) -> AnyView {
-        let date = self.toDate(fav: fav)
-        let frd = FrenchRepublicanDate(date: date)
-        return AnyView(
-            NavigationLink(destination: DateDetails(components: date.toMyDateComponents, date: frd)) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(frd.toLongStringNoYear())
-                        Spacer()
-                        Text("\(frd.components.year!)")
-                    }
-                    Text(self.toHuman(fav: fav)).foregroundColor(.secondary)
-                }.padding([.top, .bottom], 2)
-            }
-        )
-    }
-    
-    func toHuman(fav: String) -> String {
-        let df = DateFormatter()
-        df.dateFormat = "d MMMM yyyy"
-        return df.string(from: toDate(fav: fav))
     }
     
     func toDate(fav: String) -> Date {
