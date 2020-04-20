@@ -101,24 +101,28 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         self.components = DateComponents(year: year, month: dayOfYear / 30 + 1, day: dayOfYear % 30 + 1, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond, weekday: dayOfYear % 10 + 1, quarter: dayOfYear / 90 + 1, weekOfMonth: dayOfYear % 30 / 10 + 1, weekOfYear: dayOfYear / 10 + 1, yearForWeekOfYear: year)
     }
 
+    /// Returns string as EEEE d MM "An" yyyy
     func toVeryLongString() -> String {
         if components.month == 13 {
             return toLongString()
         }
         return "\(weekdayName) \(toLongString())"
     }
-
+    
+    /// Returns string as d MM "An" yyyy
     func toLongString() -> String {
         return "\(toLongStringNoYear()) An \(components.year!)"
     }
-
+    
+    /// Returns string as d MM
     func toLongStringNoYear() -> String {
         if components.month == 13 {
             return "\(SANSCULOTTIDES[components.day! - 1])"
         }
         return "\(components.day!) \(monthName)"
     }
-
+    
+    /// Returns string as d M
     func toShortString() -> String {
         if components.month == 13 {
             return "\(SANSCULOTTIDES_SHORT[components.day! - 1])"
@@ -126,14 +130,17 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         return "\(components.day!) \(shortMonthName)"
     }
     
+    /// Localized month name
     var monthName: String {
         MONTH_NAMES[components.month! - 1]
     }
     
+    /// Localized shortened month name
     var shortMonthName: String {
         MONTH_NAMES_SHORT[components.month! - 1]
     }
     
+    /// the day of the week's name
     var weekdayName: String {
         WEEKDAYS[components.weekday! - 1]
     }
