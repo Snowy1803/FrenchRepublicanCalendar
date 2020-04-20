@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20418BBD2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		20418BBD2412F3E700E0EE6E /* Calendrier républicain.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* Calendrier républicain.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20418BC32412F3E700E0EE6E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC12412F3E700E0EE6E /* Interface.storyboard */; };
 		20418BC52412F3EB00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC42412F3EB00E0EE6E /* Assets.xcassets */; };
 		20418BCC2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 20418BCB2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -57,7 +57,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				20418BBD2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App.app in Embed Watch Content */,
+				20418BBD2412F3E700E0EE6E /* Calendrier républicain.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,7 +66,7 @@
 
 /* Begin PBXFileReference section */
 		20418BB82412F3E700E0EE6E /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FrenchRepublicanCalendar WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		20418BBC2412F3E700E0EE6E /* Calendrier républicain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calendrier républicain.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20418BC22412F3E700E0EE6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		20418BC42412F3EB00E0EE6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20418BC62412F3EB00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				20418BB82412F3E700E0EE6E /* FrenchRepublicanCalendar.app */,
-				20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App.app */,
+				20418BBC2412F3E700E0EE6E /* Calendrier républicain.app */,
 				20418BCB2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex */,
 				20E3E3F5244CC149009ECB37 /* FrenchRepublicanCalendarTests.xctest */,
 			);
@@ -199,7 +199,7 @@
 			);
 			name = "FrenchRepublicanCalendar WatchKit App";
 			productName = "FrenchRepublicanCalendar WatchKit App";
-			productReference = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App.app */;
+			productReference = 20418BBC2412F3E700E0EE6E /* Calendrier républicain.app */;
 			productType = "com.apple.product-type.application.watchapp2";
 		};
 		20418BCA2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension */ = {
@@ -262,10 +262,10 @@
 			};
 			buildConfigurationList = 20418BB52412F3E700E0EE6E /* Build configuration list for PBXProject "FrenchRepublicanCalendar" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = en;
+			developmentRegion = fr;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				fr,
 				Base,
 			);
 			mainGroup = 20418BB12412F3E700E0EE6E;
@@ -535,7 +535,7 @@
 				IBSC_MODULE = FrenchRepublicanCalendar_WatchKit_Extension;
 				INFOPLIST_FILE = "FrenchRepublicanCalendar WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.FrenchRepublicanCalendar.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Calendrier républicain";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -554,7 +554,7 @@
 				IBSC_MODULE = FrenchRepublicanCalendar_WatchKit_Extension;
 				INFOPLIST_FILE = "FrenchRepublicanCalendar WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.FrenchRepublicanCalendar.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Calendrier républicain";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
