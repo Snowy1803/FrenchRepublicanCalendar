@@ -7,10 +7,14 @@
 //
 
 import SwiftUI
+import Combine
 
 struct DateDetails: View {
     let QUARTERS = ["Automne", "Hiver", "Printemps", "Été", "Sansculottides"]
+    var components: MyDateComponents
     var date: FrenchRepublicanDate
+    
+    @State var added: Bool = false
     
     var body: some View {
         ScrollView {
@@ -21,6 +25,30 @@ struct DateDetails: View {
                 Row(value: "\(QUARTERS[date.components.quarter! - 1])", title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
+                Button(action: {
+                    if var favorites = UserDefaults.standard.array(forKey: "favorites") {
+                        if self.added {
+                            favorites.removeAll(where: { date in
+                                self.components.string == date as! String
+                            })
+                        } else {
+                            favorites.append(self.components.string)
+                        }
+                        UserDefaults.standard.set(favorites, forKey: "favorites")
+                    } else {
+                        UserDefaults.standard.set([self.components.string], forKey: "favorites")
+                    }
+                    self.added.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: added ? "star.fill" : "star")
+                        Text(added ? "Enregistré " : "Enregistrer")
+                    }
+                }.onAppear {
+                    self.added = UserDefaults.standard.array(forKey: "favorites")?.contains(where: { date in
+                        self.components.string == date as! String
+                    }) ?? false
+                }
             }
         }.navigationBarTitle("Date")
     }
@@ -41,6 +69,6 @@ struct Row: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        DateDetails(date: FrenchRepublicanDate(date: Date()))
+        DateDetails(components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date()))
     }
 }

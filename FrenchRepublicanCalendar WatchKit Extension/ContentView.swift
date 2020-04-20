@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: DateDetails(date: shownDate.frd!)) {
+            NavigationLink(destination: DateDetails(components: shownDate, date: shownDate.frd!)) {
                 Text(shownDate.frd!.toLongString())
             }
             HStack {
@@ -42,7 +42,7 @@ struct ContentView: View {
                     Text("Aujourd'hui")
                 }
             }
-        }
+        }.navigationBarTitle("Calendrier républicain")
     }
 }
 
@@ -64,6 +64,10 @@ struct MyDateComponents {
     var frd: FrenchRepublicanDate? {
         let date = self.date
         return date == nil ? nil : FrenchRepublicanDate(date: date!)
+    }
+    
+    var string: String {
+        "\(year)-\(month)-\(day)"
     }
 }
 
