@@ -12,8 +12,14 @@ struct FavoriteList: View {
     @State var favs = [String]()
     
     var body: some View {
-        List(favs, id: \.self) { fav in
-            self.contentView(fav: fav)
+        Group {
+            if favs.isEmpty {
+                Text("Aucun favori")
+            } else {
+                List(favs.reversed(), id: \.self) { fav in
+                    self.contentView(fav: fav)
+                }
+            }
         }.onAppear {
             self.favs = UserDefaults.standard.array(forKey: "favorites") as? [String] ?? [String]()
         }.navigationBarTitle("Favoris")
@@ -31,7 +37,7 @@ struct FavoriteList: View {
                         Text("\(frd.components.year!)")
                     }
                     Text(self.toHuman(fav: fav)).foregroundColor(.secondary)
-                }
+                }.padding([.top, .bottom], 2)
             }
         )
     }
