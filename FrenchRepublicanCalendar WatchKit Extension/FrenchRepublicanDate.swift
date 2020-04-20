@@ -9,6 +9,8 @@
 import Foundation
 
 struct FrenchRepublicanDate: CustomDebugStringConvertible {
+    static let ORIGIN = Date(timeIntervalSince1970: -5594191200)
+    
     let MONTH_NAMES = ["Vendémiaire", "Brumaire", "Frimaire", "Nivôse", "Pluviôse", "Ventôse", "Germinal", "Floréal", "Prairial", "Messidor", "Thermidor", "Fructidor", "Sansculottide"]
     let SANSCULOTTIDES = ["Jour de la vertu", "Jour du génie", "Jour du travail", "Jour de l'opinion", "Jour des récompenses", "Jour de la révolution"]
 
