@@ -42,6 +42,12 @@ struct ContentView: View {
                     Text("Aujourd'hui")
                 }
             }
+            NavigationLink(destination: FavoriteList()) {
+                VStack {
+                    Image(systemName: "text.badge.star")
+                    Text("Mes favoris")
+                }
+            }
         }.navigationBarTitle("Calendrier républicain")
     }
 }
