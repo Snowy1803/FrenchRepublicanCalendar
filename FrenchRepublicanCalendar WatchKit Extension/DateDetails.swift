@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct DateDetails: View {
-    let QUARTERS = ["Hiver", "Printemps", "Été", "Automne", "Sansculottides"]
+    let QUARTERS = ["Automne", "Hiver", "Printemps", "Été", "Sansculottides"]
     var date: FrenchRepublicanDate
     
     var body: some View {
@@ -19,7 +19,8 @@ struct DateDetails: View {
                 Row(value: "\(date.components.year!)", title: "An :")
                 Row(value: "\(date.weekdayName)", title: "Jour :")
                 Row(value: "\(QUARTERS[date.components.quarter! - 1])", title: "Saison :")
-                Row(value: "\(date.components.weekOfYear!)", title: "Décade :")
+                Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
+                Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
             }
         }.navigationBarTitle("Date")
     }
@@ -31,7 +32,7 @@ struct Row: View {
     
     var body: some View {
         HStack {
-            Text(title).layoutPriority(2)
+            Text(title).lineLimit(1).layoutPriority(2)
             Spacer()
             Text(value).layoutPriority(3)
         }
