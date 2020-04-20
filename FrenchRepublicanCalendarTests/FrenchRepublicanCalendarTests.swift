@@ -22,13 +22,21 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         var date = Date(timeIntervalSince1970: -5594191200)
-        var prev: Int?
+        var prevDay: Int?
+        var prevYear: Int?
         for _ in 0..<1000000 {
             let frd = FrenchRepublicanDate(date: date)
-            if prev != nil {
-                XCTAssert(frd.dayInYear - prev! == 1 || frd.dayInYear == 1, "Invalid \(date) = \(frd.toLongString())")
+            if prevDay != nil {
+                if frd.dayInYear == 1 {
+                    XCTAssert(prevDay == 365 || prevDay == 366, "Year ends after \(prevDay!) days")
+                    XCTAssert(frd.components.year! - prevYear! == 1, "Year wasn't incremented")
+                } else {
+                    XCTAssert(frd.dayInYear - prevDay! == 1, "Invalid \(date) = \(frd.toLongString())")
+                    XCTAssert(frd.components.year! == prevYear!, "Year changed without resetting day at \(frd.toLongString())")
+                }
             }
-            prev = frd.dayInYear
+            prevDay = frd.dayInYear
+            prevYear = frd.components.year!
             
             date.addTimeInterval(3600 * 24)
         }
