@@ -13,7 +13,9 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text(shownDate.frd!.toLongString())
+            NavigationLink(destination: DateDetails(date: shownDate.frd!)) {
+                Text(shownDate.frd!.toLongString())
+            }
             HStack {
                 Picker(selection: $shownDate.day.wrapped, label: EmptyView()) {
                     ForEach(Calendar.current.range(of: .day, in: .month, for: shownDate.date!)!, id: \.self) { day in

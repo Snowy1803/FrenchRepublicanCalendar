@@ -105,21 +105,37 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         if components.month == 13 {
             return toLongString()
         }
-        return "\(WEEKDAYS[components.weekday! - 1]) \(toLongString())"
+        return "\(weekdayName) \(toLongString())"
     }
 
     func toLongString() -> String {
+        return "\(toLongStringNoYear()) An \(components.year!)"
+    }
+
+    func toLongStringNoYear() -> String {
         if components.month == 13 {
-            return "\(SANSCULOTTIDES[components.day! - 1]) An \(components.year!)"
+            return "\(SANSCULOTTIDES[components.day! - 1])"
         }
-        return "\(components.day!) \(MONTH_NAMES[components.month! - 1]) An \(components.year!)"
+        return "\(components.day!) \(monthName)"
     }
 
     func toShortString() -> String {
         if components.month == 13 {
             return "\(SANSCULOTTIDES_SHORT[components.day! - 1])"
         }
-        return "\(components.day!) \(MONTH_NAMES_SHORT[components.month! - 1])"
+        return "\(components.day!) \(shortMonthName)"
+    }
+    
+    var monthName: String {
+        MONTH_NAMES[components.month! - 1]
+    }
+    
+    var shortMonthName: String {
+        MONTH_NAMES_SHORT[components.month! - 1]
+    }
+    
+    var weekdayName: String {
+        WEEKDAYS[components.weekday! - 1]
     }
     
     var debugDescription: String {
