@@ -45,6 +45,10 @@ class FrenchRepublicanCalendarTests: XCTestCase {
     func testCurrentDate() throws {
         print(FrenchRepublicanDate(date: Date()))
     }
+    
+    func testDayCount() throws {
+        XCTAssert(FrenchRepublicanDate(date: Date()).DAYNAMES.count == 366)
+    }
 
 //    func testPerformanceExample() throws {
 //        // This is an example of a performance test case.

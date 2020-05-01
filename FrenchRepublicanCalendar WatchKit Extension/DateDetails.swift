@@ -28,7 +28,7 @@ struct DateDetails: View {
             VStack {
                 Text(date.toLongStringNoYear())
                 Row(value: "\(date.components.year!)", title: "An :")
-                Row(value: "\(date.weekdayName)", title: "Jour :")
+                Row(value: "\(date.dayName)", title: "\(date.weekdayName)")
                 Row(value: "\(QUARTERS[date.components.quarter! - 1])", title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")

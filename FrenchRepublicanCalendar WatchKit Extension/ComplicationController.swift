@@ -78,13 +78,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case .graphicRectangular:
             let template = CLKComplicationTemplateGraphicRectangularStandardBody()
             template.headerTextProvider = CLKSimpleTextProvider(text: "\(frd.toLongStringNoYear())")
-            template.body1TextProvider = CLKSimpleTextProvider(text: "\(frd.weekdayName)")
+            template.body1TextProvider = CLKSimpleTextProvider(text: frd.components.month! == 13 ? "\(frd.weekdayName)" : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
             template.body2TextProvider = CLKSimpleTextProvider(text: "An \(frd.components.year!)")
             return template
         case .modularLarge:
             let template = CLKComplicationTemplateModularLargeStandardBody()
             template.headerTextProvider = CLKSimpleTextProvider(text: "\(frd.toLongStringNoYear())")
-            template.body1TextProvider = CLKSimpleTextProvider(text: "\(frd.weekdayName)")
+            template.body1TextProvider = CLKSimpleTextProvider(text: frd.components.month! == 13 ? "\(frd.weekdayName)" : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
             template.body2TextProvider = CLKSimpleTextProvider(text: "An \(frd.components.year!)")
             return template
         default:
