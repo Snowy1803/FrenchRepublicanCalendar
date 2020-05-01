@@ -14,6 +14,13 @@ struct DateDetails: View {
     var components: MyDateComponents
     var date: FrenchRepublicanDate
     
+    var gregorian: String {
+        let day = components.date!
+        let df = DateFormatter()
+        df.dateFormat = "d MMM yyyy"
+        return df.string(from: day)
+    }
+    
     @State var added: Bool = false
     
     var body: some View {
@@ -25,6 +32,7 @@ struct DateDetails: View {
                 Row(value: "\(QUARTERS[date.components.quarter! - 1])", title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
+                Row(value: "\(gregorian)", title: "Grég. :")
                 Button(action: {
                     if var favorites = UserDefaults.standard.array(forKey: "favorites") {
                         if self.added {
