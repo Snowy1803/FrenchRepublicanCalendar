@@ -494,6 +494,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FrenchRepublicanCalendar WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
@@ -518,6 +519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FrenchRepublicanCalendar WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
