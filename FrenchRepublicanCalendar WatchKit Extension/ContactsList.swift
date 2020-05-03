@@ -28,6 +28,7 @@ struct ContactsList: View {
                     self.contacts.append(contact)
                 }
             }
+            contacts.sort(by: { c1, c2 in self.stringOf(contact: c1) < self.stringOf(contact: c2) })
         }
         catch {
             print("Failed to fetch contact, error: \(error)")
@@ -42,7 +43,7 @@ struct ContactsList: View {
                 List(contacts, id: \.identifier) { c in
                     NavigationLink(destination: ContactDetails(contact: c)) {
                         self.imageOf(data: c.thumbnailImageData)
-                        Text(CNContactFormatter.attributedString(from: c, style: .fullName)?.string ?? "-")
+                        Text(self.stringOf(contact: c))
                     }
                 }
             }
@@ -57,6 +58,10 @@ struct ContactsList: View {
             return AnyView(Image(uiImage: img).resizable().frame(width: 20, height: 20).clipShape(Circle()))
         }
         return AnyView(Image(systemName: "person.circle").resizable().frame(width: 20, height: 20))
+    }
+    
+    func stringOf(contact: CNContact) -> String {
+        CNContactFormatter.attributedString(from: contact, style: .fullName)?.string ?? "-"
     }
 }
 
