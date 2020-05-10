@@ -94,13 +94,13 @@ struct RepublicanToGregorianView: View {
     
     var dateString: String {
         let df = DateFormatter()
-        df.dateFormat = "EEE dd MMM yyyy"
+        df.dateFormat = "EEE d MMM yyyy"
         return df.string(from: shownDate.todate)
     }
     
     var body: some View {
         VStack {
-            Text(dateString)
+            Text(dateString).padding([.top, .bottom], 5)
             HStack {
                 Picker(selection: $shownDate.day.wrapped, label: EmptyView()) {
                     ForEach(1..<(shownDate.month < 13 ? 31 : shownDate.year % 4 == 0 ? 7 : 6), id: \.self) { day in
