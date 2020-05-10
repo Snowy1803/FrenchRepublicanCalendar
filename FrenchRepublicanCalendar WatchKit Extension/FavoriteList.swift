@@ -17,7 +17,7 @@ struct FavoriteList: View {
                 Text("Aucun favori")
             } else {
                 List(favs.reversed(), id: \.self) { fav in
-                    DateRow(date: self.toDate(fav: fav), frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
+                    DateRow(frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
                 }
             }
         }.onAppear {

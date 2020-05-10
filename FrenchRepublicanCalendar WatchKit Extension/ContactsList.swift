@@ -72,13 +72,13 @@ struct ContactDetails: View {
         List {
             if contact.birthday != nil {
                 Section(header: Text("Anniversaire")) {
-                    DateRow(date: contact.birthday!.date!, frd: FrenchRepublicanDate(date: contact.birthday!.date!))
+                    BirthdaySection(birthday: FrenchRepublicanDate(date: contact.birthday!.date!))
                 }
             }
             if !contact.dates.isEmpty {
                 Section(header: Text("Dates")) {
                     ForEach(contact.dates, id: \.self) { d in
-                        DateRow(date: d.value.date!, frd: FrenchRepublicanDate(date: d.value.date!), desc: d.label)
+                        DateRow(frd: FrenchRepublicanDate(date: d.value.date!), desc: d.label)
                     }
                 }
             }
@@ -87,18 +87,20 @@ struct ContactDetails: View {
 }
 
 struct DateRow: View {
-    var date: Date
     var frd: FrenchRepublicanDate
     var desc: String?
     
     var human: String {
+        if Calendar.current.isDateInToday(frd.date) {
+            return "Aujourd'hui"
+        }
         let df = DateFormatter()
         df.dateFormat = "d MMMM yyyy"
-        return df.string(from: date)
+        return df.string(from: frd.date)
     }
     
     var body: some View {
-        NavigationLink(destination: DateDetails(components: date.toMyDateComponents, date: frd)) {
+        NavigationLink(destination: DateDetails(components: frd.date.toMyDateComponents, date: frd)) {
             VStack(alignment: .leading) {
                 HStack {
                     Text(frd.toLongStringNoYear())
@@ -117,5 +119,26 @@ struct DateRow: View {
 struct ContactsList_Previews: PreviewProvider {
     static var previews: some View {
         ContactsList()
+    }
+}
+
+struct BirthdaySection: View {
+    var birthday: FrenchRepublicanDate
+    
+    var body: some View {
+        Group {
+            DateRow(frd: birthday)
+            DateRow(frd: birthday.nextAnniversary, desc: "🎂 \(birthday.nextAnniversary.components.year! - birthday.components.year!) ans")
+        }
+    }
+}
+
+extension FrenchRepublicanDate {
+    var nextAnniversary: FrenchRepublicanDate {
+        var curr = self
+        while curr.date < Date() && !Calendar.current.isDateInToday(curr.date) {
+            curr.nextYear()
+        }
+        return curr
     }
 }
