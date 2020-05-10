@@ -38,6 +38,10 @@ class FrenchRepublicanCalendarTests: XCTestCase {
             prevDay = frd.dayInYear
             prevYear = frd.components.year!
             
+            let copy = FrenchRepublicanDate(dayInYear: prevDay!, year: prevYear!, hour: frd.components.hour, minute: frd.components.minute, second: frd.components.second, nanosecond: frd.components.nanosecond)
+            
+            XCTAssert(copy.date == date, "Reconversion fails for \(date) = \(frd.toLongString()) ≠ \(copy.date)")
+            
             date.addTimeInterval(3600 * 24)
         }
     }

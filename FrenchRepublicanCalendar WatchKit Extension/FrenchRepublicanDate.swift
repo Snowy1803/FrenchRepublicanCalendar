@@ -55,11 +55,17 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         self.date = date
         dateToFrenchRepublican()
     }
+    
+    /// Notes dayInYear is 1-indexed
+    init(dayInYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
+        self.date = Date(dayOfYear: dayInYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
+        initComponents(dayOfYear: dayInYear - 1, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
+    }
 
     /// calculates a  0-indexed day of year out of self.date, without the correction algorithms.
     private func simpleGregToRepDate(gregorianYear year: Int) -> Int {
         var dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: date)! - 265
-        if ((year % 100 != 0) && (year % 4 == 0)) || year % 400 == 0 {
+        if year.isBissextil {
             dayOfYear -= 1
         }
         if dayOfYear < 0 {
@@ -102,7 +108,12 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
                 y += 100
             }
         }
-        self.components = DateComponents(year: year, month: dayOfYear / 30 + 1, day: dayOfYear % 30 + 1, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond, weekday: dayOfYear % 10 + 1, quarter: dayOfYear / 90 + 1, weekOfMonth: dayOfYear % 30 / 10 + 1, weekOfYear: dayOfYear / 10 + 1, yearForWeekOfYear: year)
+        initComponents(dayOfYear: dayOfYear, year: year, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond)
+    }
+    
+    /// Note dayOfYear is 0-indexed
+    private mutating func initComponents(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
+        self.components = DateComponents(year: year, month: dayOfYear / 30 + 1, day: dayOfYear % 30 + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond, weekday: dayOfYear % 10 + 1, quarter: dayOfYear / 90 + 1, weekOfMonth: dayOfYear % 30 / 10 + 1, weekOfYear: dayOfYear / 10 + 1, yearForWeekOfYear: year)
     }
 
     /// Returns string as EEEE d MM "An" yyyy
@@ -161,5 +172,53 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
 fileprivate extension Int {
     var isSextil: Bool {
         return self % 4 == 0
+    }
+    
+    var isBissextil: Bool {
+        return ((self % 100 != 0) && (self % 4 == 0)) || self % 400 == 0
+    }
+}
+
+extension Date {
+    init(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
+        self.init(timeInterval: 0, since: Calendar.current.date(from: Date.dateToGregorian(dayOfYear: dayOfYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!)
+    }
+}
+
+fileprivate extension Date {
+    static func dateToGregorian(dayOfYear rDayOfYear: Int, year rYear: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) -> DateComponents {
+        if rYear == 108 && rDayOfYear >= 100 {
+            //print("tagada")
+        }
+        var gYear = rYear + 1792
+        if rDayOfYear < 102 {
+            gYear -= 1
+        }
+        var gDayOfYear = rDayOfYear - 102
+        if gDayOfYear < 0 {
+            gDayOfYear += (gYear.isBissextil ? 366 : 365)
+        }
+        var y = 1800
+        var yt = 0
+        while gYear >= y {
+            gDayOfYear += 1
+            if gDayOfYear == (gYear.isBissextil ? 366 : 365) {
+                gYear += 1
+                gDayOfYear = 0
+            }
+            y += 100
+            if y % 400 == 0 {
+                y += 100
+            }
+            yt += 1
+        }
+        if rYear.isSextil && !gYear.isBissextil && rDayOfYear > 101 - yt {
+            gDayOfYear -= 1
+            if gDayOfYear == -1 {
+                gYear -= 1
+                gDayOfYear = gYear.isBissextil ? 366 : 365
+            }
+        }
+        return DateComponents(calendar: Calendar.current, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
 }
