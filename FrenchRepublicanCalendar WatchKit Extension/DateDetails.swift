@@ -15,7 +15,7 @@ struct DateDetails: View {
     var date: FrenchRepublicanDate
     
     var gregorian: String {
-        let day = components.date!
+        let day = components.asdate!
         let df = DateFormatter()
         df.dateFormat = "d MMM yyyy"
         return df.string(from: day)
