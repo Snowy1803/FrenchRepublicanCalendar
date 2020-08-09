@@ -14,49 +14,60 @@ struct ContentView: View {
     
     @State var converter: Bool = false
     
+    @State var gtrActive = true // When opened, Gregorian To Republican is the default view
+    @State var rtgActive = false
+    
     var body: some View {
-        Group {
-            if converter {
-                RepublicanToGregorianView(shownDate: $shownDateRepublican)
-            } else {
-                GregorianToRepublicanView(shownDate: $shownDateGregorian)
-            }
-        }.contextMenu {
+        List {
             Button(action: {
                 self.shownDateGregorian = Date().toMyDateComponents
                 self.shownDateRepublican = FrenchRepublicanDate(date: Date()).toMyDateComponents
+                gtrActive = true
             }) {
-                VStack {
-                    Image(systemName: "calendar")
+                HStack {
+                    Image(systemName: "calendar").frame(width: 20, height: 20)
                     Text("Aujourd'hui")
                 }
             }
+            NavigationLink(destination: GregorianToRepublicanView(shownDate: $shownDateGregorian), isActive: Binding<Bool>(get: { gtrActive }, set: {
+                if $0 {
+                    gtrActive = true
+                } else {
+                    gtrActive = false
+                    self.shownDateRepublican = self.shownDateGregorian.tofrd!.toMyDateComponents
+                }
+            })) {
+                HStack {
+                    Image(systemName: "doc.text").frame(width: 20, height: 20)
+                    Text("Vers Républicain")
+                }
+            }
+            NavigationLink(destination: RepublicanToGregorianView(shownDate: $shownDateRepublican), isActive: Binding<Bool>(get: { rtgActive }, set: {
+                if $0 {
+                    rtgActive = true
+                } else {
+                    rtgActive = false
+                    self.shownDateGregorian = self.shownDateRepublican.asfrd.date.toMyDateComponents
+                }
+            })) {
+                HStack {
+                    Image(systemName: "map").frame(width: 20, height: 20)
+                    Text("Vers Grégorien")
+                }
+            }
             NavigationLink(destination: FavoriteList()) {
-                VStack {
-                    Image(systemName: "text.badge.star")
+                HStack {
+                    Image(systemName: "text.badge.star").frame(width: 20, height: 20)
                     Text("Mes favoris")
                 }
             }
-            Button(action: {
-                if self.converter { // Current is Republican > Gregorian
-                    self.shownDateGregorian = self.shownDateRepublican.asfrd.date.toMyDateComponents
-                } else {
-                    self.shownDateRepublican = self.shownDateGregorian.tofrd!.toMyDateComponents
-                }
-                self.converter.toggle()
-            }) {
-                VStack {
-                    Image(systemName: "arrow.right.arrow.left")
-                    Text("Inverser")
-                }
-            }
             NavigationLink(destination: ContactsList()) {
-                VStack {
-                    Image(systemName: "person.2.fill")
+                HStack {
+                    Image(systemName: "person.2").frame(width: 20, height: 20)
                     Text("Mes contacts")
                 }
             }
-        }
+        }.navigationBarTitle("Cal Républicain")
     }
 }
 
