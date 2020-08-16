@@ -17,23 +17,29 @@ struct ContentView: View {
     @State var gtrActive = true // When opened, Gregorian To Republican is the default view
     @State var rtgActive = false
     
+    @State var todayActive = false
+    
     var body: some View {
         List {
-            Button(action: {
-                self.shownDateGregorian = Date().toMyDateComponents
-                self.shownDateRepublican = FrenchRepublicanDate(date: Date()).toMyDateComponents
-                gtrActive = true
-            }) {
+            NavigationLink(destination: DateDetails(components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date())), isActive: Binding<Bool>(get: { self.todayActive }, set: {
+                if $0 {
+                    self.shownDateGregorian = Date().toMyDateComponents
+                    self.shownDateRepublican = FrenchRepublicanDate(date: Date()).toMyDateComponents
+                    self.todayActive = true
+                } else {
+                    self.todayActive = false
+                }
+            })) {
                 HStack {
                     Image(systemName: "calendar").frame(width: 20, height: 20)
                     Text("Aujourd'hui")
                 }
             }
-            NavigationLink(destination: GregorianToRepublicanView(shownDate: $shownDateGregorian), isActive: Binding<Bool>(get: { gtrActive }, set: {
+            NavigationLink(destination: GregorianToRepublicanView(shownDate: $shownDateGregorian), isActive: Binding<Bool>(get: { self.gtrActive }, set: {
                 if $0 {
-                    gtrActive = true
+                    self.gtrActive = true
                 } else {
-                    gtrActive = false
+                    self.gtrActive = false
                     self.shownDateRepublican = self.shownDateGregorian.tofrd!.toMyDateComponents
                 }
             })) {
@@ -42,11 +48,11 @@ struct ContentView: View {
                     Text("Vers Républicain")
                 }
             }
-            NavigationLink(destination: RepublicanToGregorianView(shownDate: $shownDateRepublican), isActive: Binding<Bool>(get: { rtgActive }, set: {
+            NavigationLink(destination: RepublicanToGregorianView(shownDate: $shownDateRepublican), isActive: Binding<Bool>(get: { self.rtgActive }, set: {
                 if $0 {
-                    rtgActive = true
+                    self.rtgActive = true
                 } else {
-                    rtgActive = false
+                    self.rtgActive = false
                     self.shownDateGregorian = self.shownDateRepublican.asfrd.date.toMyDateComponents
                 }
             })) {
