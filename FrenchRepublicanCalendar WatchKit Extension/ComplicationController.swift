@@ -99,4 +99,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         handler(getTimelineEntry(family: complication.family, date: FrenchRepublicanDate.ORIGIN))
     }
     
+    // MARK: - watchOS 7
+    
+    @available(watchOSApplicationExtension 7.0, *)
+    func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
+        handler([CLKComplicationDescriptor(identifier: "CurrentFRDate", displayName: "Aujourd'hui", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicBezel, .graphicCorner, .graphicRectangular, .modularLarge])])
+    }
 }
