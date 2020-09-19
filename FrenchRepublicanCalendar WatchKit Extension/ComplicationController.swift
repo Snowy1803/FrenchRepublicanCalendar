@@ -32,7 +32,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: getTimelineEntry(family: complication.family, date: Date())))
+        if let entry = getTimelineEntry(family: complication.family, date: Date()) {
+            handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: entry))
+        } else {
+            handler(nil)
+        }
     }
     
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
@@ -41,12 +45,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let midnight = Calendar.current.startOfDay(for: Date())
         for day in 0..<limit {
             let date = midnight.addingTimeInterval(TimeInterval(3600 * 24 * day))
-            entries.append(CLKComplicationTimelineEntry(date: date, complicationTemplate: getTimelineEntry(family: complication.family, date: date)))
+            guard let entry = getTimelineEntry(family: complication.family, date: date) else {
+                handler(nil)
+                return
+            }
+            entries.append(CLKComplicationTimelineEntry(date: date, complicationTemplate: entry))
         }
         handler(entries)
     }
     
-    func getTimelineEntry(family: CLKComplicationFamily, date: Date) -> CLKComplicationTemplate {
+    func getTimelineEntry(family: CLKComplicationFamily, date: Date) -> CLKComplicationTemplate? {
         let frd = FrenchRepublicanDate(date: date)
         switch (family) {
         case .utilitarianSmall, .utilitarianSmallFlat:
@@ -88,7 +96,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             template.body2TextProvider = CLKSimpleTextProvider(text: "An \(frd.components.year!)")
             return template
         default:
-            fatalError("Family not handled")
+            print("Family not handled: \(family.rawValue)")
+            return nil
         }
         
     }
