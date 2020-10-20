@@ -15,6 +15,14 @@ struct ContentView: View {
                 VStack {
                     TodayWidget()
                     ConverterWidget()
+                    NavigationLink(destination: FavoriteList()) {
+                        HStack {
+                            Image.decorative(systemName: "star")
+                            Text("Mes Favoris")
+                            Spacer()
+                            Image.decorative(systemName: "chevron.right")
+                        }
+                    }.shadowBox()
                 }
             }.navigationBarTitle("Calendrier Républicain")
         }

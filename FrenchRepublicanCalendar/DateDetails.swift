@@ -51,6 +51,7 @@ struct DateDetails: View {
             } else {
                 UserDefaults.standard.set([iso], forKey: "favorites")
             }
+            (UIApplication.shared.delegate as! AppDelegate).syncFavorites()
             self.added.toggle()
         }) {
             Image(systemName: added ? "star.fill" : "star")
