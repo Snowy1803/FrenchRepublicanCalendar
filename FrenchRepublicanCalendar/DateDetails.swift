@@ -37,7 +37,7 @@ struct DateDetails: View {
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour de l'année :")
                 Row(value: "\(gregorian)", title: "Grégorien :")
             }
-        }.navigationBarTitle("Date")
+        }.navigationBarTitle(date.toLongString())
         .navigationBarItems(trailing: Button(action: {
             if var favorites = UserDefaults.standard.array(forKey: "favorites") {
                 if self.added {

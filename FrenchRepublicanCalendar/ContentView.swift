@@ -31,12 +31,16 @@ struct TodayWidget: View {
             let today = FrenchRepublicanDate(date: Date())
             NavigationLink(destination: DateDetails(date: today)) {
                 HStack {
+                    Text(String(today.components.day!))
+                        .font(.largeTitle)
                     VStack(alignment: .leading) {
-                        Text(today.toVeryLongString())
+                        Text(today.monthName)
                         Text(today.dayName)
                     }
                     Spacer()
-                }
+                    Image.decorative(systemName: "chevron.right")
+                        .foregroundColor(.gray)
+                }.foregroundColor(.primary)
             }
         }
     }
@@ -59,6 +63,7 @@ struct ConverterWidget: View {
                     .font(.body)
             }
         } content: {
+            let rep = FrenchRepublicanDate(date: from)
             DatePicker(selection: $from, in: FrenchRepublicanDate.ORIGIN..., displayedComponents: .date) {
                 Text("Date grégorienne : ")
             }
@@ -67,12 +72,19 @@ struct ConverterWidget: View {
                 Text("Date républicaine : ")
                 Spacer()
                 RepublicanDatePicker(date: Binding(get: {
-                    let today = FrenchRepublicanDate(date: from)
-                    return MyRepublicanDateComponents(day: today.components.day!, month: today.components.month!, year: today.components.year!)
+                    return MyRepublicanDateComponents(day: rep.components.day!, month: rep.components.month!, year: rep.components.year!)
                 }, set: { cmps in
                     from = cmps.toRep.date
                 }))
             }
+            Divider()
+            NavigationLink(destination: DateDetails(date: rep)) {
+                HStack {
+                    Text(rep.toLongString())
+                    Spacer()
+                    Image.decorative(systemName: "chevron.right")
+                }
+            }.padding(.top, 5)
         }
     }
 }
