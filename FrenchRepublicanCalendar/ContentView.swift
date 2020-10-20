@@ -17,8 +17,19 @@ struct ContentView: View {
                     ConverterWidget()
                     NavigationLink(destination: FavoriteList()) {
                         HStack {
-                            Image.decorative(systemName: "star")
+                            Image.decorative(systemName: "text.badge.star")
+                                .frame(width: 25)
                             Text("Mes Favoris")
+                            Spacer()
+                            Text(String((UserDefaults.standard.array(forKey: "favorites") as? [String])?.count ?? 0))
+                            Image.decorative(systemName: "chevron.right")
+                        }
+                    }.shadowBox()
+                    NavigationLink(destination: FavoriteList()) {
+                        HStack {
+                            Image.decorative(systemName: "person.2")
+                                .frame(width: 25)
+                            Text("Mes Contacts")
                             Spacer()
                             Image.decorative(systemName: "chevron.right")
                         }
