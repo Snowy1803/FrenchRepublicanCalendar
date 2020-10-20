@@ -7,11 +7,17 @@
 //
 
 import WatchKit
+import WatchConnectivity
 
-class ExtensionDelegate: NSObject, WKExtensionDelegate {
+class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
+    
+    private var backgroundTasks: [WKWatchConnectivityRefreshBackgroundTask] = []
 
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+        let session = WCSession.default
+        session.delegate = self
+        session.activate()
     }
 
     func applicationDidBecomeActive() {
@@ -36,6 +42,11 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
             case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
                 // Be sure to complete the connectivity task once you’re done.
+                let session = WCSession.default
+                if session.delegate == nil {
+                    session.delegate = self
+                    session.activate()
+                }
                 connectivityTask.setTaskCompletedWithSnapshot(false)
             case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
                 // Be sure to complete the URL session task once you’re done.
@@ -52,5 +63,27 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             }
         }
     }
-
+    
+    func syncFavorites() {
+        let favorites = UserDefaults.standard.array(forKey: "favorites") ?? [String]()
+        if WCSession.isSupported() {
+            WCSession.default.transferUserInfo(["favorites": favorites])
+        }
+    }
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        for (key, value) in userInfo {
+            UserDefaults.standard.set(value, forKey: key)
+        }
+        if !backgroundTasks.isEmpty && !session.hasContentPending {
+            backgroundTasks.removeAll {
+                $0.setTaskCompletedWithSnapshot(false)
+                return true
+            }
+        }
+    }
 }

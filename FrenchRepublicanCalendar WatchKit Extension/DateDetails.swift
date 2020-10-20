@@ -46,6 +46,7 @@ struct DateDetails: View {
                     } else {
                         UserDefaults.standard.set([self.components.string], forKey: "favorites")
                     }
+                    (WKExtension.shared().delegate as! ExtensionDelegate).syncFavorites()
                     self.added.toggle()
                 }) {
                     HStack {
