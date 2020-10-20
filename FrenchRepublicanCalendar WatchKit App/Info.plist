@@ -27,5 +27,7 @@
 	</array>
 	<key>WKWatchKitApp</key>
 	<true/>
+	<key>WKCompanionAppBundleIdentifier</key>
+	<string>fr.orbisec.FrenchRepublicanCalendar</string>
 </dict>
 </plist>
