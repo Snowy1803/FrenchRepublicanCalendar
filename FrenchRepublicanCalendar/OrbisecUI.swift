@@ -40,7 +40,6 @@ struct HomeWidget<Title: View, Content: View>: View {
         VStack {
             HStack {
                 title.font(.headline)
-                Spacer()
             }
             Divider()
             content
