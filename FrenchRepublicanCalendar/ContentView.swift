@@ -29,12 +29,14 @@ struct TodayWidget: View {
             Spacer()
         } content: {
             let today = FrenchRepublicanDate(date: Date())
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(today.toVeryLongString())
-                    Text(today.dayName)
+            NavigationLink(destination: DateDetails(date: today)) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(today.toVeryLongString())
+                        Text(today.dayName)
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
         }
     }

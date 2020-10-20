@@ -90,8 +90,11 @@ struct MyRepublicanDateComponents {
     var toRep: FrenchRepublicanDate {
         return FrenchRepublicanDate(dayInYear: (month - 1) * 30 + day, year: year)
     }
-    
-    var string: String {
-        "\(year)-\(month)-\(day)"
+}
+
+extension Date {
+    var iso: String {
+        let cmps = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        return "\(cmps.year!)-\(cmps.month!)-\(cmps.day!)"
     }
 }
