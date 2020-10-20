@@ -13,22 +13,29 @@ struct ContentView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    HomeWidget {
-                        Image.decorative(systemName: "calendar")
-                        Text("Aujourd'hui")
-                    } content: {
-                        let today = FrenchRepublicanDate(date: Date())
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(today.toVeryLongString())
-                                Text(today.dayName)
-                            }
-                            Spacer()
-                        }
-                    }
+                    TodayWidget()
                     GregToRepWidget()
+                    RepToGregWidget()
                 }
             }.navigationBarTitle("Calendrier républicain")
+        }
+    }
+}
+
+struct TodayWidget: View {
+    var body: some View {
+        HomeWidget {
+            Image.decorative(systemName: "calendar")
+            Text("Aujourd'hui")
+        } content: {
+            let today = FrenchRepublicanDate(date: Date())
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(today.toVeryLongString())
+                    Text(today.dayName)
+                }
+                Spacer()
+            }
         }
     }
 }
@@ -47,10 +54,56 @@ struct GregToRepWidget: View {
         } footer: {
             let today = FrenchRepublicanDate(date: from)
             HStack {
-                Text(today.toLongString())
+                Text("Date républicaine : ")
                 Spacer()
+                Text(today.toLongString())
             }
         }
+    }
+}
+
+struct RepToGregWidget: View {
+    @State private var from: MyRepublicanDateComponents = {
+        let today = FrenchRepublicanDate(date: Date())
+        return MyRepublicanDateComponents(day: today.components.day!, month: today.components.month!, year: today.components.year!)
+    }()
+    
+    var body: some View {
+        HomeWidget {
+            Image.decorative(systemName: "map")
+            Text("Républicain vers Grégorien")
+        } content: {
+            HStack {
+                Text("Date républicaine : ")
+                Spacer()
+                Text(from.toRep.toLongString())
+            }
+        } footer: {
+            let greg: String = {
+                let format = DateFormatter()
+                format.dateFormat = "EEEE d MMMM yyyy"
+                return format.string(from: from.toRep.date)
+            }()
+            HStack {
+                Text("Date grégorienne : ")
+                Spacer()
+                Text(greg)
+            }
+        }
+    }
+}
+
+struct MyRepublicanDateComponents {
+    var day: Int
+    var month: Int
+    var year: Int
+    
+    var toRep: FrenchRepublicanDate {
+        return FrenchRepublicanDate(dayInYear: (month - 1) * 30 + day, year: year)
+    }
+    
+    var string: String {
+        "\(year)-\(month)-\(day)"
     }
 }
 
