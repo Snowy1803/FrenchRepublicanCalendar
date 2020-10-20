@@ -228,3 +228,22 @@ fileprivate extension Date {
         return DateComponents(calendar: Calendar.current, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
 }
+
+// App specific stuff
+
+// When using ints as tags, it doesn't work...
+
+extension Int {
+    var wrapped: IntWrapper {
+        get {
+            IntWrapper(value: self)
+        }
+        set {
+            self = newValue.value
+        }
+    }
+}
+
+struct IntWrapper: Hashable {
+    var value: Int
+}

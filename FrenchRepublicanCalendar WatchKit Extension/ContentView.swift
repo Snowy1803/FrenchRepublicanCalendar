@@ -185,19 +185,4 @@ extension FrenchRepublicanDate {
     }
 }
 
-// When using ints as tags, it doesn't work...
 
-extension Int {
-    var wrapped: IntWrapper {
-        get {
-            IntWrapper(value: self)
-        }
-        set {
-            self = newValue.value
-        }
-    }
-}
-
-struct IntWrapper: Hashable {
-    var value: Int
-}

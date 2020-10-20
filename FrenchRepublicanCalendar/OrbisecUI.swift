@@ -27,21 +27,13 @@ extension View {
     }
 }
 
-struct HomeWidget<Title: View, Content: View, Footer: View>: View {
+struct HomeWidget<Title: View, Content: View>: View {
     var title: Title
     var content: Content
-    var footer: Footer
     
-    init(@ViewBuilder title: () -> Title, @ViewBuilder content: () -> Content, @ViewBuilder footer: () -> Footer) {
+    init(@ViewBuilder title: () -> Title, @ViewBuilder content: () -> Content) {
         self.title = title()
         self.content = content()
-        self.footer = footer()
-    }
-    
-    init(@ViewBuilder title: () -> Title, @ViewBuilder content: () -> Content) where Footer == EmptyView {
-        self.title = title()
-        self.content = content()
-        self.footer = EmptyView()
     }
     
     var body: some View {
@@ -52,10 +44,6 @@ struct HomeWidget<Title: View, Content: View, Footer: View>: View {
             }
             Divider()
             content
-            if Footer.self != EmptyView.self {
-                Divider()
-                footer.padding([.top], 5)
-            }
         }.shadowBox()
         .fixedSize(horizontal: false, vertical: true)
     }
