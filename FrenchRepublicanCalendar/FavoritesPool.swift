@@ -16,7 +16,8 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     private var sub: AnyCancellable?
     
     override init() {
-        favorites = UserDefaults.standard.array(forKey: "favorites") as? [String] ?? [String]()
+        let defaults = UserDefaults.standard.array(forKey: "favorites") as? [String]
+        favorites = defaults ?? [String]()
         super.init()
         sub = $favorites.sink { fav in
             UserDefaults.standard.set(fav, forKey: "favorites")
@@ -25,6 +26,9 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
             let session = WCSession.default
             session.delegate = self
             session.activate()
+            if defaults == nil {
+                session.transferUserInfo(["gimme": true])
+            }
         }
     }
     
@@ -59,6 +63,8 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
                 self.favorites = favorites
                 print("synced")
             }
+        } else if (userInfo["gimme"] as? Bool) == true {
+            session.transferUserInfo(["favorites": favorites])
         } else {
             print("sync data not found")
         }
