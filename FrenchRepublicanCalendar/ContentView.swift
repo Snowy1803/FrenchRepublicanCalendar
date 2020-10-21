@@ -73,13 +73,15 @@ struct ConverterWidget: View {
             Image.decorative(systemName: "arrow.left.arrow.right")
             Text("Convertir")
             Spacer()
-            Button {
-                from = Date()
-            } label: {
-                Image(systemName: "arrow.up.to.line")
-                    .accessibility(label: Text("Revenir à aujourd'hui"))
-                    .foregroundColor(.primary)
-                    .font(.body)
+            if from.iso != Date().iso {
+                Button {
+                    from = Date()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .accessibility(label: Text("Revenir à aujourd'hui"))
+                        .foregroundColor(.secondary)
+                        .font(.body)
+                }
             }
         } content: {
             let rep = FrenchRepublicanDate(date: from)
