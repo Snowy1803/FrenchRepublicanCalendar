@@ -17,6 +17,7 @@ struct DateDetails: View {
     var gregorian: String {
         let df = DateFormatter()
         df.dateFormat = "EEEE d MMMM yyyy"
+        df.locale = Locale(identifier: "fr")
         return df.string(from: date.date)
     }
     
