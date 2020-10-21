@@ -55,10 +55,8 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "32">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/Calendrier re&#x301;publicain">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "20418BBB2412F3E700E0EE6E"
@@ -66,7 +64,7 @@
             BlueprintName = "FrenchRepublicanCalendar WatchKit App"
             ReferencedContainer = "container:FrenchRepublicanCalendar.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -75,10 +73,8 @@
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES"
       launchAutomaticallySubstyle = "32">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/Calendrier re&#x301;publicain">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "20418BBB2412F3E700E0EE6E"
@@ -86,16 +82,7 @@
             BlueprintName = "FrenchRepublicanCalendar WatchKit App"
             ReferencedContainer = "container:FrenchRepublicanCalendar.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "20418BBB2412F3E700E0EE6E"
-            BuildableName = "FrenchRepublicanCalendar.app"
-            BlueprintName = "FrenchRepublicanCalendar WatchKit App"
-            ReferencedContainer = "container:FrenchRepublicanCalendar.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

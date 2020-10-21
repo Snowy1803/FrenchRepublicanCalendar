@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var favoritesPool: FavoritesPool
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -21,7 +23,7 @@ struct ContentView: View {
                                 .frame(width: 25)
                             Text("Mes Favoris")
                             Spacer()
-                            Text(String((UserDefaults.standard.array(forKey: "favorites") as? [String])?.count ?? 0))
+                            Text(String(favoritesPool.favorites.count))
                             Image.decorative(systemName: "chevron.right")
                         }
                     }.shadowBox()

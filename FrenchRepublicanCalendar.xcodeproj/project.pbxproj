@@ -39,6 +39,8 @@
 		20E095A225404BEB00383A31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20E095A125404BEB00383A31 /* Assets.xcassets */; };
 		20E095A625404BEB00383A31 /* DateWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 20E0959825404BB200383A31 /* DateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20E095B025404C0200383A31 /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
+		20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
+		20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		20E3E3F8244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E3E3F7244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift */; };
 		20E3E3FD244CC215009ECB37 /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
 /* End PBXBuildFile section */
@@ -140,6 +142,7 @@
 		20E0959F25404BB200383A31 /* DateWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWidget.swift; sourceTree = "<group>"; };
 		20E095A125404BEB00383A31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20E095A325404BEB00383A31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20E095BB254059CC00383A31 /* FavoritesPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPool.swift; sourceTree = "<group>"; };
 		20E3E3F5244CC149009ECB37 /* FrenchRepublicanCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrenchRepublicanCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20E3E3F7244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrenchRepublicanCalendarTests.swift; sourceTree = "<group>"; };
 		20E3E3F9244CC14A009ECB37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +249,7 @@
 			children = (
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
 				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
+				20E095BB254059CC00383A31 /* FavoritesPool.swift */,
 				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
 				20E09572253F8E4D00383A31 /* DateDetails.swift */,
 				20E0958A2540465500383A31 /* ContactsList.swift */,
@@ -490,6 +494,7 @@
 			files = (
 				20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */,
 				20024496244DD70E00A89D79 /* FavoriteList.swift in Sources */,
+				20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */,
 				20418BEC2412F52500E0EE6E /* FrenchRepublicanDate.swift in Sources */,
 				20418BD32412F3EB00E0EE6E /* HostingController.swift in Sources */,
 				201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */,
@@ -508,6 +513,7 @@
 				20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */,
 				20E09573253F8E4D00383A31 /* DateDetails.swift in Sources */,
 				20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */,
+				20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */,
 				2069C04F253F321D00E46721 /* FrenchRepublicanDate.swift in Sources */,
 				20D9DCB3253F23BB00B5A9FA /* ContentView.swift in Sources */,
 				2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */,

@@ -10,15 +10,13 @@ import UIKit
 import WatchConnectivity
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var favorites: FavoritesPool!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        if WCSession.isSupported() {
-            let session = WCSession.default
-            session.delegate = self
-            session.activate()
-        }
+        favorites = FavoritesPool()
         return true
     }
 
@@ -34,33 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-
-    func syncFavorites() {
-        let favorites = UserDefaults.standard.array(forKey: "favorites") ?? [String]()
-        if WCSession.isSupported() {
-            WCSession.default.transferUserInfo(["favorites": favorites])
-        }
-    }
-    
-    // MARK: WatchConnectivity session
-    
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
-    
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
-    
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        for (key, value) in userInfo {
-            UserDefaults.standard.set(value, forKey: key)
-        }
     }
 }
 

@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct FavoriteList: View {
-    @State var favs = [String]()
+    @EnvironmentObject var pool: FavoritesPool
     
     var body: some View {
         Group {
-            if favs.isEmpty {
+            if pool.favorites.isEmpty {
                 VStack {
                     Text("Aucun favori")
                         .font(.title)
@@ -28,13 +28,11 @@ struct FavoriteList: View {
                 }.multilineTextAlignment(.center)
             } else {
                 Form {
-                    ForEach(favs.reversed(), id: \.self) { fav in
+                    ForEach(pool.favorites.reversed(), id: \.self) { fav in
                         DateRow(frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
                     }
                 }
             }
-        }.onAppear {
-            self.favs = UserDefaults.standard.array(forKey: "favorites") as? [String] ?? [String]()
         }.navigationBarTitle("Favoris")
     }
     

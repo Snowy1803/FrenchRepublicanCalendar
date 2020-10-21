@@ -10,6 +10,9 @@ import SwiftUI
 import Combine
 
 struct DateDetails: View {
+    
+    @ObservedObject var favoritesPool: FavoritesPool
+    
     var components: MyDateComponents
     var date: FrenchRepublicanDate
     
@@ -20,7 +23,9 @@ struct DateDetails: View {
         return df.string(from: day)
     }
     
-    @State var added: Bool = false
+    var added: Bool {
+        favoritesPool.favorites.contains(self.components.string)
+    }
     
     var body: some View {
         ScrollView {
@@ -33,29 +38,19 @@ struct DateDetails: View {
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
                 Row(value: gregorian, title: "Grég. :")
                 Button(action: {
-                    if var favorites = UserDefaults.standard.array(forKey: "favorites") {
-                        if self.added {
-                            favorites.removeAll(where: { date in
-                                self.components.string == date as! String
-                            })
-                        } else {
-                            favorites.append(self.components.string)
+                    if self.added {
+                        favoritesPool.favorites.removeAll { date in
+                            self.components.string == date
                         }
-                        UserDefaults.standard.set(favorites, forKey: "favorites")
                     } else {
-                        UserDefaults.standard.set([self.components.string], forKey: "favorites")
+                        favoritesPool.favorites.append(self.components.string)
                     }
-                    (WKExtension.shared().delegate as! ExtensionDelegate).syncFavorites()
-                    self.added.toggle()
+                    favoritesPool.sync()
                 }) {
                     HStack {
                         Image(systemName: added ? "star.fill" : "star")
                         Text(added ? "Enregistré " : "Enregistrer")
                     }
-                }.onAppear {
-                    self.added = UserDefaults.standard.array(forKey: "favorites")?.contains(where: { date in
-                        self.components.string == date as! String
-                    }) ?? false
                 }
             }
         }.navigationBarTitle("Date")
@@ -72,11 +67,5 @@ struct Row: View {
             Spacer()
             Text(value).layoutPriority(3)
         }
-    }
-}
-
-struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        DateDetails(components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date()))
     }
 }

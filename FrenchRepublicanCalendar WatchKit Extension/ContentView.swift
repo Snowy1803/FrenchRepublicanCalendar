@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var favorites: FavoritesPool
+    
     @State var shownDateGregorian = Date().toMyDateComponents
     @State var shownDateRepublican = Date().toMyDateComponents // Overridden before use
     
@@ -21,7 +23,7 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            NavigationLink(destination: DateDetails(components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date())), isActive: Binding<Bool>(get: { self.todayActive }, set: {
+            NavigationLink(destination: DateDetails(favoritesPool: favorites, components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date())), isActive: Binding<Bool>(get: { self.todayActive }, set: {
                 if $0 {
                     self.shownDateGregorian = Date().toMyDateComponents
                     self.shownDateRepublican = FrenchRepublicanDate(date: Date()).toMyDateComponents
@@ -35,7 +37,7 @@ struct ContentView: View {
                     Text("Aujourd'hui")
                 }
             }
-            NavigationLink(destination: GregorianToRepublicanView(shownDate: $shownDateGregorian), isActive: Binding<Bool>(get: { self.gtrActive }, set: {
+            NavigationLink(destination: GregorianToRepublicanView(favoritesPool: favorites, shownDate: $shownDateGregorian), isActive: Binding<Bool>(get: { self.gtrActive }, set: {
                 if $0 {
                     self.gtrActive = true
                 } else {
@@ -61,13 +63,13 @@ struct ContentView: View {
                     Text("Vers Grégorien")
                 }
             }
-            NavigationLink(destination: FavoriteList()) {
+            NavigationLink(destination: FavoriteList(pool: favorites)) {
                 HStack {
                     Image(systemName: "text.badge.star").frame(width: 20, height: 20)
-                    Text("Mes favoris")
+                    Text("Mes favoris (\(favorites.favorites.count))")
                 }
             }
-            NavigationLink(destination: ContactsList()) {
+            NavigationLink(destination: ContactsList(favoritesPool: favorites)) {
                 HStack {
                     Image(systemName: "person.2").frame(width: 20, height: 20)
                     Text("Mes contacts")
@@ -78,11 +80,12 @@ struct ContentView: View {
 }
 
 struct GregorianToRepublicanView: View {
+    @ObservedObject var favoritesPool: FavoritesPool
     @Binding var shownDate: MyDateComponents
     
     var body: some View {
         VStack {
-            NavigationLink(destination: DateDetails(components: shownDate, date: shownDate.tofrd!)) {
+            NavigationLink(destination: DateDetails(favoritesPool: favoritesPool, components: shownDate, date: shownDate.tofrd!)) {
                 Text(shownDate.tofrd!.toLongString())
             }
             HStack {
@@ -141,7 +144,7 @@ struct RepublicanToGregorianView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(favorites: FavoritesPool())
     }
 }
 

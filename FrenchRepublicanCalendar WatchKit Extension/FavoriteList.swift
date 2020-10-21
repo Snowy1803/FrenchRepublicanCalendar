@@ -9,19 +9,17 @@
 import SwiftUI
 
 struct FavoriteList: View {
-    @State var favs = [String]()
+    @ObservedObject var pool: FavoritesPool
     
     var body: some View {
         Group {
-            if favs.isEmpty {
+            if pool.favorites.isEmpty {
                 Text("Aucun favori")
             } else {
-                List(favs.reversed(), id: \.self) { fav in
-                    DateRow(frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
+                List(pool.favorites.reversed(), id: \.self) { fav in
+                    DateRow(favoritesPool: pool, frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
                 }
             }
-        }.onAppear {
-            self.favs = UserDefaults.standard.array(forKey: "favorites") as? [String] ?? [String]()
         }.navigationBarTitle("Favoris")
     }
     
@@ -29,11 +27,5 @@ struct FavoriteList: View {
         let df = DateFormatter()
         df.dateFormat = "yyyy-M-d"
         return df.date(from: fav)!
-    }
-}
-
-struct FavoriteList_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoriteList()
     }
 }

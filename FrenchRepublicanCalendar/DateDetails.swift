@@ -10,6 +10,8 @@ import SwiftUI
 import Combine
 
 struct DateDetails: View {
+    @EnvironmentObject var favoritesPool: FavoritesPool
+    
     var date: FrenchRepublicanDate
     
     var gregorian: String {
@@ -21,8 +23,6 @@ struct DateDetails: View {
     var iso: String {
         date.date.iso
     }
-    
-    @State var added: Bool = false
     
     var body: some View {
         Form {
@@ -38,29 +38,19 @@ struct DateDetails: View {
             }
         }.navigationBarTitle(date.toLongString())
         .navigationBarItems(trailing: Button(action: {
-            if var favorites = UserDefaults.standard.array(forKey: "favorites") {
-                if self.added {
-                    favorites.removeAll(where: { date in
-                        iso == date as! String
-                    })
-                } else {
-                    favorites.append(iso)
+            if favoritesPool.favorites.contains(iso) {
+                favoritesPool.favorites.removeAll { date in
+                    self.date.date.iso == date
                 }
-                UserDefaults.standard.set(favorites, forKey: "favorites")
             } else {
-                UserDefaults.standard.set([iso], forKey: "favorites")
+                favoritesPool.favorites.append(self.date.date.iso)
             }
-            (UIApplication.shared.delegate as! AppDelegate).syncFavorites()
-            self.added.toggle()
+            favoritesPool.sync()
         }) {
+            let added = favoritesPool.favorites.contains(iso)
             Image(systemName: added ? "star.fill" : "star")
                 .accessibility(label: Text(added ? "Retirer des favoris" : "Ajouter aux favoris"))
         })
-        .onAppear {
-            self.added = UserDefaults.standard.array(forKey: "favorites")?.contains(where: { date in
-                iso == date as! String
-            }) ?? false
-        }
     }
 }
 

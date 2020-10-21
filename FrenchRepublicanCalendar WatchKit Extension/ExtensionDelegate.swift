@@ -8,16 +8,18 @@
 
 import WatchKit
 import WatchConnectivity
+import Combine
 
-class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
+class ExtensionDelegate: NSObject, WKExtensionDelegate {
     
-    private var backgroundTasks: [WKWatchConnectivityRefreshBackgroundTask] = []
+    var favorites: FavoritesPool!
+    
+    private var tasksInProgress: [WKWatchConnectivityRefreshBackgroundTask] = []
+    private var sub: AnyCancellable?
 
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
-        let session = WCSession.default
-        session.delegate = self
-        session.activate()
+        favorites = FavoritesPool()
     }
 
     func applicationDidBecomeActive() {
@@ -42,12 +44,18 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                 snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
             case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
                 // Be sure to complete the connectivity task once you’re done.
-                let session = WCSession.default
-                if session.delegate == nil {
-                    session.delegate = self
-                    session.activate()
+                if self.favorites == nil {
+                    favorites = FavoritesPool()
                 }
-                connectivityTask.setTaskCompletedWithSnapshot(false)
+                self.tasksInProgress.append(connectivityTask)
+                sub = favorites.$favorites.sink { [self] fav in
+                    if !tasksInProgress.isEmpty && !WCSession.default.hasContentPending {
+                        tasksInProgress.removeAll {
+                            $0.setTaskCompletedWithSnapshot(false)
+                            return true
+                        }
+                    }
+                }
             case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
                 // Be sure to complete the URL session task once you’re done.
                 urlSessionTask.setTaskCompletedWithSnapshot(false)
@@ -78,12 +86,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         for (key, value) in userInfo {
             UserDefaults.standard.set(value, forKey: key)
-        }
-        if !backgroundTasks.isEmpty && !session.hasContentPending {
-            backgroundTasks.removeAll {
-                $0.setTaskCompletedWithSnapshot(false)
-                return true
-            }
         }
     }
 }
