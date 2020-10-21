@@ -10,7 +10,6 @@ import SwiftUI
 import Combine
 
 struct DateDetails: View {
-    let QUARTERS = ["Automne", "Hiver", "Printemps", "Été", "Sansculottides"]
     var date: FrenchRepublicanDate
     
     var gregorian: String {
@@ -31,11 +30,11 @@ struct DateDetails: View {
                 Text(date.toVeryLongString())
             }
             Section {
-                Row(value: "\(date.dayName)", title: "Jour :")
-                Row(value: "\(QUARTERS[date.components.quarter! - 1])", title: "Saison :")
+                Row(value: date.dayName, title: "Jour :")
+                Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour de l'année :")
-                Row(value: "\(gregorian)", title: "Grégorien :")
+                Row(value: gregorian, title: "Grégorien :")
             }
         }.navigationBarTitle(date.toLongString())
         .navigationBarItems(trailing: Button(action: {

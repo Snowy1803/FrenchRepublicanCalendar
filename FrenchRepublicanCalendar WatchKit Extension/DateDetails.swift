@@ -10,7 +10,6 @@ import SwiftUI
 import Combine
 
 struct DateDetails: View {
-    let QUARTERS = ["Automne", "Hiver", "Printemps", "Été", "Sansculottides"]
     var components: MyDateComponents
     var date: FrenchRepublicanDate
     
@@ -28,11 +27,11 @@ struct DateDetails: View {
             VStack {
                 Text(date.toLongStringNoYear())
                 Row(value: "\(date.components.year!)", title: "An :")
-                Row(value: "\(date.dayName)", title: "\(date.weekdayName)")
-                Row(value: "\(QUARTERS[date.components.quarter! - 1])", title: "Saison :")
+                Row(value: date.dayName, title: date.weekdayName)
+                Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
-                Row(value: "\(gregorian)", title: "Grég. :")
+                Row(value: gregorian, title: "Grég. :")
                 Button(action: {
                     if var favorites = UserDefaults.standard.array(forKey: "favorites") {
                         if self.added {
