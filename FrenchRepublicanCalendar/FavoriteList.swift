@@ -60,14 +60,14 @@ struct DateRow: View {
     
     var body: some View {
         NavigationLink(destination: DateDetails(date: frd)) {
-            VStack(alignment: .leading) {
-                Text(frd.toLongString())
-                HStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(frd.toLongString())
                     Text(human).foregroundColor(.secondary)
-                    Spacer()
-                    if desc != nil {
-                        Text(desc!)
-                    }
+                }
+                Spacer()
+                if desc != nil {
+                    Text(desc!)
                 }
             }.padding([.top, .bottom], 2)
         }

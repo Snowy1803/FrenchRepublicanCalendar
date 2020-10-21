@@ -25,7 +25,7 @@ struct ContentView: View {
                             Image.decorative(systemName: "chevron.right")
                         }
                     }.shadowBox()
-                    NavigationLink(destination: FavoriteList()) {
+                    NavigationLink(destination: ContactsList()) {
                         HStack {
                             Image.decorative(systemName: "person.2")
                                 .frame(width: 25)
