@@ -80,7 +80,9 @@ struct ContactDetails: View {
             if !contact.dates.isEmpty {
                 Section(header: Text("Dates")) {
                     ForEach(contact.dates, id: \.self) { d in
-                        DateRow(favoritesPool: favoritesPool, frd: FrenchRepublicanDate(date: d.value.date!), desc: d.label)
+                        if let date = d.value.date {
+                            DateRow(favoritesPool: favoritesPool, frd: FrenchRepublicanDate(date: date), desc: d.label == "_$!<Anniversary>!$_" ? "Fête" : d.label)
+                        }
                     }
                 }
             }
