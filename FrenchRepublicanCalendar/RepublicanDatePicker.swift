@@ -32,7 +32,7 @@ struct RepublicanDatePicker: View {
             Text(" ")
             NavigatingPicker(
                 selection: $date.year.wrapped,
-                range: 0..<2708,
+                range: 1..<2708,
                 preferMenu: false,
                 title: "Année"
             )

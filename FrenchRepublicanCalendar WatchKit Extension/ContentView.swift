@@ -134,7 +134,7 @@ struct RepublicanToGregorianView: View {
                 }
             }
             Picker(selection: $shownDate.year.wrapped, label: EmptyView()) {
-                ForEach(0..<2708) { year in
+                ForEach(1..<2708) { year in
                     Text("\(String(year))").tag(year.wrapped)
                 }
             }

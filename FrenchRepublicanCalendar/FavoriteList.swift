@@ -53,6 +53,7 @@ struct DateRow: View {
         }
         let df = DateFormatter()
         df.dateFormat = "d MMMM yyyy"
+        df.locale = Locale(identifier: "fr")
         return df.string(from: frd.date)
     }
     
