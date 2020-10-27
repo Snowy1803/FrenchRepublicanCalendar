@@ -44,7 +44,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         entries.reserveCapacity(limit)
         let midnight = Calendar.current.startOfDay(for: Date())
         for day in 0..<limit {
-            let date = midnight.addingTimeInterval(TimeInterval(3600 * 24 * day))
+            let date = Calendar.current.date(byAdding: .day, value: day, to: midnight)!
             guard let entry = getTimelineEntry(family: complication.family, date: date) else {
                 handler(nil)
                 return
