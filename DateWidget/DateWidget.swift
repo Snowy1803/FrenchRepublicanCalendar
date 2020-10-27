@@ -22,8 +22,7 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
+        let currentDate = Calendar.current.startOfDay(for: Date())
         for offset in 0..<100 {
             let entryDate = Calendar.current.date(byAdding: .day, value: offset, to: currentDate)!
             let entry = SimpleEntry(date: entryDate)
@@ -44,7 +43,7 @@ struct DateWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        let today = FrenchRepublicanDate(date: Date())
+        let today = FrenchRepublicanDate(date: entry.date)
         Group {
             if family == WidgetFamily.systemSmall {
                 VStack(alignment: .leading) {
