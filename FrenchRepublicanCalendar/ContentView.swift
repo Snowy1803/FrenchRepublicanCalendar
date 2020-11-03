@@ -43,6 +43,8 @@ struct ContentView: View {
 }
 
 struct TodayWidget: View {
+    @EnvironmentObject var midnight: Midnight
+    
     var body: some View {
         HomeWidget {
             Image.decorative(systemName: "calendar")
@@ -68,6 +70,7 @@ struct TodayWidget: View {
 }
 
 struct ConverterWidget: View {
+    @EnvironmentObject var midnight: Midnight
     @State private var from = Date()
     
     var body: some View {
