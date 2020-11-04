@@ -27,6 +27,7 @@ struct ContentView: View {
                             Image.decorative(systemName: "chevron.right")
                         }
                     }.shadowBox()
+                    .accessibility(label: Text("Voir mes \(favoritesPool.favorites.count) favoris"))
                     NavigationLink(destination: ContactsList()) {
                         HStack {
                             Image.decorative(systemName: "person.2")
@@ -36,6 +37,7 @@ struct ContentView: View {
                             Image.decorative(systemName: "chevron.right")
                         }
                     }.shadowBox()
+                    .accessibility(label: Text("Voir mes contacts"))
                 }
             }.navigationBarTitle("Calendrier Républicain")
         }
@@ -64,7 +66,7 @@ struct TodayWidget: View {
                     Image.decorative(systemName: "chevron.right")
                         .foregroundColor(.gray)
                 }.foregroundColor(.primary)
-            }
+            }.accessibility(label: Text("\((today.components.day!)) \(today.monthName) ; Associé à : \(today.dayName)"))
         }
     }
 }

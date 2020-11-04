@@ -69,7 +69,7 @@ struct DateRow: View {
                     Text(desc!)
                 }
             }.padding([.top, .bottom], 2)
-        }
+        }.accessibility(value: Text("\(frd.toLongString()) ; Soit \(Calendar.current.isDateInToday(frd.date) ? "aujourd'hui" : "le \(human) dans le calendrier grégorien")"))
     }
 }
 

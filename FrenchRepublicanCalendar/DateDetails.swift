@@ -34,7 +34,9 @@ struct DateDetails: View {
                 Row(value: date.dayName, title: "Jour :")
                 Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
+                    .accessibility(value: Text("\(date.components.weekOfYear!) sur 37"))
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour de l'année :")
+                    .accessibility(value: Text("\(date.dayInYear) sur \(date.isYearSextil ? 366 : 365)"))
                 Row(value: gregorian, title: "Grégorien :")
             }
         }.navigationBarTitle(date.toLongString())
@@ -65,5 +67,8 @@ struct Row: View {
             Spacer()
             Text(value).layoutPriority(3)
         }
+        .accessibilityElement()
+        .accessibility(label: Text(title))
+        .accessibility(value: Text(value))
     }
 }

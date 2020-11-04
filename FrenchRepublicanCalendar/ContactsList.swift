@@ -85,7 +85,9 @@ struct ContactDetails: View {
                 Section(header: Text("Dates")) {
                     ForEach(contact.dates, id: \.self) { d in
                         if let date = d.value.date {
-                            DateRow(frd: FrenchRepublicanDate(date: date), desc: d.label == "_$!<Anniversary>!$_" ? "Fête" : d.label)
+                            let label = d.label == "_$!<Anniversary>!$_" ? "Fête" : d.label
+                            DateRow(frd: FrenchRepublicanDate(date: date), desc: label)
+                                .accessibility(label: Text(label ?? ""))
                         }
                     }
                 }
@@ -106,7 +108,10 @@ struct BirthdaySection: View {
     var body: some View {
         Group {
             DateRow(frd: birthday)
-            DateRow(frd: birthday.nextAnniversary, desc: "🎂 \(birthday.nextAnniversary.components.year! - birthday.components.year!) ans")
+                .accessibility(label: Text("Anniversaire"))
+            let age = birthday.nextAnniversary.components.year! - birthday.components.year!
+            DateRow(frd: birthday.nextAnniversary, desc: "🎂 \(age) ans")
+                .accessibility(label: Text("Anniversaire des \(age) ans"))
         }
     }
 }
