@@ -19,7 +19,7 @@ struct RepublicanDatePicker: View {
                 preferMenu: true,
                 title: "Jour"
             )
-            Text(" ")
+            Text(" ").accessibility(hidden: true)
             NavigatingPicker(
                 selection: $date.month.wrapped,
                 range: 1..<14,
@@ -29,7 +29,7 @@ struct RepublicanDatePicker: View {
                     FrenchRepublicanDate.MONTH_NAMES[$0 - 1]
                 }
             )
-            Text(" ")
+            Text(" ").accessibility(hidden: true)
             NavigatingPicker(
                 selection: $date.year.wrapped,
                 range: 1..<2708,
@@ -78,6 +78,19 @@ struct NavigatedPicker: View {
                     Text(String(value)).tag(value.wrapped)
                 }
             }.pickerStyle(WheelPickerStyle())
+            .accessibilityElement(children: .ignore)
+            .accessibility(value: Text(String(selection.value)))
+            .accessibility(label: Text(title))
+            .accessibilityAdjustableAction { direction in
+                switch direction {
+                case .increment:
+                    selection.value += 1
+                case .decrement:
+                    selection.value -= 1
+                @unknown default:
+                    print("unknown case")
+                }
+            }
         }.navigationBarTitle(Text(title))
     }
 }
