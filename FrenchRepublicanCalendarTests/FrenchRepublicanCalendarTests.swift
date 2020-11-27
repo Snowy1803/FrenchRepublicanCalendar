@@ -51,13 +51,13 @@ class FrenchRepublicanCalendarTests: XCTestCase {
     }
     
     func testDayCount() throws {
-        XCTAssert(FrenchRepublicanDate.DAYNAMES.count == 366)
+        XCTAssert(FrenchRepublicanDate.allDayNames.count == 366)
     }
     
     func testWiktionnaryEntries() throws {
         let session = URLSession(configuration: .default)
         let semaphore = DispatchSemaphore(value: 0)
-        for i in FrenchRepublicanDate.DAYNAMES.indices {
+        for i in FrenchRepublicanDate.allDayNames.indices {
             guard let url = FrenchRepublicanDate(dayInYear: i, year: 1).descriptionURL else {
                 XCTFail("invalid url with \(name)")
                 return

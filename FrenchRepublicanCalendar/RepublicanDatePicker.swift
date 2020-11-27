@@ -26,7 +26,7 @@ struct RepublicanDatePicker: View {
                 preferMenu: true,
                 title: "Mois",
                 transformer: {
-                    FrenchRepublicanDate.MONTH_NAMES[$0 - 1]
+                    FrenchRepublicanDate.allMonthNames[$0 - 1]
                 }
             )
             Text(" ").accessibility(hidden: true)

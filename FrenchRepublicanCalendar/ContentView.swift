@@ -92,7 +92,7 @@ struct ConverterWidget: View {
             }
         } content: {
             let rep = FrenchRepublicanDate(date: from)
-            DatePicker(selection: $from, in: FrenchRepublicanDate.ORIGIN..., displayedComponents: .date) {
+            DatePicker(selection: $from, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
                 Text("Date grégorienne : ")
             }.environment(\.locale, Locale(identifier: "fr"))
             Divider()

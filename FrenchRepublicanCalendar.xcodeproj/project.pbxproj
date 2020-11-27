@@ -186,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				20D93972253F536D00872351 /* .gitignore */,
+				20AEE4D625716F940015FFC6 /* Core */,
 				20D9DCAD253F23BB00B5A9FA /* FrenchRepublicanCalendar */,
 				20418BC02412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App */,
 				20418BCF2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension */,
@@ -221,7 +222,6 @@
 		20418BCF2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */,
 				20418BD02412F3EB00E0EE6E /* ContentView.swift */,
 				20024497244DE3EC00A89D79 /* ContactsList.swift */,
 				20024495244DD70E00A89D79 /* FavoriteList.swift */,
@@ -242,6 +242,14 @@
 				20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		20AEE4D625716F940015FFC6 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		20D9DCAD253F23BB00B5A9FA /* FrenchRepublicanCalendar */ = {

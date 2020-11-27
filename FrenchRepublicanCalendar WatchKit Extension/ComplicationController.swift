@@ -105,7 +105,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Placeholder Templates
     
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
-        handler(getTimelineEntry(family: complication.family, date: FrenchRepublicanDate.ORIGIN))
+        handler(getTimelineEntry(family: complication.family, date: FrenchRepublicanDate.origin))
     }
     
     // MARK: - watchOS 7

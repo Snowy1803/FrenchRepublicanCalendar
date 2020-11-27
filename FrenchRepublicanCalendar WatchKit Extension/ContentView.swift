@@ -129,7 +129,7 @@ struct RepublicanToGregorianView: View {
                 }
                 Picker(selection: $shownDate.month.wrapped, label: EmptyView()) {
                     ForEach(1..<14) { month in
-                        Text("\(FrenchRepublicanDate.MONTH_NAMES_SHORT[month - 1])").tag(month.wrapped)
+                        Text("\(FrenchRepublicanDate.shortMonthNames[month - 1])").tag(month.wrapped)
                     }
                 }
             }
