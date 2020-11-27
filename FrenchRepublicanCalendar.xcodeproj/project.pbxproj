@@ -124,6 +124,8 @@
 		20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20418BDD2412F3EC00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrenchRepublicanDate.swift; sourceTree = "<group>"; };
+		20474FFD2571C006006935A9 /* LISEZMOI.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LISEZMOI.md; sourceTree = "<group>"; };
+		204750032571C37A006935A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2069C049253F2F9500E46721 /* OrbisecUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbisecUI.swift; sourceTree = "<group>"; };
 		20AEE4EB257170620015FFC6 /* DateDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20D93972253F536D00872351 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -187,6 +189,8 @@
 		20418BB12412F3E700E0EE6E = {
 			isa = PBXGroup;
 			children = (
+				204750032571C37A006935A9 /* README.md */,
+				20474FFD2571C006006935A9 /* LISEZMOI.md */,
 				20D93972253F536D00872351 /* .gitignore */,
 				20AEE4D625716F940015FFC6 /* Shared */,
 				20D9DCAD253F23BB00B5A9FA /* iOS */,
