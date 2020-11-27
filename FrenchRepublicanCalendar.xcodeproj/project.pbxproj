@@ -23,6 +23,9 @@
 		20418BEC2412F52500E0EE6E /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
 		2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069C049253F2F9500E46721 /* OrbisecUI.swift */; };
 		2069C04F253F321D00E46721 /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
+		20AEE4EC257170620015FFC6 /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AEE4EB257170620015FFC6 /* DateDetails.swift */; };
+		20AEE510257171DC0015FFC6 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
+		20AEE511257171DC0015FFC6 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */; };
 		20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */; };
 		20D9DCB3253F23BB00B5A9FA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCB2253F23BB00B5A9FA /* ContentView.swift */; };
@@ -30,7 +33,6 @@
 		20D9DCB8253F23F000B5A9FA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20D9DCB7253F23F000B5A9FA /* Preview Assets.xcassets */; };
 		20D9DCBB253F23F000B5A9FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20D9DCB9253F23F000B5A9FA /* LaunchScreen.storyboard */; };
 		20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */; };
-		20E09573253F8E4D00383A31 /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E09572253F8E4D00383A31 /* DateDetails.swift */; };
 		20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0957C253F990C00383A31 /* FavoriteList.swift */; };
 		20E0958B2540465500383A31 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0958A2540465500383A31 /* ContactsList.swift */; };
 		20E0959B25404BB200383A31 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E0959A25404BB200383A31 /* WidgetKit.framework */; };
@@ -123,6 +125,7 @@
 		20418BDD2412F3EC00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrenchRepublicanDate.swift; sourceTree = "<group>"; };
 		2069C049253F2F9500E46721 /* OrbisecUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbisecUI.swift; sourceTree = "<group>"; };
+		20AEE4EB257170620015FFC6 /* DateDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20D93972253F536D00872351 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -133,7 +136,6 @@
 		20D9DCBA253F23F000B5A9FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		20D9DCBC253F23F000B5A9FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepublicanDatePicker.swift; sourceTree = "<group>"; };
-		20E09572253F8E4D00383A31 /* DateDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateDetails.swift; path = FrenchRepublicanCalendar/DateDetails.swift; sourceTree = SOURCE_ROOT; };
 		20E0957C253F990C00383A31 /* FavoriteList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteList.swift; sourceTree = "<group>"; };
 		20E0958A2540465500383A31 /* ContactsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsList.swift; sourceTree = "<group>"; };
 		20E0959825404BB200383A31 /* DateWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DateWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,12 +188,12 @@
 			isa = PBXGroup;
 			children = (
 				20D93972253F536D00872351 /* .gitignore */,
-				20AEE4D625716F940015FFC6 /* Core */,
-				20D9DCAD253F23BB00B5A9FA /* FrenchRepublicanCalendar */,
-				20418BC02412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App */,
-				20418BCF2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension */,
-				20E3E3F6244CC149009ECB37 /* FrenchRepublicanCalendarTests */,
-				20E0959E25404BB200383A31 /* DateWidget */,
+				20AEE4D625716F940015FFC6 /* Shared */,
+				20D9DCAD253F23BB00B5A9FA /* iOS */,
+				20418BC02412F3E700E0EE6E /* WatchKit App */,
+				20418BCF2412F3EB00E0EE6E /* WatchKit Extension */,
+				20E3E3F6244CC149009ECB37 /* Tests */,
+				20E0959E25404BB200383A31 /* Widget */,
 				20E0959925404BB200383A31 /* Frameworks */,
 				20418BB92412F3E700E0EE6E /* Products */,
 			);
@@ -209,17 +211,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		20418BC02412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App */ = {
+		20418BC02412F3E700E0EE6E /* WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
 				20418BC12412F3E700E0EE6E /* Interface.storyboard */,
 				20418BC42412F3EB00E0EE6E /* Assets.xcassets */,
 				20418BC62412F3EB00E0EE6E /* Info.plist */,
 			);
-			path = "FrenchRepublicanCalendar WatchKit App";
+			path = "WatchKit App";
 			sourceTree = "<group>";
 		};
-		20418BCF2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension */ = {
+		20418BCF2412F3EB00E0EE6E /* WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
 				20418BD02412F3EB00E0EE6E /* ContentView.swift */,
@@ -233,7 +235,7 @@
 				20418BDD2412F3EC00E0EE6E /* Info.plist */,
 				20418BDA2412F3EC00E0EE6E /* Preview Content */,
 			);
-			path = "FrenchRepublicanCalendar WatchKit Extension";
+			path = "WatchKit Extension";
 			sourceTree = "<group>";
 		};
 		20418BDA2412F3EC00E0EE6E /* Preview Content */ = {
@@ -244,22 +246,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		20AEE4D625716F940015FFC6 /* Core */ = {
+		20AEE4D625716F940015FFC6 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */,
+				20E095BB254059CC00383A31 /* FavoritesPool.swift */,
 			);
-			path = Core;
+			path = Shared;
 			sourceTree = "<group>";
 		};
-		20D9DCAD253F23BB00B5A9FA /* FrenchRepublicanCalendar */ = {
+		20D9DCAD253F23BB00B5A9FA /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
 				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
-				20E095BB254059CC00383A31 /* FavoritesPool.swift */,
 				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
-				20E09572253F8E4D00383A31 /* DateDetails.swift */,
+				20AEE4EB257170620015FFC6 /* DateDetails.swift */,
 				20E0958A2540465500383A31 /* ContactsList.swift */,
 				20E0957C253F990C00383A31 /* FavoriteList.swift */,
 				20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */,
@@ -269,7 +271,7 @@
 				20D9DCBC253F23F000B5A9FA /* Info.plist */,
 				20D9DCB6253F23F000B5A9FA /* Preview Content */,
 			);
-			path = FrenchRepublicanCalendar;
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		20D9DCB6253F23F000B5A9FA /* Preview Content */ = {
@@ -289,23 +291,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		20E0959E25404BB200383A31 /* DateWidget */ = {
+		20E0959E25404BB200383A31 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
 				20E0959F25404BB200383A31 /* DateWidget.swift */,
 				20E095A125404BEB00383A31 /* Assets.xcassets */,
 				20E095A325404BEB00383A31 /* Info.plist */,
 			);
-			path = DateWidget;
+			path = Widget;
 			sourceTree = "<group>";
 		};
-		20E3E3F6244CC149009ECB37 /* FrenchRepublicanCalendarTests */ = {
+		20E3E3F6244CC149009ECB37 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				20E3E3F7244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift */,
 				20E3E3F9244CC14A009ECB37 /* Info.plist */,
 			);
-			path = FrenchRepublicanCalendarTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -519,7 +521,7 @@
 				20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
 				20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */,
-				20E09573253F8E4D00383A31 /* DateDetails.swift in Sources */,
+				20AEE4EC257170620015FFC6 /* DateDetails.swift in Sources */,
 				20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */,
 				20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */,
 				2069C04F253F321D00E46721 /* FrenchRepublicanDate.swift in Sources */,
@@ -535,6 +537,7 @@
 			files = (
 				20E095B025404C0200383A31 /* FrenchRepublicanDate.swift in Sources */,
 				20E095A025404BB200383A31 /* DateWidget.swift in Sources */,
+				20AEE511257171DC0015FFC6 /* FavoritesPool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +547,7 @@
 			files = (
 				20E3E3FD244CC215009ECB37 /* FrenchRepublicanDate.swift in Sources */,
 				20E3E3F8244CC149009ECB37 /* FrenchRepublicanCalendarTests.swift in Sources */,
+				20AEE510257171DC0015FFC6 /* FavoritesPool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,10 +714,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"FrenchRepublicanCalendar WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "FrenchRepublicanCalendar WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -734,10 +738,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"FrenchRepublicanCalendar WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "FrenchRepublicanCalendar WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -761,7 +765,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				IBSC_MODULE = FrenchRepublicanCalendar_WatchKit_Extension;
-				INFOPLIST_FILE = "FrenchRepublicanCalendar WatchKit App/Info.plist";
+				INFOPLIST_FILE = "WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendar.watchkitapp;
 				PRODUCT_NAME = FrenchRepublicanCalendar;
 				SDKROOT = watchos;
@@ -780,7 +784,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				IBSC_MODULE = FrenchRepublicanCalendar_WatchKit_Extension;
-				INFOPLIST_FILE = "FrenchRepublicanCalendar WatchKit App/Info.plist";
+				INFOPLIST_FILE = "WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendar.watchkitapp;
 				PRODUCT_NAME = FrenchRepublicanCalendar;
 				SDKROOT = watchos;
@@ -799,10 +803,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"FrenchRepublicanCalendar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = FrenchRepublicanCalendar/Info.plist;
+				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -823,10 +827,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"FrenchRepublicanCalendar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iOS/Preview Content\"";
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = FrenchRepublicanCalendar/Info.plist;
+				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -846,7 +850,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
-				INFOPLIST_FILE = DateWidget/Info.plist;
+				INFOPLIST_FILE = Widget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -868,7 +872,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
-				INFOPLIST_FILE = DateWidget/Info.plist;
+				INFOPLIST_FILE = Widget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -888,7 +892,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
-				INFOPLIST_FILE = FrenchRepublicanCalendarTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -907,7 +911,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
-				INFOPLIST_FILE = FrenchRepublicanCalendarTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
