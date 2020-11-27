@@ -124,7 +124,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         date = Date(dayOfYear: dayInYear, year: components.year!, hour: components.hour, minute: components.minute, second: components.second, nanosecond: components.nanosecond)
     }
 
-    /// Returns string as EEEE d MM "An" yyyy
+    /// Returns string as EEEE d MMMM "An" yyyy
     func toVeryLongString() -> String {
         if components.month == 13 {
             return toLongString()
@@ -132,12 +132,12 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         return "\(weekdayName) \(toLongString())"
     }
     
-    /// Returns string as d MM "An" yyyy
+    /// Returns string as d MMMM "An" yyyy
     func toLongString() -> String {
         return "\(toLongStringNoYear()) An \(components.year!)"
     }
     
-    /// Returns string as d MM
+    /// Returns string as d MMMM
     func toLongStringNoYear() -> String {
         if components.month == 13 {
             return "\(FrenchRepublicanDate.sansculottidesDayNames[components.day! - 1])"
@@ -145,12 +145,17 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         return "\(components.day!) \(monthName)"
     }
     
-    /// Returns string as d M
+    /// Returns string as d MMM
     func toShortString() -> String {
         if components.month == 13 {
             return "\(FrenchRepublicanDate.sansculottidesShortNames[components.day! - 1])"
         }
         return "\(components.day!) \(shortMonthName)"
+    }
+    
+    /// Returns string as dd/MM/yyy
+    func toShortenedString() -> String {
+        return "\(components.day! >= 10 ? "" : "0")\(components.day!)/\(components.month! >= 10 ? "" : "0")\(components.month!)/\(components.year!)"
     }
     
     /// Localized month name

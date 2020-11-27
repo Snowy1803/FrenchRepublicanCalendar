@@ -37,6 +37,7 @@ struct DateDetails: View {
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
                 Row(value: gregorian, title: "Grég. :")
+                Row(value: date.toShortenedString(), title: "Abrégé :")
                 Button(action: {
                     if self.added {
                         favoritesPool.favorites.removeAll { date in

@@ -42,6 +42,8 @@ struct DateDetails: View {
                 Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour de l'année :")
                     .accessibility(value: Text("\(date.dayInYear) sur \(date.isYearSextil ? 366 : 365)"))
                 Row(value: gregorian, title: "Grégorien :")
+                Row(value: date.toShortenedString(), title: "Date abrégée :")
+                    .accessibility(value: Text(date.toShortenedString().replacingOccurrences(of: "/", with: "-")))
             }
         }.navigationBarTitle(date.toLongString())
         .navigationBarItems(trailing: Button(action: {
