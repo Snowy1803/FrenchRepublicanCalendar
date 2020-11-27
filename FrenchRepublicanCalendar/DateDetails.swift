@@ -31,7 +31,11 @@ struct DateDetails: View {
                 Text(date.toVeryLongString())
             }
             Section {
-                Row(value: date.dayName, title: "Jour :")
+                Button {
+                    UIApplication.shared.open(date.descriptionURL!)
+                } label: {
+                    Row(value: date.dayName, title: "Jour :")
+                }
                 Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                     .accessibility(value: Text("\(date.components.weekOfYear!) sur 37"))
@@ -64,6 +68,7 @@ struct Row: View {
     var body: some View {
         HStack {
             Text(title).lineLimit(1).layoutPriority(2)
+                .foregroundColor(.primary)
             Spacer()
             Text(value).layoutPriority(3)
         }

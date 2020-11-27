@@ -51,14 +51,27 @@ class FrenchRepublicanCalendarTests: XCTestCase {
     }
     
     func testDayCount() throws {
-        XCTAssert(FrenchRepublicanDate(date: Date()).DAYNAMES.count == 366)
+        XCTAssert(FrenchRepublicanDate.DAYNAMES.count == 366)
     }
-
-//    func testPerformanceExample() throws {
-//        // This is an example of a performance test case.
-//        measure {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
-
+    
+    func testWiktionnaryEntries() throws {
+        let session = URLSession(configuration: .default)
+        let semaphore = DispatchSemaphore(value: 0)
+        for i in FrenchRepublicanDate.DAYNAMES.indices {
+            guard let url = FrenchRepublicanDate(dayInYear: i, year: 1).descriptionURL else {
+                XCTFail("invalid url with \(name)")
+                return
+            }
+            let task = session.dataTask(with: url) { (data, response, error) in
+                guard let response = response as? HTTPURLResponse else {
+                    XCTFail("not http")
+                    return
+                }
+                XCTAssertEqual(response.statusCode, 200, "Day \(i) not found")
+                semaphore.signal()
+            }
+            task.resume()
+            semaphore.wait()
+        }
+    }
 }
