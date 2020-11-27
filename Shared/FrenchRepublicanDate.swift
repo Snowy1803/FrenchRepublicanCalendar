@@ -1,6 +1,6 @@
 //
 //  FrenchRepublicanCalendarCalculator.swift
-//  FrenchRepublicanCalendar WatchKit Extension
+//  FrenchRepublicanCalendar Shared
 //
 //  Created by Emil on 06/03/2020.
 //  Copyright © 2020 Snowy_1803. All rights reserved.
@@ -221,9 +221,6 @@ extension Date {
 
 fileprivate extension Date {
     static func dateToGregorian(dayOfYear rDayOfYear: Int, year rYear: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) -> DateComponents {
-        if rYear == 108 && rDayOfYear >= 100 {
-            //print("tagada")
-        }
         var gYear = rYear + 1792
         if rDayOfYear < 102 {
             gYear -= 1
@@ -255,23 +252,4 @@ fileprivate extension Date {
         }
         return DateComponents(calendar: Calendar.current, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
-}
-
-// App specific stuff
-
-// When using ints as tags, it doesn't work...
-
-extension Int {
-    var wrapped: IntWrapper {
-        get {
-            IntWrapper(value: self)
-        }
-        set {
-            self = newValue.value
-        }
-    }
-}
-
-struct IntWrapper: Hashable {
-    var value: Int
 }

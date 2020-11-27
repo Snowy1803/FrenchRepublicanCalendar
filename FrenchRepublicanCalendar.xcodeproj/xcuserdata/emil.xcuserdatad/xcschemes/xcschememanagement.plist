@@ -7,7 +7,7 @@
 		<key>DateWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 		<key>FrenchRepublicanCalendar WatchKit App (Complication).xcscheme_^#shared#^_</key>
 		<dict>
@@ -27,7 +27,7 @@
 		<key>FrenchRepublicanCalendarTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>3</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -43,6 +43,11 @@
 			<true/>
 		</dict>
 		<key>20D9DCAB253F23BA00B5A9FA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>20E3E3F4244CC149009ECB37</key>
 		<dict>
 			<key>primary</key>
 			<true/>

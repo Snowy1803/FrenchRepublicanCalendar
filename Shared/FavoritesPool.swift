@@ -70,3 +70,20 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 }
+
+// UI-Specific Int because using Int as tags will use their value instead of the tag
+
+extension Int {
+    var wrapped: IntWrapper {
+        get {
+            IntWrapper(value: self)
+        }
+        set {
+            self = newValue.value
+        }
+    }
+}
+
+struct IntWrapper: Hashable {
+    var value: Int
+}
