@@ -23,7 +23,6 @@ struct WheelConverterWidget: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
                         ForEach(wheelContent, id: \.self) { date in
-                            let _ = print("g")
                             WheelDateView(date: date)
                         }
                     }
@@ -33,7 +32,15 @@ struct WheelConverterWidget: View {
                         scrolled = true
                     }
                 }
-            }
+            }.mask(LinearGradient(
+                    gradient: Gradient(stops: [
+                        .init(color: .clear, location: 0),
+                        .init(color: .white, location: 0.1),
+                        .init(color: .white, location: 0.9),
+                        .init(color: .clear, location: 1)
+                    ]),
+                    startPoint: .leading, endPoint: .trailing)
+            )
         }
     }
 }
@@ -69,7 +76,7 @@ struct WheelDateView: View {
                 (Calendar.current.isDateInToday(date) ? Color.blue : favoritesPool.favorites.contains(date.iso) ? Color.yellow : Color.gray)
                     .opacity(0.15)
                     .cornerRadius(10)
-            ).foregroundColor(.black)
+            ).foregroundColor(.primary)
         }
     }
 }
