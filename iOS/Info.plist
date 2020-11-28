@@ -26,6 +26,10 @@
 	<true/>
 	<key>NSContactsUsageDescription</key>
 	<string>Pour convertir les dates de naissance de vos contacts</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>ConversionIntent</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
