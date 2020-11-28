@@ -31,6 +31,8 @@
 			<key>IntentsSupported</key>
 			<array>
 				<string>ConversionIntent</string>
+				<string>CreateDateIntent</string>
+				<string>RepublicanToGregorianIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>

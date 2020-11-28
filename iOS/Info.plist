@@ -29,6 +29,8 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConversionIntent</string>
+		<string>CreateDateIntent</string>
+		<string>RepublicanToGregorianIntent</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

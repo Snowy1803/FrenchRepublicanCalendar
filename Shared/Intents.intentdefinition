@@ -22,7 +22,7 @@
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDescription</key>
-			<string>Convertit une date du calendrier Grégorien vers le Calendrier Républicain</string>
+			<string>Convertit une date du calendrier Grégorien vers le calendrier Républicain</string>
 			<key>INIntentDescriptionID</key>
 			<string>zDpCjy</string>
 			<key>INIntentIneligibleForSuggestions</key>
@@ -120,7 +120,7 @@
 						<key>INIntentResponseCodeConciseFormatStringID</key>
 						<string>sEs5Aa</string>
 						<key>INIntentResponseCodeFormatString</key>
-						<string>Date invalide</string>
+						<string>Cette date n'existe pas</string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>5yT35h</string>
 						<key>INIntentResponseCodeName</key>
@@ -161,6 +161,369 @@
 			<string>Custom</string>
 			<key>INIntentVerb</key>
 			<string>View</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>create</string>
+			<key>INIntentConfigurable</key>
+			<true/>
+			<key>INIntentDescription</key>
+			<string>Crée une date Républicaine</string>
+			<key>INIntentDescriptionID</key>
+			<string>KYKvLU</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentLastParameterTag</key>
+			<integer>6</integer>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key>day,month,year</key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Créer la date républicaine ${day}/${month}/${year}</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>4Xw7oY</string>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
+			<key>INIntentName</key>
+			<string>CreateDate</string>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Jour</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>pPCbm5</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataMaximumValue</key>
+						<integer>30</integer>
+						<key>INIntentParameterMetadataMinimumValue</key>
+						<integer>1</integer>
+						<key>INIntentParameterMetadataType</key>
+						<string>Field</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>day</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>2</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Mois</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>tJRWuB</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataMaximumValue</key>
+						<integer>13</integer>
+						<key>INIntentParameterMetadataMinimumValue</key>
+						<integer>1</integer>
+						<key>INIntentParameterMetadataType</key>
+						<string>Field</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>month</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>4</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Année</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>qSK18d</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>3</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataMaximumValue</key>
+						<data>
+						</data>
+						<key>INIntentParameterMetadataMinimumValue</key>
+						<integer>1</integer>
+						<key>INIntentParameterMetadataType</key>
+						<string>Field</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>year</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>6</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+				</dict>
+			</array>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>Date créée</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>PJOGgB</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>C'est le jour de ${date.dayName}</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>fheWFp</string>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>Date invalide</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>13YP9D</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>Cette date n'existe pas</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>FgN5Gm</string>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>2</integer>
+				<key>INIntentResponseOutput</key>
+				<string>date</string>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Date</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>ThzyuW</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>date</string>
+						<key>INIntentResponseParameterObjectType</key>
+						<string>IntentRepublicanDate</string>
+						<key>INIntentResponseParameterObjectTypeNamespace</key>
+						<string>ChFPU4</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>2</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Object</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Créer une date</string>
+			<key>INIntentTitleID</key>
+			<string>EJcKnC</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Create</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>generic</string>
+			<key>INIntentConfigurable</key>
+			<true/>
+			<key>INIntentDescription</key>
+			<string>Convertit une date du calendrier Républicain vers le calendrier Grégorien </string>
+			<key>INIntentDescriptionID</key>
+			<string>BzlrVK</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentInput</key>
+			<string>date</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>2</integer>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key>date</key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Convertir ${date} en Grégorien</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>rakTkY</string>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
+			<key>INIntentName</key>
+			<string>RepublicanToGregorian</string>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Date</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>FROG7Q</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterName</key>
+					<string>date</string>
+					<key>INIntentParameterObjectType</key>
+					<string>IntentRepublicanDate</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>ChFPU4</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>2</integer>
+					<key>INIntentParameterType</key>
+					<string>Object</string>
+				</dict>
+			</array>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>C'est le ${date}</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>G25DEX</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>En Grégorien, c'est le ${date}</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>ZBnw9T</string>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>Date invalide</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>210hG7</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>Cette date n'existe pas</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>MSc6RD</string>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>2</integer>
+				<key>INIntentResponseOutput</key>
+				<string>date</string>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Date</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>WNCVzL</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterMetadata</key>
+						<dict>
+							<key>INIntentResponseParameterMetadataDateStyle</key>
+							<string>Full</string>
+							<key>INIntentResponseParameterMetadataFormat</key>
+							<string>Style</string>
+							<key>INIntentResponseParameterMetadataTemplateID</key>
+							<string>ABY0sQ</string>
+							<key>INIntentResponseParameterMetadataTimeStyle</key>
+							<string>No</string>
+							<key>INIntentResponseParameterMetadataType</key>
+							<string>DateTime</string>
+						</dict>
+						<key>INIntentResponseParameterName</key>
+						<string>date</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>2</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>DateComponents</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Convertir une date en Grégorien</string>
+			<key>INIntentTitleID</key>
+			<string>3mID6t</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Do</string>
 		</dict>
 	</array>
 	<key>INTypes</key>
