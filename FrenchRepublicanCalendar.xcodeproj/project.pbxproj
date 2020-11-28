@@ -23,6 +23,7 @@
 		20418BEC2412F52500E0EE6E /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
 		2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069C049253F2F9500E46721 /* OrbisecUI.swift */; };
 		2069C04F253F321D00E46721 /* FrenchRepublicanDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BEB2412F52500E0EE6E /* FrenchRepublicanDate.swift */; };
+		209C03B7257281DD00D8DF86 /* WheelConverterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209C03B6257281DD00D8DF86 /* WheelConverterWidget.swift */; };
 		20AEE4EC257170620015FFC6 /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AEE4EB257170620015FFC6 /* DateDetails.swift */; };
 		20AEE510257171DC0015FFC6 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		20AEE511257171DC0015FFC6 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
@@ -128,6 +129,7 @@
 		204750032571C37A006935A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		204750042571C4AF006935A9 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		2069C049253F2F9500E46721 /* OrbisecUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbisecUI.swift; sourceTree = "<group>"; };
+		209C03B6257281DD00D8DF86 /* WheelConverterWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelConverterWidget.swift; sourceTree = "<group>"; };
 		20AEE4EB257170620015FFC6 /* DateDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20D93972253F536D00872351 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,6 +269,7 @@
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
 				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
 				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
+				209C03B6257281DD00D8DF86 /* WheelConverterWidget.swift */,
 				20AEE4EB257170620015FFC6 /* DateDetails.swift */,
 				20E0958A2540465500383A31 /* ContactsList.swift */,
 				20E0957C253F990C00383A31 /* FavoriteList.swift */,
@@ -524,6 +527,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				209C03B7257281DD00D8DF86 /* WheelConverterWidget.swift in Sources */,
 				20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
 				20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */,

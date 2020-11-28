@@ -17,6 +17,9 @@ struct ContentView: View {
                 VStack {
                     TodayWidget()
                     ConverterWidget()
+                    if #available(iOS 14, *) {
+                        WheelConverterWidget()
+                    }
                     NavigationLink(destination: FavoriteList()) {
                         HStack {
                             Image.decorative(systemName: "text.badge.star")
