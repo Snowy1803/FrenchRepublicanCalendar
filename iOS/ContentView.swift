@@ -41,6 +41,7 @@ struct ContentView: View {
                         }
                     }.shadowBox()
                     .accessibility(label: Text("Voir mes contacts"))
+                    .padding(.bottom)
                 }
             }.navigationBarTitle("Calendrier Républicain")
         }
