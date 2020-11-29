@@ -49,7 +49,7 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         let semaphore = DispatchSemaphore(value: 0)
         for i in FrenchRepublicanDate.allDayNames.indices {
             guard let url = FrenchRepublicanDate(dayInYear: i + 1, year: 1).descriptionURL else {
-                XCTFail("invalid url with \(name)")
+                XCTFail("invalid url for day #\(i): \(FrenchRepublicanDate.allDayNames[i])")
                 return
             }
             let task = session.dataTask(with: url) { (data, response, error) in
