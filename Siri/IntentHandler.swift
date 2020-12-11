@@ -28,14 +28,23 @@ class IntentHandler: INExtension, ConversionIntentHandling, CreateDateIntentHand
     }
     
     func handle(intent: CreateDateIntent, completion: @escaping (CreateDateIntentResponse) -> Void) {
-        guard let day = intent.day,
-              let month = intent.month,
-              let year = intent.year,
-              month != 13 || Int(truncating: day) <= (Int(truncating: year) % 4 == 0 ? 6 : 5) else {
+        guard let objcday = intent.day,
+              let objcmonth = intent.month,
+              let objcyear = intent.year else {
             completion(.init(code: .failure, userActivity: nil))
             return
         }
-        let rep = FrenchRepublicanDate(dayInYear: (Int(truncating: month) - 1) * 30 + Int(truncating: day), year: Int(truncating: year))
+        let day = Int(truncating: objcday)
+        let month = Int(truncating: objcmonth)
+        let year = Int(truncating: objcyear)
+        guard 0 < day && day <= 30,
+              0 < month && month <= 13,
+              0 < year,
+              month != 13 || day <= (year % 4 == 0 ? 6 : 5) else {
+            completion(.init(code: .failure, userActivity: nil))
+            return
+        }
+        let rep = FrenchRepublicanDate(dayInYear: (month - 1) * 30 + day, year: year)
         let response = CreateDateIntentResponse(code: .success, userActivity: nil)
         response.date = createIntentRepublicanDate(from: rep)
         completion(response)
@@ -55,7 +64,7 @@ class IntentHandler: INExtension, ConversionIntentHandling, CreateDateIntentHand
         completion(response)
     }
     
-    func createIntentRepublicanDate(from rep: FrenchRepublicanDate) -> IntentRepublicanDate{
+    func createIntentRepublicanDate(from rep: FrenchRepublicanDate) -> IntentRepublicanDate {
         let result = IntentRepublicanDate(identifier: rep.toShortenedString(), display: rep.toLongString())
         result.day = rep.components.day as NSNumber?
         result.month = rep.components.month as NSNumber?
