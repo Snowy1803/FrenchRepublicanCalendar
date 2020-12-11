@@ -16,15 +16,18 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         var prevYear: Int?
         for _ in 0..<4000000 {
             let frd = FrenchRepublicanDate(date: date)
-            if prevDay != nil {
+            
+            if let prevDay = prevDay,
+               let prevYear = prevYear {
                 if frd.dayInYear == 1 {
-                    XCTAssert(prevDay == 365 || prevDay == 366, "Year ends after \(prevDay!) days")
-                    XCTAssert(frd.components.year! - prevYear! == 1, "Year wasn't incremented")
+                    XCTAssert(prevDay == (prevYear % 4 == 0 ? 366 : 365), "Year ends after \(prevDay) days")
+                    XCTAssert(frd.components.year! - prevYear == 1, "Year wasn't incremented")
                 } else {
-                    XCTAssert(frd.dayInYear - prevDay! == 1, "Invalid \(date) = \(frd.toLongString())")
-                    XCTAssert(frd.components.year! == prevYear!, "Year changed without resetting day at \(frd.toLongString())")
+                    XCTAssert(frd.dayInYear - prevDay == 1, "Invalid \(date) = \(frd.toLongString())")
+                    XCTAssert(frd.components.year! == prevYear, "Year changed without resetting day at \(frd.toLongString())")
                 }
             }
+            
             prevDay = frd.dayInYear
             prevYear = frd.components.year!
             
@@ -32,7 +35,7 @@ class FrenchRepublicanCalendarTests: XCTestCase {
             
             XCTAssert(copy.date == date, "Reconversion fails for \(date) = \(frd.toLongString()) ≠ \(copy.date)")
             
-            date.addTimeInterval(3600 * 24)
+            date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
         }
         print("Tested until (Gregorian):", date)
     }
