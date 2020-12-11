@@ -78,6 +78,8 @@ struct WheelDateView: View {
                     .opacity(0.15)
                     .cornerRadius(10)
             ).foregroundColor(.primary)
+            .accessibilityElement(children: .combine)
+            .accessibility(label: Text("\(dateString)\n\(rep.components.day!) \(rep.monthName) An \(rep.components.year!)\n\(rep.dayName)"))
         }
     }
 }
