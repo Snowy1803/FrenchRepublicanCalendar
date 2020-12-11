@@ -11,10 +11,10 @@ import XCTest
 class FrenchRepublicanCalendarTests: XCTestCase {
 
     func testDateLinearity() throws {
-        var date = Date(timeIntervalSince1970: -5594191200)
+        var date = FrenchRepublicanDate.origin
         var prevDay: Int?
         var prevYear: Int?
-        for _ in 0..<1000000 {
+        for _ in 0..<4000000 {
             let frd = FrenchRepublicanDate(date: date)
             if prevDay != nil {
                 if frd.dayInYear == 1 {
@@ -34,6 +34,7 @@ class FrenchRepublicanCalendarTests: XCTestCase {
             
             date.addTimeInterval(3600 * 24)
         }
+        print("Tested until (Gregorian):", date)
     }
     
     func testCurrentDate() throws {

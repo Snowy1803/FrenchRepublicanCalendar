@@ -252,7 +252,7 @@ fileprivate extension Date {
             gDayOfYear -= 1
             if gDayOfYear == -1 {
                 gYear -= 1
-                gDayOfYear = gYear.isBissextil ? 366 : 365
+                gDayOfYear = (gYear.isBissextil ? 366 : 365) - 1
             }
         }
         return DateComponents(calendar: Calendar.current, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)

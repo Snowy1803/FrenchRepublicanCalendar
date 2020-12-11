@@ -16,6 +16,6 @@ Features:
 Often, online converters are wrong : They either forget that 1800 and 1900 were sextils but not leap years, either forget 2000 was a leap year.  
 You can often see that by youself by converting around March 1st of those years... My implementation is fully tested and doesn't have those issues.
 
-All returned values are correct, until around the years 15.000 (in Gregorian), where the internal representation of Swift dates isn't precise enough to correctly convert all the dates.
+All returned values are correct, until around the years 15.300 (in Gregorian), where the Republican to Gregorian conversion fails.
 
 UI is 100% SwiftUI, with the UIKit Lifecycle (for iOS 13 compatibility)

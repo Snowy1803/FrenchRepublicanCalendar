@@ -15,6 +15,6 @@ Fonctionnalités :
 
 Souvent, les convertisseurs en ligne renvoient des valeurs fausses : Soit ils oublient que 1800 et 1900 étaient sextiles mais non bissextiles, soit ils oublient que 2000 était lui bissextile. Vous pouvez souvent constater cela en convertissant aux environs du premier mars de ces années... Mon implémentation est complèrement testée et n'a pas ces problèmes.
 
-Toutes les valeurs retournées sont correctes, jusqu'aux années 15 000 (grégoriennes), où la représentation interne des dates en Swift n'est pas assez précise pour convertir correctement toutes les dates.
+Toutes les valeurs retournées sont correctes, jusqu'aux années 15 300 (grégoriennes), où la conversion Républicain vers Grégorien devient fausse.
 
 L'interface graphique est 100% faite en SwiftUI, avec le cycle de vie classique UIKit pour la compatibilité iOS 13.
