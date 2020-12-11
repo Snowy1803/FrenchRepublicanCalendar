@@ -30,8 +30,12 @@ struct FavoriteList: View {
                 Form {
                     ForEach(pool.favorites.reversed(), id: \.self) { fav in
                         DateRow(frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
+                    }.onDelete { indices in
+                        pool.favorites.remove(atOffsets: IndexSet(indices.map { pool.favorites.count - 1 - $0 }))
+                    }.onMove { indices, position in
+                        pool.favorites.move(fromOffsets: IndexSet(indices.map { pool.favorites.count - 1 - $0 }), toOffset: pool.favorites.count - position)
                     }
-                }
+                }.editableList()
             }
         }.navigationBarTitle("Favoris")
     }
@@ -70,6 +74,18 @@ struct DateRow: View {
                 }
             }.padding([.top, .bottom], 2)
         }.accessibility(value: Text("\(frd.toLongString()) ; Soit \(Calendar.current.isDateInToday(frd.date) ? "aujourd'hui" : "le \(human) dans le calendrier grégorien")"))
+    }
+}
+
+extension View {
+    @ViewBuilder func editableList() -> some View {
+        if #available(iOS 14.0, *) {
+            self.toolbar {
+                EditButton()
+            }
+        } else {
+            self.navigationBarItems(trailing: EditButton())
+        }
     }
 }
 
