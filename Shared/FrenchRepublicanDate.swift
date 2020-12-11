@@ -75,20 +75,14 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         }
         return dayOfYear
     }
-
-    private func dayRemoval(dayOfYear day: inout Int, year: inout Int) {
-        day -= 1
-        if day == -1 {
+    
+    private func updateDay(byAdding add: Int, toDayOfYear day: inout Int, inYear year: inout Int) {
+        let division = (day + add).quotientAndRemainder(dividingBy: year.daysInRepublicanYear)
+        day = division.remainder
+        year += division.quotient
+        if day < 0 {
             year -= 1
-            day = year.daysInRepublicanYear - 1
-        }
-    }
-
-    private func dayAdding(dayOfYear day: inout Int, year: inout Int) {
-        day += 1
-        if day == year.daysInRepublicanYear {
-            year += 1
-            day = 0
+            day += year.daysInRepublicanYear
         }
     }
 
@@ -100,16 +94,11 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         }
         var dayOfYear = simpleGregToRepDate(gregorianYear: gregorian.year!)
         if year.isSextil && (gregorian.month! < 9 || (gregorian.month == 9 && gregorian.day! < 22)) {
-            dayAdding(dayOfYear: &dayOfYear, year: &year)
+            updateDay(byAdding: 1, toDayOfYear: &dayOfYear, inYear: &year)
         }
-        var y = 1800
-        while gregorian.year! >= y {
-            dayRemoval(dayOfYear: &dayOfYear, year: &year)
-            y += 100
-            if y % 400 == 0 {
-                y += 100
-            }
-        }
+        let remdays = (gregorian.year! / 100 - 15) * 3 / 4 - 1
+        updateDay(byAdding: -remdays, toDayOfYear: &dayOfYear, inYear: &year)
+        
         initComponents(dayOfYear: dayOfYear, year: year, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond)
     }
     
@@ -228,7 +217,7 @@ fileprivate extension Int {
 
 extension Date {
     init(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
-        self.init(timeInterval: 0, since: Calendar.current.date(from: Date.dateToGregorian(dayOfYear: dayOfYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!)
+        self = Calendar.current.date(from: Date.dateToGregorian(dayOfYear: dayOfYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!
     }
 }
 
