@@ -80,13 +80,13 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         day -= 1
         if day == -1 {
             year -= 1
-            day = year.isSextil ? 365 : 364
+            day = year.daysInRepublicanYear - 1
         }
     }
 
     private func dayAdding(dayOfYear day: inout Int, year: inout Int) {
         day += 1
-        if day == (year.isSextil ? 366 : 365) {
+        if day == year.daysInRepublicanYear {
             year += 1
             day = 0
         }
@@ -95,7 +95,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
     private mutating func dateToFrenchRepublican() {
         let gregorian = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
         var year = gregorian.year! - 1792
-        if gregorian.month! > 9 || (gregorian.month == 9 && gregorian.day! > ((year + 1).isSextil ? 21 : 21)) {
+        if gregorian.month! > 9 || (gregorian.month == 9 && gregorian.day! > 21) {
             year += 1
         }
         var dayOfYear = simpleGregToRepDate(gregorianYear: gregorian.year!)
@@ -216,6 +216,14 @@ fileprivate extension Int {
     var isBissextil: Bool {
         return ((self % 100 != 0) && (self % 4 == 0)) || self % 400 == 0
     }
+    
+    var daysInRepublicanYear: Int {
+        isSextil ? 366 : 365
+    }
+    
+    var daysInGregorianYear: Int {
+        isBissextil ? 366 : 365
+    }
 }
 
 extension Date {
@@ -232,13 +240,13 @@ fileprivate extension Date {
         }
         var gDayOfYear = rDayOfYear - 102
         if gDayOfYear < 0 {
-            gDayOfYear += (gYear.isBissextil ? 366 : 365)
+            gDayOfYear += gYear.daysInGregorianYear
         }
         var y = 1800
         var yt = 0
         while gYear >= y {
             gDayOfYear += 1
-            if gDayOfYear == (gYear.isBissextil ? 366 : 365) {
+            if gDayOfYear == gYear.daysInGregorianYear {
                 gYear += 1
                 gDayOfYear = 0
             }
@@ -252,7 +260,7 @@ fileprivate extension Date {
             gDayOfYear -= 1
             if gDayOfYear == -1 {
                 gYear -= 1
-                gDayOfYear = (gYear.isBissextil ? 366 : 365) - 1
+                gDayOfYear = gYear.daysInGregorianYear - 1
             }
         }
         return DateComponents(calendar: Calendar.current, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
