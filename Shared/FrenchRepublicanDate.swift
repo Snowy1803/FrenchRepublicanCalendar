@@ -224,33 +224,19 @@ extension Date {
 fileprivate extension Date {
     static func dateToGregorian(dayOfYear rDayOfYear: Int, year rYear: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) -> DateComponents {
         var gYear = rYear + 1792
-        if rDayOfYear < 102 {
-            gYear -= 1
-        }
-        var gDayOfYear = rDayOfYear - 102
-        if gDayOfYear < 0 {
-            gDayOfYear += gYear.daysInGregorianYear
-        }
-        var y = 1800
+        var gDayOfYear = rDayOfYear
+        gDayOfYear.increment(by: -102, year: &gYear, daysInYear: \.daysInGregorianYear)
+        
         var yt = 0
-        while gYear >= y {
-            gDayOfYear += 1
-            if gDayOfYear == gYear.daysInGregorianYear {
-                gYear += 1
-                gDayOfYear = 0
-            }
-            y += 100
-            if y % 400 == 0 {
-                y += 100
-            }
-            yt += 1
-        }
+        var diff: Int
+        repeat {
+            diff = (gYear / 100 - 15) * 3 / 4 - 1 - yt
+            gDayOfYear.increment(by: diff, year: &gYear, daysInYear: \.daysInGregorianYear)
+            yt += diff
+        } while diff != 0
+        
         if rYear.isSextil && !gYear.isBissextil && rDayOfYear > 101 - yt {
-            gDayOfYear -= 1
-            if gDayOfYear == -1 {
-                gYear -= 1
-                gDayOfYear = gYear.daysInGregorianYear - 1
-            }
+            gDayOfYear.increment(by: -1, year: &gYear, daysInYear: \.daysInGregorianYear)
         }
         return DateComponents(calendar: Calendar.current, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
