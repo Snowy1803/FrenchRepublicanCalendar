@@ -48,6 +48,7 @@ struct WheelConverterWidget: View {
 @available(iOS 14.0, *)
 struct WheelDateView: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
+    @EnvironmentObject var midnight: Midnight
     var date = Date()
     
     var dateString: String {
