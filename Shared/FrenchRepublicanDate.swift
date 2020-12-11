@@ -75,16 +75,6 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         }
         return dayOfYear
     }
-    
-    private func updateDay(byAdding add: Int, toDayOfYear day: inout Int, inYear year: inout Int) {
-        let division = (day + add).quotientAndRemainder(dividingBy: year.daysInRepublicanYear)
-        day = division.remainder
-        year += division.quotient
-        if day < 0 {
-            year -= 1
-            day += year.daysInRepublicanYear
-        }
-    }
 
     private mutating func dateToFrenchRepublican() {
         let gregorian = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
@@ -94,10 +84,10 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         }
         var dayOfYear = simpleGregToRepDate(gregorianYear: gregorian.year!)
         if year.isSextil && (gregorian.month! < 9 || (gregorian.month == 9 && gregorian.day! < 22)) {
-            updateDay(byAdding: 1, toDayOfYear: &dayOfYear, inYear: &year)
+            dayOfYear.increment(by: 1, year: &year, daysInYear: \.daysInRepublicanYear)
         }
         let remdays = (gregorian.year! / 100 - 15) * 3 / 4 - 1
-        updateDay(byAdding: -remdays, toDayOfYear: &dayOfYear, inYear: &year)
+        dayOfYear.increment(by: -remdays, year: &year, daysInYear: \.daysInRepublicanYear)
         
         initComponents(dayOfYear: dayOfYear, year: year, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond)
     }
@@ -212,6 +202,16 @@ fileprivate extension Int {
     
     var daysInGregorianYear: Int {
         isBissextil ? 366 : 365
+    }
+    
+    mutating func increment(by add: Int, year: inout Int, daysInYear: KeyPath<Int, Int>) {
+        let division = (self + add).quotientAndRemainder(dividingBy: year[keyPath: daysInYear])
+        self = division.remainder
+        year += division.quotient
+        if self < 0 {
+            year -= 1
+            self += year[keyPath: daysInYear]
+        }
     }
 }
 
