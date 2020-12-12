@@ -10,6 +10,8 @@ import Foundation
 
 struct FrenchRepublicanDate: CustomDebugStringConvertible {
     static let origin = Date(timeIntervalSince1970: -5594191200)
+    static let maxSafeDate = Date(timeIntervalSinceReferenceDate: 419707389600) // 15300-12-31
+    static let safeRange = origin...maxSafeDate
     
     static let allMonthNames = ["Vendémiaire", "Brumaire", "Frimaire", "Nivôse", "Pluviôse", "Ventôse", "Germinal", "Floréal", "Prairial", "Messidor", "Thermidor", "Fructidor", "Sansculottide"]
     static let sansculottidesDayNames = ["Jour de la vertu", "Jour du génie", "Jour du travail", "Jour de l'opinion", "Jour des récompenses", "Jour de la révolution"]

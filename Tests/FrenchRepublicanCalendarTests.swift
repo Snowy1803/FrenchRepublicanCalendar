@@ -14,7 +14,7 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         var date = FrenchRepublicanDate.origin
         var prevDay: Int?
         var prevYear: Int?
-        for _ in 0..<4000000 {
+        while date <= FrenchRepublicanDate.maxSafeDate {
             let frd = FrenchRepublicanDate(date: date)
             
             if let prevDay = prevDay,

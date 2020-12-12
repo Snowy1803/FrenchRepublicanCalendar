@@ -89,7 +89,7 @@ struct DateCollection: RandomAccessCollection {
     var startDate = Calendar.current.startOfDay(for: FrenchRepublicanDate.origin)
     
     var startIndex: Int = 0
-    var endIndex: Int = 4800000
+    var endIndex: Int = 4933795
     
     typealias Element = Date
     typealias Index = Int
