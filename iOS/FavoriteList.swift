@@ -52,7 +52,7 @@ struct DateRow: View {
     var desc: String?
     
     var human: String {
-        if Calendar.current.isDateInToday(frd.date) {
+        if Calendar.gregorian.isDateInToday(frd.date) {
             return "Aujourd'hui"
         }
         let df = DateFormatter()
@@ -74,7 +74,7 @@ struct DateRow: View {
                 }
             }.padding([.top, .bottom], 2)
             .accessibilityElement(children: .combine)
-            .accessibility(label: Text("\(frd.toLongString()) ; Soit \(Calendar.current.isDateInToday(frd.date) ? "aujourd'hui" : "le \(human) dans le calendrier grégorien")"))
+            .accessibility(label: Text("\(frd.toLongString()) ; Soit \(Calendar.gregorian.isDateInToday(frd.date) ? "aujourd'hui" : "le \(human) dans le calendrier grégorien")"))
         }
         
     }

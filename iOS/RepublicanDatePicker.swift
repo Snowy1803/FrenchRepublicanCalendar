@@ -107,7 +107,7 @@ struct MyRepublicanDateComponents {
 
 extension Date {
     var iso: String {
-        let cmps = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        let cmps = Calendar.gregorian.dateComponents([.year, .month, .day], from: self)
         return "\(cmps.year!)-\(cmps.month!)-\(cmps.day!)"
     }
 }

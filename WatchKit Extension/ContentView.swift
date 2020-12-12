@@ -90,13 +90,13 @@ struct GregorianToRepublicanView: View {
             }
             HStack {
                 Picker(selection: $shownDate.day.wrapped, label: EmptyView()) {
-                    ForEach(Calendar.current.range(of: .day, in: .month, for: shownDate.asdate!)!, id: \.self) { day in
+                    ForEach(Calendar.gregorian.range(of: .day, in: .month, for: shownDate.asdate!)!, id: \.self) { day in
                         Text("\(day)").tag(day.wrapped)
                     }
                 }
                 Picker(selection: $shownDate.month.wrapped, label: EmptyView()) {
                     ForEach(1..<13) { month in
-                        Text("\(Calendar.current.shortMonthSymbols[month - 1])").tag(month.wrapped)
+                        Text("\(Calendar.gregorian.shortMonthSymbols[month - 1])").tag(month.wrapped)
                     }
                 }
             }
@@ -154,7 +154,7 @@ struct MyDateComponents {
     var year: Int
     
     var asdate: Date? {
-        Calendar.current.date(from: DateComponents(year: year, month: month, day: day))
+        Calendar.gregorian.date(from: DateComponents(year: year, month: month, day: day))
     }
     
     var tofrd: FrenchRepublicanDate? {
@@ -177,7 +177,7 @@ struct MyDateComponents {
 
 extension Date {
     var toMyDateComponents: MyDateComponents {
-        let comp = Calendar.current.dateComponents([.day, .month, .year], from: self)
+        let comp = Calendar.gregorian.dateComponents([.day, .month, .year], from: self)
         return MyDateComponents(day: comp.day!, month: comp.month!, year: comp.year!)
     }
 }

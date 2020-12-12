@@ -22,9 +22,9 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
 
-        let currentDate = Calendar.current.startOfDay(for: Date())
+        let currentDate = Calendar.gregorian.startOfDay(for: Date())
         for offset in 0..<100 {
-            let entryDate = Calendar.current.date(byAdding: .day, value: offset, to: currentDate)!
+            let entryDate = Calendar.gregorian.date(byAdding: .day, value: offset, to: currentDate)!
             let entry = SimpleEntry(date: entryDate)
             entries.append(entry)
         }

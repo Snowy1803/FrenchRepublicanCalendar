@@ -28,7 +28,7 @@ struct WheelConverterWidget: View {
                     }
                 }.onAppear {
                     if !scrolled {
-                        reader.scrollTo(Calendar.current.startOfDay(for: Date()), anchor: .center)
+                        reader.scrollTo(Calendar.gregorian.startOfDay(for: Date()), anchor: .center)
                         scrolled = true
                     }
                 }
@@ -74,7 +74,7 @@ struct WheelDateView: View {
             }.frame(width: 110)
             .padding()
             .background(
-                (Calendar.current.isDateInToday(date) ? Color.blue : favoritesPool.favorites.contains(date.iso) ? Color.yellow : Color.gray)
+                (Calendar.gregorian.isDateInToday(date) ? Color.blue : favoritesPool.favorites.contains(date.iso) ? Color.yellow : Color.gray)
                     .opacity(0.15)
                     .cornerRadius(10)
             ).foregroundColor(.primary)
@@ -86,7 +86,7 @@ struct WheelDateView: View {
 
 @available(iOS 14.0, *)
 struct DateCollection: RandomAccessCollection {
-    var startDate = Calendar.current.startOfDay(for: FrenchRepublicanDate.origin)
+    var startDate = Calendar.gregorian.startOfDay(for: FrenchRepublicanDate.origin)
     
     var startIndex: Int = 0
     var endIndex: Int = 4933795
@@ -98,7 +98,7 @@ struct DateCollection: RandomAccessCollection {
     
     subscript(position: Int) -> Date {
         get {
-            Calendar.current.date(byAdding: .day, value: position, to: startDate)!
+            Calendar.gregorian.date(byAdding: .day, value: position, to: startDate)!
         }
     }
 }

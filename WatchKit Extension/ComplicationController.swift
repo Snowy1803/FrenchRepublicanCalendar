@@ -42,9 +42,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
         var entries = [CLKComplicationTimelineEntry]()
         entries.reserveCapacity(limit)
-        let midnight = Calendar.current.startOfDay(for: Date())
+        let midnight = Calendar.gregorian.startOfDay(for: Date())
         for day in 0..<limit {
-            let date = Calendar.current.date(byAdding: .day, value: day, to: midnight)!
+            let date = Calendar.gregorian.date(byAdding: .day, value: day, to: midnight)!
             guard let entry = getTimelineEntry(family: complication.family, date: date) else {
                 handler(nil)
                 return

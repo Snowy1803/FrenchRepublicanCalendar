@@ -68,7 +68,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
 
     /// calculates a  0-indexed day of year out of self.date, without the correction algorithms.
     private func simpleGregToRepDate(gregorianYear year: Int) -> Int {
-        var dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: date)! - 265
+        var dayOfYear = Calendar.gregorian.ordinality(of: .day, in: .year, for: date)! - 265
         if year.isBissextil {
             dayOfYear -= 1
         }
@@ -79,7 +79,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
     }
 
     private mutating func dateToFrenchRepublican() {
-        let gregorian = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
+        let gregorian = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
         var year = gregorian.year! - 1792
         if gregorian.month! > 9 || (gregorian.month == 9 && gregorian.day! > 21) {
             year += 1
@@ -217,9 +217,13 @@ fileprivate extension Int {
     }
 }
 
+extension Calendar {
+    static let gregorian = Calendar(identifier: .gregorian)
+}
+
 extension Date {
     init(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
-        self = Calendar.current.date(from: Date.dateToGregorian(dayOfYear: dayOfYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!
+        self = Calendar.gregorian.date(from: Date.dateToGregorian(dayOfYear: dayOfYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!
     }
 }
 
@@ -241,6 +245,6 @@ fileprivate extension Date {
             gDayOfYear.increment(by: -1, year: &gYear, daysInYear: \.daysInGregorianYear)
         }
         
-        return DateComponents(calendar: Calendar.current, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
+        return DateComponents(calendar: Calendar.gregorian, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
 }

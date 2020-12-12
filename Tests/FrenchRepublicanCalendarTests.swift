@@ -35,7 +35,7 @@ class FrenchRepublicanCalendarTests: XCTestCase {
             
             XCTAssert(copy.date == date, "Reconversion fails for \(date) = \(frd.toLongString()) ≠ \(copy.date)")
             
-            date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+            date = Calendar.gregorian.date(byAdding: .day, value: 1, to: date)!
         }
         print("Tested until (Gregorian):", date)
     }

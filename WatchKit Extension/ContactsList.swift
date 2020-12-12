@@ -96,7 +96,7 @@ struct DateRow: View {
     var desc: String?
     
     var human: String {
-        if Calendar.current.isDateInToday(frd.date) {
+        if Calendar.gregorian.isDateInToday(frd.date) {
             return "Aujourd'hui"
         }
         let df = DateFormatter()
@@ -136,7 +136,7 @@ struct BirthdaySection: View {
 extension FrenchRepublicanDate {
     var nextAnniversary: FrenchRepublicanDate {
         var curr = self
-        while curr.date < Date() && !Calendar.current.isDateInToday(curr.date) {
+        while curr.date < Date() && !Calendar.gregorian.isDateInToday(curr.date) {
             curr.nextYear()
         }
         return curr

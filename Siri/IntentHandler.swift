@@ -13,7 +13,7 @@ class IntentHandler: INExtension, ConversionIntentHandling, CreateDateIntentHand
     func handle(intent: ConversionIntent, completion: @escaping (ConversionIntentResponse) -> Void) {
         let date: Date
         if let gregorian = intent.gregorian {
-            guard let greg = Calendar.current.date(from: gregorian) else {
+            guard let greg = Calendar.gregorian.date(from: gregorian) else {
                 completion(.init(code: .failure, userActivity: nil))
                 return
             }
@@ -60,7 +60,7 @@ class IntentHandler: INExtension, ConversionIntentHandling, CreateDateIntentHand
         }
         let rep = FrenchRepublicanDate(dayInYear: (Int(truncating: month) - 1) * 30 + Int(truncating: day), year: Int(truncating: year))
         let response = RepublicanToGregorianIntentResponse(code: .success, userActivity: nil)
-        response.date = Calendar.current.dateComponents([.day, .month, .year], from: rep.date)
+        response.date = Calendar(identifier: .gregorian).dateComponents([.day, .month, .year], from: rep.date)
         completion(response)
     }
     
