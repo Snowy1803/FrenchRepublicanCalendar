@@ -40,6 +40,12 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         print("Tested until (Gregorian):", date)
     }
     
+    func testOriginDate() {
+        let origin = FrenchRepublicanDate.origin
+        let frd = FrenchRepublicanDate(date: origin)
+        XCTAssert(frd.dayInYear == 1 && frd.components.year == 1, "Origin is wrong")
+    }
+    
     func testCurrentDate() throws {
         print(FrenchRepublicanDate(date: Date()))
     }

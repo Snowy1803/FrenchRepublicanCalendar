@@ -66,32 +66,14 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         initComponents(dayOfYear: dayInYear - 1, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
 
-    /// calculates a  0-indexed day of year out of self.date, without the correction algorithms.
-    private func simpleGregToRepDate(gregorianYear year: Int) -> Int {
-        var dayOfYear = Calendar.gregorian.ordinality(of: .day, in: .year, for: date)! - 265
-        if year.isBissextil {
-            dayOfYear -= 1
-        }
-        if dayOfYear < 0 {
-            dayOfYear += 365
-        }
-        return dayOfYear
-    }
-
     private mutating func dateToFrenchRepublican() {
         let gregorian = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
         let gYear = gregorian.year!
-        let gMonth = gregorian.month!
-        let gDay = gregorian.day!
         
-        var year = gYear - 1792
-        if gMonth > 9 || (gMonth == 9 && gDay > 21) {
-            year += 1
-        }
-        var dayOfYear = simpleGregToRepDate(gregorianYear: gYear)
-        if year.isSextil && (gMonth < 9 || (gMonth == 9 && gDay < 22)) {
-            dayOfYear.increment(by: 1, year: &year, daysInYear: \.daysInRepublicanYear)
-        }
+        var year = gYear - 1791
+        var dayOfYear = Calendar.gregorian.ordinality(of: .day, in: .year, for: date)!
+        dayOfYear.increment(by: -265 - (gYear.isBissextil ? 1 : 0), year: &year, daysInYear: \.daysInRepublicanYear)
+        
         let remdays = (gYear / 100 - 15) * 3 / 4 - 1
         dayOfYear.increment(by: -remdays, year: &year, daysInYear: \.daysInRepublicanYear)
         
