@@ -80,15 +80,19 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
 
     private mutating func dateToFrenchRepublican() {
         let gregorian = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
-        var year = gregorian.year! - 1792
-        if gregorian.month! > 9 || (gregorian.month == 9 && gregorian.day! > 21) {
+        let gYear = gregorian.year!
+        let gMonth = gregorian.month!
+        let gDay = gregorian.day!
+        
+        var year = gYear - 1792
+        if gMonth > 9 || (gMonth == 9 && gDay > 21) {
             year += 1
         }
-        var dayOfYear = simpleGregToRepDate(gregorianYear: gregorian.year!)
-        if year.isSextil && (gregorian.month! < 9 || (gregorian.month == 9 && gregorian.day! < 22)) {
+        var dayOfYear = simpleGregToRepDate(gregorianYear: gYear)
+        if year.isSextil && (gMonth < 9 || (gMonth == 9 && gDay < 22)) {
             dayOfYear.increment(by: 1, year: &year, daysInYear: \.daysInRepublicanYear)
         }
-        let remdays = (gregorian.year! / 100 - 15) * 3 / 4 - 1
+        let remdays = (gYear / 100 - 15) * 3 / 4 - 1
         dayOfYear.increment(by: -remdays, year: &year, daysInYear: \.daysInRepublicanYear)
         
         initComponents(dayOfYear: dayOfYear, year: year, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond)
