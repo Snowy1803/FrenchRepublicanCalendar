@@ -9,8 +9,11 @@
 import Foundation
 
 struct FrenchRepublicanDate: CustomDebugStringConvertible {
+    /// The origin of the Republican Calendar, 1er Vendémiaire An 1 or 1792-09-22
     static let origin = Date(timeIntervalSince1970: -5594191200)
+    /// The maximum safe date to convert, currently 15300-12-31
     static let maxSafeDate = Date(timeIntervalSinceReferenceDate: 419707389600) // 15300-12-31
+    /// The safe range that is guaranteed to convert properly
     static let safeRange = origin...maxSafeDate
     
     static let allMonthNames = ["Vendémiaire", "Brumaire", "Frimaire", "Nivôse", "Pluviôse", "Ventôse", "Germinal", "Floréal", "Prairial", "Messidor", "Thermidor", "Fructidor", "Sansculottide"]
@@ -25,7 +28,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
     
     static let allQuarters = ["Automne", "Hiver", "Printemps", "Été", "Sansculottides"]
     
-    /// the Date this object was initialized with
+    /// the system Date value for this Republican Date
     var date: Date
     
     /// `year`: The year, starting at 1 for 1792-09-22,
@@ -55,17 +58,27 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         return components.year!.isSextil
     }
     
+    /// Creates a Republican Date from the given Gregorian Date
+    /// - Parameter date: the Gregorian Date
     init(date: Date) {
         self.date = date
         dateToFrenchRepublican()
     }
     
-    /// Notes dayInYear is 1-indexed
+    /// Creates a Republican Date from Republican Date component. The `date` property will contain the Gregorian value, so this converts from Republican to Gregorian
+    /// - Parameters:
+    ///   - dayInYear: Day in Year, 1-indexed
+    ///   - year: The republican Year
+    ///   - hour: Hour
+    ///   - minute: Minutes
+    ///   - second: Seconds
+    ///   - nanosecond: Nanoseconds
     init(dayInYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
         self.date = Date(dayOfYear: dayInYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
         initComponents(dayOfYear: dayInYear - 1, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
-
+    
+    /// Logic that converts the `date` value to republican date components. Called by the Gregorian > Republican constructor
     private mutating func dateToFrenchRepublican() {
         let gregorian = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second, .nanosecond], from: date)
         let gYear = gregorian.year!
@@ -80,11 +93,19 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         initComponents(dayOfYear: dayOfYear, year: year, hour: gregorian.hour, minute: gregorian.minute, second: gregorian.second, nanosecond: gregorian.nanosecond)
     }
     
-    /// Note dayOfYear is 0-indexed
+    /// Initializes the `components` property with the given values
+    /// - Parameters:
+    ///   - dayOfYear: Days of year, 0-indexed
+    ///   - year: Year
+    ///   - hour: Hour
+    ///   - minute: Minutes
+    ///   - second: Seconds
+    ///   - nanosecond: Nanoseconds
     private mutating func initComponents(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
         self.components = DateComponents(year: year, month: dayOfYear / 30 + 1, day: dayOfYear % 30 + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond, weekday: dayOfYear % 10 + 1, quarter: dayOfYear / 90 + 1, weekOfMonth: dayOfYear % 30 / 10 + 1, weekOfYear: dayOfYear / 10 + 1, yearForWeekOfYear: year)
     }
     
+    /// Increments the Republican year for this Date. The Gregorian `date` will be recomputed.
     mutating func nextYear() {
         components.year! += 1
         components.yearForWeekOfYear! += 1
@@ -140,18 +161,22 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         FrenchRepublicanDate.allWeekdays[components.weekday! - 1]
     }
     
+    /// the name given to the day
     var dayName: String {
         FrenchRepublicanDate.allDayNames[dayInYear - 1]
     }
     
+    /// the name of the quarter, or season
     var quarter: String {
         FrenchRepublicanDate.allQuarters[components.quarter! - 1]
     }
     
+    /// the debug description of this value
     var debugDescription: String {
         return "\(toVeryLongString()), quarter \(components.quarter!), decade \(components.weekOfMonth!) of month, decade \(components.weekOfYear!) of year, day \(dayInYear) of year"
     }
     
+    /// Returns the wiktionary or wikipedia page link associated with the day name.
     var descriptionURL: URL? {
         let wikipediaOverrides = [
             "Belle de nuit": "Mirabilis_jalapa",
@@ -176,22 +201,31 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
 }
 
 fileprivate extension Int {
+    /// If self represents a republican year, this returns true if it is sextil
     var isSextil: Bool {
         return self % 4 == 0
     }
     
+    /// If self represents a gregorian year, this returns true if it is bissextil
     var isBissextil: Bool {
         return ((self % 100 != 0) && (self % 4 == 0)) || self % 400 == 0
     }
     
+    /// If self represents a republican year, this returns the number of days in it
     var daysInRepublicanYear: Int {
         isSextil ? 366 : 365
     }
     
+    /// If self represents a gregorian year, this returns the number of days in it
     var daysInGregorianYear: Int {
         isBissextil ? 366 : 365
     }
     
+    /// Increments the day component, and if it overflows, updates the year value
+    /// - Parameters:
+    ///   - add: The number of days to add (or remove if negative) to/from ourself
+    ///   - year: The inout year, updated if necessary
+    ///   - daysInYear: A keypath in Int returning an Int: "\.daysInRepublicanYear" or "\.daysInGregorianYear"
     mutating func increment(by add: Int, year: inout Int, daysInYear: KeyPath<Int, Int>) {
         let division = (self + add).quotientAndRemainder(dividingBy: year[keyPath: daysInYear])
         self = division.remainder
@@ -208,12 +242,29 @@ extension Calendar {
 }
 
 extension Date {
+    /// Creates a Date from the given Republican date components
+    /// - Parameters:
+    ///   - dayOfYear: Republican Day of Year, 0-indexed
+    ///   - year: Republican Year
+    ///   - hour: Hour, will directly be copied over
+    ///   - minute: Minute, will directly be copied over
+    ///   - second: Second, will directly be copied over
+    ///   - nanosecond: Nanosecond, will directly be copied over
     init(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
         self = Calendar.gregorian.date(from: Date.dateToGregorian(dayOfYear: dayOfYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!
     }
 }
 
 fileprivate extension Date {
+    /// Converts a date from Republican to Gregorian date components.
+    /// - Parameters:
+    ///   - rDayOfYear: Republican Day of Year, 0-indexed
+    ///   - rYear: Republican Year
+    ///   - hour: Hour, will directly be copied over
+    ///   - minute: Minute, will directly be copied over
+    ///   - second: Second, will directly be copied over
+    ///   - nanosecond: Nanosecond, will directly be copied over
+    /// - Returns: A DateComponents object containing the gregorian year and day of year, with the additional time components copied over.
     static func dateToGregorian(dayOfYear rDayOfYear: Int, year rYear: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) -> DateComponents {
         var gYear = rYear + 1792
         var gDayOfYear = rDayOfYear
