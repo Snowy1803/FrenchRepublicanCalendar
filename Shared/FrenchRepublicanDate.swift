@@ -278,7 +278,7 @@ fileprivate extension Date {
             yt += diff
         } while diff != 0
         
-        if rYear.isSextil && !gYear.isBissextil && rDayInYear > 101 - yt && (rDayInYear - 101 + yt) <= 366 {
+        if rYear.isSextil && !gYear.isBissextil && (1...366).contains(rDayInYear - 101 + yt) {
             gDayOfYear.increment(by: -1, year: &gYear, daysInYear: \.daysInGregorianYear)
         }
         
