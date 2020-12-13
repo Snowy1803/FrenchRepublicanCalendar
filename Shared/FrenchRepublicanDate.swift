@@ -74,7 +74,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
     ///   - second: Seconds
     ///   - nanosecond: Nanoseconds
     init(dayInYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
-        self.date = Date(dayOfYear: dayInYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
+        self.date = Date(dayInYear: dayInYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
         initComponents(dayOfYear: dayInYear - 1, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
     
@@ -109,7 +109,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
     mutating func nextYear() {
         components.year! += 1
         components.yearForWeekOfYear! += 1
-        date = Date(dayOfYear: dayInYear, year: components.year!, hour: components.hour, minute: components.minute, second: components.second, nanosecond: components.nanosecond)
+        date = Date(dayInYear: dayInYear, year: components.year!, hour: components.hour, minute: components.minute, second: components.second, nanosecond: components.nanosecond)
     }
 
     /// Returns string as EEEE d MMMM "An" yyyy
@@ -244,30 +244,30 @@ extension Calendar {
 extension Date {
     /// Creates a Date from the given Republican date components
     /// - Parameters:
-    ///   - dayOfYear: Republican Day of Year, 0-indexed
+    ///   - dayInYear: Republican Day in Year, 1-indexed
     ///   - year: Republican Year
     ///   - hour: Hour, will directly be copied over
     ///   - minute: Minute, will directly be copied over
     ///   - second: Second, will directly be copied over
     ///   - nanosecond: Nanosecond, will directly be copied over
-    init(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
-        self = Calendar.gregorian.date(from: Date.dateToGregorian(dayOfYear: dayOfYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!
+    init(dayInYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
+        self = Calendar.gregorian.date(from: Date.dateToGregorian(dayInYear: dayInYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond))!
     }
 }
 
 fileprivate extension Date {
     /// Converts a date from Republican to Gregorian date components.
     /// - Parameters:
-    ///   - rDayOfYear: Republican Day of Year, 0-indexed
+    ///   - rDayInYear: Republican Day in Year, 1-indexed
     ///   - rYear: Republican Year
     ///   - hour: Hour, will directly be copied over
     ///   - minute: Minute, will directly be copied over
     ///   - second: Second, will directly be copied over
     ///   - nanosecond: Nanosecond, will directly be copied over
     /// - Returns: A DateComponents object containing the gregorian year and day of year, with the additional time components copied over.
-    static func dateToGregorian(dayOfYear rDayOfYear: Int, year rYear: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) -> DateComponents {
+    static func dateToGregorian(dayInYear rDayInYear: Int, year rYear: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) -> DateComponents {
         var gYear = rYear + 1792
-        var gDayOfYear = rDayOfYear
+        var gDayOfYear = rDayInYear
         gDayOfYear.increment(by: -102, year: &gYear, daysInYear: \.daysInGregorianYear)
         
         var yt = 0
@@ -278,7 +278,7 @@ fileprivate extension Date {
             yt += diff
         } while diff != 0
         
-        if rYear.isSextil && !gYear.isBissextil && rDayOfYear > 101 - yt && (rDayOfYear - 101 + yt) <= 366 {
+        if rYear.isSextil && !gYear.isBissextil && rDayInYear > 101 - yt && (rDayInYear - 101 + yt) <= 366 {
             gDayOfYear.increment(by: -1, year: &gYear, daysInYear: \.daysInGregorianYear)
         }
         
