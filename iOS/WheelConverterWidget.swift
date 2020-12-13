@@ -7,41 +7,72 @@
 //
 
 import SwiftUI
+import Combine
 
 @available(iOS 14.0, *)
 struct WheelConverterWidget: View {
-    @State var scrolled = false
-    @State var wheelContent = DateCollection()
+    @State private var userScrolled = false
+    private var backToToday = ObservableObjectPublisher()
     
     var body: some View {
         HomeWidget {
             Image.decorative(systemName: "forward")
             Text("Conversion rapide")
             Spacer()
+            if userScrolled {
+                Button {
+                    backToToday.send()
+                    userScrolled = false
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .accessibility(label: Text("Recentrer sur aujourd'hui"))
+                        .foregroundColor(.secondary)
+                        .font(.body)
+                }
+            }
         } content: {
-            ScrollViewReader { reader in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        ForEach(wheelContent, id: \.self) { date in
-                            WheelDateView(date: date)
-                        }
-                    }
-                }.onAppear {
-                    if !scrolled {
-                        reader.scrollTo(Calendar.gregorian.startOfDay(for: Date()), anchor: .center)
-                        scrolled = true
+            WheelConverterWidgetContent(userScrolled: $userScrolled, backToToday: backToToday)
+        }
+    }
+}
+
+@available(iOS 14.0, *)
+struct WheelConverterWidgetContent: View {
+    @State private var initialScroll = false
+    @State private var wheelContent = DateCollection()
+    
+    @Binding var userScrolled: Bool
+    var backToToday: ObservableObjectPublisher
+    
+    var body: some View {
+        ScrollViewReader { reader in
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    ForEach(wheelContent, id: \.self) { date in
+                        WheelDateView(date: date)
                     }
                 }
-            }.mask(LinearGradient(
-                    gradient: Gradient(stops: [
-                        .init(color: .clear, location: 0),
-                        .init(color: .white, location: 0.1),
-                        .init(color: .white, location: 0.9),
-                        .init(color: .clear, location: 1)
-                    ]),
-                    startPoint: .leading, endPoint: .trailing)
-            )
-        }
+            }.onAppear {
+                if !initialScroll {
+                    reader.scrollTo(Calendar.current.startOfDay(for: Date()), anchor: .center)
+                    initialScroll = true
+                }
+            }.onReceive(backToToday) { _ in
+                withAnimation {
+                    reader.scrollTo(Calendar.current.startOfDay(for: Date()), anchor: .center)
+                }
+            }.simultaneousGesture(DragGesture().onChanged { _ in
+                userScrolled = true
+            })
+        }.mask(LinearGradient(
+                gradient: Gradient(stops: [
+                    .init(color: .clear, location: 0),
+                    .init(color: .white, location: 0.1),
+                    .init(color: .white, location: 0.9),
+                    .init(color: .clear, location: 1)
+                ]),
+                startPoint: .leading, endPoint: .trailing)
+        )
     }
 }
 
