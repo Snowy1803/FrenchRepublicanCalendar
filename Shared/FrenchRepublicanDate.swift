@@ -238,7 +238,11 @@ fileprivate extension Int {
 }
 
 extension Calendar {
-    static let gregorian = Calendar(identifier: .gregorian)
+    static let gregorian: Calendar = {
+        var cal = Calendar(identifier: .gregorian)
+        cal.locale = Locale(identifier: "fr-FR")
+        return cal
+    }()
 }
 
 extension Date {
