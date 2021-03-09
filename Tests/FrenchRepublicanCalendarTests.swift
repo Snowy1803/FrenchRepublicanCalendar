@@ -46,6 +46,13 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         XCTAssert(frd.dayInYear == 1 && frd.components.year == 1, "Origin is wrong")
     }
     
+    func testHistoricalDates() {
+        let df = ISO8601DateFormatter()
+        df.formatOptions = .withFullDate
+        XCTAssertEqual(FrenchRepublicanDate(date: df.date(from: "1799-11-09")!).toShortenedString(), "18/02/8")
+        XCTAssertEqual(df.string(from: FrenchRepublicanDate(dayInYear: 30+19, year: 8).date), "1799-11-09")
+    }
+    
     func testCurrentDate() throws {
         print(FrenchRepublicanDate(date: Date()))
     }
