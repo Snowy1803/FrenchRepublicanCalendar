@@ -12,7 +12,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
     /// The origin of the Republican Calendar, 1er Vendémiaire An 1 or 1792-09-22
     static let origin = Date(timeIntervalSince1970: -5594191200)
     /// The maximum safe date to convert, currently 15300-12-31
-    static let maxSafeDate = Date(timeIntervalSinceReferenceDate: 419707389600) // 15300-12-31
+    static let maxSafeDate = Date(timeIntervalSinceReferenceDate: 419675853600) // 15299-12-31
     /// The safe range that is guaranteed to convert properly
     static let safeRange = origin...maxSafeDate
     
@@ -85,7 +85,13 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
         
         var year = gYear - 1791
         var dayOfYear = Calendar.gregorian.ordinality(of: .day, in: .year, for: date)!
-        dayOfYear.increment(by: -265 - (gYear.isBissextil ? 1 : 0), year: &year, daysInYear: \.daysInRepublicanYear)
+        dayOfYear.increment(by: -265, year: &year, daysInYear: \.daysInRepublicanYear)
+        if gYear.isSextil {
+            dayOfYear.increment(by: -1, year: &year, daysInYear: \.daysInRepublicanYear)
+        }
+        if (gYear).isBissextil {
+            dayOfYear.increment(by: -1, year: &year, daysInYear: \.daysInRepublicanYear)
+        }
         
         let remdays = (gYear / 100 - 15) * 3 / 4 - 1
         dayOfYear.increment(by: -remdays, year: &year, daysInYear: \.daysInRepublicanYear)
@@ -203,7 +209,7 @@ struct FrenchRepublicanDate: CustomDebugStringConvertible {
 fileprivate extension Int {
     /// If self represents a republican year, this returns true if it is sextil
     var isSextil: Bool {
-        return self % 4 == 0
+        return self % 4 == 3
     }
     
     /// If self represents a gregorian year, this returns true if it is bissextil
@@ -282,8 +288,8 @@ fileprivate extension Date {
             yt += diff
         } while diff != 0
         
-        if rYear.isSextil && !gYear.isBissextil && (1...366).contains(rDayInYear - 101 + yt) {
-            gDayOfYear.increment(by: -1, year: &gYear, daysInYear: \.daysInGregorianYear)
+        if (rYear - 1).isSextil && !(gYear % 4 == 0 && !gYear.isBissextil) {
+            gDayOfYear.increment(by: 1, year: &gYear, daysInYear: \.daysInGregorianYear)
         }
         
         return DateComponents(calendar: Calendar.gregorian, year: gYear, day: gDayOfYear + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond)

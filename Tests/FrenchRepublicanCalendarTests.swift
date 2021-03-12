@@ -20,10 +20,10 @@ class FrenchRepublicanCalendarTests: XCTestCase {
             if let prevDay = prevDay,
                let prevYear = prevYear {
                 if frd.dayInYear == 1 {
-                    XCTAssert(prevDay == (prevYear % 4 == 0 ? 366 : 365), "Year ends after \(prevDay) days")
+                    XCTAssert(prevDay == (prevYear % 4 == 3 ? 366 : 365), "Year ends after \(prevDay) days")
                     XCTAssert(frd.components.year! - prevYear == 1, "Year wasn't incremented")
                 } else {
-                    XCTAssert(frd.dayInYear - prevDay == 1, "Invalid \(date) = \(frd.toLongString())")
+                    XCTAssert(frd.dayInYear - prevDay == 1, "Invalid \(date) = \(frd.toLongString()) after \(FrenchRepublicanDate(dayInYear: prevDay, year: prevYear).toLongString())")
                     XCTAssert(frd.components.year! == prevYear, "Year changed without resetting day at \(frd.toLongString())")
                 }
             }
@@ -40,17 +40,12 @@ class FrenchRepublicanCalendarTests: XCTestCase {
         print("Tested until (Gregorian):", date)
     }
     
-    func testOriginDate() {
-        let origin = FrenchRepublicanDate.origin
-        let frd = FrenchRepublicanDate(date: origin)
-        XCTAssert(frd.dayInYear == 1 && frd.components.year == 1, "Origin is wrong")
-    }
-    
     func testHistoricalDates() {
         let df = ISO8601DateFormatter()
         df.formatOptions = .withFullDate
+        XCTAssertEqual(FrenchRepublicanDate(date: FrenchRepublicanDate.origin).toShortenedString(), "01/01/1")
         XCTAssertEqual(FrenchRepublicanDate(date: df.date(from: "1799-11-09")!).toShortenedString(), "18/02/8")
-        XCTAssertEqual(df.string(from: FrenchRepublicanDate(dayInYear: 30+19, year: 8).date), "1799-11-09")
+        XCTAssertEqual(df.string(from: FrenchRepublicanDate(dayInYear: 49, year: 8).date), "1799-11-09")
     }
     
     func testCurrentDate() throws {
