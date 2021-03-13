@@ -32,9 +32,18 @@ struct DateDetails: View {
             }
             Section {
                 Button {
-                    UIApplication.shared.open(date.descriptionURL!)
+                    defineDayName()
                 } label: {
                     Row(value: date.dayName, title: "Jour :")
+                }.contextMenu {
+                    Button(action: defineDayName) {
+                        Image(systemName: "magnifyingglass")
+                        Text("Chercher")
+                    }
+                    Button(action: openDayNameDescriptionURL) {
+                        Image(systemName: "w.circle")
+                        Text("Définition")
+                    }
                 }
                 Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
@@ -60,6 +69,32 @@ struct DateDetails: View {
             Image(systemName: added ? "star.fill" : "star")
                 .accessibility(label: Text(added ? "Retirer des favoris" : "Ajouter aux favoris"))
         })
+    }
+    
+    func defineDayName() {
+        // We're gonna create a new UIKit text view and make it look up the word
+        let tv = UITextView()
+        tv.text = date.dayName
+        tv.isEditable = false // prevents showing the keyboard
+        
+        guard let root = UIApplication.shared.windows.first?.rootViewController?.view else { return }
+        root.addSubview(tv)
+        
+        tv.selectAll(tv)
+        // hi Apple, please add a public API for this
+        let sel = Selector(String(":enifed_".reversed()))
+        if tv.responds(to: sel) {
+            tv.perform(sel, with: tv)
+        } else {
+            print("cannot define, opening in Safari")
+            openDayNameDescriptionURL()
+        }
+        
+        tv.removeFromSuperview()
+    }
+    
+    func openDayNameDescriptionURL() {
+        UIApplication.shared.open(date.descriptionURL!)
     }
 }
 
