@@ -34,7 +34,10 @@ struct RepublicanDatePicker: View {
                 selection: $date.year.wrapped,
                 range: 1..<2708,
                 preferMenu: false,
-                title: "Année"
+                title: "Année",
+                transformer: {
+                    FrenchRepublicanDate(dayInYear: 1, year: $0).formattedYear
+                }
             )
         }.layoutPriority(10)
     }
@@ -56,8 +59,8 @@ struct NavigatingPicker: View {
                     }
                 }.pickerStyle(MenuPickerStyle())
             } else {
-                NavigationLink(destination: NavigatedPicker(selection: $selection, range: range, title: title)) {
-                    Text(String(selection.value))
+                NavigationLink(destination: NavigatedPicker(selection: $selection, range: range, title: title, transformer: transformer)) {
+                    Text(transformer(selection.value))
                 }
             }
         }
@@ -70,12 +73,13 @@ struct NavigatedPicker: View {
     @Binding var selection: IntWrapper
     var range: Range<Int>
     var title: String
+    var transformer: (Int) -> String
     
     var body: some View {
         Form {
             Picker(selection: $selection, label: EmptyView()) {
                 ForEach(range, id: \.self) { value in
-                    Text(String(value)).tag(value.wrapped)
+                    Text(transformer(value)).tag(value.wrapped)
                 }
             }.pickerStyle(WheelPickerStyle())
             .accessibilityElement(children: .ignore)

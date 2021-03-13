@@ -31,7 +31,7 @@ extension FrenchRepublicanDate: CustomDebugStringConvertible {
     
     /// Returns string as d MMMM "An" yyyy
     func toLongString() -> String {
-        return "\(toLongStringNoYear()) An \(components.year!)"
+        return "\(toLongStringNoYear()) An \(formattedYear)"
     }
     
     /// Returns string as d MMMM
@@ -52,7 +52,7 @@ extension FrenchRepublicanDate: CustomDebugStringConvertible {
     
     /// Returns string as dd/MM/yyy
     func toShortenedString() -> String {
-        return "\(components.day! >= 10 ? "" : "0")\(components.day!)/\(components.month! >= 10 ? "" : "0")\(components.month!)/\(components.year!)"
+        return "\(components.day! >= 10 ? "" : "0")\(components.day!)/\(components.month! >= 10 ? "" : "0")\(components.month!)/\(formattedYear)"
     }
     
     /// Localized month name
@@ -78,6 +78,46 @@ extension FrenchRepublicanDate: CustomDebugStringConvertible {
     /// the name of the quarter, or season
     var quarter: String {
         FrenchRepublicanDate.allQuarters[components.quarter! - 1]
+    }
+    
+    /// the year, formatted according to this converter's options (roman numerals, or simply an interpolated Int)
+    var formattedYear: String {
+        if options.romanYear {
+            // Inspired from https://learnappmaking.com/roman-numerals-swift/
+            
+            let numerals = [
+                (1000, "M"),
+                (900, "CM"),
+                (500, "D"),
+                (400, "CD"),
+                (100, "C"),
+                (90, "XC"),
+                (50, "L"),
+                (40, "XL"),
+                (10, "X"),
+                (9, "IX"),
+                (5, "V"),
+                (4, "IV"),
+                (1, "I"),
+            ]
+
+            var result = ""
+            var number = components.year!
+
+            while number > 0 {
+                for (decimal, numeral) in numerals {
+                    if number >= decimal {
+                        number -= decimal
+                        result += numeral
+                        break
+                    }
+                }
+            }
+
+            return result
+        } else {
+            return String(components.year!)
+        }
     }
     
     /// the debug description of this value

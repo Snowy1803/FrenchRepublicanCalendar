@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
+    @EnvironmentObject var midnight: Midnight
     
     var body: some View {
         NavigationView {
@@ -41,6 +42,15 @@ struct ContentView: View {
                         }
                     }.shadowBox()
                     .accessibility(label: Text("Voir mes contacts"))
+                    
+                    Toggle(isOn: Binding {
+                        FrenchRepublicanDateOptions.current.romanYear
+                    } set: {
+                        FrenchRepublicanDateOptions.current.romanYear = $0
+                        midnight.objectWillChange.send()
+                    }) {
+                        Text("Chiffres romains pour les années")
+                    }.shadowBox()
                     .padding(.bottom)
                 }
             }.navigationBarTitle("Calendrier Républicain")

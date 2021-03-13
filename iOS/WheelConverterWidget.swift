@@ -69,7 +69,7 @@ struct WheelDateView: View {
                 Text(String(rep.components.day!))
                     .font(.largeTitle)
                 Text(rep.monthName)
-                Text("An \(rep.components.year!)")
+                Text("An \(rep.formattedYear)")
                 Text(rep.dayName)
             }.frame(width: 110)
             .padding()

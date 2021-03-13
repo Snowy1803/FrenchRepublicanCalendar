@@ -72,6 +72,7 @@ struct ContactsList: View {
 }
 
 struct ContactDetails: View {
+    @EnvironmentObject var midnight: Midnight
     var contact: CNContact
     
     var body: some View {

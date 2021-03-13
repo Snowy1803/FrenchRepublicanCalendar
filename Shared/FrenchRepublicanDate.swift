@@ -41,6 +41,8 @@ struct FrenchRepublicanDate {
     /// weekOfYear: The week within the year (a week being 10 days)
     var components: DateComponents!
     
+    var options: FrenchRepublicanDateOptions
+    
     // MARK: Component accessors
     
     /// The day in year date component, 1-indexed
@@ -59,6 +61,7 @@ struct FrenchRepublicanDate {
     /// - Parameter date: the Gregorian Date
     init(date: Date) {
         self.date = date
+        options = .current
         dateToFrenchRepublican()
     }
     
@@ -72,6 +75,7 @@ struct FrenchRepublicanDate {
     ///   - nanosecond: Nanoseconds
     init(dayInYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
         self.date = Date(dayInYear: dayInYear, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
+        options = .current
         initComponents(dayOfYear: dayInYear - 1, year: year, hour: hour, minute: minute, second: second, nanosecond: nanosecond)
     }
     
