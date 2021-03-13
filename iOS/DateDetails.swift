@@ -10,6 +10,8 @@ import SwiftUI
 import Combine
 
 struct DateDetails: View {
+    private static let preferredDefineMethodKey = "preferredDefineMethod"
+    
     @EnvironmentObject var favoritesPool: FavoritesPool
     
     var date: FrenchRepublicanDate
@@ -32,15 +34,26 @@ struct DateDetails: View {
             }
             Section {
                 Button {
-                    defineDayName()
+                    switch UserDefaults.standard.integer(forKey: DateDetails.preferredDefineMethodKey) {
+                    case 1:
+                        openDayNameDescriptionURL()
+                    default: // 0 (default), 2 (preferred)
+                        defineDayName()
+                    }
                 } label: {
                     Row(value: date.dayName, title: "Jour :")
                 }.contextMenu {
-                    Button(action: defineDayName) {
+                    Button {
+                        UserDefaults.standard.set(2, forKey: DateDetails.preferredDefineMethodKey)
+                        defineDayName()
+                    } label: {
                         Image(systemName: "magnifyingglass")
                         Text("Chercher")
                     }
-                    Button(action: openDayNameDescriptionURL) {
+                    Button {
+                        UserDefaults.standard.set(1, forKey: DateDetails.preferredDefineMethodKey)
+                        openDayNameDescriptionURL()
+                    } label:  {
                         Image(systemName: "w.circle")
                         Text("Définition")
                     }
