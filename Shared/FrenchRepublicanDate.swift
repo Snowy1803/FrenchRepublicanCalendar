@@ -9,12 +9,17 @@
 import Foundation
 
 struct FrenchRepublicanDate {
+    
+    // MARK: Static: Origin and Maximum
+    
     /// The origin of the Republican Calendar, 1er Vendémiaire An 1 or 1792-09-22
     static let origin = Date(timeIntervalSince1970: -5594191200)
     /// The maximum safe date to convert, currently 15300-12-31
     static let maxSafeDate = Date(timeIntervalSinceReferenceDate: 419675853600) // 15299-12-31
     /// The safe range that is guaranteed to convert properly
     static let safeRange = origin...maxSafeDate
+    
+    // MARK: Instance variables
     
     /// the system Date value for this Republican Date
     var date: Date
@@ -36,6 +41,8 @@ struct FrenchRepublicanDate {
     /// weekOfYear: The week within the year (a week being 10 days)
     var components: DateComponents!
     
+    // MARK: Component accessors
+    
     /// The day in year date component, 1-indexed
     var dayInYear: Int {
         return (components.month! - 1) * 30 + components.day!
@@ -45,6 +52,8 @@ struct FrenchRepublicanDate {
     var isYearSextil: Bool {
         return components.year!.isSextil
     }
+    
+    // MARK: Initializers
     
     /// Creates a Republican Date from the given Gregorian Date
     /// - Parameter date: the Gregorian Date
@@ -98,6 +107,8 @@ struct FrenchRepublicanDate {
     private mutating func initComponents(dayOfYear: Int, year: Int, hour: Int? = nil, minute: Int? = nil, second: Int? = nil, nanosecond: Int? = nil) {
         self.components = DateComponents(year: year, month: dayOfYear / 30 + 1, day: dayOfYear % 30 + 1, hour: hour, minute: minute, second: second, nanosecond: nanosecond, weekday: dayOfYear % 10 + 1, quarter: dayOfYear / 90 + 1, weekOfMonth: dayOfYear % 30 / 10 + 1, weekOfYear: dayOfYear / 10 + 1, yearForWeekOfYear: year)
     }
+    
+    // MARK: Mutating utils
     
     /// Increments the Republican year for this Date. The Gregorian `date` will be recomputed.
     mutating func nextYear() {
