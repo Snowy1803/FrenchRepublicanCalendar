@@ -14,7 +14,7 @@ struct ConverterWidget: View {
     
     var body: some View {
         HomeWidget {
-            Image.decorative(systemName: "arrow.left.arrow.right")
+            Image.decorative(systemName: "arrow.right.arrow.left")
             Text("Convertir")
             Spacer()
             if from.iso != Date().iso {

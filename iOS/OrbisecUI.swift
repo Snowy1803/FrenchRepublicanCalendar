@@ -51,16 +51,6 @@ struct HomeWidget<Title: View, Content: View>: View {
 
 extension Image {
     @ViewBuilder static func decorative(systemName name: String) -> some View {
-        if #available(iOS 14.0, macOS 11.0, *) {
-            Image(systemName: name).accessibility(hidden: true)
-        }
-    }
-    
-    init?(systemNameIfAvailable name: String) {
-        if #available(iOS 14.0, macOS 11.0, *) {
-            self.init(systemName: name)
-        } else {
-            return nil
-        }
+        Image(systemName: name).accessibility(hidden: true)
     }
 }
