@@ -11,6 +11,9 @@ import Foundation
 struct FrenchRepublicanDateOptions {
     
     static let `default` = FrenchRepublicanDateOptions(romanYear: false, variant: .original)
+    #if WASM
+    static let current = FrenchRepublicanDateOptions.default
+    #else
     static var current: FrenchRepublicanDateOptions {
         get {
             FrenchRepublicanDateOptions(
@@ -23,6 +26,7 @@ struct FrenchRepublicanDateOptions {
             UserDefaults.standard.set(newValue.variant.rawValue, forKey: "frdo-variant")
         }
     }
+    #endif
     
     var romanYear: Bool
     var variant: Variant

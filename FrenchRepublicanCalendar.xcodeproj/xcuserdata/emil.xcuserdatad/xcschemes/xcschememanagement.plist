@@ -7,7 +7,7 @@
 		<key>DateWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>6</integer>
 		</dict>
 		<key>FrenchRepublicanCalendar WatchKit App (Complication).xcscheme_^#shared#^_</key>
 		<dict>
@@ -29,10 +29,15 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>Siri.xcscheme_^#shared#^_</key>
+		<key>FrenchRepublicanCalendarWeb.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
+		</dict>
+		<key>Siri.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
