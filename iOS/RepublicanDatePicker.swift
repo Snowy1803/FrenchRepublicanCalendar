@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FrenchRepublicanCalendarCore
 
 struct RepublicanDatePicker: View {
     @Binding var date: MyRepublicanDateComponents

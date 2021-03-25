@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FrenchRepublicanCalendarCore
 
 struct RepublicanToGregorianView: View {
     @Binding var shownDate: MyDateComponents

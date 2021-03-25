@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FrenchRepublicanCalendarCore
 
 struct MyDateComponents {
     var day: Int

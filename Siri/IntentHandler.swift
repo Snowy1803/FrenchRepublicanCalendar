@@ -7,6 +7,7 @@
 //
 
 import Intents
+import FrenchRepublicanCalendarCore
 
 class IntentHandler: INExtension, ConversionIntentHandling, CreateDateIntentHandling, RepublicanToGregorianIntentHandling {
     

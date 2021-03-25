@@ -7,7 +7,7 @@
 //
 
 import ClockKit
-
+import FrenchRepublicanCalendarCore
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     

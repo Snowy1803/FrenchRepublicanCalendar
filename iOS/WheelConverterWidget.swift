@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FrenchRepublicanCalendarCore
 
 @available(iOS 14.0, *)
 struct WheelConverterWidget: View {

@@ -6,8 +6,9 @@
 //  Copyright © 2020 Snowy_1803. All rights reserved.
 //
 
-import WidgetKit
 import SwiftUI
+import FrenchRepublicanCalendarCore
+import WidgetKit
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {

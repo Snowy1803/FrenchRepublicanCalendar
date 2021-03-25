@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FrenchRepublicanCalendarCore
 
 struct ContentView: View {
     @ObservedObject var favorites: FavoritesPool

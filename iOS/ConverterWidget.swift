@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FrenchRepublicanCalendarCore
 
 struct ConverterWidget: View {
     @EnvironmentObject var midnight: Midnight
