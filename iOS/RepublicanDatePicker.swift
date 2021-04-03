@@ -16,7 +16,7 @@ struct RepublicanDatePicker: View {
         HStack(spacing: 0) {
             NavigatingPicker(
                 selection: $date.day.wrapped,
-                range: 1..<(date.month < 13 ? 31 : date.year % 4 == 0 ? 7 : 6),
+                range: 1..<(date.month < 13 ? 31 : date.year % 4 == 3 ? 7 : 6),
                 preferMenu: true,
                 title: "Jour"
             )

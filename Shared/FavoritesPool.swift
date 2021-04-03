@@ -9,6 +9,7 @@
 import Foundation
 import WatchConnectivity
 import Combine
+import FrenchRepublicanCalendarCore
 
 class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     @Published var favorites: [String]
@@ -67,6 +68,21 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
             session.transferUserInfo(["favorites": favorites])
         } else {
             print("sync data not found")
+        }
+    }
+}
+
+extension FrenchRepublicanDateOptions: SaveableFrenchRepublicanDateOptions {
+    public static var current: FrenchRepublicanDateOptions {
+        get {
+            FrenchRepublicanDateOptions(
+                romanYear: UserDefaults.standard.bool(forKey: "frdo-roman"),
+                variant: Variant(rawValue: UserDefaults.standard.integer(forKey: "frdo-variant")) ?? .original
+            )
+        }
+        set {
+            UserDefaults.standard.set(newValue.romanYear, forKey: "frdo-roman")
+            UserDefaults.standard.set(newValue.variant.rawValue, forKey: "frdo-variant")
         }
     }
 }
