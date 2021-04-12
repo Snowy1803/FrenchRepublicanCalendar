@@ -10,6 +10,9 @@ import Foundation
 import WatchConnectivity
 import Combine
 import FrenchRepublicanCalendarCore
+#if os(watchOS)
+import ClockKit
+#endif
 
 class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     @Published var favorites: [String]
@@ -59,6 +62,7 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     #endif
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        var updateComplication = false
         for (key, value) in userInfo {
             switch key {
             case "favorites":
@@ -74,10 +78,18 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
                 session.transferUserInfo(["favorites": favorites])
             case "frdo-roman", "frdo-variant":
                 UserDefaults.shared.set(value, forKey: key)
+                updateComplication = true
             default:
                 print("unknown key \(key) in transfer")
             }
         }
+        #if os(watchOS)
+        if updateComplication {
+            CLKComplicationServer.sharedInstance().activeComplications?.forEach {
+                CLKComplicationServer.sharedInstance().reloadTimeline(for: $0)
+            }
+        }
+        #endif
     }
 }
 

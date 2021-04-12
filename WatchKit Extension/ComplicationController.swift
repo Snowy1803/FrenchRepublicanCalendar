@@ -67,33 +67,33 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             return template
         case .extraLarge:
             let template = CLKComplicationTemplateExtraLargeStackText()
-            template.line1TextProvider = CLKSimpleTextProvider(text: frd.toShortString())
-            template.line2TextProvider = CLKSimpleTextProvider(text: "An \(frd.components.year!)")
+            template.line1TextProvider = CLKSimpleTextProvider(text: String(frd.components.day!))
+            template.line2TextProvider = CLKSimpleTextProvider(text: frd.shortMonthName)
             return template
         case .graphicBezel:
             let template = CLKComplicationTemplateGraphicBezelCircularText()
             template.textProvider = CLKSimpleTextProvider(text: frd.toLongString())
             let smaller = CLKComplicationTemplateGraphicCircularStackText()
-            smaller.line1TextProvider = CLKSimpleTextProvider(text: "\(frd.components.day!)")
-            smaller.line2TextProvider = CLKSimpleTextProvider(text: "\(frd.components.month!)")
+            smaller.line1TextProvider = CLKSimpleTextProvider(text: String(frd.components.day!))
+            smaller.line2TextProvider = CLKSimpleTextProvider(text: frd.shortMonthName)
             template.circularTemplate = smaller
             return template
         case .graphicCorner:
             let template = CLKComplicationTemplateGraphicCornerStackText()
-            template.outerTextProvider = CLKSimpleTextProvider(text: "\(frd.components.day!)")
+            template.outerTextProvider = CLKSimpleTextProvider(text: String(frd.components.day!))
             template.innerTextProvider = CLKSimpleTextProvider(text: "\(frd.monthName) \(frd.components.year!)")
             return template
         case .graphicRectangular:
             let template = CLKComplicationTemplateGraphicRectangularStandardBody()
-            template.headerTextProvider = CLKSimpleTextProvider(text: "\(frd.toLongStringNoYear())")
-            template.body1TextProvider = CLKSimpleTextProvider(text: frd.components.month! == 13 ? "\(frd.weekdayName)" : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
-            template.body2TextProvider = CLKSimpleTextProvider(text: "An \(frd.components.year!)")
+            template.headerTextProvider = CLKSimpleTextProvider(text: frd.toLongStringNoYear())
+            template.body1TextProvider = CLKSimpleTextProvider(text: frd.components.month! == 13 ? frd.weekdayName : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
+            template.body2TextProvider = CLKSimpleTextProvider(text: "An \(frd.formattedYear)")
             return template
         case .modularLarge:
             let template = CLKComplicationTemplateModularLargeStandardBody()
-            template.headerTextProvider = CLKSimpleTextProvider(text: "\(frd.toLongStringNoYear())")
-            template.body1TextProvider = CLKSimpleTextProvider(text: frd.components.month! == 13 ? "\(frd.weekdayName)" : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
-            template.body2TextProvider = CLKSimpleTextProvider(text: "An \(frd.components.year!)")
+            template.headerTextProvider = CLKSimpleTextProvider(text: frd.toLongStringNoYear())
+            template.body1TextProvider = CLKSimpleTextProvider(text: frd.components.month! == 13 ? frd.weekdayName : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
+            template.body2TextProvider = CLKSimpleTextProvider(text: "An \(frd.formattedYear)")
             return template
         default:
             print("Family not handled: \(family.rawValue)")
