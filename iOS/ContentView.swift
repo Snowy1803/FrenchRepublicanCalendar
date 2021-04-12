@@ -52,6 +52,22 @@ struct ContentView: View {
                     }) {
                         Text("Chiffres romains pour les années")
                     }.shadowBox()
+                    
+                    NavigationLink(destination: VariantPicker()) {
+                        HStack {
+                            Image.decorative(systemName: "gear")
+                                .frame(width: 25)
+                            Text("Calendriers républicains")
+                            Spacer()
+                            Text(FrenchRepublicanDateOptions.current.variant.description)
+                                .foregroundColor(.secondary)
+                            Image.decorative(systemName: "chevron.right")
+                                .imageScale(.small)
+                                .foregroundColor(.secondary)
+                        }.foregroundColor(.primary)
+                    }.shadowBox()
+                    .accessibility(label: Text("Changer de variant de calendrier républicain"))
+                    .accessibility(value: Text(FrenchRepublicanDateOptions.current.variant.description))
                     .padding(.bottom)
                 }
             }.navigationBarTitle("Calendrier Républicain")

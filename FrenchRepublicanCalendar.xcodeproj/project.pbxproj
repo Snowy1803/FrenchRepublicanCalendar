@@ -20,6 +20,7 @@
 		20418BD72412F3EB00E0EE6E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD62412F3EB00E0EE6E /* ComplicationController.swift */; };
 		20418BD92412F3EC00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BD82412F3EC00E0EE6E /* Assets.xcassets */; };
 		20418BDC2412F3EC00E0EE6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */; };
+		2047A3472624A6FC00AA662C /* VariantPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A3462624A6FC00AA662C /* VariantPicker.swift */; };
 		2061525B25728FCF007A214D /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2061525A25728FCF007A214D /* IntentHandler.swift */; };
 		2061525F25728FCF007A214D /* Siri.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2061525825728FCF007A214D /* Siri.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
@@ -142,6 +143,7 @@
 		20474FFD2571C006006935A9 /* LISEZMOI.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LISEZMOI.md; sourceTree = "<group>"; };
 		204750032571C37A006935A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		204750042571C4AF006935A9 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		2047A3462624A6FC00AA662C /* VariantPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantPicker.swift; sourceTree = "<group>"; };
 		2061524E25728F95007A214D /* FrenchRepublicanCalendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FrenchRepublicanCalendar.entitlements; sourceTree = "<group>"; };
 		2061525825728FCF007A214D /* Siri.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Siri.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2061525A25728FCF007A214D /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				20E0958A2540465500383A31 /* ContactsList.swift */,
 				20E0957C253F990C00383A31 /* FavoriteList.swift */,
 				20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */,
+				2047A3462624A6FC00AA662C /* VariantPicker.swift */,
 				2069C049253F2F9500E46721 /* OrbisecUI.swift */,
 				20D9DCB4253F23F000B5A9FA /* Assets.xcassets */,
 				20D9DCB9253F23F000B5A9FA /* LaunchScreen.storyboard */,
@@ -590,6 +593,7 @@
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
 				20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */,
 				20AEE4EC257170620015FFC6 /* DateDetails.swift in Sources */,
+				2047A3472624A6FC00AA662C /* VariantPicker.swift in Sources */,
 				20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */,
 				2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */,
 				20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */,
