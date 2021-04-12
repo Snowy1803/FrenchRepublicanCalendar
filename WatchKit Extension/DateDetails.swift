@@ -32,7 +32,7 @@ struct DateDetails: View {
         ScrollView {
             VStack {
                 Text(date.toLongStringNoYear())
-                Row(value: "\(date.components.year!)", title: "An :")
+                Row(value: "\(date.formattedYear)", title: "An :")
                 Row(value: date.dayName, title: date.weekdayName)
                 Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")

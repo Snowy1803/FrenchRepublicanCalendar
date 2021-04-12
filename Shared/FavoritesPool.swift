@@ -59,15 +59,24 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     #endif
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        if let favorites = userInfo["favorites"] as? [String] {
-            DispatchQueue.main.async {
-                self.favorites = favorites
-                print("synced")
+        for (key, value) in userInfo {
+            switch key {
+            case "favorites":
+                if let favorites = value as? [String] {
+                    DispatchQueue.main.async {
+                        self.favorites = favorites
+                        print("synced")
+                    }
+                } else {
+                    print("received invalid favorites data")
+                }
+            case "gimme":
+                session.transferUserInfo(["favorites": favorites])
+            case "frdo-roman", "frdo-variant":
+                UserDefaults.standard.set(value, forKey: key)
+            default:
+                print("unknown key \(key) in transfer")
             }
-        } else if (userInfo["gimme"] as? Bool) == true {
-            session.transferUserInfo(["favorites": favorites])
-        } else {
-            print("sync data not found")
         }
     }
 }
@@ -83,6 +92,7 @@ extension FrenchRepublicanDateOptions: SaveableFrenchRepublicanDateOptions {
         set {
             UserDefaults.standard.set(newValue.romanYear, forKey: "frdo-roman")
             UserDefaults.standard.set(newValue.variant.rawValue, forKey: "frdo-variant")
+            WCSession.default.transferUserInfo(["frdo-roman": newValue.romanYear, "frdo-variant": newValue.variant.rawValue])
         }
     }
 }

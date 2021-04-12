@@ -35,7 +35,7 @@ struct RepublicanToGregorianView: View {
             }
             Picker(selection: $shownDate.year.wrapped, label: EmptyView()) {
                 ForEach(1..<2708) { year in
-                    Text("\(String(year))").tag(year.wrapped)
+                    Text("\(FrenchRepublicanDate(dayInYear: 1, year: year).formattedYear)").tag(year.wrapped)
                 }
             }
         }.navigationBarTitle("Rép > Grég")

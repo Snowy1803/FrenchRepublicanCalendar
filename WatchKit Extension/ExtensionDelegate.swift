@@ -71,21 +71,4 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             }
         }
     }
-    
-    func syncFavorites() {
-        let favorites = UserDefaults.standard.array(forKey: "favorites") ?? [String]()
-        if WCSession.isSupported() {
-            WCSession.default.transferUserInfo(["favorites": favorites])
-        }
-    }
-    
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        for (key, value) in userInfo {
-            UserDefaults.standard.set(value, forKey: key)
-        }
-    }
 }
