@@ -61,9 +61,9 @@ extension FrenchRepublicanDateOptions.Variant {
     var explanation: String {
         switch self {
         case .original:
-            return "Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris.\nLa première année sextile est l'an \(FrenchRepublicanDate(dayInYear: 1, year: 3).formattedYear), puis il y a une nouvelle année sextile tous les 4 ans."
+            return "Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris.\nLa première année sextile est l'an \(FrenchRepublicanDate(dayInYear: 1, year: 3).formattedYear), il y a ensuite une année sextile tous les 4 ans."
         case .romme:
-            return "Version réformée, n'ayant jamais réellement été utilisée. Le décalage des années sextile sur le long terme y a été corrigé : les années divisibles par 4 sont sextiles, sauf celles divisibles par 100, sauf celles divisibles par 400, sauf celles divisibles par 4000."
+            return "Version réformée, n'ayant jamais réellement été utilisée. Le décalage des jours sur le long terme y a été corrigé : les années divisibles par 4 sont sextiles, sauf celles divisibles par 100, sauf celles divisibles par 400, sauf celles divisibles par 4000."
         }
     }
 }
