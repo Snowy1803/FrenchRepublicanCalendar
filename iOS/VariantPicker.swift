@@ -34,6 +34,15 @@ struct VariantPicker: View {
                     }
                 }
             }
+            
+            Toggle(isOn: Binding {
+                FrenchRepublicanDateOptions.current.romanYear
+            } set: {
+                FrenchRepublicanDateOptions.current.romanYear = $0
+                midnight.objectWillChange.send()
+            }) {
+                Text("Chiffres romains pour les années")
+            }
         }.navigationBarTitle(Text("Variantes"))
     }
 }

@@ -44,15 +44,6 @@ struct ContentView: View {
                     }.shadowBox()
                     .accessibility(label: Text("Voir mes contacts"))
                     
-                    Toggle(isOn: Binding {
-                        FrenchRepublicanDateOptions.current.romanYear
-                    } set: {
-                        FrenchRepublicanDateOptions.current.romanYear = $0
-                        midnight.objectWillChange.send()
-                    }) {
-                        Text("Chiffres romains pour les années")
-                    }.shadowBox()
-                    
                     NavigationLink(destination: VariantPicker()) {
                         HStack {
                             Image.decorative(systemName: "gear")
@@ -66,7 +57,7 @@ struct ContentView: View {
                                 .foregroundColor(.secondary)
                         }.foregroundColor(.primary)
                     }.shadowBox()
-                    .accessibility(label: Text("Changer de variant de calendrier républicain"))
+                    .accessibility(label: Text("Changer de variante de calendrier républicain"))
                     .accessibility(value: Text(FrenchRepublicanDateOptions.current.variant.description))
                     .padding(.bottom)
                 }
