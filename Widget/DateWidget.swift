@@ -92,7 +92,7 @@ struct SimpleDateStack: View {
         Text(String(today.components.day!))
             .font(.system(size: 50))
         Text(today.monthName)
-        Text("An \(today.components.year!)")
+        Text("An \(today.formattedYear)")
     }
 }
 

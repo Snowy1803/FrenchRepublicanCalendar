@@ -21,6 +21,11 @@
 		20418BD92412F3EC00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BD82412F3EC00E0EE6E /* Assets.xcassets */; };
 		20418BDC2412F3EC00E0EE6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */; };
 		2047A3472624A6FC00AA662C /* VariantPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A3462624A6FC00AA662C /* VariantPicker.swift */; };
+		2047A34A2624B27D00AA662C /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
+		2047A34C2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
+		2047A34D2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
+		2047A34E2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
+		2047A34F2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
 		2061525B25728FCF007A214D /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2061525A25728FCF007A214D /* IntentHandler.swift */; };
 		2061525F25728FCF007A214D /* Siri.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2061525825728FCF007A214D /* Siri.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
@@ -144,6 +149,9 @@
 		204750032571C37A006935A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		204750042571C4AF006935A9 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		2047A3462624A6FC00AA662C /* VariantPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantPicker.swift; sourceTree = "<group>"; };
+		2047A3482624B0AB00AA662C /* DateWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DateWidgetExtension.entitlements; sourceTree = "<group>"; };
+		2047A3492624B0BC00AA662C /* Siri.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Siri.entitlements; sourceTree = "<group>"; };
+		2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveableFrenchRepublicanDateOptions.swift; sourceTree = "<group>"; };
 		2061524E25728F95007A214D /* FrenchRepublicanCalendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FrenchRepublicanCalendar.entitlements; sourceTree = "<group>"; };
 		2061525825728FCF007A214D /* Siri.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Siri.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2061525A25728FCF007A214D /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -219,6 +227,7 @@
 		20418BB12412F3E700E0EE6E = {
 			isa = PBXGroup;
 			children = (
+				2047A3482624B0AB00AA662C /* DateWidgetExtension.entitlements */,
 				2061524E25728F95007A214D /* FrenchRepublicanCalendar.entitlements */,
 				204750042571C4AF006935A9 /* COPYING */,
 				204750032571C37A006935A9 /* README.md */,
@@ -288,6 +297,7 @@
 		2061525925728FCF007A214D /* Siri */ = {
 			isa = PBXGroup;
 			children = (
+				2047A3492624B0BC00AA662C /* Siri.entitlements */,
 				2061525A25728FCF007A214D /* IntentHandler.swift */,
 				2061525C25728FCF007A214D /* Info.plist */,
 			);
@@ -298,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				20E095BB254059CC00383A31 /* FavoritesPool.swift */,
+				2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */,
 				2061526925728FF9007A214D /* Intents.intentdefinition */,
 			);
 			path = Shared;
@@ -569,6 +580,7 @@
 				20418BD72412F3EB00E0EE6E /* ComplicationController.swift in Sources */,
 				208A0E01258675C900D635CE /* RepublicanToGregorianView.swift in Sources */,
 				20418BD12412F3EB00E0EE6E /* ContentView.swift in Sources */,
+				2047A34D2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				208A0DF9258675AA00D635CE /* GregorianToRepublicanView.swift in Sources */,
 				20418BD52412F3EB00E0EE6E /* ExtensionDelegate.swift in Sources */,
 				208A0DF1258673E300D635CE /* MyDateComponents.swift in Sources */,
@@ -579,8 +591,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2047A34F2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				2061526B25728FF9007A214D /* Intents.intentdefinition in Sources */,
 				2061525B25728FCF007A214D /* IntentHandler.swift in Sources */,
+				2047A34A2624B27D00AA662C /* FavoritesPool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +613,7 @@
 				20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */,
 				208A0DD62586734B00D635CE /* ConverterWidget.swift in Sources */,
 				20D9DCB3253F23BB00B5A9FA /* ContentView.swift in Sources */,
+				2047A34C2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */,
 				208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */,
 				20E0958B2540465500383A31 /* ContactsList.swift in Sources */,
@@ -611,6 +626,7 @@
 			files = (
 				20E095A025404BB200383A31 /* DateWidget.swift in Sources */,
 				20AEE511257171DC0015FFC6 /* FavoritesPool.swift in Sources */,
+				2047A34E2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,6 +882,7 @@
 		2061526125728FCF007A214D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Siri/Siri.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = Siri/Info.plist;
@@ -886,6 +903,7 @@
 		2061526225728FCF007A214D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Siri/Siri.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = Siri/Info.plist;
@@ -958,6 +976,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DateWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = Widget/Info.plist;
@@ -980,6 +999,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DateWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = Widget/Info.plist;

@@ -73,26 +73,10 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
             case "gimme":
                 session.transferUserInfo(["favorites": favorites])
             case "frdo-roman", "frdo-variant":
-                UserDefaults.standard.set(value, forKey: key)
+                UserDefaults.shared.set(value, forKey: key)
             default:
                 print("unknown key \(key) in transfer")
             }
-        }
-    }
-}
-
-extension FrenchRepublicanDateOptions: SaveableFrenchRepublicanDateOptions {
-    public static var current: FrenchRepublicanDateOptions {
-        get {
-            FrenchRepublicanDateOptions(
-                romanYear: UserDefaults.standard.bool(forKey: "frdo-roman"),
-                variant: Variant(rawValue: UserDefaults.standard.integer(forKey: "frdo-variant")) ?? .original
-            )
-        }
-        set {
-            UserDefaults.standard.set(newValue.romanYear, forKey: "frdo-roman")
-            UserDefaults.standard.set(newValue.variant.rawValue, forKey: "frdo-variant")
-            WCSession.default.transferUserInfo(["frdo-roman": newValue.romanYear, "frdo-variant": newValue.variant.rawValue])
         }
     }
 }
