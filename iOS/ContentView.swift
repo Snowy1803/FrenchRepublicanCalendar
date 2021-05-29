@@ -60,9 +60,10 @@ struct ContentView: View {
                     .accessibility(label: Text("Changer de variante de calendrier républicain"))
                     .accessibility(value: Text(FrenchRepublicanDateOptions.current.variant.description))
                     .padding(.bottom)
-                }
+                }.frame(maxWidth: 800)
             }.navigationBarTitle("Calendrier Républicain")
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
