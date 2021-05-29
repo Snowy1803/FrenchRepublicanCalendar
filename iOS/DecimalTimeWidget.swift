@@ -10,15 +10,28 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 
 struct DecimalTimeWidget: View {
+    var link: Bool
+    
     var body: some View {
         HomeWidget {
             Image.decorative(systemName: "clock")
-            Text("Heure décimale")
+            Text("Temps décimal")
             Spacer()
         } content: {
-            HStack {
-                CurrentDecimalTime()
-                Spacer()
+            if link {
+                NavigationLink(destination: DecimalTimeDetails()) {
+                    HStack {
+                        CurrentDecimalTime()
+                        Spacer()
+                        Image.decorative(systemName: "chevron.right")
+                            .foregroundColor(.gray)
+                    }.foregroundColor(.primary)
+                }
+            } else {
+                HStack {
+                    CurrentDecimalTime()
+                    Spacer()
+                }
             }
         }
     }
@@ -43,6 +56,6 @@ struct CurrentDecimalTime: View {
 
 struct DecimalTimeWidget_Previews: PreviewProvider {
     static var previews: some View {
-        DecimalTimeWidget()
+        DecimalTimeWidget(link: false)
     }
 }
