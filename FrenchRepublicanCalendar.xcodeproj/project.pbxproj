@@ -316,22 +316,38 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		20D9DCAD253F23BB00B5A9FA /* iOS */ = {
+		20C645C72662DA64001D7108 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
-				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
-				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
 				208A0DCD2586732E00D635CE /* TodayWidget.swift */,
 				20C645C32662BECF001D7108 /* DecimalTimeWidget.swift */,
 				208A0DD52586734B00D635CE /* ConverterWidget.swift */,
 				209C03B6257281DD00D8DF86 /* WheelConverterWidget.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		20C645C82662DA91001D7108 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
 				20AEE4EB257170620015FFC6 /* DateDetails.swift */,
 				20C645C52662D216001D7108 /* DecimalTimeDetails.swift */,
 				20E0958A2540465500383A31 /* ContactsList.swift */,
 				20E0957C253F990C00383A31 /* FavoriteList.swift */,
-				20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */,
 				2047A3462624A6FC00AA662C /* VariantPicker.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		20D9DCAD253F23BB00B5A9FA /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				20C645C72662DA64001D7108 /* Widgets */,
+				20C645C82662DA91001D7108 /* Screens */,
+				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
+				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
+				20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */,
 				2069C049253F2F9500E46721 /* OrbisecUI.swift */,
 				20D9DCB4253F23F000B5A9FA /* Assets.xcassets */,
 				20D9DCB9253F23F000B5A9FA /* LaunchScreen.storyboard */,
