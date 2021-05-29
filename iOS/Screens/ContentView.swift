@@ -61,7 +61,7 @@ struct ContentView: View {
                     .accessibility(label: Text("Changer de variante de calendrier républicain"))
                     .accessibility(value: Text(FrenchRepublicanDateOptions.current.variant.description))
                     .padding(.bottom)
-                }.frame(maxWidth: 800)
+                }.notTooWide()
             }.navigationBarTitle("Calendrier Républicain")
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -71,5 +71,13 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+extension View {
+    func notTooWide() -> some View {
+        // one frame for the content, one for the scroll view
+        self.frame(maxWidth: 800)
+            .frame(maxWidth: .infinity)
     }
 }
