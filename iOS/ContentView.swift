@@ -18,6 +18,7 @@ struct ContentView: View {
             ScrollView {
                 VStack {
                     TodayWidget()
+                    DecimalTimeWidget()
                     ConverterWidget()
                     if #available(iOS 14, *) {
                         WheelConverterWidget()
