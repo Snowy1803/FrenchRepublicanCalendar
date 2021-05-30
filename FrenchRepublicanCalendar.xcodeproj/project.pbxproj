@@ -43,6 +43,8 @@
 		20C18A5D260D250100967DF3 /* FrenchRepublicanCalendarCore in Frameworks */ = {isa = PBXBuildFile; productRef = 20C18A5C260D250100967DF3 /* FrenchRepublicanCalendarCore */; };
 		20C645C42662BECF001D7108 /* DecimalTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645C32662BECF001D7108 /* DecimalTimeWidget.swift */; };
 		20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645C52662D216001D7108 /* DecimalTimeDetails.swift */; };
+		20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645C926639EC9001D7108 /* DecimalTimeConverterWidget.swift */; };
+		20C645CC26639F64001D7108 /* DecimalTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645CB26639F64001D7108 /* DecimalTimePicker.swift */; };
 		20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */; };
 		20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */; };
 		20D9DCB3253F23BB00B5A9FA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCB2253F23BB00B5A9FA /* ContentView.swift */; };
@@ -167,6 +169,8 @@
 		20AEE4EB257170620015FFC6 /* DateDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20C645C32662BECF001D7108 /* DecimalTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimeWidget.swift; sourceTree = "<group>"; };
 		20C645C52662D216001D7108 /* DecimalTimeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimeDetails.swift; sourceTree = "<group>"; };
+		20C645C926639EC9001D7108 /* DecimalTimeConverterWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecimalTimeConverterWidget.swift; sourceTree = "<group>"; };
+		20C645CB26639F64001D7108 /* DecimalTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimePicker.swift; sourceTree = "<group>"; };
 		20D93972253F536D00872351 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -323,6 +327,7 @@
 				20C645C32662BECF001D7108 /* DecimalTimeWidget.swift */,
 				208A0DD52586734B00D635CE /* ConverterWidget.swift */,
 				209C03B6257281DD00D8DF86 /* WheelConverterWidget.swift */,
+				20C645C926639EC9001D7108 /* DecimalTimeConverterWidget.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -348,6 +353,7 @@
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
 				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
 				20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */,
+				20C645CB26639F64001D7108 /* DecimalTimePicker.swift */,
 				2069C049253F2F9500E46721 /* OrbisecUI.swift */,
 				20D9DCB4253F23F000B5A9FA /* Assets.xcassets */,
 				20D9DCB9253F23F000B5A9FA /* LaunchScreen.storyboard */,
@@ -623,7 +629,9 @@
 			files = (
 				209C03B7257281DD00D8DF86 /* WheelConverterWidget.swift in Sources */,
 				20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */,
+				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
 				20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */,
+				20C645CC26639F64001D7108 /* DecimalTimePicker.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
 				20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */,
 				20C645C42662BECF001D7108 /* DecimalTimeWidget.swift in Sources */,
