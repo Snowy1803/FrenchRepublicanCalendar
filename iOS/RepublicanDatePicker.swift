@@ -65,6 +65,9 @@ struct NavigatingPicker: View {
                 }
             }
         }
+        .accessibility(value: Text(transformer(selection.value)))
+        .accessibility(label: Text(title))
+        .accessibilityAdjustableAction(with: $selection, in: range)
         .padding(5)
         .background(Color("PickerBackground").cornerRadius(5))
     }
@@ -86,16 +89,7 @@ struct NavigatedPicker: View {
             .accessibilityElement(children: .ignore)
             .accessibility(value: Text(String(selection.value)))
             .accessibility(label: Text(title))
-            .accessibilityAdjustableAction { direction in
-                switch direction {
-                case .increment:
-                    selection.value += 1
-                case .decrement:
-                    selection.value -= 1
-                @unknown default:
-                    print("unknown case")
-                }
-            }
+            .accessibilityAdjustableAction(with: $selection, in: range)
         }.navigationBarTitle(Text(title))
     }
 }
@@ -114,5 +108,25 @@ extension Date {
     var iso: String {
         let cmps = Calendar.gregorian.dateComponents([.year, .month, .day], from: self)
         return "\(cmps.year!)-\(cmps.month!)-\(cmps.day!)"
+    }
+}
+
+extension View {
+    func accessibilityAdjustableAction(with selection: Binding<IntWrapper>, in range: Range<Int>) -> some View {
+        self.accessibilityAdjustableAction { direction in
+            let add: Int
+            switch direction {
+            case .increment:
+                add = 1
+            case .decrement:
+                add = -1
+            @unknown default:
+                add = 0
+            }
+            let new = selection.wrappedValue.value + add
+            if range.contains(new) {
+                selection.wrappedValue.value = new
+            }
+        }
     }
 }

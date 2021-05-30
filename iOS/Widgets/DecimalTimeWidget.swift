@@ -50,7 +50,7 @@ struct CurrentDecimalTime: View {
                 .font(.body.monospacedDigit())
         ).onReceive(timer) { _ in
             self.time = DecimalTime()
-        }
+        }.accessibility(label: Text("\(time.hour) heures, \(time.minute) minutes, et \(time.second) secondes"))
     }
 }
 
