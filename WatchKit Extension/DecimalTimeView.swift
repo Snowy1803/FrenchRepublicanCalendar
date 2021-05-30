@@ -15,7 +15,7 @@ struct DecimalTimeView: View {
     var body: some View {
         VStack {
             CurrentDecimalTime().padding([.top, .bottom], 5)
-            Text("Temps décimal").font(.system(size: 10))
+            Text("Temps décimal").font(.system(size: 11))
             HStack {
                 Picker(selection: $shownTime.hour.wrapped, label: Text("Heure décimale")) {
                     ForEach(0..<10) { h in
@@ -50,9 +50,11 @@ struct DecimalTimeView: View {
                     }
                 }
             }
-            Text("Temps SI").font(.system(size: 10))
+            Text("Temps SI").font(.system(size: 11))
+                .padding(.bottom)
         }.navigationBarTitle("Temps décimal")
         .labelsHidden()
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
