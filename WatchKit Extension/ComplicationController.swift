@@ -32,7 +32,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        if let entry = getTimelineEntry(family: complication.family, date: Date()) {
+        if let entry = (complication.isDecimalTime ? getDecimalTimeEntry : getTimelineEntry)(complication.family, Date()) {
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: entry))
         } else {
             handler(nil)
@@ -42,14 +42,39 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
         var entries = [CLKComplicationTimelineEntry]()
         entries.reserveCapacity(limit)
-        let midnight = Calendar.gregorian.startOfDay(for: Date())
-        for day in 0..<limit {
-            let date = Calendar.gregorian.date(byAdding: .day, value: day, to: midnight)!
-            guard let entry = getTimelineEntry(family: complication.family, date: date) else {
-                handler(nil)
-                return
+        if complication.isDecimalTime {
+            let startOfDay = Calendar.gregorian.startOfDay(for: date)
+            var current = DecimalTime(timeSinceMidnight: date.timeIntervalSince(startOfDay))
+            current.minute += 1
+            current.second = 0
+            current.remainder = 0
+            let dtime = current.decimalTime
+            let day = dtime > 10_00_00
+            current.decimalTime = day ? dtime - 10_00_00 : dtime
+            var date = startOfDay + current.timeSinceMidnight
+            if day {
+                date = Calendar.gregorian.date(byAdding: .day, value: 1, to: date)!
             }
-            entries.append(CLKComplicationTimelineEntry(date: date, complicationTemplate: entry))
+            current.decimalTime += 50 * DecimalTime.decimalSecond // avoids rounding errors
+            for _ in 0..<limit {
+                guard let entry = getDecimalTimeEntry(family: complication.family, time: current) else {
+                    handler(nil)
+                    return
+                }
+                entries.append(CLKComplicationTimelineEntry(date: date, complicationTemplate: entry))
+                current.decimalTime += 100 * DecimalTime.decimalSecond
+                date += 100 * DecimalTime.decimalSecond
+            }
+        } else {
+            let midnight = Calendar.gregorian.startOfDay(for: Date())
+            for day in 0..<limit {
+                let date = Calendar.gregorian.date(byAdding: .day, value: day, to: midnight)!
+                guard let entry = getTimelineEntry(family: complication.family, date: date) else {
+                    handler(nil)
+                    return
+                }
+                entries.append(CLKComplicationTimelineEntry(date: date, complicationTemplate: entry))
+            }
         }
         handler(entries)
     }
@@ -99,19 +124,68 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             print("Family not handled: \(family.rawValue)")
             return nil
         }
-        
+    }
+    
+    func getDecimalTimeEntry(family: CLKComplicationFamily, date: Date) -> CLKComplicationTemplate? {
+        let time = DecimalTime(timeSinceMidnight: date.timeIntervalSince(Calendar.gregorian.startOfDay(for: date)))
+        return getDecimalTimeEntry(family: family, time: time)
+    }
+    
+    func getDecimalTimeEntry(family: CLKComplicationFamily, time: DecimalTime) -> CLKComplicationTemplate? {
+        switch (family) {
+        case .utilitarianSmall, .utilitarianSmallFlat:
+            let template = CLKComplicationTemplateUtilitarianSmallFlat()
+            template.textProvider = CLKSimpleTextProvider(text: time.shortDescription)
+            return template
+        case .utilitarianLarge:
+            let template = CLKComplicationTemplateUtilitarianLargeFlat()
+            template.textProvider = CLKSimpleTextProvider(text: time.shortDescription)
+            return template
+        case .extraLarge:
+            let template = CLKComplicationTemplateExtraLargeSimpleText()
+            template.textProvider = CLKSimpleTextProvider(text: time.shortDescription)
+            return template
+        case .graphicCorner:
+            let template = CLKComplicationTemplateGraphicCornerStackText()
+            template.outerTextProvider = CLKSimpleTextProvider(text: "")
+            template.innerTextProvider = CLKSimpleTextProvider(text: time.shortDescription)
+            return template
+        default:
+            print("Family not handled: \(family.rawValue)")
+            return nil
+        }
     }
     
     // MARK: - Placeholder Templates
     
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
-        handler(getTimelineEntry(family: complication.family, date: FrenchRepublicanDate.origin))
+        if complication.isDecimalTime {
+            handler(getDecimalTimeEntry(family: complication.family, time: DecimalTime(hour: 4, minute: 29, second: 0, remainder: 0)))
+        } else {
+            handler(getTimelineEntry(family: complication.family, date: FrenchRepublicanDate.origin))
+        }
     }
     
     // MARK: - watchOS 7
     
-    @available(watchOSApplicationExtension 7.0, *)
+    @available(watchOS 7.0, *)
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
-        handler([CLKComplicationDescriptor(identifier: "CurrentFRDate", displayName: "Aujourd'hui", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicBezel, .graphicCorner, .graphicRectangular, .modularLarge])])
+        handler([CLKComplicationDescriptor(identifier: "CurrentFRDate", displayName: "Aujourd'hui", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicBezel, .graphicCorner, .graphicRectangular, .modularLarge]), CLKComplicationDescriptor(identifier: "CurrentDecimalTime", displayName: "Temps Décimal", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicCorner])])
+    }
+}
+
+extension CLKComplication {
+    var isDecimalTime: Bool {
+        if #available(watchOS 7.0, *) {
+            return identifier == "CurrentDecimalTime"
+        } else {
+            return false
+        }
+    }
+}
+
+extension DecimalTime {
+    var shortDescription: String {
+        "\(hour):\(("0" + String(minute)).suffix(2))"
     }
 }
