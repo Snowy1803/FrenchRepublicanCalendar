@@ -76,6 +76,12 @@ struct ContentView: View {
                     Text("Mes contacts")
                 }
             }
+            NavigationLink(destination: DecimalTimeView()) {
+                HStack {
+                    Image(systemName: "clock").frame(width: 20, height: 20)
+                    Text("Temps décimal")
+                }
+            }
         }.navigationBarTitle("Cal Républicain")
     }
 }
