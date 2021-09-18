@@ -8,6 +8,7 @@
 
 import SwiftUI
 import FrenchRepublicanCalendarCore
+import Introspect
 
 struct ContentView: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
@@ -78,5 +79,11 @@ extension View {
     func notTooWide() -> some View {
         self.modifier(ReadableContentFollowingModifier())
             .modifier(ReadableContentMeasuringModifier())
+    }
+    
+    func listNotTooWide() -> some View {
+        self.introspectTableView { tableView in
+            tableView.cellLayoutMarginsFollowReadableWidth = true
+        }
     }
 }

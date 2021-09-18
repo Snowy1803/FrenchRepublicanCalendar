@@ -37,6 +37,7 @@ struct FavoriteList: View {
                         pool.favorites.move(fromOffsets: IndexSet(indices.map { pool.favorites.count - 1 - $0 }), toOffset: pool.favorites.count - position)
                     }
                 }.editableList()
+                .listNotTooWide()
             }
         }.navigationBarTitle("Favoris")
     }

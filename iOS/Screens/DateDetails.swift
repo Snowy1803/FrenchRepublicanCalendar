@@ -56,7 +56,7 @@ struct DateDetails: View {
             let added = favoritesPool.favorites.contains(iso)
             Image(systemName: added ? "star.fill" : "star")
                 .accessibility(label: Text(added ? "Retirer des favoris" : "Ajouter aux favoris"))
-        })
+        }).listNotTooWide()
     }
 }
 

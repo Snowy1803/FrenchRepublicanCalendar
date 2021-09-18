@@ -30,6 +30,7 @@
 		2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
 		2061526B25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
 		2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */; };
+		2067271926F6580F00562A62 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 2067271826F6580F00562A62 /* Introspect */; };
 		2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069C049253F2F9500E46721 /* OrbisecUI.swift */; };
 		208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208A0DCD2586732E00D635CE /* TodayWidget.swift */; };
 		208A0DD62586734B00D635CE /* ConverterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208A0DD52586734B00D635CE /* ConverterWidget.swift */; };
@@ -218,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20C18A57260D24A600967DF3 /* FrenchRepublicanCalendarCore in Frameworks */,
+				2067271926F6580F00562A62 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +478,7 @@
 			name = FrenchRepublicanCalendar;
 			packageProductDependencies = (
 				20C18A56260D24A600967DF3 /* FrenchRepublicanCalendarCore */,
+				2067271826F6580F00562A62 /* Introspect */,
 			);
 			productName = FrenchRepublicanCal;
 			productReference = 20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */;
@@ -539,6 +542,7 @@
 			mainGroup = 20418BB12412F3E700E0EE6E;
 			packageReferences = (
 				20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */,
+				2067271726F6580F00562A62 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 20418BB92412F3E700E0EE6E /* Products */;
 			projectDirPath = "";
@@ -1113,6 +1117,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2067271726F6580F00562A62 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.3;
+			};
+		};
 		20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Snowy1803/FrenchRepublicanCalendarCore";
@@ -1124,6 +1136,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2067271826F6580F00562A62 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2067271726F6580F00562A62 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
 		20C18A56260D24A600967DF3 /* FrenchRepublicanCalendarCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */;

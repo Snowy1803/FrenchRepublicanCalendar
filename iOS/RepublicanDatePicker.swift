@@ -91,6 +91,7 @@ struct NavigatedPicker: View {
             .accessibility(label: Text(title))
             .accessibilityAdjustableAction(with: $selection, in: range)
         }.navigationBarTitle(Text(title))
+        .listNotTooWide()
     }
 }
 

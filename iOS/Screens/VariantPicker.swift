@@ -44,6 +44,7 @@ struct VariantPicker: View {
                 Text("Chiffres romains pour les années")
             }
         }.navigationBarTitle(Text("Variantes"))
+        .listNotTooWide()
     }
 }
 

@@ -52,7 +52,7 @@ struct ContactsList: View {
                         self.imageOf(data: c.thumbnailImageData)
                         Text(self.stringOf(contact: c))
                     }
-                }
+                }.listNotTooWide()
             }
         }.onAppear {
             self.fetchContacts()
@@ -95,6 +95,7 @@ struct ContactDetails: View {
                 }
             }
         }.navigationBarTitle(contact.givenName)
+        .listNotTooWide()
     }
 }
 
