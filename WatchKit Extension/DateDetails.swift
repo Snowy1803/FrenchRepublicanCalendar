@@ -31,14 +31,21 @@ struct DateDetails: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text(date.toLongStringNoYear())
-                Row(value: "\(date.formattedYear)", title: "An :")
-                Row(value: date.dayName, title: date.weekdayName)
-                Row(value: date.quarter, title: "Saison :")
-                Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
-                Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
-                Row(value: gregorian, title: "Grég. :")
-                Row(value: date.toShortenedString(), title: "Abrégé :")
+                let details = VStack {
+                    Text(date.toLongStringNoYear())
+                    Row(value: "\(date.formattedYear)", title: "An :")
+                    Row(value: date.dayName, title: date.weekdayName)
+                    Row(value: date.quarter, title: "Saison :")
+                    Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
+                    Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
+                    Row(value: gregorian, title: "Grég. :")
+                    Row(value: date.toShortenedString(), title: "Abrégé :")
+                }
+                if #available(watchOS 8, *) {
+                    details.scenePadding() // For Series 7 mostly
+                } else {
+                    details
+                }
                 Button(action: {
                     if self.added {
                         favoritesPool.favorites.removeAll { date in
