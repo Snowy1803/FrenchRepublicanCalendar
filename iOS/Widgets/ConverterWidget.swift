@@ -30,9 +30,14 @@ struct ConverterWidget: View {
             }
         } content: {
             let rep = FrenchRepublicanDate(date: from)
-            DatePicker(selection: $from, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
+            let picker = DatePicker(selection: $from, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
                 Text("Date grégorienne : ")
             }.environment(\.locale, Locale(identifier: "fr"))
+            if #available(iOS 14, *) {
+                picker
+            } else {
+                picker.labelsHidden() // ugly on iOS 13 with label on
+            }
             Divider()
             HStack {
                 Text("Date républicaine : ")
