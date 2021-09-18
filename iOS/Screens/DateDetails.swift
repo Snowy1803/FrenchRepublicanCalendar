@@ -11,8 +11,6 @@ import FrenchRepublicanCalendarCore
 import Combine
 
 struct DateDetails: View {
-    private static let preferredDefineMethodKey = "preferredDefineMethod"
-    
     @EnvironmentObject var favoritesPool: FavoritesPool
     
     var date: FrenchRepublicanDate
@@ -34,31 +32,7 @@ struct DateDetails: View {
                 Text(date.toVeryLongString())
             }
             Section {
-                Button {
-                    switch UserDefaults.standard.integer(forKey: DateDetails.preferredDefineMethodKey) {
-                    case 1:
-                        openDayNameDescriptionURL()
-                    default: // 0 (default), 2 (preferred)
-                        defineDayName()
-                    }
-                } label: {
-                    Row(value: date.dayName, title: "Jour :")
-                }.contextMenu {
-                    Button {
-                        UserDefaults.standard.set(2, forKey: DateDetails.preferredDefineMethodKey)
-                        defineDayName()
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                        Text("Chercher")
-                    }
-                    Button {
-                        UserDefaults.standard.set(1, forKey: DateDetails.preferredDefineMethodKey)
-                        openDayNameDescriptionURL()
-                    } label:  {
-                        Image(systemName: "w.circle")
-                        Text("Définition")
-                    }
-                }
+                DayNameButton(date: date)
                 Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                     .accessibility(value: Text("\(date.components.weekOfYear!) sur 37"))
@@ -84,10 +58,66 @@ struct DateDetails: View {
                 .accessibility(label: Text(added ? "Retirer des favoris" : "Ajouter aux favoris"))
         })
     }
+}
+
+struct DayNameButton: View {
+    private static let preferredDefineMethodKey = "preferredDefineMethod"
+    
+    @State var dayFrame: CGRect = CGRect()
+    
+    var date: FrenchRepublicanDate
+    
+    var body: some View {
+        Button {
+            switch UserDefaults.standard.integer(forKey: DayNameButton.preferredDefineMethodKey) {
+            case 1:
+                openDayNameDescriptionURL()
+            default: // 0 (default), 2 (preferred)
+                defineDayName()
+            }
+        } label: {
+            HStack {
+                Text("Jour :").lineLimit(1).layoutPriority(2)
+                    .foregroundColor(.primary)
+                Spacer()
+                Text(date.dayName).layoutPriority(3)
+                    .background(GeometryReader { proxy in
+                        let frame = proxy.frame(in: .global)
+                        if dayFrame != frame {
+                            let _ = DispatchQueue.main.async {
+                                dayFrame = frame
+                            }
+                        }
+                        EmptyView()
+                    })
+            }
+            .accessibilityElement()
+            .accessibility(label: Text("Jour :"))
+            .accessibility(value: Text(date.dayName))
+        }.contextMenu {
+            Button {
+                UserDefaults.standard.set(2, forKey: DayNameButton.preferredDefineMethodKey)
+                defineDayName()
+            } label: {
+                Image(systemName: "magnifyingglass")
+                Text("Chercher")
+            }
+            Button {
+                UserDefaults.standard.set(1, forKey: DayNameButton.preferredDefineMethodKey)
+                openDayNameDescriptionURL()
+            } label:  {
+                Image(systemName: "w.circle")
+                Text("Définition")
+            }
+        }
+    }
     
     func defineDayName() {
         // We're gonna create a new UIKit text view and make it look up the word
-        let tv = UITextView()
+        
+        // center and inset the popover on iOS 15
+        let tv = UITextView(frame: CGRect(x: dayFrame.minX - 5, y: dayFrame.midY, width: dayFrame.width + 10, height: 0))
+        tv.layer.isHidden = true
         tv.text = date.dayName
         tv.isEditable = false // prevents showing the keyboard
         
@@ -104,7 +134,9 @@ struct DateDetails: View {
             openDayNameDescriptionURL()
         }
         
-        tv.removeFromSuperview()
+        DispatchQueue.main.async { // popover needs it to remain for a tick
+            tv.removeFromSuperview()
+        }
     }
     
     func openDayNameDescriptionURL() {
