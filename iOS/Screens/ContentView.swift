@@ -76,8 +76,7 @@ struct ContentView_Previews: PreviewProvider {
 
 extension View {
     func notTooWide() -> some View {
-        // one frame for the content, one for the scroll view
-        self.frame(maxWidth: 800)
-            .frame(maxWidth: .infinity)
+        self.modifier(ReadableContentFollowingModifier())
+            .modifier(ReadableContentMeasuringModifier())
     }
 }

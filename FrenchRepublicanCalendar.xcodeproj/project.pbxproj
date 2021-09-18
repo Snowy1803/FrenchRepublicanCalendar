@@ -29,6 +29,7 @@
 		2061525F25728FCF007A214D /* Siri.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2061525825728FCF007A214D /* Siri.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
 		2061526B25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
+		2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */; };
 		2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069C049253F2F9500E46721 /* OrbisecUI.swift */; };
 		208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208A0DCD2586732E00D635CE /* TodayWidget.swift */; };
 		208A0DD62586734B00D635CE /* ConverterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208A0DD52586734B00D635CE /* ConverterWidget.swift */; };
@@ -160,6 +161,7 @@
 		2061525A25728FCF007A214D /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		2061525C25728FCF007A214D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2061526925728FF9007A214D /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutGuidesSwiftUI.swift; sourceTree = "<group>"; };
 		2069C049253F2F9500E46721 /* OrbisecUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbisecUI.swift; sourceTree = "<group>"; };
 		208A0DCD2586732E00D635CE /* TodayWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWidget.swift; sourceTree = "<group>"; };
 		208A0DD52586734B00D635CE /* ConverterWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverterWidget.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 		20D9DCAD253F23BB00B5A9FA /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */,
 				20C645C72662DA64001D7108 /* Widgets */,
 				20C645C82662DA91001D7108 /* Screens */,
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
@@ -633,6 +636,7 @@
 			files = (
 				209C03B7257281DD00D8DF86 /* WheelConverterWidget.swift in Sources */,
 				20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */,
+				2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */,
 				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
 				20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */,
 				20C645CC26639F64001D7108 /* DecimalTimePicker.swift in Sources */,
