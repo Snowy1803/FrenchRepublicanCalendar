@@ -94,20 +94,21 @@ struct DayNameButton: View {
             .accessibilityElement()
             .accessibility(label: Text("Jour :"))
             .accessibility(value: Text(date.dayName))
-        }.contextMenu {
-            Button {
-                UserDefaults.standard.set(2, forKey: DayNameButton.preferredDefineMethodKey)
-                defineDayName()
-            } label: {
-                Image(systemName: "magnifyingglass")
-                Text("Chercher")
-            }
-            Button {
-                UserDefaults.standard.set(1, forKey: DayNameButton.preferredDefineMethodKey)
-                openDayNameDescriptionURL()
-            } label:  {
-                Image(systemName: "w.circle")
-                Text("Définition")
+            .contextMenu {
+                Button {
+                    UserDefaults.standard.set(2, forKey: DayNameButton.preferredDefineMethodKey)
+                    defineDayName()
+                } label: {
+                    Image(systemName: "magnifyingglass")
+                    Text("Chercher")
+                }
+                Button {
+                    UserDefaults.standard.set(1, forKey: DayNameButton.preferredDefineMethodKey)
+                    openDayNameDescriptionURL()
+                } label:  {
+                    Image(systemName: "w.circle")
+                    Text("Définition")
+                }
             }
         }
     }
