@@ -56,6 +56,7 @@ struct DateDetails: View {
                 }
             }
         }.navigationBarTitle("Date")
+            .ensureSmallBarTitle()
     }
 }
 

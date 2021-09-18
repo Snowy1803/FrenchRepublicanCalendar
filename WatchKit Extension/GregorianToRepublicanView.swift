@@ -35,5 +35,16 @@ struct GregorianToRepublicanView: View {
                 }
             }
         }.navigationBarTitle("Grég > Rép")
+            .ensureSmallBarTitle()
+    }
+}
+
+extension View {
+    @ViewBuilder func ensureSmallBarTitle() -> some View {
+        if #available(watchOS 8, *) {
+            self.navigationBarTitleDisplayMode(.inline)
+        } else {
+            self
+        }
     }
 }

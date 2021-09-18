@@ -39,5 +39,6 @@ struct RepublicanToGregorianView: View {
                 }
             }
         }.navigationBarTitle("Rép > Grég")
+            .ensureSmallBarTitle()
     }
 }

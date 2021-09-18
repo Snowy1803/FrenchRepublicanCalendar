@@ -53,6 +53,7 @@ struct DecimalTimeView: View {
             Text("Temps SI").font(.system(size: 11))
                 .padding(.bottom)
         }.navigationBarTitle("Temps décimal")
+        .ensureSmallBarTitle()
         .labelsHidden()
         .edgesIgnoringSafeArea(.bottom)
     }
