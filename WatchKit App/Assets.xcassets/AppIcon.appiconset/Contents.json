@@ -17,6 +17,14 @@
       "scale" : "2x"
     },
     {
+      "size" : "33x33",
+      "idiom" : "watch",
+      "filename" : "icon-66.png",
+      "subtype" : "45mm",
+      "role" : "notificationCenter",
+      "scale" : "2x"
+    },
+    {
       "size" : "29x29",
       "idiom" : "watch",
       "filename" : "icon-58.png",
@@ -55,6 +63,22 @@
       "scale" : "2x"
     },
     {
+      "size" : "46x46",
+      "idiom" : "watch",
+      "filename" : "icon-92.png",
+      "subtype" : "41mm",
+      "role" : "appLauncher",
+      "scale" : "2x"
+    },
+    {
+      "size" : "51x51",
+      "idiom" : "watch",
+      "filename" : "icon-102.png",
+      "subtype" : "45mm",
+      "role" : "appLauncher",
+      "scale" : "2x"
+    },
+    {
       "size" : "86x86",
       "idiom" : "watch",
       "filename" : "icon-172.png",
@@ -79,6 +103,14 @@
       "scale" : "2x"
     },
     {
+      "size" : "117x117",
+      "idiom" : "watch",
+      "filename" : "icon-234.png",
+      "subtype" : "45mm",
+      "role" : "quickLook",
+      "scale" : "2x"
+    },
+    {
       "size" : "1024x1024",
       "idiom" : "watch-marketing",
       "filename" : "icon-1024.png",
@@ -86,5 +118,5 @@
     }
   ],
   "author" : "Iconizer",
-  "version" : "3.0.0"
+  "version" : "2020.11.0"
 }
