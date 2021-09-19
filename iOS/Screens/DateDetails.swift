@@ -117,7 +117,7 @@ struct DayNameButton: View {
         // We're gonna create a new UIKit text view and make it look up the word
         
         // center and inset the popover on iOS 15
-        let tv = UITextView(frame: CGRect(x: dayFrame.minX - 5, y: dayFrame.midY, width: dayFrame.width + 10, height: 0))
+        let tv = UITextView(frame: CGRect(x: dayFrame.midX, y: dayFrame.maxY + 5, width: 0, height: 0))
         tv.layer.isHidden = true
         tv.text = date.dayName
         tv.isEditable = false // prevents showing the keyboard
