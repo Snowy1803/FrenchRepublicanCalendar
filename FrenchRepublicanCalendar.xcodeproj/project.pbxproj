@@ -152,7 +152,6 @@
 		20418BDD2412F3EC00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20474FFD2571C006006935A9 /* LISEZMOI.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LISEZMOI.md; sourceTree = "<group>"; };
 		204750032571C37A006935A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		204750042571C4AF006935A9 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		2047A3462624A6FC00AA662C /* VariantPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantPicker.swift; sourceTree = "<group>"; };
 		2047A3482624B0AB00AA662C /* DateWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DateWidgetExtension.entitlements; sourceTree = "<group>"; };
 		2047A3492624B0BC00AA662C /* Siri.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Siri.entitlements; sourceTree = "<group>"; };
@@ -164,6 +163,7 @@
 		2061526925728FF9007A214D /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutGuidesSwiftUI.swift; sourceTree = "<group>"; };
 		2069C049253F2F9500E46721 /* OrbisecUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbisecUI.swift; sourceTree = "<group>"; };
+		2083846726F92F6200E9E283 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		208A0DCD2586732E00D635CE /* TodayWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWidget.swift; sourceTree = "<group>"; };
 		208A0DD52586734B00D635CE /* ConverterWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverterWidget.swift; sourceTree = "<group>"; };
 		208A0DE3258673B900D635CE /* MyDateComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDateComponents.swift; sourceTree = "<group>"; };
@@ -241,9 +241,9 @@
 			children = (
 				2047A3482624B0AB00AA662C /* DateWidgetExtension.entitlements */,
 				2061524E25728F95007A214D /* FrenchRepublicanCalendar.entitlements */,
-				204750042571C4AF006935A9 /* COPYING */,
 				204750032571C37A006935A9 /* README.md */,
 				20474FFD2571C006006935A9 /* LISEZMOI.md */,
+				2083846726F92F6200E9E283 /* LICENSE.txt */,
 				20D93972253F536D00872351 /* .gitignore */,
 				20AEE4D625716F940015FFC6 /* Shared */,
 				20D9DCAD253F23BB00B5A9FA /* iOS */,
