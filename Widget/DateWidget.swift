@@ -50,7 +50,14 @@ struct DateWidgetEntryView : View {
     var body: some View {
         let today = FrenchRepublicanDate(date: entry.date)
         Group {
-            if family == WidgetFamily.systemSmall {
+            if #available(iOSApplicationExtension 16, *), family == .accessoryInline {
+                ViewThatFits(in: .horizontal) {
+                    Text(today.toVeryLongString())
+                    Text(today.toLongString())
+                    Text(today.toLongStringNoYear())
+                    Text(today.toShortString())
+                }
+            } else if family == .systemSmall {
                 VStack(alignment: .leading) {
                     SimpleDateStack(today: today)
                     Spacer()
@@ -103,12 +110,19 @@ struct SimpleDateStack: View {
 @main
 struct DateWidget: Widget {
     let kind: String = "DateWidget"
+    
+    var supported: [WidgetFamily] {
+        if #available(iOS 16, *) {
+            return [.systemSmall, .systemMedium, .accessoryInline]
+        }
+        return [.systemSmall, .systemMedium]
+    }
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             DateWidgetEntryView(entry: entry)
         }
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies(supported)
         .configurationDisplayName("Aujourd'hui")
         .description("Affiche la date actuelle dans le Calendrier Républicain")
     }
