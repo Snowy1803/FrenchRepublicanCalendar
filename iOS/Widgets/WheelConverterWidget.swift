@@ -33,6 +33,7 @@ struct WheelConverterWidget: View {
                     }
                 }.onAppear {
                     if !scrolled {
+                        print("Starting at", wheelContent.first ?? "nil")
                         reader.scrollTo(Calendar.gregorian.startOfDay(for: Date()), anchor: .center)
                         scrolled = true
                     }
@@ -93,7 +94,13 @@ struct WheelDateView: View {
 struct DateCollection: RandomAccessCollection {
     var startDate = Calendar.gregorian.startOfDay(for: FrenchRepublicanDate.origin)
     
-    var startIndex: Int = 0
+    var startIndex: Int = {
+        if #available(iOS 16, *) {
+            return 82440 // workaround FB11396644 (ScrollViewReader for LazyHStack is not lazy anymore)
+        } else {
+            return 0
+        }
+    }()
     var endIndex: Int = 4933795
     
     typealias Element = Date
