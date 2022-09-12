@@ -80,6 +80,18 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 extension View {
+    public func introspectCollectionView(customize: @escaping (UICollectionView) -> ()) -> some View {
+        return inject(UIKitIntrospectionView(
+            selector: { introspectionView in
+                guard let viewHost = Introspect.findViewHost(from: introspectionView) else {
+                    return nil
+                }
+                return Introspect.previousSibling(containing: UICollectionView.self, from: viewHost)
+            },
+            customize: customize
+        ))
+    }
+    
     func notTooWide() -> some View {
         self.modifier(ReadableContentFollowingModifier())
             .modifier(ReadableContentMeasuringModifier())
@@ -87,7 +99,26 @@ extension View {
     
     func listNotTooWide() -> some View {
         self.introspectTableView { tableView in
+            // iOS 15
             tableView.cellLayoutMarginsFollowReadableWidth = true
+        }.introspectCollectionView { collectionView in
+            // iOS 16
+            guard #available(iOS 16, *) else {
+                return
+            }
+            // create a new fresh layout how I like
+            // this is very hacky
+            collectionView.collectionViewLayout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
+                // Create the layout section using a list configuration.
+                let listConfig = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+                let section = NSCollectionLayoutSection.list(using: listConfig, layoutEnvironment: layoutEnvironment)
+                
+                // Change the section's content insets reference to the readable content.
+                // This changes the way that the insets in the section's contentInsets property are interpreted.
+                section.contentInsetsReference = .readableContent
+                
+                return section
+            }
         }
     }
 }

@@ -139,7 +139,11 @@ struct DayNameButton: View {
             openDayNameDescriptionURL()
         }
         
-        DispatchQueue.main.async { // popover needs it to remain for a tick
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // popover needs the view to remain a while
+            // no delay needed for iOS 13-14
+            // one tick needed for iOS 15
+            // multiple ticks needed for iOS 16
+            // what next?
             tv.removeFromSuperview()
         }
     }
