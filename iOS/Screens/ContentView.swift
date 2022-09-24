@@ -106,17 +106,17 @@ extension View {
             guard #available(iOS 16, *) else {
                 return
             }
-            // create a new fresh layout how I like
+            guard let layout = collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout,
+                  layout.responds(to: Selector(("layoutSectionProvider"))) else {
+                return // impl changed, abort
+            }
             // this is very hacky
+            let ogProvider = unsafeBitCast(
+                layout.value(forKey: "_layoutSectionProvider") as AnyObject,
+                to: (@convention(block) (Int, NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection?).self)
             collectionView.collectionViewLayout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-                // Create the layout section using a list configuration.
-                let listConfig = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-                let section = NSCollectionLayoutSection.list(using: listConfig, layoutEnvironment: layoutEnvironment)
-                
-                // Change the section's content insets reference to the readable content.
-                // This changes the way that the insets in the section's contentInsets property are interpreted.
-                section.contentInsetsReference = .readableContent
-                
+                let section = ogProvider(sectionIndex, layoutEnvironment)
+                section?.contentInsetsReference = .readableContent
                 return section
             }
         }
