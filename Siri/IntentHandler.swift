@@ -45,7 +45,7 @@ class IntentHandler: INExtension, ConversionIntentHandling, CreateDateIntentHand
         guard 0 < day && day <= 30,
               0 < month && month <= 13,
               0 < year,
-              month != 13 || day <= (year % 4 == 0 ? 6 : 5) else {
+              month != 13 || day <= (FrenchRepublicanDateOptions.current.variant.isYearSextil(year) ? 6 : 5) else {
             completion(.init(code: .failure, userActivity: nil))
             return
         }

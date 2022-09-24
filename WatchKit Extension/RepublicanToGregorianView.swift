@@ -27,7 +27,7 @@ struct RepublicanToGregorianView: View {
             Text(dateString).padding([.top, .bottom], 5)
             HStack {
                 Picker(selection: $shownDate.day.wrapped, label: EmptyView()) {
-                    ForEach(1..<(shownDate.month < 13 ? 31 : shownDate.year % 4 == 0 ? 7 : 6), id: \.self) { day in
+                    ForEach(1..<(shownDate.month < 13 ? 31 : FrenchRepublicanDateOptions.current.variant.isYearSextil(shownDate.year) ? 7 : 6), id: \.self) { day in
                         Text("\(day)").tag(day.wrapped)
                     }
                 }
