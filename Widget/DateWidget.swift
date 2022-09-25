@@ -28,7 +28,7 @@ struct Provider: TimelineProvider {
         var entries: [SimpleEntry] = []
 
         let currentDate = Calendar.gregorian.startOfDay(for: Date())
-        for offset in 0..<100 {
+        for offset in 0..<30 {
             let entryDate = Calendar.gregorian.date(byAdding: .day, value: offset, to: currentDate)!
             let entry = SimpleEntry(date: entryDate)
             entries.append(entry)
