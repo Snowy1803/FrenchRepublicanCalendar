@@ -57,6 +57,15 @@ struct DateWidgetEntryView : View {
                     Text(today.toLongStringNoYear())
                     Text(today.toShortString())
                 }
+            } else if #available(iOSApplicationExtension 16, *), family == .accessoryRectangular {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(today.toLongStringNoYear())
+                        Text("An \(today.formattedYear)")
+                        Text(today.components.month! == 13 ? today.weekdayName : today.dayName)
+                    }
+                    Spacer(minLength: 0)
+                }
             } else if family == .systemSmall {
                 VStack(alignment: .leading) {
                     SimpleDateStack(today: today)
@@ -112,7 +121,7 @@ struct DateWidget: Widget {
     
     var supported: [WidgetFamily] {
         if #available(iOS 16, *) {
-            return [.systemSmall, .systemMedium, .accessoryInline]
+            return [.systemSmall, .systemMedium, .accessoryInline, .accessoryRectangular]
         }
         return [.systemSmall, .systemMedium]
     }
