@@ -59,21 +59,22 @@ struct TimeEntry: TimelineEntry {
 }
 
 struct TimeWidgetEntryView : View {
+    @Environment(\.widgetFamily) var family
     var entry: TimeEntry
 
     var body: some View {
-        Group {
-            Text(entry.time.hourAndMinuteFormatted)
-        }
-        .foregroundColor(.primary)
-        .font({
-            if #available(iOS 15, *) {
-                return .system(.largeTitle).monospacedDigit()
-            } else {
-                return .system(.largeTitle, design: .monospaced)
-            }
-        }())
-        .padding()
+        Text(entry.time.hourAndMinuteFormatted)
+            .fixedSize()
+            .foregroundColor(.primary)
+            .font({
+                if #available(iOS 15, *) {
+                    return .system(.largeTitle).monospacedDigit()
+                } else {
+                    return .system(.largeTitle, design: .monospaced)
+                }
+            }())
+            .scaledToFit()
+            .padding()
     }
 }
 
@@ -82,7 +83,7 @@ struct TimeWidget: Widget {
     
     var supported: [WidgetFamily] {
         if #available(iOS 16, *) {
-            return [.systemSmall, .accessoryInline]
+            return [.systemSmall, .accessoryInline, .accessoryCircular]
         }
         return [.systemSmall]
     }
