@@ -12,6 +12,7 @@
 
 import SwiftUI
 import FrenchRepublicanCalendarCore
+import StoreKit
 
 struct VariantPicker: View {
     @EnvironmentObject var midnight: Midnight
@@ -49,6 +50,14 @@ struct VariantPicker: View {
             }
         }.navigationBarTitle(Text("Variantes"))
         .listNotTooWide()
+        .onDisappear {
+            let key = "store-review-settings-count"
+            let count = UserDefaults.standard.integer(forKey: key) + 1
+            UserDefaults.standard.set(count, forKey: key)
+            if count % 30 == 2 { // second time it disappears
+                SKStoreReviewController.requestReview()
+            }
+        }
     }
 }
 
