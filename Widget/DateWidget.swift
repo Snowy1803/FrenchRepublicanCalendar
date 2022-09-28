@@ -107,7 +107,6 @@ struct SimpleDateStack: View {
     }
 }
 
-@main
 struct DateWidget: Widget {
     let kind: String = "DateWidget"
     
@@ -125,6 +124,14 @@ struct DateWidget: Widget {
         .supportedFamilies(supported)
         .configurationDisplayName("Aujourd'hui")
         .description("Affiche la date actuelle dans le Calendrier Républicain")
+    }
+}
+
+@main
+struct FrenchRepublicanWidgets: WidgetBundle {
+    var body: some Widget {
+        DateWidget()
+        TimeWidget()
     }
 }
 
