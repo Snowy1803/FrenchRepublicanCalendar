@@ -59,14 +59,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             if day {
                 date = Calendar.gregorian.date(byAdding: .day, value: 1, to: date)!
             }
-            current.decimalTime += 50 * DecimalTime.decimalSecond // avoids rounding errors
+            current.second = 50 // avoids rounding errors
             for _ in 0..<limit {
                 guard let entry = getDecimalTimeEntry(family: complication.family, time: current) else {
                     handler(nil)
                     return
                 }
                 entries.append(CLKComplicationTimelineEntry(date: date, complicationTemplate: entry))
-                current.decimalTime += 100 * DecimalTime.decimalSecond
+                current.decimalTime += 100
                 date += 100 * DecimalTime.decimalSecond
             }
         } else {

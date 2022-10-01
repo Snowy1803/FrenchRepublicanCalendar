@@ -39,12 +39,12 @@ struct TimeProvider: TimelineProvider {
         if day {
             date = Calendar.gregorian.date(byAdding: .day, value: 1, to: date)!
         }
-        current.second += 50 // avoids rounding errors
+        current.second = 50 // avoids rounding errors
         
         var entries: [TimeEntry] = []
         for _ in 0..<100 {
             entries.append(TimeEntry(date: date, time: current))
-            current.decimalTime += 100 * DecimalTime.decimalSecond
+            current.decimalTime += 100
             date += 100 * DecimalTime.decimalSecond
         }
 
