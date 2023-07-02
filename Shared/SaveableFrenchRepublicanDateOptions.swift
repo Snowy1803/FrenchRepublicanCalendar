@@ -13,7 +13,7 @@
 import Foundation
 import FrenchRepublicanCalendarCore
 import WatchConnectivity
-#if os(iOS)
+#if os(iOS) && canImport(WidgetKit)
 import WidgetKit
 #endif
 
@@ -40,7 +40,7 @@ extension FrenchRepublicanDateOptions: SaveableFrenchRepublicanDateOptions {
             UserDefaults.shared.set(newValue.romanYear, forKey: "frdo-roman")
             UserDefaults.shared.set(newValue.variant.rawValue, forKey: "frdo-variant")
             WCSession.default.transferUserInfo(["frdo-roman": newValue.romanYear, "frdo-variant": newValue.variant.rawValue])
-            #if os(iOS)
+            #if os(iOS) && canImport(WidgetKit)
             if #available(iOS 14.0, *) {
                 WidgetCenter.shared.reloadAllTimelines()
             }

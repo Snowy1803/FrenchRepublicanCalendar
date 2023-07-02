@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		20024496244DD70E00A89D79 /* FavoriteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20024495244DD70E00A89D79 /* FavoriteList.swift */; };
 		20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20024497244DE3EC00A89D79 /* ContactsList.swift */; };
 		201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A51C1244D2C8800C9867B /* DateDetails.swift */; };
-		20418BBD2412F3E700E0EE6E /* FrenchRepublicanCalendar.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		20418BBD2412F3E700E0EE6E /* FrenchRepublicanCalendar.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20418BC32412F3E700E0EE6E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC12412F3E700E0EE6E /* Interface.storyboard */; };
 		20418BC52412F3EB00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC42412F3EB00E0EE6E /* Assets.xcassets */; };
 		20418BCC2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 20418BCB2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -26,7 +26,7 @@
 		2047A34E2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
 		2047A34F2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
 		2061525B25728FCF007A214D /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2061525A25728FCF007A214D /* IntentHandler.swift */; };
-		2061525F25728FCF007A214D /* Siri.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2061525825728FCF007A214D /* Siri.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2061525F25728FCF007A214D /* Siri.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2061525825728FCF007A214D /* Siri.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
 		2061526B25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
 		2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */; };
@@ -62,7 +62,7 @@
 		20E0959D25404BB200383A31 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E0959C25404BB200383A31 /* SwiftUI.framework */; };
 		20E095A025404BB200383A31 /* DateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0959F25404BB200383A31 /* DateWidget.swift */; };
 		20E095A225404BEB00383A31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20E095A125404BEB00383A31 /* Assets.xcassets */; };
-		20E095A625404BEB00383A31 /* DateWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 20E0959825404BB200383A31 /* DateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		20E095A625404BEB00383A31 /* DateWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 20E0959825404BB200383A31 /* DateWidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 /* End PBXBuildFile section */
@@ -684,16 +684,19 @@
 		};
 		2061525E25728FCF007A214D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 2061525725728FCF007A214D /* Siri */;
 			targetProxy = 2061525D25728FCF007A214D /* PBXContainerItemProxy */;
 		};
 		2069C035253F266700E46721 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 20418BBB2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App */;
 			targetProxy = 2069C034253F266700E46721 /* PBXContainerItemProxy */;
 		};
 		20E095A525404BEB00383A31 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 20E0959725404BB200383A31 /* DateWidgetExtension */;
 			targetProxy = 20E095A425404BEB00383A31 /* PBXContainerItemProxy */;
 		};
@@ -985,6 +988,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1010,6 +1017,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
