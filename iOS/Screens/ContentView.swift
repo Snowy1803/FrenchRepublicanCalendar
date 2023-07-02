@@ -70,6 +70,7 @@ struct ContentView: View {
             }.navigationBarTitle("Calendrier Républicain")
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .buttonStyle(.plain)
     }
 }
 
