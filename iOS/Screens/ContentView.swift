@@ -80,18 +80,6 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 extension View {
-    public func introspectCollectionView(customize: @escaping (UICollectionView) -> ()) -> some View {
-        return inject(UIKitIntrospectionView(
-            selector: { introspectionView in
-                guard let viewHost = Introspect.findViewHost(from: introspectionView) else {
-                    return nil
-                }
-                return Introspect.previousSibling(containing: UICollectionView.self, from: viewHost)
-            },
-            customize: customize
-        ))
-    }
-    
     func notTooWide() -> some View {
         self.modifier(ReadableContentFollowingModifier())
             .modifier(ReadableContentMeasuringModifier())
