@@ -18,11 +18,13 @@ struct ContactsList: View {
     @ObservedObject var favoritesPool: FavoritesPool
     
     @State var contacts = [CNContact]()
+    @State var errorMessage: String = "Chargement"
     
-    func fetchContacts() {
+    nonisolated func fetchContacts() {
         let store = CNContactStore()
         
-        contacts.removeAll()
+        var contacts: [CNContact] = []
+        var errorMessage: String = "Aucun contact"
         
         var keys = [CNContactThumbnailImageDataKey, CNContactBirthdayKey, CNContactDatesKey] as [CNKeyDescriptor]
         keys.append(CNContactFormatter.descriptorForRequiredKeys(for: .fullName))
@@ -32,19 +34,29 @@ struct ContactsList: View {
             try store.enumerateContacts(with: request) { (contact, stop) in
                 if contact.birthday != nil || !contact.dates.isEmpty {
                     self.contacts.append(contact)
+                } else {
+                    errorMessage = "Aucun contact avec un anniversaire"
                 }
             }
-            contacts.sort(by: { c1, c2 in self.stringOf(contact: c1) < self.stringOf(contact: c2) })
+            Task { @MainActor in
+                contacts.sort(by: { c1, c2 in self.stringOf(contact: c1) < self.stringOf(contact: c2) })
+                self.contacts = contacts
+                self.errorMessage = errorMessage
+            }
         }
         catch {
             print("Failed to fetch contact, error: \(error)")
+            Task { @MainActor in
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
     
     var body: some View {
         Group {
             if contacts.isEmpty {
-                Text("Accès refusé")
+                Text(errorMessage)
+                    .multilineTextAlignment(.center)
             } else {
                 List(contacts, id: \.identifier) { c in
                     NavigationLink(destination: ContactDetails(favoritesPool: favoritesPool, contact: c)) {
@@ -54,7 +66,9 @@ struct ContactsList: View {
                 }
             }
         }.onAppear {
-            self.fetchContacts()
+            Task.detached {
+                self.fetchContacts()
+            }
         }.navigationBarTitle("Contacts")
     }
     
