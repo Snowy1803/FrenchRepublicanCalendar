@@ -34,18 +34,20 @@ struct ConverterWidget: View {
             }
         } content: {
             let rep = FrenchRepublicanDate(date: from)
-            let picker = DatePicker(selection: $from, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
-                Text("Date grégorienne : ")
-            }.environment(\.locale, Locale(identifier: "fr"))
-            if #available(iOS 14, *) {
-                picker
-            } else {
-                picker.labelsHidden() // ugly on iOS 13 with label on
+            VStack(alignment: .leading) {
+                Text("Date grégorienne")
+                    .font(.headline)
+                    .accessibility(hidden: true)
+                DatePicker(selection: $from, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
+                    Text("Date grégorienne")
+                }.frame(maxWidth: .infinity, alignment: .leading)
+                .environment(\.locale, Locale(identifier: "fr"))
+                .labelsHidden()
             }
             Divider()
-            HStack {
-                Text("Date républicaine : ")
-                Spacer()
+            VStack(alignment: .leading) {
+                Text("Date républicaine")
+                    .font(.headline)
                 RepublicanDatePicker(date: Binding(get: {
                     return MyRepublicanDateComponents(day: rep.components.day!, month: rep.components.month!, year: rep.components.year!)
                 }, set: { cmps in

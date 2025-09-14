@@ -13,28 +13,45 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
+struct HOrVStack<Content: View>: View {
+    @Environment(\.horizontalSizeClass) var sizeClass
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        if sizeClass == .compact {
+            VStack {
+                content()
+            }
+        } else {
+            HStack {
+                content()
+            }
+        }
+    }
+}
+
 struct RepublicanDatePicker: View {
     @Binding var date: MyRepublicanDateComponents
     
     var body: some View {
-        HStack(spacing: 0) {
-            NavigatingPicker(
-                selection: $date.day.wrapped,
-                range: 1..<(date.month < 13 ? 31 : FrenchRepublicanDateOptions.current.variant.isYearSextil(date.year) ? 7 : 6),
-                preferMenu: true,
-                title: "Jour"
-            )
-            Text(" ").accessibility(hidden: true)
-            NavigatingPicker(
-                selection: $date.month.wrapped,
-                range: 1..<14,
-                preferMenu: true,
-                title: "Mois",
-                transformer: {
-                    FrenchRepublicanDate.allMonthNames[$0 - 1]
-                }
-            )
-            Text(" ").accessibility(hidden: true)
+        HOrVStack {
+            HStack {
+                NavigatingPicker(
+                    selection: $date.day.wrapped,
+                    range: 1..<(date.month < 13 ? 31 : FrenchRepublicanDateOptions.current.variant.isYearSextil(date.year) ? 7 : 6),
+                    preferMenu: true,
+                    title: "Jour"
+                )
+                NavigatingPicker(
+                    selection: $date.month.wrapped,
+                    range: 1..<14,
+                    preferMenu: true,
+                    title: "Mois",
+                    transformer: {
+                        FrenchRepublicanDate.allMonthNames[$0 - 1]
+                    }
+                )
+            }
             NavigatingPicker(
                 selection: $date.year.wrapped,
                 range: 1..<2708,
@@ -66,9 +83,11 @@ struct NavigatingPicker: View {
             } else {
                 NavigationLink(destination: NavigatedPicker(selection: $selection, range: range, title: title, transformer: transformer)) {
                     Text(transformer(selection.value))
+                        .padding(.vertical, 7) // somehow that aligns it perfectly
                 }
             }
         }
+        .frame(maxWidth: .infinity)
         .accessibility(value: Text(transformer(selection.value)))
         .accessibility(label: Text(title))
         .accessibilityAdjustableAction(with: $selection, in: range)

@@ -23,15 +23,13 @@ struct DecimalTimeConverterWidget: View {
             Text("Convertir")
             Spacer()
         } content: {
-            HStack {
-                Text("Temps SI : ")
-                Spacer()
+            VStack(alignment: .leading) {
+                Text("Temps SI")
+                    .font(.headline)
                 SITimePicker(time: $time)
-            }
-            Divider()
-            HStack {
-                Text("Temps décimal : ")
-                Spacer()
+                Divider()
+                Text("Temps décimal")
+                    .font(.headline)
                 DecimalTimePicker(time: $time)
             }
         }
