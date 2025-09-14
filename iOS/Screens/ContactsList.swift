@@ -17,11 +17,13 @@ import Contacts
 struct ContactsList: View {
     
     @State var contacts = [CNContact]()
-    
-    func fetchContacts() {
+    @State var errorMessage: String = "Chargement"
+
+    nonisolated func fetchContacts() {
         let store = CNContactStore()
         
-        contacts.removeAll()
+        var contacts: [CNContact] = []
+        var errorMessage: String = "Aucun contact"
         
         var keys = [CNContactThumbnailImageDataKey, CNContactBirthdayKey, CNContactDatesKey] as [CNKeyDescriptor]
         keys.append(CNContactFormatter.descriptorForRequiredKeys(for: .fullName))
@@ -30,26 +32,40 @@ struct ContactsList: View {
         do {
             try store.enumerateContacts(with: request) { (contact, stop) in
                 if contact.birthday != nil || !contact.dates.isEmpty {
-                    self.contacts.append(contact)
+                    contacts.append(contact)
+                } else {
+                    errorMessage = "Aucun contact avec un anniversaire"
                 }
             }
-            contacts.sort(by: { c1, c2 in self.stringOf(contact: c1) < self.stringOf(contact: c2) })
+            Task { @MainActor in
+                contacts.sort(by: { c1, c2 in self.stringOf(contact: c1) < self.stringOf(contact: c2) })
+                self.contacts = contacts
+                self.errorMessage = errorMessage
+            }
         }
         catch {
             print("Failed to fetch contact, error: \(error)")
+            Task { @MainActor in
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
     
     var body: some View {
         Group {
             if contacts.isEmpty {
-                VStack {
-                    Text("Accès refusé")
-                        .font(.title)
-                        .padding(.bottom)
-                    Text("Autorisez l'accès aux Contacts dans les Réglages iOS")
-                        .padding(.bottom, 100)
-                }.multilineTextAlignment(.center)
+                if CNContactStore.authorizationStatus(for: .contacts) == .denied {
+                    VStack {
+                        Text("Accès refusé")
+                            .font(.title)
+                            .padding(.bottom)
+                        Text("Autorisez l'accès aux Contacts dans les Réglages iOS")
+                            .padding(.bottom, 100)
+                    }.multilineTextAlignment(.center)
+                } else {
+                    Text(self.errorMessage)
+                        .multilineTextAlignment(.center)
+                }
             } else {
                 List(contacts, id: \.identifier) { c in
                     NavigationLink(destination: ContactDetails(contact: c)) {
@@ -59,7 +75,9 @@ struct ContactsList: View {
                 }.listNotTooWide()
             }
         }.onAppear {
-            self.fetchContacts()
+            Task.detached {
+                self.fetchContacts()
+            }
         }.navigationBarTitle("Contacts")
     }
     

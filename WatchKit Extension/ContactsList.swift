@@ -33,7 +33,7 @@ struct ContactsList: View {
         do {
             try store.enumerateContacts(with: request) { (contact, stop) in
                 if contact.birthday != nil || !contact.dates.isEmpty {
-                    self.contacts.append(contact)
+                    contacts.append(contact)
                 } else {
                     errorMessage = "Aucun contact avec un anniversaire"
                 }
