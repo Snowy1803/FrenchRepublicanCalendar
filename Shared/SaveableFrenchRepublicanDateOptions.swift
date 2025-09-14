@@ -28,7 +28,7 @@ extension UserDefaults {
     }()
 }
 
-extension FrenchRepublicanDateOptions: SaveableFrenchRepublicanDateOptions {
+extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDateOptions {
     public static var current: FrenchRepublicanDateOptions {
         get {
             FrenchRepublicanDateOptions(
