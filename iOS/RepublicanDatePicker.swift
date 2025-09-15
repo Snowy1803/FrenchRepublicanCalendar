@@ -92,7 +92,7 @@ struct NavigatingPicker: View {
         .accessibility(label: Text(title))
         .accessibilityAdjustableAction(with: $selection, in: range)
         .padding(5)
-        .background(Color("PickerBackground").cornerRadius(5))
+        .background(Capsule().fill(Color("PickerBackground")))
     }
 }
 
