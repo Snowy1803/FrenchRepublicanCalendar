@@ -51,10 +51,26 @@ struct WheelConverterWidget: View {
     }
 }
 
-@available(iOS 14.0, *)
-struct WheelDateView: View {
+struct WheelDateBackground: ViewModifier {
     @EnvironmentObject var favoritesPool: FavoritesPool
     @EnvironmentObject var midnight: Midnight
+    var date: Date
+    
+    func body(content: Content) -> some View {
+        let color = (Calendar.gregorian.isDateInToday(date) ? Color.blue
+                     : favoritesPool.favorites.contains(date.iso) ? Color.yellow
+                     : Color.gray).opacity(0.15)
+        if #available(iOS 26.0, *) {
+            content
+                .glassEffect(.regular.tint(color).interactive(), in: .rect(cornerRadius: 26 - 8))
+        } else {
+            content.background(color.cornerRadius(10))
+        }
+    }
+}
+
+@available(iOS 14.0, *)
+struct WheelDateView: View {
     var date = Date()
     
     var dateString: String {
@@ -79,14 +95,11 @@ struct WheelDateView: View {
                 Text(rep.dayName)
             }.frame(width: 110)
             .padding()
-            .background(
-                (Calendar.gregorian.isDateInToday(date) ? Color.blue : favoritesPool.favorites.contains(date.iso) ? Color.yellow : Color.gray)
-                    .opacity(0.15)
-                    .cornerRadius(10)
-            ).foregroundColor(.primary)
+            .foregroundColor(.primary)
             .accessibilityElement(children: .combine)
             .accessibility(label: Text("\(dateString)\n\(rep.components.day!) \(rep.monthName) An \(rep.components.year!)\n\(rep.dayName)"))
         }
+        .modifier(WheelDateBackground(date: date))
     }
 }
 

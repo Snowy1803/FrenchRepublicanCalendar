@@ -16,12 +16,20 @@ struct ShadowBox: ViewModifier {
     @Environment(\.colorScheme) var scheme
     
     func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(scheme == .dark ? Color(white: 0.1) : Color.white)
-            .cornerRadius(15)
-            .shadow(color: Color.gray.opacity(0.33), radius: scheme == .dark ? 0 : 5)
-            .padding([.leading, .trailing, .top])
+        if #available(iOS 26.0, *) {
+            content
+                .padding()
+                .glassEffect(.regular.tint(scheme == .dark ? Color(white: 0.1) : Color.white), in: ConcentricRectangle())
+                .containerShape(.rect(cornerRadius: 26))
+                .padding([.leading, .trailing, .top])
+        } else {
+            content
+                .padding()
+                .background(scheme == .dark ? Color(white: 0.1) : Color.white)
+                .cornerRadius(15)
+                .shadow(color: Color.gray.opacity(0.33), radius: scheme == .dark ? 0 : 5)
+                .padding([.leading, .trailing, .top])
+        }
     }
 }
 
