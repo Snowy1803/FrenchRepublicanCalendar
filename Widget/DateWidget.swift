@@ -101,7 +101,6 @@ struct DateWidgetEntryView : View {
             }
         }
         .foregroundColor(.primary)
-        .padding()
     }
 }
 
