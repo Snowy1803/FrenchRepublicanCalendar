@@ -28,41 +28,24 @@ struct ContentView: View {
                     if #available(iOS 14, *) {
                         WheelConverterWidget()
                     }
-                    NavigationLink(destination: FavoriteList()) {
-                        HStack {
-                            Image.decorative(systemName: "text.badge.star")
-                                .frame(width: 25)
-                            Text("Mes Favoris")
-                            Spacer()
-                            Text(String(favoritesPool.favorites.count))
-                            Image.decorative(systemName: "chevron.right")
-                        }
-                    }.shadowBox()
-                    .accessibility(label: Text("Voir mes \(favoritesPool.favorites.count) favoris"))
-                    NavigationLink(destination: ContactsList()) {
-                        HStack {
-                            Image.decorative(systemName: "person.2")
-                                .frame(width: 25)
-                            Text("Mes Contacts")
-                            Spacer()
-                            Image.decorative(systemName: "chevron.right")
-                        }
-                    }.shadowBox()
-                    .accessibility(label: Text("Voir mes contacts"))
-                    
-                    NavigationLink(destination: VariantPicker()) {
-                        HStack {
-                            Image.decorative(systemName: "gear")
-                                .frame(width: 25)
-                            Text("Calendriers républicains")
-                            Spacer()
-                            Text(FrenchRepublicanDateOptions.current.variant.description)
-                                .foregroundColor(.secondary)
-                            Image.decorative(systemName: "chevron.right")
-                                .imageScale(.small)
-                                .foregroundColor(.secondary)
-                        }.foregroundColor(.primary)
-                    }.shadowBox()
+                    LinkWidget(
+                        destination: FavoriteList(),
+                        imageSystemName: "text.badge.star",
+                        title: Text("Mes Favoris"),
+                        data: Text(String(favoritesPool.favorites.count))
+                    ).accessibility(label: Text("Voir mes \(favoritesPool.favorites.count) favoris"))
+                    LinkWidget(
+                        destination: ContactsList(),
+                        imageSystemName: "person.2",
+                        title: Text("Mes Contacts"),
+                        data: Text("")
+                    ).accessibility(label: Text("Voir mes contacts"))
+                    LinkWidget(
+                        destination: VariantPicker(),
+                        imageSystemName: "gear",
+                        title: Text("Calendriers républicains"),
+                        data: Text(FrenchRepublicanDateOptions.current.variant.description)
+                    )
                     .accessibility(label: Text("Changer de variante de calendrier républicain"))
                     .accessibility(value: Text(FrenchRepublicanDateOptions.current.variant.description))
                     .padding(.bottom)
