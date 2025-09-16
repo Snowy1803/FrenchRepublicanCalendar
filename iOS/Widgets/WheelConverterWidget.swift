@@ -15,14 +15,26 @@ import FrenchRepublicanCalendarCore
 
 @available(iOS 14.0, *)
 struct WheelConverterWidget: View {
-    @State var scrolled = false
-    @State var wheelContent = DateCollection()
+    @State private var userScrolled = false
+    @State private var scrolled = false
+    @State private var wheelContent = DateCollection()
     
     var body: some View {
         HomeWidget {
             Image.decorative(systemName: "forward")
             Text("Conversion rapide")
             Spacer()
+            if userScrolled {
+                Button {
+                    scrolled = false
+                    userScrolled = false
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .accessibility(label: Text("Recentrer sur aujourd'hui"))
+                        .foregroundColor(.secondary)
+                        .font(.body)
+                }
+            }
         } content: {
             ScrollViewReader { reader in
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -38,6 +50,17 @@ struct WheelConverterWidget: View {
                         scrolled = true
                     }
                 }
+                .onScroll {
+                    if userScrolled == false {
+                        userScrolled = true
+                    }
+                }
+                .onChange(of: scrolled) { scrolled in
+                    if !scrolled {
+                        reader.scrollTo(Calendar.gregorian.startOfDay(for: Date()), anchor: .center)
+                        self.scrolled = true
+                    }
+                }
             }.mask(LinearGradient(
                     gradient: Gradient(stops: [
                         .init(color: .clear, location: 0),
@@ -47,6 +70,22 @@ struct WheelConverterWidget: View {
                     ]),
                     startPoint: .leading, endPoint: .trailing)
             )
+        }
+    }
+}
+
+fileprivate extension View {
+    @ViewBuilder func onScroll(perform: @escaping () -> Void) -> some View {
+        if #available(iOS 18.0, *) {
+            self.onScrollPhaseChange { _, phase in
+                if phase == .interacting {
+                    perform()
+                }
+            }
+        } else {
+            self.simultaneousGesture(DragGesture().onChanged { _ in
+                perform()
+            })
         }
     }
 }
