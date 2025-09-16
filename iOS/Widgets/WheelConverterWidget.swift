@@ -59,7 +59,7 @@ struct WheelDateBackground: ViewModifier {
     func body(content: Content) -> some View {
         let color = (Calendar.gregorian.isDateInToday(date) ? Color.blue
                      : favoritesPool.favorites.contains(date.iso) ? Color.yellow
-                     : Color.gray).opacity(0.15)
+                     : Color(white: 0.8)).opacity(0.1)
         if #available(iOS 26.0, *) {
             content
                 .glassEffect(.regular.tint(color).interactive(), in: .rect(cornerRadius: 26 - 8))
@@ -88,6 +88,7 @@ struct WheelDateView: View {
             VStack {
                 Text(dateString)
                     .font(.caption)
+                    .foregroundColor(.secondary)
                 Text(String(rep.components.day!))
                     .font(.largeTitle)
                 Text(rep.monthName)
