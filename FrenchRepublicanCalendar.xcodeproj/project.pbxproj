@@ -12,7 +12,6 @@
 		201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A51C1244D2C8800C9867B /* DateDetails.swift */; };
 		20418BBD2412F3E700E0EE6E /* FrenchRepublicanCalendar.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20418BC32412F3E700E0EE6E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC12412F3E700E0EE6E /* Interface.storyboard */; };
-		20418BC52412F3EB00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC42412F3EB00E0EE6E /* Assets.xcassets */; };
 		20418BCC2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 20418BCB2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20418BD12412F3EB00E0EE6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD02412F3EB00E0EE6E /* ContentView.swift */; };
 		20418BD32412F3EB00E0EE6E /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD22412F3EB00E0EE6E /* HostingController.swift */; };
@@ -66,6 +65,8 @@
 		20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */; };
+		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
+		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,7 +143,6 @@
 		201A51C1244D2C8800C9867B /* DateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20418BC22412F3E700E0EE6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
-		20418BC42412F3EB00E0EE6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20418BC62412F3EB00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20418BCB2412F3EB00E0EE6E /* FrenchRepublicanCalendar WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "FrenchRepublicanCalendar WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20418BD02412F3EB00E0EE6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -199,6 +199,7 @@
 		20E095A325404BEB00383A31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20E095BB254059CC00383A31 /* FavoritesPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPool.swift; sourceTree = "<group>"; };
 		FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWidget.swift; sourceTree = "<group>"; };
+		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +246,7 @@
 			children = (
 				2047A3482624B0AB00AA662C /* DateWidgetExtension.entitlements */,
 				2061524E25728F95007A214D /* FrenchRepublicanCalendar.entitlements */,
+				FD8D50EA2E79E15000951805 /* AppIcon.icon */,
 				204750032571C37A006935A9 /* README.md */,
 				20474FFD2571C006006935A9 /* LISEZMOI.md */,
 				2083846726F92F6200E9E283 /* LICENSE.txt */,
@@ -276,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				20418BC12412F3E700E0EE6E /* Interface.storyboard */,
-				20418BC42412F3EB00E0EE6E /* Assets.xcassets */,
 				20418BC62412F3EB00E0EE6E /* Info.plist */,
 			);
 			path = "WatchKit App";
@@ -569,7 +570,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20418BC52412F3EB00E0EE6E /* Assets.xcassets in Resources */,
+				FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */,
 				20418BC32412F3E700E0EE6E /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,6 +595,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */,
 				20D9DCBB253F23F000B5A9FA /* LaunchScreen.storyboard in Resources */,
 				20D9DCB8253F23F000B5A9FA /* Preview Assets.xcassets in Resources */,
 				20D9DCB5253F23F000B5A9FA /* Assets.xcassets in Resources */,
@@ -898,6 +900,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				IBSC_MODULE = FrenchRepublicanCalendar_WatchKit_Extension;
 				INFOPLIST_FILE = "WatchKit App/Info.plist";
@@ -915,6 +918,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				IBSC_MODULE = FrenchRepublicanCalendar_WatchKit_Extension;
 				INFOPLIST_FILE = "WatchKit App/Info.plist";
@@ -973,6 +977,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = FrenchRepublicanCalendar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -999,6 +1004,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = FrenchRepublicanCalendar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
