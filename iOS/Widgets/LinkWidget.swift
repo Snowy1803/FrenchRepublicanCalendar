@@ -16,7 +16,7 @@ struct LinkWidget<Destination: View>: View {
     var destination: Destination
     var imageSystemName: String
     var title: Text
-    var data: Text
+    var data: Text?
     
     var body: some View {
         NavigationLink(destination: destination) {
@@ -31,6 +31,6 @@ struct LinkWidget<Destination: View>: View {
                     .imageScale(.small)
                     .foregroundColor(.secondary)
             }.foregroundColor(.primary)
-        }.shadowBox()
+        }.shadowBox(interactive: true)
     }
 }

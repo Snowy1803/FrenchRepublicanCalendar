@@ -38,7 +38,7 @@ struct ContentView: View {
                         destination: ContactsList(),
                         imageSystemName: "person.2",
                         title: Text("Mes Contacts"),
-                        data: Text("")
+                        data: nil
                     ).accessibility(label: Text("Voir mes contacts"))
                     LinkWidget(
                         destination: VariantPicker(),
