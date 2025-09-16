@@ -43,7 +43,7 @@ struct ConverterWidget: View {
                 }.frame(maxWidth: .infinity, alignment: .leading)
                 .environment(\.locale, Locale(identifier: "fr"))
                 .labelsHidden()
-            }
+            }.padding(.top, 4)
             Divider()
             VStack(alignment: .leading) {
                 Text("Date républicaine")
@@ -53,15 +53,19 @@ struct ConverterWidget: View {
                 }, set: { cmps in
                     from = cmps.toRep.date
                 }))
-            }
+            }.padding(.top, 4)
             Divider()
             NavigationLink(destination: DateDetails(date: rep)) {
                 HStack {
-                    Text(rep.toLongString())
+                    Image.decorative(systemName: "calendar")
+                        .frame(width: 25)
+                    Text("Détails")
                     Spacer()
                     Image.decorative(systemName: "chevron.right")
-                }
-            }.padding(.top, 5)
+                        .imageScale(.small)
+                        .foregroundColor(.secondary)
+                }.foregroundColor(.primary)
+            }.padding(.top, 4)
         }
     }
 }
