@@ -41,9 +41,7 @@ extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDate
             UserDefaults.shared.set(newValue.variant.rawValue, forKey: "frdo-variant")
             WCSession.default.transferUserInfo(["frdo-roman": newValue.romanYear, "frdo-variant": newValue.variant.rawValue])
             #if os(iOS)
-            if #available(iOS 14.0, *) {
-                WidgetCenter.shared.reloadAllTimelines()
-            }
+            WidgetCenter.shared.reloadAllTimelines()
             #endif
         }
     }

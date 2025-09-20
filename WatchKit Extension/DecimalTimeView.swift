@@ -18,11 +18,7 @@ struct DecimalTimeView: View {
     
     var body: some View {
         VStack {
-            if #available(watchOS 8, *) {
-                CurrentDecimalTimeline().padding([.top, .bottom], 5)
-            } else {
-                CurrentDecimalTime().padding([.top, .bottom], 5)
-            }
+            CurrentDecimalTimeline().padding([.top, .bottom], 5)
             Text("Temps décimal").font(.system(size: 11))
             HStack {
                 Picker(selection: $shownTime.hour.wrapped, label: Text("Heure décimale")) {
@@ -67,24 +63,6 @@ struct DecimalTimeView: View {
     }
 }
 
-struct CurrentDecimalTime: View {
-    let timer = Timer.publish(every: DecimalTime.decimalSecond / 10, on: .main, in: .common).autoconnect()
-    
-    @State private var time = DecimalTime()
-    
-    var body: some View {
-        (
-            Text(time.description)
-                .font(.body.monospacedDigit())
-            + Text(String(format: "%.1f", time.remainder).dropFirst())
-                .font(.caption.monospacedDigit())
-        ).onReceive(timer) { _ in
-            self.time = DecimalTime()
-        }.accessibility(label: Text("\(time.hour) heures, \(time.minute) minutes, et \(time.second) secondes"))
-    }
-}
-
-@available(watchOS 8, *)
 struct CurrentDecimalTimeline: View {
     var body: some View {
         TimelineView(.periodic(from: Calendar.gregorian.startOfDay(for: Date()), by: DecimalTime.decimalSecond / 10)) { context in

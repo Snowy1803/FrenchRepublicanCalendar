@@ -35,7 +35,7 @@ struct DateDetails: View {
     var body: some View {
         ScrollView {
             VStack {
-                let details = VStack {
+                VStack {
                     Text(date.toLongStringNoYear())
                     Row(value: "\(date.formattedYear)", title: "An :")
                     Row(value: date.dayName, title: date.weekdayName)
@@ -44,12 +44,7 @@ struct DateDetails: View {
                     Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
                     Row(value: gregorian, title: "Grég. :")
                     Row(value: date.toShortenedString(), title: "Abrégé :")
-                }
-                if #available(watchOS 8, *) {
-                    details.scenePadding() // For Series 7 mostly
-                } else {
-                    details
-                }
+                }.scenePadding()
                 Button(action: {
                     if self.added {
                         favoritesPool.favorites.removeAll { date in

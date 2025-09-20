@@ -13,7 +13,6 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
-@available(iOS 14.0, *)
 struct WheelConverterWidget: View {
     @State private var userScrolled = false
     @State private var scrolled = false
@@ -108,7 +107,6 @@ struct WheelDateBackground: ViewModifier {
     }
 }
 
-@available(iOS 14.0, *)
 struct WheelDateView: View {
     var date = Date()
     
@@ -143,7 +141,6 @@ struct WheelDateView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct DateCollection: RandomAccessCollection {
     var startDate = Calendar.gregorian.startOfDay(for: FrenchRepublicanDate.origin)
     

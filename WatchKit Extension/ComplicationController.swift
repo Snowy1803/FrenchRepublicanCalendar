@@ -172,7 +172,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - watchOS 7
     
-    @available(watchOS 7.0, *)
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         handler([CLKComplicationDescriptor(identifier: "CurrentFRDate", displayName: "Aujourd'hui", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicBezel, .graphicCorner, .graphicRectangular, .modularLarge]), CLKComplicationDescriptor(identifier: "CurrentDecimalTime", displayName: "Temps Décimal", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicCorner])])
     }
@@ -180,11 +179,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
 extension CLKComplication {
     var isDecimalTime: Bool {
-        if #available(watchOS 7.0, *) {
-            return identifier == "CurrentDecimalTime"
-        } else {
-            return false
-        }
+        return identifier == "CurrentDecimalTime"
     }
 }
 

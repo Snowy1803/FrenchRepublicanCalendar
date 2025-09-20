@@ -25,9 +25,7 @@ struct ContentView: View {
                     TodayWidget()
                     DecimalTimeWidget(link: true)
                     ConverterWidget()
-                    if #available(iOS 14, *) {
-                        WheelConverterWidget()
-                    }
+                    WheelConverterWidget()
                     LinkWidget(
                         destination: FavoriteList(),
                         imageSystemName: "text.badge.star",
