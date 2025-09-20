@@ -16,6 +16,6 @@ import SwiftUI
 
 class HostingController: WKHostingController<ContentView> {
     override var body: ContentView {
-        return ContentView(favorites: (WKExtension.shared().delegate as! ExtensionDelegate).favorites)
+        return ContentView(favorites: (WKApplication.shared().delegate as! ExtensionDelegate).favorites)
     }
 }
