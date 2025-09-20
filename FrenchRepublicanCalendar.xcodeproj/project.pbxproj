@@ -131,7 +131,6 @@
 		20418BD62412F3EB00E0EE6E /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		20418BD82412F3EC00E0EE6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		20418BDD2412F3EC00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20474FFD2571C006006935A9 /* LISEZMOI.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LISEZMOI.md; sourceTree = "<group>"; };
 		204750032571C37A006935A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2047A3462624A6FC00AA662C /* VariantPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantPicker.swift; sourceTree = "<group>"; };
