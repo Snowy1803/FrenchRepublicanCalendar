@@ -11,9 +11,8 @@
 		20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20024497244DE3EC00A89D79 /* ContactsList.swift */; };
 		201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A51C1244D2C8800C9867B /* DateDetails.swift */; };
 		20418BBD2412F3E700E0EE6E /* FrenchRepublicanCalendar.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		20418BC32412F3E700E0EE6E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20418BC12412F3E700E0EE6E /* Interface.storyboard */; };
 		20418BD12412F3EB00E0EE6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD02412F3EB00E0EE6E /* ContentView.swift */; };
-		20418BD32412F3EB00E0EE6E /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD22412F3EB00E0EE6E /* HostingController.swift */; };
+		20418BD32412F3EB00E0EE6E /* WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD22412F3EB00E0EE6E /* WatchApp.swift */; };
 		20418BD52412F3EB00E0EE6E /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD42412F3EB00E0EE6E /* ExtensionDelegate.swift */; };
 		20418BD72412F3EB00E0EE6E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD62412F3EB00E0EE6E /* ComplicationController.swift */; };
 		20418BD92412F3EC00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BD82412F3EC00E0EE6E /* Assets.xcassets */; };
@@ -123,10 +122,9 @@
 		20024497244DE3EC00A89D79 /* ContactsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsList.swift; sourceTree = "<group>"; };
 		201A51C1244D2C8800C9867B /* DateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		20418BC22412F3E700E0EE6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		20418BC62412F3EB00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20418BD02412F3EB00E0EE6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		20418BD22412F3EB00E0EE6E /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
+		20418BD22412F3EB00E0EE6E /* WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchApp.swift; sourceTree = "<group>"; };
 		20418BD42412F3EB00E0EE6E /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		20418BD62412F3EB00E0EE6E /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		20418BD82412F3EC00E0EE6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				20D93972253F536D00872351 /* .gitignore */,
 				20AEE4D625716F940015FFC6 /* Shared */,
 				20D9DCAD253F23BB00B5A9FA /* iOS */,
-				20418BC02412F3E700E0EE6E /* WatchKit App */,
 				20418BCF2412F3EB00E0EE6E /* WatchKit Extension */,
 				20E0959E25404BB200383A31 /* Widget */,
 				2061525925728FCF007A214D /* Siri */,
@@ -252,18 +249,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		20418BC02412F3E700E0EE6E /* WatchKit App */ = {
-			isa = PBXGroup;
-			children = (
-				20418BC12412F3E700E0EE6E /* Interface.storyboard */,
-				20418BC62412F3EB00E0EE6E /* Info.plist */,
-			);
-			path = "WatchKit App";
-			sourceTree = "<group>";
-		};
 		20418BCF2412F3EB00E0EE6E /* WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				20418BC62412F3EB00E0EE6E /* Info.plist */,
 				20418BD02412F3EB00E0EE6E /* ContentView.swift */,
 				208A0DE3258673B900D635CE /* MyDateComponents.swift */,
 				208A0DF8258675AA00D635CE /* GregorianToRepublicanView.swift */,
@@ -272,11 +261,10 @@
 				20024497244DE3EC00A89D79 /* ContactsList.swift */,
 				20024495244DD70E00A89D79 /* FavoriteList.swift */,
 				201A51C1244D2C8800C9867B /* DateDetails.swift */,
-				20418BD22412F3EB00E0EE6E /* HostingController.swift */,
+				20418BD22412F3EB00E0EE6E /* WatchApp.swift */,
 				20418BD42412F3EB00E0EE6E /* ExtensionDelegate.swift */,
 				20418BD62412F3EB00E0EE6E /* ComplicationController.swift */,
 				20418BD82412F3EC00E0EE6E /* Assets.xcassets */,
-				20418BDD2412F3EC00E0EE6E /* Info.plist */,
 				20418BDA2412F3EC00E0EE6E /* Preview Content */,
 			);
 			path = "WatchKit Extension";
@@ -527,7 +515,6 @@
 				FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */,
 				20418BDC2412F3EC00E0EE6E /* Preview Assets.xcassets in Resources */,
 				20418BD92412F3EC00E0EE6E /* Assets.xcassets in Resources */,
-				20418BC32412F3E700E0EE6E /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +554,7 @@
 				20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */,
 				20024496244DD70E00A89D79 /* FavoriteList.swift in Sources */,
 				20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */,
-				20418BD32412F3EB00E0EE6E /* HostingController.swift in Sources */,
+				20418BD32412F3EB00E0EE6E /* WatchApp.swift in Sources */,
 				20C645CF2663BAA3001D7108 /* DecimalTimeView.swift in Sources */,
 				201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */,
 				20418BD72412F3EB00E0EE6E /* ComplicationController.swift in Sources */,
@@ -649,14 +636,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		20418BC12412F3E700E0EE6E /* Interface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				20418BC22412F3E700E0EE6E /* Base */,
-			);
-			name = Interface.storyboard;
-			sourceTree = "<group>";
-		};
 		20D9DCB9253F23F000B5A9FA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -799,7 +778,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "WatchKit App/Info.plist";
+				INFOPLIST_FILE = "WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
@@ -821,7 +800,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "WatchKit App/Info.plist";
+				INFOPLIST_FILE = "WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",

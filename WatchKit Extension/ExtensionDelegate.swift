@@ -14,7 +14,6 @@ import WatchKit
 import WatchConnectivity
 import Combine
 
-@main
 class ExtensionDelegate: NSObject, WKApplicationDelegate {
     
     var favorites: FavoritesPool!
