@@ -89,21 +89,28 @@ struct TimeZonePicker: View {
             midnight.objectWillChange.send()
         }) {
             VStack(alignment: .leading) {
-                Text("Fuseau horaire local")
-                Text("Utiliser l'heure système (\(timeZoneName(tz: TimeZone.current)))")
+                Text("Heure locale")
+                Text("Utiliser le fuseau horaire système (\(timeZoneName(tz: TimeZone.current)))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }.tag(nil as TimeZone?)
             VStack(alignment: .leading) {
-                Text("Heure de l'Observatoire de Paris")
-                Text("Utiliser l'heure utilisée en France avant 1911 (\(timeZoneName(tz: TimeZone.parisMeridian)))")
+                Text("Heure moyenne de Paris")
+                Text("Fuseau utilisé en France entre 1891 et 1911 (\(timeZoneName(tz: TimeZone.parisMeridian)))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }.tag(TimeZone.parisMeridian)
+            let gmt = TimeZone(identifier: "GMT")!
+            VStack(alignment: .leading) {
+                Text("Heure de Greenwich")
+                Text("Fuseau utilisé en France entre 1911 et 1940 (\(timeZoneName(tz: gmt)))")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }.tag(gmt)
             let paris = TimeZone(identifier: "Europe/Paris")!
             VStack(alignment: .leading) {
                 Text("Heure à Paris")
-                Text("Utiliser l'heure actuelle en France (\(timeZoneName(tz: paris)))")
+                Text("Fuseau utilisé en France actuellement (\(timeZoneName(tz: paris)))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }.tag(paris)
