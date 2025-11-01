@@ -67,23 +67,18 @@ struct DateDetails: View {
 }
 
 struct DayNameButton: View {
-    @State var dayFrame: CGRect = CGRect()
+    @State var showDefinePopup: Bool = false
     
     var date: FrenchRepublicanDate
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(date, format: .republicanDate.day(.dayName))
-                .font(.title)
-                .background(GeometryReader { proxy in
-                    let frame = proxy.frame(in: .global)
-                    if dayFrame != frame {
-                        let _ = DispatchQueue.main.async {
-                            dayFrame = frame
-                        }
-                    }
-                    EmptyView()
-                })
+            VStack(spacing: 0) {
+                Text(date, format: .republicanDate.day(.dayName))
+                    .font(.title)
+                DayNameDefiner(showDefinePopup: $showDefinePopup, date: date)
+                    .frame(width: 0, height: 0)
+            }
             let buttonbar = HStack {
                 Button {
                     defineDayName()
@@ -110,38 +105,48 @@ struct DayNameButton: View {
     }
     
     func defineDayName() {
-        // We're gonna create a new UIKit text view and make it look up the word
-        
-        // center and inset the popover on iOS 15
-        let tv = UITextView(frame: CGRect(x: dayFrame.midX, y: dayFrame.maxY + 5, width: 0, height: 0))
-        tv.layer.isHidden = true
-        tv.text = date.dayName
-        tv.isEditable = false // prevents showing the keyboard
-        
-        guard let root = UIApplication.shared.windows.first?.rootViewController?.view else { return }
-        root.addSubview(tv)
-        
-        tv.selectAll(tv)
-        // hi Apple, please add a public API for this
-        let sel = Selector(String(":enifed_".reversed()))
-        if tv.responds(to: sel) {
-            tv.perform(sel, with: tv)
-        } else {
-            print("cannot define, opening in Safari")
-            openDayNameDescriptionURL()
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // popover needs the view to remain a while
-            // no delay needed for iOS 13-14
-            // one tick needed for iOS 15
-            // multiple ticks needed for iOS 16
-            // what next?
-            tv.removeFromSuperview()
-        }
+        showDefinePopup = true
     }
     
     func openDayNameDescriptionURL() {
         UIApplication.shared.open(date.descriptionURL!)
+    }
+}
+
+struct DayNameDefiner: UIViewRepresentable {
+    typealias UIViewType = UITextView
+    
+    @Binding var showDefinePopup: Bool
+    var date: FrenchRepublicanDate
+
+    func makeUIView(context: Context) -> UITextView {
+        let tv = UITextView()
+        tv.layer.isHidden = true
+        tv.text = date.dayName
+        tv.isEditable = false // prevents showing the keyboard
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        return tv
+    }
+    
+    func updateUIView(_ tv: UITextView, context: Context) {
+        tv.frame = CGRect(x: 0, y: 0, width: tv.superview!.frame.width, height: tv.superview!.frame.height)
+        if showDefinePopup {
+            DispatchQueue.main.async {
+                showDefinePopup = false
+                tv.selectAll(tv)
+                // hi Apple, please add a public API for this
+                let sel = Selector(String(":enifed_".reversed()))
+                if tv.responds(to: sel) {
+                    tv.perform(sel, with: tv)
+                } else {
+                    print("cannot define, opening in Safari")
+                    UIApplication.shared.open(date.descriptionURL!)
+                }
+                DispatchQueue.main.async {
+                    tv.selectedTextRange = nil
+                }
+            }
+        }
     }
 }
 
