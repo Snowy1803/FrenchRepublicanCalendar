@@ -22,6 +22,14 @@ struct DecimalTimeConverterWidget: View {
             Image.decorative(systemName: "arrow.right.arrow.left")
             Text("Convertir")
             Spacer()
+            Button {
+                time = DecimalTime()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .accessibility(label: Text("Revenir à maintenant"))
+                    .foregroundColor(.secondary)
+                    .font(.body)
+            }
         } content: {
             VStack(alignment: .leading) {
                 Text("Temps SI")
