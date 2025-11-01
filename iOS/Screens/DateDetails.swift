@@ -81,13 +81,17 @@ struct DayNameButton: View {
             }
             let buttonbar = HStack {
                 Button {
-                    defineDayName()
+                    showDefinePopup = true
                 } label: {
-                    Image(systemName: "magnifyingglass")
+                    if showDefinePopup {
+                        Image(systemName: "progress.indicator")
+                    } else {
+                        Image(systemName: "magnifyingglass")
+                    }
                     Text("Chercher")
                 }
                 Button {
-                    openDayNameDescriptionURL()
+                    UIApplication.shared.open(date.descriptionURL!)
                 } label: {
                     Image(systemName: "w.circle")
                     Text("Définition en ligne")
@@ -102,14 +106,6 @@ struct DayNameButton: View {
                     .buttonBorderShape(.capsule)
             }
         }
-    }
-    
-    func defineDayName() {
-        showDefinePopup = true
-    }
-    
-    func openDayNameDescriptionURL() {
-        UIApplication.shared.open(date.descriptionURL!)
     }
 }
 
