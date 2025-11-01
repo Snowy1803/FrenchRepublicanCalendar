@@ -26,6 +26,12 @@ struct DecimalTimeDetails: View {
                     .padding([.top, .leading, .trailing])
                 DecimalTimeConverterWidget()
                     .padding(.bottom)
+                LinkWidget(
+                    destination: VariantPicker(),
+                    imageSystemName: "globe.europe.africa",
+                    title: Text("Fuseau horaire"),
+                    data: Text(TimeZonePicker().timeZoneName(tz: FrenchRepublicanDateOptions.current.currentTimeZone))
+                )
             }.notTooWide()
         }.navigationBarTitle("Temps décimal")
     }
