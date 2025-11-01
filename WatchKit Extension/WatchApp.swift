@@ -14,8 +14,15 @@ import WatchKit
 import Foundation
 import SwiftUI
 
-class HostingController: WKHostingController<ContentView> {
-    override var body: ContentView {
-        return ContentView(favorites: (WKExtension.shared().delegate as! ExtensionDelegate).favorites)
+@main
+struct WatchApp: App {
+    @WKApplicationDelegateAdaptor var appDelegate: ExtensionDelegate
+
+    var body: some Scene {
+        WindowGroup {
+            NavigationView {
+                ContentView(favorites: appDelegate.favorites)
+            }
+        }
     }
 }

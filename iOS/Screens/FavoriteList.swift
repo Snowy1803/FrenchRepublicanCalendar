@@ -23,13 +23,8 @@ struct FavoriteList: View {
                     Text("Aucun favori")
                         .font(.title)
                         .padding(.bottom)
-                    if #available(iOS 14.0, *) {
-                        Text("Ajoutez-en en appuyant sur \(Image(systemName: "star")) dans les détails d'une date")
-                            .padding(.bottom, 100)
-                    } else {
-                        Text("Ajoutez-en en appuyant sur l'étoile dans les détails d'une date")
-                            .padding(.bottom, 100)
-                    }
+                    Text("Ajoutez-en en appuyant sur \(Image(systemName: "star")) dans les détails d'une date")
+                        .padding(.bottom, 100)
                 }.multilineTextAlignment(.center)
             } else {
                 Form {
@@ -88,12 +83,8 @@ struct DateRow: View {
 
 extension View {
     @ViewBuilder func editableList() -> some View {
-        if #available(iOS 14.0, *) {
-            self.toolbar {
-                EditButton()
-            }
-        } else {
-            self.navigationBarItems(trailing: EditButton())
+        self.toolbar {
+            EditButton()
         }
     }
 }

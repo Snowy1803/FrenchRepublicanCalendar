@@ -127,7 +127,12 @@ struct DateWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            DateWidgetEntryView(entry: entry)
+            if #available(iOS 17.0, *) {
+                DateWidgetEntryView(entry: entry)
+                    .containerBackground(.background, for: .widget)
+            } else {
+                DateWidgetEntryView(entry: entry)
+            }
         }
         .supportedFamilies(supported)
         .configurationDisplayName("Aujourd'hui")

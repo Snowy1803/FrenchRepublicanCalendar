@@ -45,10 +45,6 @@ struct GregorianToRepublicanView: View {
 
 extension View {
     @ViewBuilder func ensureSmallBarTitle() -> some View {
-        if #available(watchOS 8, *) {
-            self.navigationBarTitleDisplayMode(.inline)
-        } else {
-            self
-        }
+        self.navigationBarTitleDisplayMode(.inline)
     }
 }

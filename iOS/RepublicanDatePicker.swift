@@ -74,7 +74,7 @@ struct NavigatingPicker: View {
     
     var body: some View {
         Group {
-            if preferMenu, #available(iOS 14, *) {
+            if preferMenu {
                 Picker(selection: $selection, label: Text(transformer(selection.value))) {
                     ForEach(range, id: \.self) { value in
                         Text(transformer(value)).tag(value.wrapped)

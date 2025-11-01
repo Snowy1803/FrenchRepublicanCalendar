@@ -90,7 +90,12 @@ struct TimeWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: TimeProvider()) { entry in
-            TimeWidgetEntryView(entry: entry)
+            if #available(iOS 17.0, *) {
+                TimeWidgetEntryView(entry: entry)
+                    .containerBackground(.background, for: .widget)
+            } else {
+                TimeWidgetEntryView(entry: entry)
+            }
         }
         .supportedFamilies(supported)
         .configurationDisplayName("Temps décimal")
