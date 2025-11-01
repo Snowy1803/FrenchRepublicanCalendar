@@ -37,6 +37,8 @@ struct DateDetails: View {
             }
             Section {
                 DayNameButton(date: date)
+            }
+            Section {
                 Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                     .accessibility(value: Text("\(date.components.weekOfYear!) sur 37"))
@@ -65,54 +67,44 @@ struct DateDetails: View {
 }
 
 struct DayNameButton: View {
-    private static let preferredDefineMethodKey = "preferredDefineMethod"
-    
     @State var dayFrame: CGRect = CGRect()
     
     var date: FrenchRepublicanDate
     
     var body: some View {
-        Button {
-            switch UserDefaults.standard.integer(forKey: DayNameButton.preferredDefineMethodKey) {
-            case 1:
-                openDayNameDescriptionURL()
-            default: // 0 (default), 2 (preferred)
-                defineDayName()
-            }
-        } label: {
-            HStack {
-                Text("Jour :").lineLimit(1).layoutPriority(2)
-                    .foregroundColor(.primary)
-                Spacer()
-                Text(date.dayName).layoutPriority(3)
-                    .background(GeometryReader { proxy in
-                        let frame = proxy.frame(in: .global)
-                        if dayFrame != frame {
-                            let _ = DispatchQueue.main.async {
-                                dayFrame = frame
-                            }
+        VStack(alignment: .leading) {
+            Text(date, format: .republicanDate.day(.dayName))
+                .font(.title)
+                .background(GeometryReader { proxy in
+                    let frame = proxy.frame(in: .global)
+                    if dayFrame != frame {
+                        let _ = DispatchQueue.main.async {
+                            dayFrame = frame
                         }
-                        EmptyView()
-                    })
-            }
-            .accessibilityElement()
-            .accessibility(label: Text("Jour :"))
-            .accessibility(value: Text(date.dayName))
-            .contextMenu {
+                    }
+                    EmptyView()
+                })
+            let buttonbar = HStack {
                 Button {
-                    UserDefaults.standard.set(2, forKey: DayNameButton.preferredDefineMethodKey)
                     defineDayName()
                 } label: {
                     Image(systemName: "magnifyingglass")
                     Text("Chercher")
                 }
                 Button {
-                    UserDefaults.standard.set(1, forKey: DayNameButton.preferredDefineMethodKey)
                     openDayNameDescriptionURL()
-                } label:  {
+                } label: {
                     Image(systemName: "w.circle")
-                    Text("Définition")
+                    Text("Définition en ligne")
                 }
+            }.tint(Color.purple)
+            if #available(iOS 26.0, *) {
+                buttonbar
+                    .buttonStyle(.glassProminent)
+            } else {
+                buttonbar
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.capsule)
             }
         }
     }
