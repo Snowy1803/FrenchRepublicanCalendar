@@ -29,17 +29,41 @@ extension UserDefaults {
 }
 
 extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDateOptions {
+    private static func saveableTimeZoneIdentifier(_ tz: TimeZone?) -> String {
+        guard let tz else { return "" }
+        return if tz == TimeZone.parisMeridian {
+            "FRC/Paris"
+        } else {
+            tz.identifier
+        }
+    }
+    
+    private static func parseTimeZoneIdentifier(_ id: String?) -> TimeZone? {
+        guard let id, id != "" else { return nil }
+        if id == "FRC/Paris" {
+            return .parisMeridian
+        } else {
+            return TimeZone(identifier: id)
+        }
+    }
+    
     public static var current: FrenchRepublicanDateOptions {
         get {
             FrenchRepublicanDateOptions(
                 romanYear: UserDefaults.shared.bool(forKey: "frdo-roman"),
-                variant: Variant(rawValue: UserDefaults.shared.integer(forKey: "frdo-variant")) ?? .original
+                variant: Variant(rawValue: UserDefaults.shared.integer(forKey: "frdo-variant")) ?? .original,
+                timeZone: parseTimeZoneIdentifier(UserDefaults.shared.string(forKey: "frdo-timezone"))
             )
         }
         set { // only called on iOS
             UserDefaults.shared.set(newValue.romanYear, forKey: "frdo-roman")
             UserDefaults.shared.set(newValue.variant.rawValue, forKey: "frdo-variant")
-            WCSession.default.transferUserInfo(["frdo-roman": newValue.romanYear, "frdo-variant": newValue.variant.rawValue])
+            UserDefaults.shared.set(saveableTimeZoneIdentifier(newValue.timeZone), forKey: "frdo-timezone")
+            WCSession.default.transferUserInfo([
+                "frdo-roman": newValue.romanYear,
+                "frdo-variant": newValue.variant.rawValue,
+                "frdo-timezone": saveableTimeZoneIdentifier(newValue.timeZone)
+            ])
             #if os(iOS)
             WidgetCenter.shared.reloadAllTimelines()
             #endif

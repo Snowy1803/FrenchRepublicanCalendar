@@ -80,7 +80,7 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
                 }
             case "gimme":
                 session.transferUserInfo(["favorites": favorites])
-            case "frdo-roman", "frdo-variant":
+            case "frdo-roman", "frdo-variant", "frdo-timezone":
                 UserDefaults.shared.set(value, forKey: key)
                 updateComplication = true
             default:
