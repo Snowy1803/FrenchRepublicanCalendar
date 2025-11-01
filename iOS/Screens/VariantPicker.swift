@@ -17,6 +17,16 @@ import StoreKit
 struct VariantPicker: View {
     @EnvironmentObject var midnight: Midnight
     
+    func timeZoneName(tz: TimeZone) -> String {
+        var formatter = Date.FormatStyle.dateTime.timeZone(.localizedGMT(.long))
+        formatter.locale = Locale(identifier: "fr-FR")
+        formatter.timeZone = tz
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.calendar.timeZone = tz
+        formatter.calendar.locale = formatter.locale
+        return formatter.format(Date())
+    }
+    
     var body: some View {
         Form {
             ForEach(FrenchRepublicanDateOptions.Variant.allCases, id: \.rawValue) { variant in
@@ -47,6 +57,48 @@ struct VariantPicker: View {
                 midnight.objectWillChange.send()
             }) {
                 Text("Chiffres romains pour les années")
+            }
+            
+            Section(
+                header: Text("Fuseau horaire"),
+                footer: Text("Ce fuseau horaire sera utilisé pour le Temps Décimal, mais aussi pour déterminer la date du jour.")
+            ) {
+                Picker("Fuseau horaire", selection: Binding {
+                    FrenchRepublicanDateOptions.current.timeZone
+                } set: {
+                    FrenchRepublicanDateOptions.current.timeZone = $0
+                    midnight.objectWillChange.send()
+                }) {
+                    VStack(alignment: .leading) {
+                        Text("Fuseau horaire local")
+                        Text("Utiliser l'heure système (\(timeZoneName(tz: TimeZone.current)))")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }.tag(nil as TimeZone?)
+                    VStack(alignment: .leading) {
+                        Text("Heure de l'Observatoire de Paris")
+                        Text("Utiliser l'heure utilisée en France avant 1911 (\(timeZoneName(tz: TimeZone.parisMeridian)))")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }.tag(TimeZone.parisMeridian)
+                    let paris = TimeZone(identifier: "Europe/Paris")!
+                    VStack(alignment: .leading) {
+                        Text("Heure à Paris")
+                        Text("Utiliser l'heure actuelle en France (\(timeZoneName(tz: paris)))")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }.tag(paris)
+//                    let mtl = TimeZone(identifier: "America/Montreal")!
+//                    VStack(alignment: .leading) {
+//                        Text("Heure à Montréal")
+//                        Text("\(timeZoneName(tz: mtl))")
+//                            .font(.caption)
+//                            .foregroundStyle(.secondary)
+//                    }.tag(mtl)
+                    // Could add an "Other..." option
+                }
+                .pickerStyle(.inline)
+                .labelsHidden()
             }
         }.navigationBarTitle(Text("Variantes"))
         .listNotTooWide()
