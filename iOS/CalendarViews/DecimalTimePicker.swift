@@ -18,7 +18,7 @@ struct FoldableDecimalTimePicker: View {
     var text: Text
     var precision: DecimalTimePrecision
     @Binding var decimalTime: DecimalTime
-    @State private var showPicker: Bool = false
+    @Binding var showPicker: Bool
     
     var body: some View {
         HStack {

@@ -16,6 +16,7 @@ import FrenchRepublicanCalendarCore
 struct DecimalTimeConverterWidget: View {
     @EnvironmentObject var midnight: Midnight
     @State private var time = DecimalTime()
+    @State private var showPicker: Bool? = nil
     
     var body: some View {
         HomeWidget {
@@ -36,13 +37,25 @@ struct DecimalTimeConverterWidget: View {
                     si: true,
                     text: Text("Temps SI"),
                     precision: .secondPrecision,
-                    decimalTime: $time)
+                    decimalTime: $time,
+                    showPicker: Binding {
+                        showPicker == true
+                    } set: { newValue in
+                        showPicker = newValue ? true : nil
+                    }
+                )
                 Divider()
                 FoldableDecimalTimePicker(
                     si: false,
                     text: Text("Temps décimal"),
                     precision: .secondPrecision,
-                    decimalTime: $time)
+                    decimalTime: $time,
+                    showPicker: Binding {
+                        showPicker == false
+                    } set: { newValue in
+                        showPicker = newValue ? false : nil
+                    }
+                )
             }
         }
     }
