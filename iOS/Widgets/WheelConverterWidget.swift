@@ -129,13 +129,13 @@ struct WheelDateView: View {
                 Text(String(rep.components.day!))
                     .font(.largeTitle)
                 Text(rep.monthName)
-                Text("An \(rep.formattedYear)")
+                Text(rep, format: .republicanDate.year(.long))
                 Text(rep.dayName)
             }.frame(width: 110)
             .padding()
             .foregroundColor(.primary)
             .accessibilityElement(children: .combine)
-            .accessibility(label: Text("\(dateString)\n\(rep.components.day!) \(rep.monthName) An \(rep.components.year!)\n\(rep.dayName)"))
+            .accessibility(label: Text("\(dateString)\n\(rep, format: .republicanDate.day(.preferred).year(.long))\n\(rep.dayName)"))
         }
         .modifier(WheelDateBackground(date: date))
     }
