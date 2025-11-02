@@ -31,14 +31,18 @@ struct DecimalTimeConverterWidget: View {
                     .font(.body)
             }
         } content: {
-            VStack(alignment: .leading) {
-                Text("Temps SI")
-                    .font(.headline)
-                SITimePicker(time: $time)
+            VStack(alignment: .center) {
+                FoldableDecimalTimePicker(
+                    si: true,
+                    text: Text("Temps SI"),
+                    precision: .secondPrecision,
+                    decimalTime: $time)
                 Divider()
-                Text("Temps décimal")
-                    .font(.headline)
-                DecimalTimePicker(time: $time)
+                FoldableDecimalTimePicker(
+                    si: false,
+                    text: Text("Temps décimal"),
+                    precision: .secondPrecision,
+                    decimalTime: $time)
             }
         }
     }

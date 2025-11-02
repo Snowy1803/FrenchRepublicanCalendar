@@ -44,7 +44,6 @@
 		20C645C42662BECF001D7108 /* DecimalTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645C32662BECF001D7108 /* DecimalTimeWidget.swift */; };
 		20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645C52662D216001D7108 /* DecimalTimeDetails.swift */; };
 		20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645C926639EC9001D7108 /* DecimalTimeConverterWidget.swift */; };
-		20C645CC26639F64001D7108 /* DecimalTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645CB26639F64001D7108 /* DecimalTimePicker.swift */; };
 		20C645CF2663BAA3001D7108 /* DecimalTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C645CD2663B968001D7108 /* DecimalTimeView.swift */; };
 		20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */; };
 		20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */; };
@@ -67,6 +66,7 @@
 		FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventVC.swift */; };
 		FD6EBB542EB7F1B600796761 /* CreateEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */; };
 		FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */; };
+		FD6EBB5A2EB8015D00796761 /* DecimalTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
@@ -158,7 +158,6 @@
 		20C645C32662BECF001D7108 /* DecimalTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimeWidget.swift; sourceTree = "<group>"; };
 		20C645C52662D216001D7108 /* DecimalTimeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimeDetails.swift; sourceTree = "<group>"; };
 		20C645C926639EC9001D7108 /* DecimalTimeConverterWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecimalTimeConverterWidget.swift; sourceTree = "<group>"; };
-		20C645CB26639F64001D7108 /* DecimalTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimePicker.swift; sourceTree = "<group>"; };
 		20C645CD2663B968001D7108 /* DecimalTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimeView.swift; sourceTree = "<group>"; };
 		20D93972253F536D00872351 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +183,7 @@
 		FD6EBB512EB7F19A00796761 /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventVC.swift; sourceTree = "<group>"; };
 		FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
+		FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimePicker.swift; sourceTree = "<group>"; };
 		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -344,7 +344,6 @@
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
 				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
 				20E0956C253F8A7200383A31 /* RepublicanDatePicker.swift */,
-				20C645CB26639F64001D7108 /* DecimalTimePicker.swift */,
 				2069C049253F2F9500E46721 /* OrbisecUI.swift */,
 				20D9DCB4253F23F000B5A9FA /* Assets.xcassets */,
 				20D9DCB9253F23F000B5A9FA /* LaunchScreen.storyboard */,
@@ -386,6 +385,7 @@
 		FD6EBB582EB7F24100796761 /* CalendarViews */ = {
 			isa = PBXGroup;
 			children = (
+				FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */,
 				FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */,
 			);
 			path = CalendarViews;
@@ -607,13 +607,13 @@
 				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
 				FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */,
 				20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */,
-				20C645CC26639F64001D7108 /* DecimalTimePicker.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
 				FD6EBB542EB7F1B600796761 /* CreateEventVC.swift in Sources */,
 				20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */,
 				FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */,
 				20C645C42662BECF001D7108 /* DecimalTimeWidget.swift in Sources */,
 				20AEE4EC257170620015FFC6 /* DateDetails.swift in Sources */,
+				FD6EBB5A2EB8015D00796761 /* DecimalTimePicker.swift in Sources */,
 				2047A3472624A6FC00AA662C /* VariantPicker.swift in Sources */,
 				20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */,
 				2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */,
