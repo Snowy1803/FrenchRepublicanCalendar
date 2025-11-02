@@ -93,7 +93,7 @@ struct DayNameButton: View {
                 Button {
                     UIApplication.shared.open(date.descriptionURL!)
                 } label: {
-                    Image(systemName: "w.circle")
+                    Image(systemName: "arrow.up.right")
                     Text("Définition en ligne")
                 }
             }.tint(Color.purple)
