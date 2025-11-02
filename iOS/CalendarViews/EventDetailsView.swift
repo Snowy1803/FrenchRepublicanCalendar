@@ -95,7 +95,9 @@ struct AccessEventDetailsView: View {
         let evPred = store.predicateForEvents(withStart: start, end: end, calendars: nil)
         let resultingEvents = store.events(matching: evPred)
         Task { @MainActor in
-            self.events = resultingEvents
+            self.events = resultingEvents.sorted(by: { lhs, rhs in
+                lhs.compareStartDate(with: rhs) == .orderedAscending
+            })
             self.loading = false
         }
     }
@@ -106,10 +108,25 @@ struct SingleEventView: View {
 
     var body: some View {
         NavigationLink(destination: EventVC(event: event)) {
-            HStack {
+            HStack(alignment: .firstTextBaseline) {
                 Image.decorative(systemName: "circle.fill")
                     .foregroundStyle(Color(cgColor: event.calendar.cgColor))
-                Text(event.title)
+                VStack(alignment: .leading) {
+                    Text(event.title)
+                    Group {
+                        if event.isAllDay {
+                            Text("Toute la journée")
+                        } else {
+                            let singleDay = Calendar.gregorian.isDate(event.startDate, inSameDayAs: event.endDate)
+                            
+                            let format = FRCFormat.republicanDate
+                                .day(singleDay ? .none : .preferred)
+                                .decimalTime(.minutePrecision)
+                            Text("\(FrenchRepublicanDate(date: event.startDate), format: format) - \(FrenchRepublicanDate(date: event.endDate), format: format)")
+                            
+                        }
+                    }.foregroundStyle(.secondary)
+                }
             }
         }
     }
