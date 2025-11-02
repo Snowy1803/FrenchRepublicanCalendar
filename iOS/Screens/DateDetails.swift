@@ -100,7 +100,7 @@ struct DayNameButton: View {
                     Image(systemName: "arrow.up.right")
                     Text("Définition en ligne")
                 }
-            }.tint(Color.purple)
+            }
             .prominentButtonStyle()
         }
     }
@@ -215,7 +215,7 @@ struct EventDetailsView: View {
                     } label: {
                         Text("Autoriser")
                     }
-                }.tint(Color.purple)
+                }
                 .prominentButtonStyle()
             }
         } else {
