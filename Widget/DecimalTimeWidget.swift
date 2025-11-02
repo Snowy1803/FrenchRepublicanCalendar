@@ -19,7 +19,7 @@ struct TimeProvider: TimelineProvider {
         let now = Date()
         let startOfDay = Calendar.gregorian.startOfDay(for: now)
         let current = DecimalTime(timeSinceMidnight: now.timeIntervalSince(startOfDay))
-        return TimeEntry(date: Date(), time: current)
+        return TimeEntry(date: now, time: current)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TimeEntry) -> ()) {
@@ -66,13 +66,7 @@ struct TimeWidgetEntryView : View {
         Text(entry.time.hourAndMinuteFormatted)
             .fixedSize()
             .foregroundColor(.primary)
-            .font({
-                if #available(iOS 15, *) {
-                    return .system(.largeTitle).monospacedDigit()
-                } else {
-                    return .system(.largeTitle, design: .monospaced)
-                }
-            }())
+            .font(.system(.largeTitle).monospacedDigit())
             .scaledToFit()
             .padding()
     }

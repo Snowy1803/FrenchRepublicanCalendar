@@ -60,9 +60,9 @@ struct DateWidgetEntryView : View {
             } else if #available(iOSApplicationExtension 16, *), family == .accessoryRectangular {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(today.toLongStringNoYear())
-                        Text("An \(today.formattedYear)")
-                        Text(today.components.month! == 13 ? today.weekdayName : today.dayName)
+                        Text(today, format: .republicanDate.day(.preferred))
+                        Text(today, format: .republicanDate.year(.long))
+                        Text(today.isSansculottides ? today.weekdayName : today.dayName)
                     }
                     Spacer(minLength: 0)
                 }
@@ -111,7 +111,7 @@ struct SimpleDateStack: View {
         Text(String(today.components.day!))
             .font(.system(size: 50))
         Text(today.monthName)
-        Text("An \(today.formattedYear)")
+        Text(today, format: .republicanDate.year(.long))
     }
 }
 
@@ -145,6 +145,7 @@ struct FrenchRepublicanWidgets: WidgetBundle {
     var body: some Widget {
         DateWidget()
         TimeWidget()
+        DateTimeWidget()
     }
 }
 

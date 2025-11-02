@@ -63,6 +63,7 @@
 		20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */; };
+		FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
@@ -176,6 +177,7 @@
 		20E095A325404BEB00383A31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20E095BB254059CC00383A31 /* FavoritesPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPool.swift; sourceTree = "<group>"; };
 		FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWidget.swift; sourceTree = "<group>"; };
+		FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeWidget.swift; sourceTree = "<group>"; };
 		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -364,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				20E0959F25404BB200383A31 /* DateWidget.swift */,
+				FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */,
 				20B64D8828E4F622006A0471 /* DecimalTimeWidget.swift */,
 				20E095A125404BEB00383A31 /* Assets.xcassets */,
 				20E095A325404BEB00383A31 /* Info.plist */,
@@ -609,6 +612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */,
 				20B64D8A28E4F627006A0471 /* DecimalTimeWidget.swift in Sources */,
 				20E095A025404BB200383A31 /* DateWidget.swift in Sources */,
 				2047A34E2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
