@@ -20,8 +20,8 @@ struct WheelConverterWidget: View {
     
     var body: some View {
         HomeWidget {
-            Image.decorative(systemName: "forward")
-            Text("Conversion rapide")
+            Image.decorative(systemName: "rectangle.on.rectangle.angled")
+            Text("Roue de conversion")
             Spacer()
             if userScrolled {
                 Button {
