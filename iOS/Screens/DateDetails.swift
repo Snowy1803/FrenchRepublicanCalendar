@@ -14,6 +14,7 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 import Combine
 import EventKit
+import EventKitUI
 
 struct DateDetails: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
@@ -219,8 +220,65 @@ struct EventDetailsView: View {
                 .prominentButtonStyle()
             }
         } else {
-            // Show
-            Text("Events go here")
+            AccessEventDetailsView(date: date, store: store)
         }
     }
+}
+
+struct AccessEventDetailsView: View {
+    var date: FrenchRepublicanDate
+    var store: EKEventStore
+    @State var events: [EKEvent] = []
+    @State var loading: Bool = true
+
+    var body: some View {
+        Group {
+            if loading {
+                ProgressView()
+            } else if events.isEmpty {
+                Text("Aucun évènement ce jour-là")
+            }
+            ForEach(events, id: \.calendarItemIdentifier) { event in
+                SingleEventView(event: event)
+            }
+        }.task {
+            let start = Calendar.gregorian.startOfDay(for: date.date)
+            let end = Calendar.gregorian.date(byAdding: .day, value: 1, to: start)!
+            let evPred = store.predicateForEvents(withStart: start, end: end, calendars: nil)
+            let resultingEvents = store.events(matching: evPred)
+            Task { @MainActor in
+                self.events = resultingEvents
+                self.loading = false
+            }
+        }
+    }
+}
+
+struct SingleEventView: View {
+    let event: EKEvent
+
+    var body: some View {
+        NavigationLink(destination: EventVC(event: event)) {
+            HStack {
+                Image.decorative(systemName: "circle.fill")
+                    .foregroundStyle(Color(cgColor: event.calendar.cgColor))
+                Text(event.title)
+            }
+        }
+    }
+}
+
+struct EventVC: UIViewControllerRepresentable {
+    typealias UIViewControllerType = EKEventViewController
+    
+    let event: EKEvent
+    
+    func makeUIViewController(context: Context) -> EKEventViewController {
+        EKEventViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: EKEventViewController, context: Context) {
+        uiViewController.event = event
+    }
+    
 }
