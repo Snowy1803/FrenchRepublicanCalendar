@@ -24,8 +24,16 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Pour afficher vos évènements dans le calendrier républicain. Vos données restent en sécurité sur votre appareil.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Pour afficher vos évènements dans le calendrier républicain. Vos données restent en sécurité sur votre appareil.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Pour convertir les dates de naissance de vos contacts</string>
+	<string>Pour convertir les dates de naissance de vos contacts. Vos données restent en sécurité sur votre appareil.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>Pour afficher vos rappels dans le calendrier républicain. Vos données restent en sécurité sur votre appareil.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Pour afficher vos rappels dans le calendrier républicain. Vos données restent en sécurité sur votre appareil.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConversionIntent</string>

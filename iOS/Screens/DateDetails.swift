@@ -13,6 +13,7 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 import Combine
+import EventKit
 
 struct DateDetails: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
@@ -48,6 +49,9 @@ struct DateDetails: View {
                 Row(value: date.toShortenedString(), title: "Date abrégée :")
                     .accessibility(value: Text(date.toShortenedString().replacingOccurrences(of: "/", with: "-")))
             }
+            Section(header: Text("Évènements")) {
+                EventDetailsView(date: date)
+            }
         }.navigationBarTitle(date.toLongString())
         .navigationBarItems(trailing: Button(action: {
             if favoritesPool.favorites.contains(iso) {
@@ -79,7 +83,7 @@ struct DayNameButton: View {
                 DayNameDefiner(showDefinePopup: $showDefinePopup, date: date)
                     .frame(width: 0, height: 0)
             }
-            let buttonbar = HStack {
+            HStack {
                 Button {
                     showDefinePopup = true
                 } label: {
@@ -97,14 +101,21 @@ struct DayNameButton: View {
                     Text("Définition en ligne")
                 }
             }.tint(Color.purple)
-            if #available(iOS 26.0, *) {
-                buttonbar
-                    .buttonStyle(.glassProminent)
-            } else {
-                buttonbar
-                    .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.capsule)
-            }
+            .prominentButtonStyle()
+        }
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func prominentButtonStyle() -> some View {
+        if #available(iOS 26.0, *) {
+            self
+                .buttonStyle(.glassProminent)
+        } else {
+            self
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.capsule)
         }
     }
 }
@@ -160,5 +171,56 @@ struct Row: View {
         .accessibilityElement()
         .accessibility(label: Text(title))
         .accessibility(value: Text(value))
+    }
+}
+
+struct EventDetailsView: View {
+    @EnvironmentObject var midnight: Midnight
+    var date: FrenchRepublicanDate
+    let store = (UIApplication.shared.delegate as! AppDelegate).eventStore
+
+    var body: some View {
+        let eventAccess = EKEventStore.authorizationStatus(for: .event)
+        let reminderAccess = EKEventStore.authorizationStatus(for: .reminder)
+        if eventAccess == .denied && reminderAccess == .denied {
+            VStack(alignment: .leading) {
+                Text("Accès refusé")
+                    .font(.headline)
+                Text("Autorisez l'accès au Calendrier et/ou aux Rappels dans les Réglages iOS")
+            }
+        } else if eventAccess == .restricted && reminderAccess == .restricted {
+            VStack(alignment: .leading) {
+                Text("Accès restreint")
+                    .font(.headline)
+                Text("Autorisez l'accès au Calendrier et/ou aux Rappels dans les Réglages iOS")
+            }
+        } else if eventAccess == .notDetermined || reminderAccess == .notDetermined {
+            VStack(alignment: .leading) {
+                Text("Autorisez l'accès au Calendrier afin d'afficher tous vos évènements dans le Calendrier Républicain")
+                HStack {
+                    Button {
+                        Task {
+                            if #available(iOS 17.0, *) {
+                                try await store.requestFullAccessToEvents()
+                            } else {
+                                try await store.requestAccess(to: .event)
+                            }
+                            if #available(iOS 17.0, *) {
+                                try await store.requestFullAccessToReminders()
+                            } else {
+                                try await store.requestAccess(to: .reminder)
+                            }
+                            midnight.objectWillChange.send()
+                        }
+                    } label: {
+                        Text("Autoriser")
+                    }
+                }.tint(Color.purple)
+                .prominentButtonStyle()
+            }
+        } else {
+            // Show
+            Text("Events go here")
+        }
     }
 }

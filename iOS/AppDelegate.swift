@@ -12,12 +12,14 @@
 
 import UIKit
 import WatchConnectivity
+import EventKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var midnight = Midnight()
     var favorites: FavoritesPool!
+    let eventStore = EKEventStore()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
