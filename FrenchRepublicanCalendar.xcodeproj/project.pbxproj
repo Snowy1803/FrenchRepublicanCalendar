@@ -64,6 +64,9 @@
 		20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E095BB254059CC00383A31 /* FavoritesPool.swift */; };
 		FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */; };
 		FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
+		FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventVC.swift */; };
+		FD6EBB542EB7F1B600796761 /* CreateEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */; };
+		FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
@@ -178,6 +181,9 @@
 		20E095BB254059CC00383A31 /* FavoritesPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPool.swift; sourceTree = "<group>"; };
 		FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWidget.swift; sourceTree = "<group>"; };
 		FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeWidget.swift; sourceTree = "<group>"; };
+		FD6EBB512EB7F19A00796761 /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
+		FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventVC.swift; sourceTree = "<group>"; };
+		FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -318,6 +324,8 @@
 			children = (
 				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
 				20AEE4EB257170620015FFC6 /* DateDetails.swift */,
+				FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */,
+				FD6EBB512EB7F19A00796761 /* EventVC.swift */,
 				20C645C52662D216001D7108 /* DecimalTimeDetails.swift */,
 				20E0958A2540465500383A31 /* ContactsList.swift */,
 				20E0957C253F990C00383A31 /* FavoriteList.swift */,
@@ -331,6 +339,7 @@
 			children = (
 				2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */,
 				20C645C72662DA64001D7108 /* Widgets */,
+				FD6EBB582EB7F24100796761 /* CalendarViews */,
 				20C645C82662DA91001D7108 /* Screens */,
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
 				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
@@ -372,6 +381,14 @@
 				20E095A325404BEB00383A31 /* Info.plist */,
 			);
 			path = Widget;
+			sourceTree = "<group>";
+		};
+		FD6EBB582EB7F24100796761 /* CalendarViews */ = {
+			isa = PBXGroup;
+			children = (
+				FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */,
+			);
+			path = CalendarViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -588,9 +605,11 @@
 				20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */,
 				2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */,
 				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
+				FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */,
 				20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */,
 				20C645CC26639F64001D7108 /* DecimalTimePicker.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
+				FD6EBB542EB7F1B600796761 /* CreateEventVC.swift in Sources */,
 				20D9DCAF253F23BB00B5A9FA /* AppDelegate.swift in Sources */,
 				FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */,
 				20C645C42662BECF001D7108 /* DecimalTimeWidget.swift in Sources */,
@@ -605,6 +624,7 @@
 				2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */,
 				208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */,
 				20E0958B2540465500383A31 /* ContactsList.swift in Sources */,
+				FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

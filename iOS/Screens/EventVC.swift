@@ -1,0 +1,30 @@
+//
+//  EventVC.swift
+//  FrenchRepublicanCalendar
+// 
+//  Created by Emil Pedersen on 02/11/2025.
+//  Copyright © 2025 Snowy_1803. All rights reserved.
+// 
+//  This Source Code Form is subject to the terms of the Mozilla Public
+//  License, v. 2.0. If a copy of the MPL was not distributed with this
+//  file, You can obtain one at https://mozilla.org/MPL/2.0/.
+//
+
+import SwiftUI
+import FrenchRepublicanCalendarCore
+import EventKit
+import EventKitUI
+
+struct EventVC: UIViewControllerRepresentable {
+    typealias UIViewControllerType = EKEventViewController
+    
+    let event: EKEvent
+    
+    func makeUIViewController(context: Context) -> EKEventViewController {
+        EKEventViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: EKEventViewController, context: Context) {
+        uiViewController.event = event
+    }
+}
