@@ -17,13 +17,31 @@ struct CalendarMonthView: View {
     var date: FrenchRepublicanDate
     // true: show 5 columns, false: show 10 columns
     var halfWeek: Bool = true
+    // true: show 3/6 rows, false: show less rows for Sansculottides
+    var constantHeight: Bool = true
+    
+    var rowCount: Int {
+        if !constantHeight && date.isSansculottides {
+            if date.isYearSextil && halfWeek {
+                2
+            } else {
+                1
+            }
+        } else {
+            if halfWeek {
+                6
+            } else {
+                3
+            }
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(date, format: .republicanDate.day(.monthOnly).year(.long))
                 .font(.headline)
                 .padding()
-            ForEach(0..<(halfWeek ? 6 : 3), id: \.self) { row in
+            ForEach(0..<rowCount, id: \.self) { row in
                 CalendarMonthRow(date: date, halfWeek: halfWeek, row: row)
             }
         }
@@ -34,15 +52,23 @@ struct CalendarMonthRow: View {
     var date: FrenchRepublicanDate
     var halfWeek: Bool = false
     var row: Int
+    
+    var colCount: Int {
+        if halfWeek {
+            5
+        } else {
+            10
+        }
+    }
 
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(0..<(halfWeek ? 5 : 10), id: \.self) { col in
+            ForEach(0..<colCount, id: \.self) { col in
                 Spacer(minLength: col == 0 ? 0 : 2)
                 let date = FrenchRepublicanDate(
-                    dayInYear: (self.date.components.month! - 1) * 30 + row * (halfWeek ? 5 : 10) + col + 1,
+                    dayInYear: (self.date.components.month! - 1) * 30 + row * colCount + col + 1,
                     year: self.date.components.year!)
-                CalendarMonthItem(date: date, selected: date.components.day == self.date.components.day)
+                CalendarMonthItem(date: date, selection: self.date)
             }
             Spacer(minLength: 0)
         }
@@ -51,7 +77,11 @@ struct CalendarMonthRow: View {
 
 struct CalendarMonthItem: View {
     var date: FrenchRepublicanDate
-    var selected: Bool
+    var selection: FrenchRepublicanDate
+    
+    var isSelected: Bool {
+        Calendar.gregorian.isDate(date.date, inSameDayAs: selection.date)
+    }
     
     var isWeekend: Bool {
         date.isSansculottides || date.components.day! % 10 == 0
@@ -60,22 +90,27 @@ struct CalendarMonthItem: View {
     var isToday: Bool {
         Calendar.gregorian.isDateInToday(date.date)
     }
+    
+    var isValid: Bool {
+        date.dayInYear <= (date.isYearSextil ? 366 : 365)
+    }
 
     var body: some View {
-        Text(date.dayInYear <= (date.isYearSextil ? 366 : 365) ? "\(date.components.day!)" : "")
-            .fontWeight(selected ? .semibold : .regular)
+        Text(isValid ? "\(date.components.day!)" : "0")
+            .fontWeight(isSelected ? .semibold : .regular)
             .minimumScaleFactor(0.5)
             .padding(10)
             .foregroundStyle(
-                selected && isToday ? .white
-                : selected || isToday ? .red
+                !isValid ? .clear
+                : isSelected && isToday ? .white
+                : isSelected || isToday ? .red
                 : isWeekend ? .secondary
                 : .primary)
             .aspectRatio(1, contentMode: .fill)
             .frame(maxWidth: .infinity)
             .background(Circle().fill(
-                selected && isToday ? Color.red
-                : selected ? Color.red.opacity(0.15)
+                isSelected && isToday ? Color.red
+                : isSelected ? Color.red.opacity(0.15)
                 : Color.clear
             ))
     }
