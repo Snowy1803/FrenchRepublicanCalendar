@@ -14,7 +14,7 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 
 struct CalendarMonthView: View {
-    var date: FrenchRepublicanDate
+    @Binding var date: FrenchRepublicanDate
     // true: show 5 columns, false: show 10 columns
     var halfWeek: Bool = true
     // true: show 3/6 rows, false: show less rows for Sansculottides
@@ -42,14 +42,14 @@ struct CalendarMonthView: View {
                 .font(.headline)
                 .padding()
             ForEach(0..<rowCount, id: \.self) { row in
-                CalendarMonthRow(date: date, halfWeek: halfWeek, row: row)
+                CalendarMonthRow(date: $date, halfWeek: halfWeek, row: row)
             }
         }
     }
 }
 
 struct CalendarMonthRow: View {
-    var date: FrenchRepublicanDate
+    @Binding var date: FrenchRepublicanDate
     var halfWeek: Bool = false
     var row: Int
     
@@ -68,7 +68,7 @@ struct CalendarMonthRow: View {
                 let date = FrenchRepublicanDate(
                     dayInYear: (self.date.components.month! - 1) * 30 + row * colCount + col + 1,
                     year: self.date.components.year!)
-                CalendarMonthItem(date: date, selection: self.date)
+                CalendarMonthItem(date: date, selection: self.$date)
             }
             Spacer(minLength: 0)
         }
@@ -77,7 +77,7 @@ struct CalendarMonthRow: View {
 
 struct CalendarMonthItem: View {
     var date: FrenchRepublicanDate
-    var selection: FrenchRepublicanDate
+    @Binding var selection: FrenchRepublicanDate
     
     var isSelected: Bool {
         Calendar.gregorian.isDate(date.date, inSameDayAs: selection.date)
@@ -111,7 +111,11 @@ struct CalendarMonthItem: View {
             .background(Circle().fill(
                 isSelected && isToday ? Color.red
                 : isSelected ? Color.red.opacity(0.15)
-                : Color.clear
+                : Color(.widgetBackground)
             ))
+            .onTapGesture {
+                print("Tap on \(date.components.day!)")
+                selection = date
+            }
     }
 }

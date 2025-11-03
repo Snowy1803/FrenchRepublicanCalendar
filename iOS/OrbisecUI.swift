@@ -21,14 +21,14 @@ struct ShadowBox: ViewModifier {
             content
                 .padding()
                 .glassEffect(
-                    .regular.tint(scheme == .dark ? Color(white: 0.1) : Color.white).interactive(interactive),
+                    .regular.tint(Color(.widgetBackground)).interactive(interactive),
                     in: ConcentricRectangle())
                 .containerShape(.rect(cornerRadius: 26))
                 .padding([.leading, .trailing, .top])
         } else {
             content
                 .padding()
-                .background(scheme == .dark ? Color(white: 0.1) : Color.white)
+                .background(Color(.widgetBackground))
                 .cornerRadius(15)
                 .shadow(color: Color.gray.opacity(0.33), radius: scheme == .dark ? 0 : 5)
                 .padding([.leading, .trailing, .top])
