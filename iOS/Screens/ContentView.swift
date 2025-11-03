@@ -51,7 +51,6 @@ struct ContentView: View {
             }.navigationBarTitle("Calendrier Républicain")
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .tint(.red)
     }
 }
 

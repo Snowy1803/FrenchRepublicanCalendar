@@ -103,7 +103,7 @@ struct CalendarMonthItem: View {
                 .foregroundStyle(
                     !isValid ? .clear
                     : isSelected && isToday ? .white
-                    : isSelected || isToday ? .red
+                    : isSelected || isToday ? .accentColor
                     : isWeekend ? .secondary
                     : .primary)
         }
@@ -126,10 +126,12 @@ struct CalendarDayButtonStyle: ButtonStyle {
             .aspectRatio(1, contentMode: .fill)
             .frame(maxWidth: .infinity)
             .background(Circle().fill(
-                isSelected && isToday ? Color.red
-                : isSelected ? Color.red.opacity(0.12)
-                : configuration.isPressed ? Color.red.opacity(0.06)
-                : Color(.widgetBackground)
+                Color.accentColor.opacity(
+                    isSelected && isToday ? 1
+                    : isSelected ? 0.12
+                    : configuration.isPressed ? 0.06
+                    : 0
+                )
             ))
             .contentShape(Circle())
     }

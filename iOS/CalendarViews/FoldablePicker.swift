@@ -48,7 +48,7 @@ struct PickerButton: View {
             }
         } label: {
             label
-                .foregroundStyle(showDetails ? .red : .primary)
+                .foregroundStyle(showDetails ? Color.accentColor : .primary)
                 .padding(10)
                 .background(Capsule().fill(Color("PickerBackground")))
         }
