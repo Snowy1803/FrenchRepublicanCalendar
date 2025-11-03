@@ -17,6 +17,8 @@ struct RepublicanDatePicker: View {
     @State private var month: FrenchRepublicanDate
     @Binding var selection: FrenchRepublicanDate
     @Environment(\.horizontalSizeClass) var sizeClass
+    @State private var isMovingForward = true
+
     
     init(selection: Binding<FrenchRepublicanDate>) {
         self.month = selection.wrappedValue
@@ -59,40 +61,56 @@ struct RepublicanDatePicker: View {
                 }
             }
             CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
+                .id(month)
+                .transition(currentTransition)
+                .animation(.default, value: month)
         }
     }
     
     func previousMonth() {
-        if month.components.month! == 1 {
-            month = FrenchRepublicanDate(
-                day: 1,
-                month: 13,
-                year: self.month.components.year! - 1
-            )
-        } else {
-            month = FrenchRepublicanDate(
-                day: 1,
-                month: self.month.components.month! - 1,
-                year: self.month.components.year!
-            )
+        isMovingForward = false
+        DispatchQueue.main.async {
+            if month.components.month! == 1 {
+                month = FrenchRepublicanDate(
+                    day: 1,
+                    month: 13,
+                    year: self.month.components.year! - 1
+                )
+            } else {
+                month = FrenchRepublicanDate(
+                    day: 1,
+                    month: self.month.components.month! - 1,
+                    year: self.month.components.year!
+                )
+            }
         }
     }
     
     func nextMonth() {
-        if month.isSansculottides {
-            month = FrenchRepublicanDate(
-                day: 1,
-                month: 1,
-                year: self.month.components.year! + 1
-            )
-        } else {
-            month = FrenchRepublicanDate(
-                day: 1,
-                month: self.month.components.month! + 1,
-                year: self.month.components.year!
-            )
+        isMovingForward = true
+        DispatchQueue.main.async {
+            if month.isSansculottides {
+                month = FrenchRepublicanDate(
+                    day: 1,
+                    month: 1,
+                    year: self.month.components.year! + 1
+                )
+            } else {
+                month = FrenchRepublicanDate(
+                    day: 1,
+                    month: self.month.components.month! + 1,
+                    year: self.month.components.year!
+                )
+            }
         }
-
+    }
+    
+    private var currentTransition: AnyTransition {
+        isMovingForward
+        ? .asymmetric(insertion: .move(edge: .trailing),
+                      removal: .move(edge: .leading))
+        : .asymmetric(insertion: .move(edge: .leading),
+                      removal: .move(edge: .trailing))
     }
 }
 
