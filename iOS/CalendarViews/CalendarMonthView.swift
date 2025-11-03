@@ -79,7 +79,7 @@ struct CalendarMonthItem: View {
     @Binding var selection: FrenchRepublicanDate
     
     var isSelected: Bool {
-        Calendar.gregorian.isDate(date.date, inSameDayAs: selection.date)
+        isValid && Calendar.gregorian.isDate(date.date, inSameDayAs: selection.date)
     }
     
     var isWeekend: Bool {
