@@ -70,11 +70,13 @@ struct RepublicanDatePicker: View {
                 CalendarMonthView(month: prevMonth, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
                     .id(prevMonth)
                     .offset(x: -width)
+                    .accessibilityHidden(true)
                 CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
                     .id(month)
                 CalendarMonthView(month: followingMonth, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
                     .id(followingMonth)
                     .offset(x: width)
+                    .accessibilityHidden(true)
             }
             .offset(x: dragOffset)
             .contentShape(Rectangle())
