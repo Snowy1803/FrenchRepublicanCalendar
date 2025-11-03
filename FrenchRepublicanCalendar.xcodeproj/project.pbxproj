@@ -67,6 +67,7 @@
 		FD6EBB542EB7F1B600796761 /* CreateEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */; };
 		FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */; };
 		FD6EBB5A2EB8015D00796761 /* DecimalTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */; };
+		FD6EBB5E2EB8331C00796761 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
@@ -184,6 +185,7 @@
 		FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventVC.swift; sourceTree = "<group>"; };
 		FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimePicker.swift; sourceTree = "<group>"; };
+		FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
 		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -385,6 +387,7 @@
 		FD6EBB582EB7F24100796761 /* CalendarViews */ = {
 			isa = PBXGroup;
 			children = (
+				FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */,
 				FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */,
 				FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */,
 			);
@@ -605,6 +608,7 @@
 				20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */,
 				2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */,
 				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
+				FD6EBB5E2EB8331C00796761 /* CalendarMonthView.swift in Sources */,
 				FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */,
 				20E0956D253F8A7200383A31 /* RepublicanDatePicker.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,

@@ -59,7 +59,7 @@ struct DecimalTimePickerButton: View {
             }
         } label: {
             label
-                .foregroundStyle(showDetails ? .red : .black)
+                .foregroundStyle(showDetails ? .red : .primary)
                 .padding(10)
                 .background(Capsule().fill(Color("PickerBackground")))
         }
