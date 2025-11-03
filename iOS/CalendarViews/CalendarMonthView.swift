@@ -13,6 +13,26 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
+struct RepublicanDatePicker2: View {
+    @State private var month: FrenchRepublicanDate
+    @Binding var selection: FrenchRepublicanDate
+    @Environment(\.horizontalSizeClass) var sizeClass
+    
+    init(selection: Binding<FrenchRepublicanDate>) {
+        self.month = selection.wrappedValue
+        self._selection = selection
+    }
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(month, format: .republicanDate.day(.monthOnly).year(.long))
+                .font(.headline)
+                .padding()
+            CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
+        }
+    }
+}
+
 struct CalendarMonthView: View {
     var month: FrenchRepublicanDate
     @Binding var selection: FrenchRepublicanDate
@@ -38,10 +58,7 @@ struct CalendarMonthView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(month, format: .republicanDate.day(.monthOnly).year(.long))
-                .font(.headline)
-                .padding()
+        VStack {
             ForEach(0..<rowCount, id: \.self) { row in
                 CalendarMonthRow(month: month, row: row, selection: $selection, halfWeek: halfWeek)
             }

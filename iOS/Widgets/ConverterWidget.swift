@@ -67,7 +67,7 @@ struct ConverterWidget: View {
                 }.foregroundColor(.primary)
             }.padding(.top, 4)
 //            Divider()
-//            CalendarMonthView(month: rep, selection: Binding {
+//            RepublicanDatePicker2(selection: Binding {
 //                FrenchRepublicanDate(date: from)
 //            } set: {
 //                from = $0.date
