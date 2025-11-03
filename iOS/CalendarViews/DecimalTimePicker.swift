@@ -38,6 +38,19 @@ struct DecimalTimePickerButton: View {
     var decimalTime: DecimalTime
     var precision: DecimalTimePrecision
     @Binding var showDetails: Bool
+    
+    var label: Text {
+        if si {
+            let date = Calendar.gregorian.startOfDay(for: Date())
+                .addingTimeInterval(decimalTime.timeSinceMidnight)
+            let format = Date.FormatStyle.dateTime
+                .hour(.twoDigits(amPM: .abbreviated))
+                .minute(.twoDigits)
+            return Text(date, format: precision == .secondPrecision ? format.second(.twoDigits) : format)
+        } else {
+            return Text(decimalTime, format: .decimalTime.precision(precision))
+        }
+    }
 
     var body: some View {
         Group {
@@ -46,20 +59,14 @@ struct DecimalTimePickerButton: View {
                     showDetails.toggle()
                 }
             } label: {
-                if si {
-                    let date = Calendar.gregorian.startOfDay(for: Date())
-                        .addingTimeInterval(decimalTime.timeSinceMidnight)
-                    let format = Date.FormatStyle.dateTime
-                        .hour(.twoDigits(amPM: .abbreviated))
-                        .minute(.twoDigits)
-                    Text(date, format: precision == .secondPrecision ? format.second(.twoDigits) : format)
-                } else {
-                    Text(decimalTime, format: .decimalTime.precision(precision))
-                }
+                label
             }
             .buttonStyle(.bordered)
         }
-        .accessibility(label: Text(si ? "Temps SI" : "Temps décimal"))
+        .accessibilityLabel(Text(si ? "Temps SI" : "Temps décimal"))
+        .accessibilityValue(label)
+        .accessibilityHint(Text("Sélectionner pour développer"))
+        .accessibilityAddTraits(showDetails ? .isSelected : [])
     }
 }
 
@@ -103,7 +110,7 @@ struct DecimalTimePickerView: UIViewRepresentable {
         picker.reloadAllComponents()
     }
     
-    class Coordinator: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
+    class Coordinator: NSObject, UIPickerViewDelegate, UIPickerViewDataSource, UIPickerViewAccessibilityDelegate {
         var si: Bool = false
         var precision: DecimalTimePrecision = .none
         var selection: Binding<DecimalTime> = .constant(DecimalTime(timeSinceMidnight: 0))
@@ -157,6 +164,15 @@ struct DecimalTimePickerView: UIViewRepresentable {
                 }
             default:
                 preconditionFailure()
+            }
+        }
+        
+        func pickerView(_ pickerView: UIPickerView, accessibilityLabelForComponent component: Int) -> String? {
+            switch component {
+            case 0: return "Heures"
+            case 1: return "Minutes"
+            case 2: return "Secondes"
+            default: preconditionFailure()
             }
         }
     }
