@@ -20,18 +20,25 @@ struct FoldablePicker<PickerView: View>: View {
     @ViewBuilder var pickerView: () -> PickerView
     
     var body: some View {
-        HStack {
-            label.font(.headline)
-                .lineLimit(1)
-                .layoutPriority(1)
-            Spacer()
-            PickerButton(label: value, showDetails: $showPicker)
-                .lineLimit(1)
-                .layoutPriority(5)
-        }.accessibilityElement(children: .combine)
-        if showPicker {
-            pickerView()
-                .transition(.move(edge: .top).combined(with: .opacity))
+        VStack {
+            HStack {
+                label.font(.headline)
+                    .lineLimit(1)
+                    .layoutPriority(1)
+                Spacer()
+                PickerButton(label: value, showDetails: $showPicker)
+                    .lineLimit(1)
+                    .layoutPriority(5)
+            }.accessibilityElement(children: .combine)
+            ZStack {
+                if showPicker {
+                    pickerView()
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 0.01) // need > 0 for the view to exist but want 0
+            .clipped()
         }
     }
 }

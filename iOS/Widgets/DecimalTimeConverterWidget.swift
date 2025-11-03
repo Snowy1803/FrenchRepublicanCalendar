@@ -32,7 +32,7 @@ struct DecimalTimeConverterWidget: View {
                     .font(.body)
             }
         } content: {
-            VStack(alignment: .center) {
+            VStack {
                 FoldableDecimalTimePicker(
                     si: true,
                     text: Text("Temps SI"),
@@ -56,7 +56,7 @@ struct DecimalTimeConverterWidget: View {
                         showPicker = newValue ? false : nil
                     }
                 )
-            }
+            }.padding(.bottom, -10)
         }
     }
 }
