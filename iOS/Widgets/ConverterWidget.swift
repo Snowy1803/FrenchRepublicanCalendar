@@ -67,7 +67,7 @@ struct ConverterWidget: View {
                 }.foregroundColor(.primary)
             }.padding(.top, 4)
 //            Divider()
-//            CalendarMonthView(date: Binding {
+//            CalendarMonthView(month: rep, selection: Binding {
 //                FrenchRepublicanDate(date: from)
 //            } set: {
 //                from = $0.date

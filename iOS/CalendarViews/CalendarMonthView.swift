@@ -14,15 +14,16 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 
 struct CalendarMonthView: View {
-    @Binding var date: FrenchRepublicanDate
+    var month: FrenchRepublicanDate
+    @Binding var selection: FrenchRepublicanDate
     // true: show 5 columns, false: show 10 columns
     var halfWeek: Bool = true
     // true: show 3/6 rows, false: show less rows for Sansculottides
     var constantHeight: Bool = true
     
     var rowCount: Int {
-        if !constantHeight && date.isSansculottides {
-            if date.isYearSextil && halfWeek {
+        if !constantHeight && month.isSansculottides {
+            if month.isYearSextil && halfWeek {
                 2
             } else {
                 1
@@ -38,20 +39,21 @@ struct CalendarMonthView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(date, format: .republicanDate.day(.monthOnly).year(.long))
+            Text(month, format: .republicanDate.day(.monthOnly).year(.long))
                 .font(.headline)
                 .padding()
             ForEach(0..<rowCount, id: \.self) { row in
-                CalendarMonthRow(date: $date, halfWeek: halfWeek, row: row)
+                CalendarMonthRow(month: month, row: row, selection: $selection, halfWeek: halfWeek)
             }
         }
     }
 }
 
 struct CalendarMonthRow: View {
-    @Binding var date: FrenchRepublicanDate
-    var halfWeek: Bool = false
+    var month: FrenchRepublicanDate
     var row: Int
+    @Binding var selection: FrenchRepublicanDate
+    var halfWeek: Bool = false
     
     var colCount: Int {
         if halfWeek {
@@ -66,9 +68,9 @@ struct CalendarMonthRow: View {
             ForEach(0..<colCount, id: \.self) { col in
                 Spacer(minLength: col == 0 ? 0 : 2)
                 let date = FrenchRepublicanDate(
-                    dayInYear: (self.date.components.month! - 1) * 30 + row * colCount + col + 1,
-                    year: self.date.components.year!)
-                CalendarMonthItem(date: date, selection: self.$date)
+                    dayInYear: (month.components.month! - 1) * 30 + row * colCount + col + 1,
+                    year: month.components.year!)
+                CalendarMonthItem(date: date, selection: $selection)
             }
             Spacer(minLength: 0)
         }
