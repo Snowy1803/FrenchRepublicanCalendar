@@ -20,25 +20,6 @@ struct FoldableDecimalTimePicker: View {
     @Binding var decimalTime: DecimalTime
     @Binding var showPicker: Bool
     
-    var body: some View {
-        HStack {
-            text.font(.headline)
-            Spacer()
-            DecimalTimePickerButton(si: si, decimalTime: decimalTime, precision: precision, showDetails: $showPicker)
-        }
-        if showPicker {
-            DecimalTimePickerView(si: si, precision: precision, selection: $decimalTime)
-                .transition(.move(edge: .top).combined(with: .opacity))
-        }
-    }
-}
-
-struct DecimalTimePickerButton: View {
-    var si: Bool
-    var decimalTime: DecimalTime
-    var precision: DecimalTimePrecision
-    @Binding var showDetails: Bool
-    
     var label: Text {
         if si {
             let date = Calendar.gregorian.startOfDay(for: Date())
@@ -51,23 +32,11 @@ struct DecimalTimePickerButton: View {
             return Text(decimalTime, format: .decimalTime.precision(precision))
         }
     }
-
+    
     var body: some View {
-        Button {
-            withAnimation {
-                showDetails.toggle()
-            }
-        } label: {
-            label
-                .foregroundStyle(showDetails ? .red : .primary)
-                .padding(10)
-                .background(Capsule().fill(Color("PickerBackground")))
+        FoldablePicker(label: text, value: label, showPicker: $showPicker) {
+            DecimalTimePickerView(si: si, precision: precision, selection: $decimalTime)
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text(si ? "Temps SI" : "Temps décimal"))
-        .accessibilityValue(label)
-        .accessibilityHint(Text("Sélectionner pour développer"))
-        .accessibilityAddTraits(showDetails ? .isSelected : [])
     }
 }
 

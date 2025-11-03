@@ -16,6 +16,7 @@ import FrenchRepublicanCalendarCore
 struct ConverterWidget: View {
     @EnvironmentObject var midnight: Midnight
     @State private var from = Date()
+    @State private var showPicker: Bool? = nil
     
     var body: some View {
         HomeWidget {
@@ -34,26 +35,27 @@ struct ConverterWidget: View {
             }
         } content: {
             let rep = FrenchRepublicanDate(date: from)
-            VStack(alignment: .leading) {
-                Text("Date grégorienne")
-                    .font(.headline)
-                    .accessibility(hidden: true)
-                DatePicker(selection: $from, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
-                    Text("Date grégorienne")
-                }.frame(maxWidth: .infinity, alignment: .leading)
-                .environment(\.locale, Locale(identifier: "fr"))
-                .labelsHidden()
-            }.padding(.top, 4)
+            FoldableDatePicker(
+                si: true,
+                label: Text("Date grégorienne"),
+                date: $from,
+                showPicker: Binding {
+                    showPicker == true
+                } set: { newValue in
+                    showPicker = newValue ? true : nil
+                }
+            )
             Divider()
-            VStack(alignment: .leading) {
-                Text("Date républicaine")
-                    .font(.headline)
-                RepublicanDatePicker(date: Binding(get: {
-                    return MyRepublicanDateComponents(day: rep.components.day!, month: rep.components.month!, year: rep.components.year!)
-                }, set: { cmps in
-                    from = cmps.toRep.date
-                }))
-            }.padding(.top, 4)
+            FoldableDatePicker(
+                si: false,
+                label: Text("Date républicaine"),
+                date: $from,
+                showPicker: Binding {
+                    showPicker == false
+                } set: { newValue in
+                    showPicker = newValue ? false : nil
+                }
+            )
             Divider()
             NavigationLink(destination: DateDetails(date: rep)) {
                 HStack {
@@ -66,12 +68,6 @@ struct ConverterWidget: View {
                         .foregroundColor(.secondary)
                 }.foregroundColor(.primary)
             }.padding(.top, 4)
-//            Divider()
-//            RepublicanDatePicker2(selection: Binding {
-//                FrenchRepublicanDate(date: from)
-//            } set: {
-//                from = $0.date
-//            })
         }
     }
 }
