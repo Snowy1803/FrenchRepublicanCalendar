@@ -95,26 +95,41 @@ struct CalendarMonthItem: View {
     }
 
     var body: some View {
-        Text(isValid ? "\(date.components.day!)" : "0")
-            .fontWeight(isSelected ? .semibold : .regular)
+        Button {
+            selection = date
+        } label: {
+            Text(isValid ? "\(date.components.day!)" : "0")
+                .fontWeight(isSelected ? .semibold : .regular)
+                .foregroundStyle(
+                    !isValid ? .clear
+                    : isSelected && isToday ? .white
+                    : isSelected || isToday ? .red
+                    : isWeekend ? .secondary
+                    : .primary)
+        }
+        .buttonStyle(CalendarDayButtonStyle(isSelected: isSelected, isToday: isToday))
+        .disabled(!isValid)
+        .accessibilityHidden(!isValid)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+}
+
+struct CalendarDayButtonStyle: ButtonStyle {
+    var isSelected: Bool
+    var isToday: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
             .minimumScaleFactor(0.5)
             .padding(10)
-            .foregroundStyle(
-                !isValid ? .clear
-                : isSelected && isToday ? .white
-                : isSelected || isToday ? .red
-                : isWeekend ? .secondary
-                : .primary)
             .aspectRatio(1, contentMode: .fill)
             .frame(maxWidth: .infinity)
             .background(Circle().fill(
                 isSelected && isToday ? Color.red
                 : isSelected ? Color.red.opacity(0.15)
+                : configuration.isPressed ? Color.red.opacity(0.10)
                 : Color(.widgetBackground)
             ))
-            .onTapGesture {
-                print("Tap on \(date.components.day!)")
-                selection = date
-            }
+            .contentShape(Circle())
     }
 }
