@@ -27,24 +27,24 @@ struct RepublicanDatePicker: View {
         VStack(alignment: .leading) {
             HStack {
                 Text(month, format: .republicanDate.day(.monthOnly).year(.long))
-                    .padding()
+                    .font(.headline)
                 Spacer()
                 Button {
                     previousMonth()
                 } label: {
-                    Image(systemName: "chevron.left")
-                        .padding()
+                    Image(systemName: "chevron.backward")
                         .foregroundStyle(.foreground)
-                }
+                        .font(.title3.weight(.semibold))
+                }.padding(.trailing)
                 Button {
                     nextMonth()
                 } label: {
-                    Image(systemName: "chevron.right")
-                        .padding()
+                    Image(systemName: "chevron.forward")
                         .foregroundStyle(.foreground)
+                        .font(.title3.weight(.semibold))
                 }
             }
-            .font(.headline)
+            .padding()
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text("Mois"))
             .accessibilityValue(Text(month, format: .republicanDate.day(.monthOnly).year(.long)))

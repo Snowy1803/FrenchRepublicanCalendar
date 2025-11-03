@@ -22,8 +22,12 @@ struct FoldablePicker<PickerView: View>: View {
     var body: some View {
         HStack {
             label.font(.headline)
+                .lineLimit(1)
+                .layoutPriority(1)
             Spacer()
             PickerButton(label: value, showDetails: $showPicker)
+                .lineLimit(1)
+                .layoutPriority(5)
         }.accessibilityElement(children: .combine)
         if showPicker {
             pickerView()

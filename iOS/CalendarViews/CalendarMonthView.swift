@@ -63,7 +63,7 @@ struct CalendarMonthRow: View {
     var body: some View {
         HStack(spacing: 0) {
             ForEach(0..<colCount, id: \.self) { col in
-                Spacer(minLength: col == 0 ? 0 : 2)
+                Spacer(minLength: 0)
                 let date = FrenchRepublicanDate(
                     dayInYear: (month.components.month! - 1) * 30 + row * colCount + col + 1,
                     year: month.components.year!)
@@ -99,7 +99,7 @@ struct CalendarMonthItem: View {
             selection = date
         } label: {
             Text(isValid ? "\(date.components.day!)" : "0")
-                .fontWeight(isSelected ? .semibold : .regular)
+                .font(.system(size: 20, weight: isSelected ? .semibold : .regular))
                 .foregroundStyle(
                     !isValid ? .clear
                     : isSelected && isToday ? .white
@@ -127,8 +127,8 @@ struct CalendarDayButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .background(Circle().fill(
                 isSelected && isToday ? Color.red
-                : isSelected ? Color.red.opacity(0.15)
-                : configuration.isPressed ? Color.red.opacity(0.10)
+                : isSelected ? Color.red.opacity(0.12)
+                : configuration.isPressed ? Color.red.opacity(0.06)
                 : Color(.widgetBackground)
             ))
             .contentShape(Circle())

@@ -151,7 +151,7 @@ struct DateCollection: RandomAccessCollection {
             return 0
         }
     }()
-    var endIndex: Int = 4933795
+    var endIndex: Int = 4933795 // maxSafeDate, year 15300
     
     typealias Element = Date
     typealias Index = Int
