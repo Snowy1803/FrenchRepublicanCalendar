@@ -35,7 +35,6 @@ struct RepublicanDatePicker: View {
                     Image(systemName: "chevron.left")
                         .padding()
                         .foregroundStyle(.foreground)
-                        .accessibilityLabel(Text("Mois précédent"))
                 }
                 Button {
                     nextMonth()
@@ -43,9 +42,22 @@ struct RepublicanDatePicker: View {
                     Image(systemName: "chevron.right")
                         .padding()
                         .foregroundStyle(.foreground)
-                        .accessibilityLabel(Text("Mois suivant"))
                 }
-            }.font(.headline)
+            }
+            .font(.headline)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("Mois"))
+            .accessibilityValue(Text(month, format: .republicanDate.day(.monthOnly).year(.long)))
+            .accessibilityAdjustableAction { direction in
+                switch direction {
+                case .increment:
+                    nextMonth()
+                case .decrement:
+                    previousMonth()
+                @unknown default:
+                    ()
+                }
+            }
             CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
         }
     }

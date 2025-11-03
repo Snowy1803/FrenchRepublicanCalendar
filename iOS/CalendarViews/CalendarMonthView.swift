@@ -111,6 +111,7 @@ struct CalendarMonthItem: View {
         .disabled(!isValid)
         .accessibilityHidden(!isValid)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityLabel(isValid ? Text("\(isToday ? "Aujourd'hui, " : "")\(date, format: .republicanDate.day(.preferred).year(.long))") : Text(""))
     }
 }
 
