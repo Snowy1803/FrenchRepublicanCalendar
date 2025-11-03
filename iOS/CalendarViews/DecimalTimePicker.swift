@@ -53,16 +53,17 @@ struct DecimalTimePickerButton: View {
     }
 
     var body: some View {
-        Group {
-            Button {
-                withAnimation {
-                    showDetails.toggle()
-                }
-            } label: {
-                label
+        Button {
+            withAnimation {
+                showDetails.toggle()
             }
-            .buttonStyle(.bordered)
+        } label: {
+            label
+                .foregroundStyle(showDetails ? .red : .black)
+                .padding(10)
+                .background(Capsule().fill(Color("PickerBackground")))
         }
+        .buttonStyle(.plain)
         .accessibilityLabel(Text(si ? "Temps SI" : "Temps décimal"))
         .accessibilityValue(label)
         .accessibilityHint(Text("Sélectionner pour développer"))
