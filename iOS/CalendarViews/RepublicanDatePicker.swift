@@ -19,18 +19,30 @@ struct RepublicanDatePicker: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     @State private var dragOffset: CGFloat = 0
     @State private var width: CGFloat = 0
+    @State private var showMonthWheel: Bool = false
 
     init(selection: Binding<FrenchRepublicanDate>) {
-        self.month = selection.wrappedValue
+        self.month = FrenchRepublicanDate(day: 1, month: selection.wrappedValue.components.month!, year: selection.wrappedValue.components.year!)
         self._selection = selection
     }
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(month, format: .republicanDate.day(.monthOnly).year(.long))
-                    .font(.headline)
-                    .animation(nil, value: month)
+                Button {
+                    withAnimation(.easeInOut(duration: 0.15)) {
+                        showMonthWheel.toggle()
+                    }
+                } label: {
+                    Text(month, format: .republicanDate.day(.monthOnly).year(.long))
+                        .animation(nil, value: month)
+                        .foregroundStyle(showMonthWheel ? Color.accentColor : Color.primary)
+                    Image(systemName: "chevron.forward")
+                        .imageScale(.small)
+                        .foregroundStyle(.tint)
+                        .rotationEffect(showMonthWheel ? .degrees(90) : .degrees(0))
+                }
+                .font(.headline)
                 Spacer()
                 Button {
                     previousMonth()
@@ -73,12 +85,23 @@ struct RepublicanDatePicker: View {
                     .accessibilityHidden(true)
                 CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
                     .id(month)
+                    .accessibilityHidden(showMonthWheel)
                 CalendarMonthView(month: followingMonth, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: true)
                     .id(followingMonth)
                     .offset(x: width)
                     .accessibilityHidden(true)
             }
             .offset(x: dragOffset)
+            .overlay { // keep size from month view
+                if showMonthWheel {
+                    ZStack {
+                        Rectangle()
+                            .fill(.background)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        WheelRepublicanDatePicker(precision: .republicanDate.day(.monthOnly).year(), selection: $month)
+                    }.transition(.opacity)
+                }
+            }
             .contentShape(Rectangle())
             .highPriorityGesture(
                 DragGesture(minimumDistance: 10).onChanged { value in
@@ -101,7 +124,8 @@ struct RepublicanDatePicker: View {
                         ),
                         forward: forward
                     )
-                }
+                },
+                isEnabled: !showMonthWheel
             )
         }
     }
