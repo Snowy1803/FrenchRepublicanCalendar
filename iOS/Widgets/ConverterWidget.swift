@@ -68,6 +68,12 @@ struct ConverterWidget: View {
                         .foregroundColor(.secondary)
                 }.foregroundColor(.primary)
             }.padding(.top, 4)
+//            Divider()
+//            WheelRepublicanDatePicker(precision: .republicanDate.day(.monthOnly).year(), selection: Binding {
+//                FrenchRepublicanDate(date: from)
+//            } set: {
+//                from = $0.date
+//            })
         }
     }
 }

@@ -70,6 +70,7 @@
 		FD6EBB5E2EB8331C00796761 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */; };
 		FD6EBB602EB90E1300796761 /* RepublicanDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */; };
 		FD6EBB622EB90F6E00796761 /* FoldablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB612EB90F6E00796761 /* FoldablePicker.swift */; };
+		FD6EBB642EB98EBF00796761 /* WheelRepublicanDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
@@ -190,6 +191,7 @@
 		FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
 		FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepublicanDatePicker.swift; sourceTree = "<group>"; };
 		FD6EBB612EB90F6E00796761 /* FoldablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldablePicker.swift; sourceTree = "<group>"; };
+		FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelRepublicanDatePicker.swift; sourceTree = "<group>"; };
 		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -394,6 +396,7 @@
 				FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */,
 				FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */,
 				FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */,
+				FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */,
 				FD6EBB612EB90F6E00796761 /* FoldablePicker.swift */,
 				FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */,
 			);
@@ -616,6 +619,7 @@
 				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
 				FD6EBB5E2EB8331C00796761 /* CalendarMonthView.swift in Sources */,
 				FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */,
+				FD6EBB642EB98EBF00796761 /* WheelRepublicanDatePicker.swift in Sources */,
 				20E0956D253F8A7200383A31 /* Date+iso.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
 				FD6EBB542EB7F1B600796761 /* CreateEventVC.swift in Sources */,
