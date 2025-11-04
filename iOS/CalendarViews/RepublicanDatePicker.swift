@@ -233,12 +233,21 @@ struct FoldableDatePicker: View {
     var body: some View {
         FoldablePicker(label: label, value: value, showPicker: $showPicker) {
             if si {
-                DatePicker(selection: $date, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
-                    label
-                }.frame(maxWidth: .infinity, alignment: .leading)
-                .environment(\.locale, Locale(identifier: "fr"))
-                .datePickerStyle(.graphical)
-                .labelsHidden()
+                if date > Date.distantFuture {
+                    HStack(alignment: .firstTextBaseline) {
+                        Image.decorative(systemName: "exclamationmark.circle.fill")
+                            .imageScale(.large)
+                            .foregroundStyle(.red)
+                        Text("La date sélectionnée n'est pas supportée par le sélecteur de date système\n\(Text("Date maximale : \(Date.distantFuture, format: .dateTime.day().month().year())").foregroundColor(.secondary))")
+                    }.frame(alignment: .leading)
+                } else {
+                    DatePicker(selection: $date, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
+                        label
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        .environment(\.locale, Locale(identifier: "fr"))
+                        .datePickerStyle(.graphical)
+                        .labelsHidden()
+                }
             } else {
                 RepublicanDatePicker(selection: Binding {
                     FrenchRepublicanDate(date: date)
