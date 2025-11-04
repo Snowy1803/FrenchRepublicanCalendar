@@ -37,32 +37,36 @@ struct RepublicanDatePicker: View {
                     Text(month, format: .republicanDate.day(.monthOnly).year(.long))
                         .animation(nil, value: month)
                         .foregroundStyle(showMonthWheel ? Color.accentColor : Color.primary)
+                        .lineLimit(1)
                     Image(systemName: "chevron.forward")
                         .imageScale(.small)
                         .foregroundStyle(.tint)
                         .rotationEffect(showMonthWheel ? .degrees(90) : .degrees(0))
-                }
+                }.buttonStyle(.plain)
                 .font(.headline)
                 Spacer()
-                Button {
-                    previousMonth()
-                } label: {
-                    Image(systemName: "chevron.backward")
-                        .foregroundStyle(.foreground)
-                        .font(.title3.weight(.semibold))
-                }.padding(.trailing)
-                Button {
-                    nextMonth()
-                } label: {
-                    Image(systemName: "chevron.forward")
-                        .foregroundStyle(.foreground)
-                        .font(.title3.weight(.semibold))
+                if !showMonthWheel {
+                    Button {
+                        previousMonth()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .foregroundStyle(.foreground)
+                            .font(.title3.weight(.semibold))
+                    }.padding(.trailing)
+                    Button {
+                        nextMonth()
+                    } label: {
+                        Image(systemName: "chevron.forward")
+                            .foregroundStyle(.foreground)
+                            .font(.title3.weight(.semibold))
+                    }
                 }
             }
             .padding()
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text("Mois"))
             .accessibilityValue(Text(month, format: .republicanDate.day(.monthOnly).year(.long)))
+            .accessibilityAddTraits(showMonthWheel ? [.isSelected, .isButton] : .isButton)
             .accessibilityAdjustableAction { direction in
                 switch direction {
                 case .increment:
@@ -71,6 +75,11 @@ struct RepublicanDatePicker: View {
                     previousMonth()
                 @unknown default:
                     ()
+                }
+            }
+            .accessibilityAction {
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    showMonthWheel.toggle()
                 }
             }
             ZStack {

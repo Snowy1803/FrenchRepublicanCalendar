@@ -109,9 +109,9 @@ struct CalendarMonthItem: View {
         }
         .buttonStyle(CalendarDayButtonStyle(isSelected: isSelected, isToday: isToday))
         .disabled(!isValid)
-        .accessibilityHidden(!isValid)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityLabel(isValid ? Text("\(isToday ? "Aujourd'hui, " : "")\(date, format: .republicanDate.day(.preferred).year(.long))") : Text(""))
+        .accessibilityHidden(!isValid) // this doesnt work
     }
 }
 
