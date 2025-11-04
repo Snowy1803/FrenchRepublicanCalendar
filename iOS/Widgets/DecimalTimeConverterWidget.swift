@@ -36,7 +36,7 @@ struct DecimalTimeConverterWidget: View {
                 FoldableDecimalTimePicker(
                     si: true,
                     text: Text("Temps SI"),
-                    precision: .secondPrecision,
+                    precision: .decimalTime.hour().minute().second(),
                     decimalTime: $time,
                     showPicker: Binding {
                         showPicker == true
@@ -48,7 +48,7 @@ struct DecimalTimeConverterWidget: View {
                 FoldableDecimalTimePicker(
                     si: false,
                     text: Text("Temps décimal"),
-                    precision: .secondPrecision,
+                    precision: .decimalTime.hour().minute().second(),
                     decimalTime: $time,
                     showPicker: Binding {
                         showPicker == false

@@ -16,7 +16,7 @@ import FrenchRepublicanCalendarCore
 struct FoldableDecimalTimePicker: View {
     var si: Bool
     var text: Text
-    var precision: DecimalTimePrecision
+    var precision: DecimalTimeFormat
     @Binding var decimalTime: DecimalTime
     @Binding var showPicker: Bool
     
@@ -24,12 +24,34 @@ struct FoldableDecimalTimePicker: View {
         if si {
             let date = Calendar.gregorian.startOfDay(for: Date())
                 .addingTimeInterval(decimalTime.timeSinceMidnight)
-            let format = Date.FormatStyle.dateTime
-                .hour(.twoDigits(amPM: .abbreviated))
-                .minute(.twoDigits)
-            return Text(date, format: precision == .secondPrecision ? format.second(.twoDigits) : format)
+            var format = Date.FormatStyle.dateTime
+            switch precision.hour {
+            case .long: format = format.hour(.twoDigits(amPM: .abbreviated))
+            case .default: format = format.hour(.defaultDigits(amPM: .abbreviated))
+            case .short: format = format.hour(.conversationalDefaultDigits(amPM: .abbreviated))
+            case .none:
+                break
+            }
+            switch precision.minute {
+            case .long: format = format.minute(.twoDigits)
+            case .default, .short: format = format.minute(.defaultDigits)
+            case .none:
+                break
+            }
+            switch precision.second {
+            case .long: format = format.second(.twoDigits)
+            case .default, .short: format = format.second(.defaultDigits)
+            case .none:
+                break
+            }
+            switch precision.subsecond {
+            case .precision(let precision): format = format.secondFraction(.fractional(precision))
+            case .none:
+                break
+            }
+            return Text(date, format: format)
         } else {
-            return Text(decimalTime, format: .decimalTime.precision(precision))
+            return Text(decimalTime, format: precision)
         }
     }
     
@@ -43,7 +65,7 @@ struct FoldableDecimalTimePicker: View {
 struct DecimalTimePickerView: UIViewRepresentable {
     typealias UIViewType = UIPickerView
     var si: Bool
-    var precision: DecimalTimePrecision
+    var precision: DecimalTimeFormat
     @Binding var selection: DecimalTime
     
     func makeUIView(context: Context) -> UIPickerView {
@@ -64,56 +86,72 @@ struct DecimalTimePickerView: UIViewRepresentable {
         context.coordinator.si = si
         context.coordinator.precision = precision
         context.coordinator.selection = $selection
-        if si {
-            picker.selectRow(selection.hourSI, inComponent: 0, animated: false)
-            picker.selectRow(selection.minuteSI, inComponent: 1, animated: false)
-            if context.coordinator.numberOfComponents(in: picker) == 3 {
-                picker.selectRow(selection.secondSI, inComponent: 2, animated: false)
-            }
-        } else {
-            picker.selectRow(selection.hour, inComponent: 0, animated: false)
-            picker.selectRow(selection.minute, inComponent: 1, animated: false)
-            if context.coordinator.numberOfComponents(in: picker) == 3 {
-                picker.selectRow(selection.second, inComponent: 2, animated: false)
-            }
+        var component: Int = 0
+        if precision.hour != .none {
+            picker.selectRow(si ? selection.hourSI : selection.hour, inComponent: component, animated: false)
+            component += 1
+        }
+        if precision.minute != .none {
+            picker.selectRow(si ? selection.minuteSI : selection.minute, inComponent: component, animated: false)
+            component += 1
+        }
+        if precision.second != .none {
+            picker.selectRow(si ? selection.secondSI : selection.second, inComponent: component, animated: false)
+            component += 1
         }
         picker.reloadAllComponents()
     }
     
     class Coordinator: NSObject, UIPickerViewDelegate, UIPickerViewDataSource, UIPickerViewAccessibilityDelegate {
         var si: Bool = false
-        var precision: DecimalTimePrecision = .none
+        var precision: DecimalTimeFormat = .decimalTime
         var selection: Binding<DecimalTime> = .constant(DecimalTime(timeSinceMidnight: 0))
         
         func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            switch precision {
-            case .none, .minutePrecision:
-                2
-            case .secondPrecision, .subsecondPrecision:
-                3
+            var component: Int = 0
+            if precision.hour != .none {
+                component += 1
             }
+            if precision.minute != .none {
+                component += 1
+            }
+            if precision.second != .none {
+                component += 1
+            }
+            return component
+        }
+        
+        func resolve(component: Int) -> Int {
+            var component = component
+            if precision.hour == .none {
+                // (minute, second) becomes (_, minute, second)
+                component += 1
+            }
+            if precision.minute == .none && component >= 1 {
+                // (hour, second) becomes (hour, _, seconds)
+                component += 1
+            }
+            return component
         }
         
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            switch component {
-            case 0: // hours
-                si ? 24 : 10
-            case 1, 2: // minutes, seconds
-                si ? 60 : 100
-            default:
-                preconditionFailure()
+            if component == 0 && precision.hour != .none {
+                si ? 24 : 10 // hours
+            } else {
+                si ? 60 : 100 // minutes, seconds
             }
         }
         
         func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            if !si && component == 0 {
+            // TODO: use formatter
+            if !si && component == 0 && precision.hour != .none {
                 return String(row)
             }
             return String("0\(row)".suffix(2))
         }
         
         func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            switch component {
+            switch resolve(component: component) {
             case 0:
                 if si {
                     selection.wrappedValue.hourSI = row
@@ -138,7 +176,7 @@ struct DecimalTimePickerView: UIViewRepresentable {
         }
         
         func pickerView(_ pickerView: UIPickerView, accessibilityLabelForComponent component: Int) -> String? {
-            switch component {
+            switch resolve(component: component) {
             case 0: return "Heures"
             case 1: return "Minutes"
             case 2: return "Secondes"

@@ -121,7 +121,7 @@ struct SingleEventView: View {
                             
                             let format = FRCFormat.republicanDate
                                 .day(singleDay ? .none : .preferred)
-                                .decimalTime(.minutePrecision)
+                                .hour().minute()
                             Text("\(FrenchRepublicanDate(date: event.startDate), format: format) - \(FrenchRepublicanDate(date: event.endDate), format: format)")
                             
                         }
