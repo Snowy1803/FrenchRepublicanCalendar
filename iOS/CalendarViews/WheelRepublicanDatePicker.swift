@@ -25,6 +25,9 @@ struct WheelRepublicanDatePicker: UIViewRepresentable {
         // Without these, SwiftUI goes in an infinite loop on smaller devices
         picker.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         picker.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        // On iPad (aka regular horizontal size class), which has a smaller date picker vertically, we want it to resize itself as well
+        picker.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        picker.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return picker
     }
     
