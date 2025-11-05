@@ -108,6 +108,7 @@ struct WheelDateBackground: ViewModifier {
 }
 
 struct WheelDateView: View {
+    @EnvironmentObject var midnight: Midnight
     var date = Date()
     
     var dateString: String {
@@ -146,7 +147,10 @@ struct DateCollection: RandomAccessCollection {
     
     var startIndex: Int = {
         if #available(iOS 16, *) {
-            return 82440 // workaround FB11396644 (ScrollViewReader for LazyHStack is not lazy anymore)
+            // workaround FB11396644 (ScrollViewReader for LazyHStack is not lazy anymore)
+            // Been a problem since iOS 16 and still in iOS 26:
+            // All views are calculated during scrollTo, not lazily
+            return 84000 // 18 September 2023 (can go back ~2 years as of 2025)
         } else {
             return 0
         }
