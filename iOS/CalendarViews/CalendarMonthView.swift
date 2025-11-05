@@ -64,9 +64,8 @@ struct CalendarMonthRow: View {
         HStack(spacing: 0) {
             ForEach(0..<colCount, id: \.self) { col in
                 Spacer(minLength: 0)
-                let date = FrenchRepublicanDate(
-                    dayInYear: (month.components.month! - 1) * 30 + row * colCount + col + 1,
-                    year: month.components.year!)
+                let dayInYear = (month.components.month! - 1) * 30 + row * colCount + col + 1
+                let date = dayInYear <= month.dayCountThisYear ? FrenchRepublicanDate(dayInYear: dayInYear, year: month.year) : nil
                 CalendarMonthItem(date: date, selection: $selection)
             }
             Spacer(minLength: 0)
@@ -75,30 +74,44 @@ struct CalendarMonthRow: View {
 }
 
 struct CalendarMonthItem: View {
-    var date: FrenchRepublicanDate
+    var date: FrenchRepublicanDate?
     @Binding var selection: FrenchRepublicanDate
     
     var isSelected: Bool {
-        isValid && Calendar.gregorian.isDate(date.date, inSameDayAs: selection.date)
+        if let date {
+            isValid && Calendar.gregorian.isDate(date.date, inSameDayAs: selection.date)
+        } else {
+            false
+        }
     }
     
     var isWeekend: Bool {
-        date.isSansculottides || date.components.day! % 10 == 0
+        if let date {
+            date.isSansculottides || date.components.day! % 10 == 0
+        } else {
+            false
+        }
     }
     
     var isToday: Bool {
-        Calendar.gregorian.isDateInToday(date.date)
+        if let date {
+            Calendar.gregorian.isDateInToday(date.date)
+        } else {
+            false
+        }
     }
     
     var isValid: Bool {
-        date.dayInYear <= (date.isYearSextil ? 366 : 365)
+        date != nil
     }
 
     var body: some View {
         Button {
-            selection = date
+            if let date {
+                selection = date
+            }
         } label: {
-            Text(isValid ? "\(date.components.day!)" : "0")
+            Text(isValid ? "\(date!.components.day!)" : "0")
                 .font(.system(size: 20, weight: isSelected ? .semibold : .regular))
                 .foregroundStyle(
                     !isValid ? .clear
@@ -110,7 +123,7 @@ struct CalendarMonthItem: View {
         .buttonStyle(CalendarDayButtonStyle(isSelected: isSelected, isToday: isToday))
         .disabled(!isValid)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
-        .accessibilityLabel(isValid ? Text("\(isToday ? "Aujourd'hui, " : "")\(date, format: .republicanDate.day(.preferred).year(.long))") : Text(""))
+        .accessibilityLabel(isValid ? Text("\(isToday ? "Aujourd'hui, " : "")\(date!, format: .republicanDate.day(.preferred).year(.long))") : Text(""))
         .accessibilityHidden(!isValid) // this doesnt work
     }
 }
