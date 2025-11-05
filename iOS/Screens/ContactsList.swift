@@ -144,8 +144,10 @@ struct BirthdaySection: View {
 extension FrenchRepublicanDate {
     var nextAnniversary: FrenchRepublicanDate {
         var curr = self
+        var age = 0
         while curr.date < Date() && !Calendar.gregorian.isDateInToday(curr.date) {
-            curr.nextYear()
+            curr = .init(dayInYear: self.dayInYear, year: self.year + age)
+            age += 1
         }
         return curr
     }
