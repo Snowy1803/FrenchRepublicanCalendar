@@ -41,7 +41,7 @@ struct HomeView: View {
                         data: nil
                     ).accessibility(label: Text("Voir mes contacts"))
                     LinkWidget(
-                        destination: VariantPicker(),
+                        destination: SettingsView(),
                         imageSystemName: "gear",
                         title: Text("Calendriers républicains"),
                         data: Text(FrenchRepublicanDateOptions.current.variant.description)

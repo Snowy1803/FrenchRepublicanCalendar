@@ -27,7 +27,7 @@ struct DecimalTimeDetails: View {
                 DecimalTimeConverterWidget()
                     .padding(.bottom)
                 LinkWidget(
-                    destination: VariantPicker(),
+                    destination: SettingsView(),
                     imageSystemName: "globe.europe.africa",
                     title: Text("Fuseau horaire"),
                     data: Text(TimeZonePicker().timeZoneName(tz: FrenchRepublicanDateOptions.current.currentTimeZone))

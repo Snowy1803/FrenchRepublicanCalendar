@@ -17,7 +17,7 @@
 		20418BD72412F3EB00E0EE6E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD62412F3EB00E0EE6E /* ComplicationController.swift */; };
 		20418BD92412F3EC00E0EE6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BD82412F3EC00E0EE6E /* Assets.xcassets */; };
 		20418BDC2412F3EC00E0EE6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */; };
-		2047A3472624A6FC00AA662C /* VariantPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A3462624A6FC00AA662C /* VariantPicker.swift */; };
+		2047A3472624A6FC00AA662C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A3462624A6FC00AA662C /* SettingsView.swift */; };
 		2047A34C2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
 		2047A34D2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
 		2047A34E2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
@@ -141,7 +141,7 @@
 		20418BDB2412F3EC00E0EE6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20474FFD2571C006006935A9 /* LISEZMOI.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LISEZMOI.md; sourceTree = "<group>"; };
 		204750032571C37A006935A9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2047A3462624A6FC00AA662C /* VariantPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantPicker.swift; sourceTree = "<group>"; };
+		2047A3462624A6FC00AA662C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2047A3482624B0AB00AA662C /* DateWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DateWidgetExtension.entitlements; sourceTree = "<group>"; };
 		2047A3492624B0BC00AA662C /* Siri.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Siri.entitlements; sourceTree = "<group>"; };
 		2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveableFrenchRepublicanDateOptions.swift; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 				20C645C52662D216001D7108 /* DecimalTimeDetails.swift */,
 				20E0958A2540465500383A31 /* ContactsList.swift */,
 				20E0957C253F990C00383A31 /* FavoriteList.swift */,
-				2047A3462624A6FC00AA662C /* VariantPicker.swift */,
+				2047A3462624A6FC00AA662C /* SettingsView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -636,7 +636,7 @@
 				20AEE4EC257170620015FFC6 /* DateDetails.swift in Sources */,
 				FD6EBB602EB90E1300796761 /* RepublicanDatePicker.swift in Sources */,
 				FD6EBB5A2EB8015D00796761 /* DecimalTimePicker.swift in Sources */,
-				2047A3472624A6FC00AA662C /* VariantPicker.swift in Sources */,
+				2047A3472624A6FC00AA662C /* SettingsView.swift in Sources */,
 				20D9DCB1253F23BB00B5A9FA /* SceneDelegate.swift in Sources */,
 				2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */,
 				20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */,

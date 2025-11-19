@@ -1,5 +1,5 @@
 //
-//  VariantPicker.swift
+//  SettingsView.swift
 //  FrenchRepublicanCalendar
 //
 //  Created by Emil Pedersen on 12/04/2021.
@@ -14,7 +14,7 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 import StoreKit
 
-struct VariantPicker: View {
+struct SettingsView: View {
     @EnvironmentObject var midnight: Midnight
     
     var body: some View {
