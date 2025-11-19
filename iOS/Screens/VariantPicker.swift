@@ -55,6 +55,14 @@ struct VariantPicker: View {
             ) {
                 TimeZonePicker()
             }
+            
+            #if DEBUG
+            Button {
+                UserDefaults.shared.set(0, forKey: "frc-last-open-build")
+            } label: {
+                Text("Afficher l'écran de bienvenue")
+            }
+            #endif
         }.navigationBarTitle(Text("Variantes"))
         .listNotTooWide()
         .onDisappear {

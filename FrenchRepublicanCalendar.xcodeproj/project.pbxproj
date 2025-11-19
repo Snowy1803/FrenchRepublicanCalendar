@@ -73,6 +73,8 @@
 		FD6EBB642EB98EBF00796761 /* WheelRepublicanDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
+		FDA5226D2ECE423A00210C75 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA5226C2ECE423A00210C75 /* WhatsNew.swift */; };
+		FDA5226F2ECE662C00210C75 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA5226E2ECE662C00210C75 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +195,8 @@
 		FD6EBB612EB90F6E00796761 /* FoldablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldablePicker.swift; sourceTree = "<group>"; };
 		FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelRepublicanDatePicker.swift; sourceTree = "<group>"; };
 		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		FDA5226C2ECE423A00210C75 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
+		FDA5226E2ECE662C00210C75 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,7 +334,9 @@
 		20C645C82662DA91001D7108 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				FDA5226C2ECE423A00210C75 /* WhatsNew.swift */,
 				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
+				FDA5226E2ECE662C00210C75 /* HomeView.swift */,
 				20AEE4EB257170620015FFC6 /* DateDetails.swift */,
 				FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */,
 				FD6EBB512EB7F19A00796761 /* EventVC.swift */,
@@ -615,6 +621,7 @@
 			files = (
 				209C03B7257281DD00D8DF86 /* WheelConverterWidget.swift in Sources */,
 				20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */,
+				FDA5226D2ECE423A00210C75 /* WhatsNew.swift in Sources */,
 				2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */,
 				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
 				FD6EBB5E2EB8331C00796761 /* CalendarMonthView.swift in Sources */,
@@ -636,6 +643,7 @@
 				208A0DD62586734B00D635CE /* ConverterWidget.swift in Sources */,
 				FD6EBB622EB90F6E00796761 /* FoldablePicker.swift in Sources */,
 				20D9DCB3253F23BB00B5A9FA /* ContentView.swift in Sources */,
+				FDA5226F2ECE662C00210C75 /* HomeView.swift in Sources */,
 				2047A34C2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */,
 				208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */,
