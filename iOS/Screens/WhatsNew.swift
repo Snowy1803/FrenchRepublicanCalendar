@@ -13,77 +13,72 @@
 import SwiftUI
 
 struct WhatsNew: View {
-    @AppStorage("frc-last-open-build", store: UserDefaults.shared) var lastVersion = 0
     static let lastSignificantChange = 25 // build number for 7.0
     static var currentVersion: Int {
         Int(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0") ?? 0
     }
     
     var body: some View {
-        VStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    WhatsNewRow(
-                        icon: "figure.wave",
-                        title: Text("Bienvenue dans votre calendrier républicain"),
-                        text: Text("Explorez une version moderne du Calendrier Républicain : intuitive, élégante et complète")
-                    )
-                    WhatsNewRow(
-                        icon: "sun.and.horizon.fill",
-                        title: Text("Choisissez votre variante"),
-                        text: Text("Sélectionnez entre le modèle Delambre ou la réforme de Romme")
-                    )
-                    WhatsNewRow(
-                        icon: "calendar",
-                        title: Text("Calendrier complet"),
-                        text: Text("Remontez les années et voyez tous vos évènements de calendrier, dans le calendrier républicain")
-                    )
-                    WhatsNewRow(
-                        icon: "clock.arrow.circlepath",
-                        title: Text("Temps décimal"),
-                        text: Text("Consultez l'heure dans un format d'un autre temps, désormais aussi dans les anciens fuseaux horaires de France")
-                    )
-                    WhatsNewRow(
-                        icon: "arrow.right.arrow.left",
-                        title: Text("Convertir"),
-                        text: Text("Convertissez toutes les dates à partir de l'An I, entre les calendriers Grégorien et Républicain")
-                    )
-                    WhatsNewRow(
-                        icon: {
-                            if #available(iOS 18.0, *) {
-                                "widget.small"
-                            } else {
-                                "square.text.square"
-                            }
-                        }(),
-                        title: Text("Widgets"),
-                        text: Text("Ajoutez des widgets à votre écran d'accueil ou de verrouillage, pour toujours voir la date républicaine et/ou l'heure décimale")
-                    )
-                    WhatsNewRow(
-                        icon: "waveform.and.mic",
-                        title: Text("Demandez à Siri"),
-                        text: Text("Ajoutez des commandes à Siri pour consulter la date républicaine ou l'heure décimale")
-                    )
-                }.padding(32)
-            }
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    Button {
-                        lastVersion = WhatsNew.currentVersion
-                    } label: {
-                        if #available(iOS 26.0, *) {
-                            Text("Continuer")
-                                .font(.headline)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                WhatsNewRow(
+                    icon: "figure.wave",
+                    title: Text("Bienvenue dans votre calendrier républicain"),
+                    text: Text("Explorez une version moderne du Calendrier Républicain : intuitive, élégante et complète")
+                )
+                WhatsNewRow(
+                    icon: "sun.and.horizon.fill",
+                    title: Text("Choisissez votre variante"),
+                    text: Text("Sélectionnez entre le modèle Delambre ou la réforme de Romme")
+                )
+                WhatsNewRow(
+                    icon: "calendar",
+                    title: Text("Calendrier complet"),
+                    text: Text("Remontez les années et voyez tous vos évènements de calendrier, dans le calendrier républicain")
+                )
+                WhatsNewRow(
+                    icon: "clock.arrow.circlepath",
+                    title: Text("Temps décimal"),
+                    text: Text("Consultez l'heure dans un format d'un autre temps, désormais aussi dans les anciens fuseaux horaires de France")
+                )
+                WhatsNewRow(
+                    icon: "arrow.right.arrow.left",
+                    title: Text("Convertir"),
+                    text: Text("Convertissez toutes les dates à partir de l'An I, entre les calendriers Grégorien et Républicain")
+                )
+                WhatsNewRow(
+                    icon: {
+                        if #available(iOS 18.0, *) {
+                            "widget.small"
                         } else {
-                            Text("Continuer")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 4)
+                            "square.text.square"
                         }
+                    }(),
+                    title: Text("Widgets"),
+                    text: Text("Ajoutez des widgets à votre écran d'accueil ou de verrouillage, pour toujours voir la date républicaine et/ou l'heure décimale")
+                )
+                WhatsNewRow(
+                    icon: "waveform.and.mic",
+                    title: Text("Demandez à Siri"),
+                    text: Text("Ajoutez des commandes à Siri pour consulter la date républicaine ou l'heure décimale")
+                )
+            }.padding(32)
+        }
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                NavigationLink(destination: VariantPicker()) {
+                    if #available(iOS 26.0, *) {
+                        Text("Continuer")
+                            .font(.headline)
+                    } else {
+                        Text("Continuer")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 4)
                     }
-                    .frame(maxWidth: .infinity)
-                    .prominentButtonStyle()
                 }
+                .frame(maxWidth: .infinity)
+                .prominentButtonStyle()
             }
         }
         .navigationTitle(Text("Bienvenue"))
