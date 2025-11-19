@@ -94,7 +94,7 @@ struct DateWidgetEntryView : View {
                             Spacer()
                             Text(today.quarter)
                             Text("Décade \(today.components.weekOfYear!)/37")
-                            Text("Jour \(today.dayInYear)/\(today.isYearSextil ? 366 : 365)")
+                            Text("Jour \(today.dayInYear)/\(today.dayCountThisYear)")
                         }
                     }
                 }

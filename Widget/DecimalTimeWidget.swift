@@ -16,10 +16,7 @@ import WidgetKit
 
 struct TimeProvider: TimelineProvider {
     func placeholder(in context: Context) -> TimeEntry {
-        let now = Date()
-        let startOfDay = Calendar.gregorian.startOfDay(for: now)
-        let current = DecimalTime(timeSinceMidnight: now.timeIntervalSince(startOfDay))
-        return TimeEntry(date: now, time: current)
+        TimeEntry(date: Date(), time: DecimalTime())
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TimeEntry) -> ()) {
