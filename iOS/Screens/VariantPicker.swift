@@ -130,6 +130,8 @@ extension FrenchRepublicanDateOptions.Variant {
             return "Calendrier originel"
         case .romme:
             return "Réforme de Romme"
+        case .delambre:
+            return "Modèle Delambre"
         }
     }
     
@@ -139,6 +141,8 @@ extension FrenchRepublicanDateOptions.Variant {
             return "Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris.\nLa première année sextile est l'an \(FrenchRepublicanDate(dayInYear: 1, year: 3).formattedYear), il y a ensuite une année sextile tous les 4 ans."
         case .romme:
             return "Version réformée, n'ayant jamais réellement été utilisée. Le décalage des jours sur le long terme y a été corrigé : les années divisibles par 4 sont sextiles, sauf celles divisibles par 100, sauf celles divisibles par 400, sauf celles divisibles par 4000."
+        case .delambre:
+            return "Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris.\nLe début de chaque année républicaine est définie comme étant le jour du solstice d'automne, tel que vu depuis l'Observatoire de Paris."
         }
     }
 }
