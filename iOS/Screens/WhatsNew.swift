@@ -39,12 +39,7 @@ struct WhatsNew: View {
                 WhatsNewRow(
                     icon: "clock.arrow.circlepath",
                     title: Text("Temps décimal"),
-                    text: Text("Consultez l'heure dans un format d'un autre temps, désormais aussi dans les anciens fuseaux horaires de France")
-                )
-                WhatsNewRow(
-                    icon: "arrow.right.arrow.left",
-                    title: Text("Convertir"),
-                    text: Text("Convertissez toutes les dates à partir de l'An I, entre les calendriers Grégorien et Républicain")
+                    text: Text("Consultez l'heure dans le format proposé durant la Révolution, désormais disponible dans les anciens fuseaux horaires utilisés en France")
                 )
                 WhatsNewRow(
                     icon: {
@@ -61,6 +56,11 @@ struct WhatsNew: View {
                     icon: "waveform.and.mic",
                     title: Text("Demandez à Siri"),
                     text: Text("Ajoutez des commandes à Siri pour consulter la date républicaine ou l'heure décimale")
+                )
+                WhatsNewRow(
+                    icon: "hand.raised",
+                    title: Text("Gratuit, privé, et sans publicité"),
+                    text: Text("L'application restera toujours gratuite, privée, et sans publicité. Aucune connexion internet n'est requise car toutes vos données restent en sécurité sur votre appareil.")
                 )
             }.padding(32)
         }

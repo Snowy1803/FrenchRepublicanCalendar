@@ -58,7 +58,7 @@ struct VariantLink: View {
         }
         let extraLabel = Group {
             if variant == FrenchRepublicanDateOptions.current.variant {
-                TagLabel(text: "Précédemment utilisé", color: .gray)
+                TagLabel(text: "Précédemment selectionné", color: .gray)
             }
         }
         if #available(iOS 16.0, *) {
