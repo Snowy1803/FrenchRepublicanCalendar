@@ -22,7 +22,7 @@ struct RepublicanDatePicker: View {
     @State private var showMonthWheel: Bool = false
 
     init(selection: Binding<FrenchRepublicanDate>) {
-        self.month = FrenchRepublicanDate(day: 1, month: selection.wrappedValue.components.month!, year: selection.wrappedValue.components.year!)
+        self.month = FrenchRepublicanDate(day: 2, month: selection.wrappedValue.components.month!, year: selection.wrappedValue.components.year!)
         self._selection = selection
     }
 
@@ -46,20 +46,23 @@ struct RepublicanDatePicker: View {
                 .font(.headline)
                 Spacer()
                 if !showMonthWheel {
-                    Button {
-                        previousMonth()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .foregroundStyle(.foreground)
-                            .font(.title3.weight(.semibold))
-                    }.padding(.trailing)
-                    Button {
-                        nextMonth()
-                    } label: {
-                        Image(systemName: "chevron.forward")
-                            .foregroundStyle(.foreground)
-                            .font(.title3.weight(.semibold))
+                    Group {
+                        Button {
+                            previousMonth()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                        }
+                        .disabled(!canGoBack)
+                        .padding(.trailing)
+                        Button {
+                            nextMonth()
+                        } label: {
+                            Image(systemName: "chevron.forward")
+                        }
+                        .disabled(!canGoForward)
                     }
+                    .font(.title3.weight(.semibold))
+                    .tint(Color.primary)
                 }
             }
             .padding()
@@ -115,6 +118,9 @@ struct RepublicanDatePicker: View {
             .highPriorityGesture(
                 DragGesture(minimumDistance: 10).onChanged { value in
                     dragOffset = value.translation.width
+                    if (dragOffset > 0 && !canGoBack) || (dragOffset < 0 && !canGoForward) {
+                        dragOffset *= 0.2
+                    }
                 }.onEnded { value in
                     let threshold = width / 2
                     let forward: Bool?
@@ -142,13 +148,13 @@ struct RepublicanDatePicker: View {
     var prevMonth: FrenchRepublicanDate {
         if month.components.month! == 1 {
             FrenchRepublicanDate(
-                day: 1,
+                day: 2,
                 month: 13,
                 year: self.month.components.year! - 1
             )
         } else {
             FrenchRepublicanDate(
-                day: 1,
+                day: 2,
                 month: self.month.components.month! - 1,
                 year: self.month.components.year!
             )
@@ -158,20 +164,35 @@ struct RepublicanDatePicker: View {
     var followingMonth: FrenchRepublicanDate {
         if month.isSansculottides {
             FrenchRepublicanDate(
-                day: 1,
+                day: 2,
                 month: 1,
                 year: self.month.components.year! + 1
             )
         } else {
             FrenchRepublicanDate(
-                day: 1,
+                day: 2,
                 month: self.month.components.month! + 1,
                 year: self.month.components.year!
             )
         }
     }
     
-    func swipeMonth(animation: Animation, forward: Bool?) {
+    var canGoBack: Bool {
+        FrenchRepublicanDate.safeRange.contains(prevMonth.date)
+    }
+    
+    var canGoForward: Bool {
+        FrenchRepublicanDate.safeRange.contains(followingMonth.date)
+    }
+    
+    func swipeMonth(animation: Animation, forward _forward: Bool?) {
+        var forward: Bool? {
+            switch _forward {
+            case true where !canGoForward: nil
+            case false where !canGoBack: nil
+            case let forward: forward
+            }
+        }
         func animated() {
             switch forward {
             case true: dragOffset = -width
@@ -187,6 +208,7 @@ struct RepublicanDatePicker: View {
                 } else {
                     month = prevMonth
                 }
+                print("month: ", month)
             }
         }
         if #available(iOS 17.0, *) {

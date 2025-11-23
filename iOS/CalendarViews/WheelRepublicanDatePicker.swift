@@ -126,7 +126,7 @@ struct WheelRepublicanDatePicker: UIViewRepresentable {
             case .month:
                 13
             case .year:
-                15300
+                FrenchRepublicanDate(date: FrenchRepublicanDate.maxSafeDate).year
             }
         }
         
