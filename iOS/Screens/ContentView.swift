@@ -12,7 +12,7 @@
 
 import SwiftUI
 import FrenchRepublicanCalendarCore
-import Introspect
+@_spi(Advanced) import SwiftUIIntrospect
 
 struct ContentView: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
@@ -45,10 +45,10 @@ extension View {
     }
     
     func listNotTooWide() -> some View {
-        self.introspectTableView { tableView in
+        self.introspect(.list, on: .iOS(.v15)) { tableView in
             // iOS 15
             tableView.cellLayoutMarginsFollowReadableWidth = true
-        }.introspectCollectionView { collectionView in
+        }.introspect(.list, on: .iOS(.v16...)) { collectionView in
             // iOS 16
             guard #available(iOS 16, *) else {
                 return
