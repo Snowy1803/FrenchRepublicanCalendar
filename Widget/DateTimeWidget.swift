@@ -20,18 +20,30 @@ struct DateTimeWidgetEntryView : View {
 
     var body: some View {
         let today = FrenchRepublicanDate(date: entry.date)
-        VStack(alignment: .leading) {
-            Text(today, format: .republicanDate.day(.preferred))
-            Text(today, format: .republicanDate.year(.long))
-            Spacer(minLength: 0)
-            HStack {
-                Spacer(minLength: 0)
-                Text(entry.time.hourAndMinuteFormatted)
-                    .font(.system(.largeTitle).monospacedDigit())
+        if #available(iOS 16.0, *), family == .accessoryInline {
+            Text("\(today, format: .republicanDate.day()) à \(entry.time, format: .decimalTime.hour().minute())")
+                .monospacedDigit()
+        } else if #available(iOS 16.0, *), family == .accessoryRectangular {
+            VStack(alignment: .leading) {
+                Text(today, format: .republicanDate.day(.preferred).year(today.isSansculottides ? .none : .long))
+                Text(today, format: today.isSansculottides ? .republicanDate.year() : .republicanDate.day(.dayName))
+                Text(entry.time, format: .decimalTime.hour().minute())
+                    .monospacedDigit()
             }
-            Spacer(minLength: 0)
-            Text(today.isSansculottides ? today.weekdayName : today.dayName)
-        }.foregroundColor(.primary)
+        } else {
+            VStack(alignment: .leading) {
+                Text(today, format: .republicanDate.day(.preferred))
+                Text(today, format: .republicanDate.year(.long))
+                Spacer(minLength: 0)
+                HStack {
+                    Spacer(minLength: 0)
+                    Text(entry.time, format: .decimalTime.hour().minute())
+                        .font(.system(.largeTitle).monospacedDigit())
+                }
+                Spacer(minLength: 0)
+                Text(today.isSansculottides ? today.weekdayName : today.dayName)
+            }.foregroundColor(.primary)
+        }
     }
 }
 
@@ -39,6 +51,9 @@ struct DateTimeWidget: Widget {
     let kind: String = "DateTimeWidget"
     
     var supported: [WidgetFamily] {
+        if #available(iOS 16, *) {
+            return [.systemSmall, .accessoryInline, .accessoryRectangular]
+        }
         return [.systemSmall]
     }
 
