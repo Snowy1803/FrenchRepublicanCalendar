@@ -66,7 +66,7 @@ struct WhatsNew: View {
         }
         .toolbar {
             ToolbarItem(placement: .bottomBar) {
-                NavigationLink(destination: VariantPicker()) {
+                NavigationLink(destination: VariantPicker(firstShown: true)) {
                     if #available(iOS 26.0, *) {
                         Text("Continuer")
                             .font(.headline)

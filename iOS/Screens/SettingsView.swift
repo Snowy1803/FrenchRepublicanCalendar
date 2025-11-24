@@ -19,24 +19,12 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
-            ForEach(FrenchRepublicanDateOptions.Variant.allCases, id: \.rawValue) { variant in
-                Section(
-                    header: Text(FrenchRepublicanDate(date: Date(), options: .init(romanYear: FrenchRepublicanDateOptions.current.romanYear, variant: variant)).toLongString()),
-                    footer: Text(variant.explanation)
-                ) {
-                    Button {
-                        FrenchRepublicanDateOptions.current.variant = variant
-                        midnight.objectWillChange.send()
-                    } label: {
-                        HStack {
-                            Text(variant.name)
-                                .foregroundColor(.primary)
-                            if FrenchRepublicanDateOptions.current.variant == variant {
-                                Spacer()
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
+            NavigationLink(destination: VariantPicker(firstShown: false)) {
+                HStack {
+                    Text("Variante")
+                    Spacer()
+                    Text(FrenchRepublicanDateOptions.current.variant.name)
+                        .foregroundStyle(.secondary)
                 }
             }
             
@@ -131,26 +119,14 @@ struct TimeZonePicker: View {
 }
 
 extension FrenchRepublicanDateOptions.Variant {
-    
     var name: String {
         switch self {
-        case .original:
-            return "Calendrier originel"
         case .romme:
             return "Réforme de Romme"
         case .delambre:
             return "Modèle Delambre"
-        }
-    }
-    
-    var explanation: String {
-        switch self {
         case .original:
-            return "Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris.\nLa première année sextile est l'an \(FrenchRepublicanDate(dayInYear: 1, year: 3).formattedYear), il y a ensuite une année sextile tous les 4 ans."
-        case .romme:
-            return "Version réformée, n'ayant jamais réellement été utilisée. Le décalage des jours sur le long terme y a été corrigé : les années divisibles par 4 sont sextiles, sauf celles divisibles par 100, sauf celles divisibles par 400, sauf celles divisibles par 4000."
-        case .delambre:
-            return "Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris.\nLe début de chaque année républicaine est définie comme étant le jour du solstice d'automne, tel que vu depuis l'Observatoire de Paris."
+            return "Article X original"
         }
     }
 }

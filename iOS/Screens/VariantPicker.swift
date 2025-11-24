@@ -14,24 +14,28 @@ import FrenchRepublicanCalendarCore
 import SwiftUI
 
 struct VariantPicker: View {
+    // True: WhatsNew view
+    // False: Settings view
+    var firstShown: Bool
+
     var body: some View {
         Form {
             VariantLink(
+                firstShown: firstShown,
                 variant: .delambre,
                 icon: "sun.and.horizon.fill",
-                title: Text("Modèle Delambre"),
                 text: Text("Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris. Basé sur l'astronomie.")
             )
             VariantLink(
+                firstShown: firstShown,
                 variant: .romme,
                 icon: "doc.badge.plus",
-                title: Text("Réforme de Romme"),
                 text: Text("Version réformée, n'ayant jamais réellement été utilisée. Change la règle sur les années sextiles pour avoir une règle similaire au calendrier grégorien.")
             )
             VariantLink(
+                firstShown: firstShown,
                 variant: .original,
                 icon: "doc.text",
-                title: Text("Article X original"),
                 text: Text("Version originelle, mais privilégiant l'article X sur l'article III: il y a une année sextile tous les 4 ans.\nCe calendrier se décale sur le temps, et n'est donc pas recommandé.")
             )
         }.navigationTitle(Text("Variantes"))
@@ -39,10 +43,12 @@ struct VariantPicker: View {
 }
 
 struct VariantLink: View {
+    var firstShown: Bool
     var variant: FrenchRepublicanDateOptions.Variant
     var icon: String
-    var title: Text
     var text: Text
+    
+    @EnvironmentObject var midnight: Midnight
     
     @ViewBuilder var labels: some View {
         let baseLabels = Group {
@@ -57,8 +63,9 @@ struct VariantLink: View {
             }
         }
         let extraLabel = Group {
-            if variant == FrenchRepublicanDateOptions.current.variant {
-                TagLabel(text: "Précédemment selectionné", color: .gray)
+            if firstShown && variant == FrenchRepublicanDateOptions.current.variant && variant != .delambre {
+                // Only shown in WhatsNew during migration to 7.x
+                TagLabel(text: "Sélectionné avant la MàJ", color: .gray)
             }
         }
         if #available(iOS 16.0, *) {
@@ -97,7 +104,7 @@ struct VariantLink: View {
                             .font(.largeTitle.weight(.semibold))
                             .frame(width: 60)
                         VStack(alignment: .leading) {
-                            title.font(.headline)
+                            Text(variant.name).font(.headline)
                             Text(FrenchRepublicanDate(date: Date(), options: {
                                 var options = FrenchRepublicanDateOptions.current
                                 options.variant = variant
@@ -106,6 +113,17 @@ struct VariantLink: View {
                             .font(.headline)
                             .foregroundStyle(.secondary)
                             labels
+                        }
+                        if !firstShown {
+                            Spacer(minLength: 0)
+                            Image(systemName: variant == FrenchRepublicanDateOptions.current.variant ? "checkmark.circle.fill" : "circle")
+                                .padding(.vertical)
+                                .foregroundStyle(.tint)
+                                .font(.title)
+                                .onTapGesture {
+                                    FrenchRepublicanDateOptions.current.variant = variant
+                                    midnight.objectWillChange.send()
+                                }
                         }
                     }
                     text.font(.body)
@@ -132,6 +150,7 @@ struct TagLabel: View {
 }
 
 struct VariantDetails: View {
+    @EnvironmentObject var midnight: Midnight
     @AppStorage("frc-last-open-build", store: UserDefaults.shared) var lastVersion = 0
     var variant: FrenchRepublicanDateOptions.Variant
 
@@ -141,6 +160,7 @@ struct VariantDetails: View {
             ToolbarItem(placement: .bottomBar) {
                 Button {
                     FrenchRepublicanDateOptions.current.variant = variant
+                    midnight.objectWillChange.send()
                     lastVersion = WhatsNew.currentVersion
                 } label: {
                     if #available(iOS 26.0, *) {
@@ -162,6 +182,6 @@ struct VariantDetails: View {
 
 #Preview {
     NavigationView {
-        VariantPicker()
+        VariantPicker(firstShown: true)
     }
 }
