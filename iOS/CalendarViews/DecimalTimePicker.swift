@@ -14,57 +14,24 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 
 struct FoldableDecimalTimePicker: View {
-    var si: Bool
     var text: Text
     var precision: DecimalTimeFormat
     @Binding var decimalTime: DecimalTime
     @Binding var showPicker: Bool
     
     var label: Text {
-        if si {
-            let date = Calendar.gregorian.startOfDay(for: Date())
-                .addingTimeInterval(decimalTime.timeSinceMidnight)
-            var format = Date.FormatStyle.dateTime
-            switch precision.hour {
-            case .long: format = format.hour(.twoDigits(amPM: .abbreviated))
-            case .default: format = format.hour(.defaultDigits(amPM: .abbreviated))
-            case .short: format = format.hour(.conversationalDefaultDigits(amPM: .abbreviated))
-            case .none:
-                break
-            }
-            switch precision.minute {
-            case .long: format = format.minute(.twoDigits)
-            case .default, .short: format = format.minute(.defaultDigits)
-            case .none:
-                break
-            }
-            switch precision.second {
-            case .long: format = format.second(.twoDigits)
-            case .default, .short: format = format.second(.defaultDigits)
-            case .none:
-                break
-            }
-            switch precision.subsecond {
-            case .precision(let precision): format = format.secondFraction(.fractional(precision))
-            case .none:
-                break
-            }
-            return Text(date, format: format)
-        } else {
-            return Text(decimalTime, format: precision)
-        }
+        return Text(decimalTime, format: precision)
     }
     
     var body: some View {
         FoldablePicker(label: text, value: label, showPicker: $showPicker) {
-            DecimalTimePickerView(si: si, precision: precision, selection: $decimalTime)
+            DecimalTimePickerView(precision: precision, selection: $decimalTime)
         }
     }
 }
 
 struct DecimalTimePickerView: UIViewRepresentable {
     typealias UIViewType = UIPickerView
-    var si: Bool
     var precision: DecimalTimeFormat
     @Binding var selection: DecimalTime
     
@@ -83,29 +50,31 @@ struct DecimalTimePickerView: UIViewRepresentable {
     }
     
     func updateUIView(_ picker: UIPickerView, context: Context) {
-        context.coordinator.si = si
         context.coordinator.precision = precision
         context.coordinator.selection = $selection
         var component: Int = 0
         if precision.hour != .none {
-            picker.selectRow(si ? selection.hourSI : selection.hour, inComponent: component, animated: false)
+            picker.selectRow(precision.useSI ? selection.hourSI : selection.hour, inComponent: component, animated: false)
             component += 1
         }
         if precision.minute != .none {
-            picker.selectRow(si ? selection.minuteSI : selection.minute, inComponent: component, animated: false)
+            picker.selectRow(precision.useSI ? selection.minuteSI : selection.minute, inComponent: component, animated: false)
             component += 1
         }
         if precision.second != .none {
-            picker.selectRow(si ? selection.secondSI : selection.second, inComponent: component, animated: false)
+            picker.selectRow(precision.useSI ? selection.secondSI : selection.second, inComponent: component, animated: false)
             component += 1
         }
         picker.reloadAllComponents()
     }
     
     class Coordinator: NSObject, UIPickerViewDelegate, UIPickerViewDataSource, UIPickerViewAccessibilityDelegate {
-        var si: Bool = false
         var precision: DecimalTimeFormat = .decimalTime
         var selection: Binding<DecimalTime> = .constant(DecimalTime(timeSinceMidnight: 0))
+        
+        var si: Bool {
+            precision.useSI
+        }
         
         func numberOfComponents(in pickerView: UIPickerView) -> Int {
             var component: Int = 0

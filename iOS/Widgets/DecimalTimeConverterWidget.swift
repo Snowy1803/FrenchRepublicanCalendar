@@ -34,9 +34,8 @@ struct DecimalTimeConverterWidget: View {
         } content: {
             VStack {
                 FoldableDecimalTimePicker(
-                    si: true,
                     text: Text("Temps SI"),
-                    precision: .decimalTime.hour().minute().second(),
+                    precision: .decimalTime.hour().minute().second().useSI(),
                     decimalTime: $time,
                     showPicker: Binding {
                         showPicker == true
@@ -46,7 +45,6 @@ struct DecimalTimeConverterWidget: View {
                 )
                 Divider()
                 FoldableDecimalTimePicker(
-                    si: false,
                     text: Text("Temps décimal"),
                     precision: .decimalTime.hour().minute().second(),
                     decimalTime: $time,
