@@ -25,9 +25,23 @@ struct ContentView: View {
             NavigationView {
                 WhatsNew()
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .navigationViewStyle(.stack)
         } else {
-            HomeView()
+            TabView {
+                HomeView()
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("Accueil")
+                }
+                NavigationView {
+                    SettingsView()
+                }
+                .navigationViewStyle(.stack)
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Réglages")
+                }
+            }
         }
     }
 }

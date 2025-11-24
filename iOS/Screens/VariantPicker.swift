@@ -38,7 +38,9 @@ struct VariantPicker: View {
                 icon: "doc.text",
                 text: Text("Version originelle, mais privilégiant l'article X sur l'article III: il y a une année sextile tous les 4 ans.\nCe calendrier se décale sur le temps, et n'est donc pas recommandé.")
             )
-        }.navigationTitle(Text("Variantes"))
+        }
+        .navigationTitle(Text("Variantes"))
+        .listNotTooWide()
     }
 }
 

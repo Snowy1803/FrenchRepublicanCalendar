@@ -40,18 +40,10 @@ struct HomeView: View {
                         title: Text("Mes Contacts"),
                         data: nil
                     ).accessibility(label: Text("Voir mes contacts"))
-                    LinkWidget(
-                        destination: SettingsView(),
-                        imageSystemName: "gear",
-                        title: Text("Calendriers républicains"),
-                        data: Text(FrenchRepublicanDateOptions.current.variant.description)
-                    )
-                    .accessibility(label: Text("Changer de variante de calendrier républicain"))
-                    .accessibility(value: Text(FrenchRepublicanDateOptions.current.variant.description))
                     .padding(.bottom)
                 }.notTooWide()
             }.navigationBarTitle("Calendrier Républicain")
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationViewStyle(.stack)
     }
 }
