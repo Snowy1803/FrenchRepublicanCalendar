@@ -51,7 +51,7 @@ struct SettingsView: View {
                 Text("Afficher l'écran de bienvenue")
             }
             #endif
-        }.navigationBarTitle(Text("Variantes"))
+        }.navigationBarTitle(Text("Réglages"))
         .listNotTooWide()
         .onDisappear {
             let key = "store-review-settings-count"
