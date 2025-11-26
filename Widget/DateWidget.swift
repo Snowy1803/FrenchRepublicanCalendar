@@ -97,6 +97,7 @@ struct DateWidgetEntryView : View {
                                 .font(.headline)
                                 .widgetAccentable()
                             Text(today, format: .republicanDate.year(.long))
+                                .foregroundStyle(.secondary)
                             Text(today.isSansculottides ? today.weekdayName : today.dayName)
                         }
                         Spacer(minLength: 0)
