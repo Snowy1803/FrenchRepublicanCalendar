@@ -20,11 +20,7 @@ import WidgetKit
 extension UserDefaults {
     /// this is only used for variants, use standard for favorites
     static let shared: UserDefaults = {
-        #if os(watchOS)
-        return standard
-        #else
         return UserDefaults(suiteName: "group.fr.orbisec.RepublicanCalendar")!
-        #endif
     }()
 }
 
