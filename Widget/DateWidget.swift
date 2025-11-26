@@ -81,6 +81,7 @@ struct DateWidgetEntryView : View {
                                 Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
                             }
                             .font(.caption)
+                            .widgetAccentable()
                             .padding(.horizontal, 4)
                         }
                     }

@@ -16,6 +16,11 @@ import WidgetKit
 
 struct DateTimeWidgetEntryView : View {
     @Environment(\.widgetFamily) var family
+    #if os(watchOS)
+    @Environment(\.showsWidgetLabel) var showsWidgetLabel
+    #else
+    var showsWidgetLabel: Bool { false }
+    #endif
     var entry: TimeEntry
 
     var body: some View {
@@ -48,6 +53,39 @@ struct DateTimeWidgetEntryView : View {
                     Spacer(minLength: 0)
                 }
             }
+        case .accessoryCircular: // mostly useful on Infograph bezel (when showsWidgetLabel)
+            if #available(iOS 16, *) {
+                VStack {
+                    if !showsWidgetLabel {
+                        ViewThatFits(in: .horizontal) {
+                            Text(today, format: .republicanDate.day())
+                            Text(today, format: .republicanDate.day().dayLength(.short))
+                            Text("\(today.components.day!)")
+                        }.font(.caption)
+                    }
+                    Text(entry.time, format: .decimalTime.hour().minute())
+                        .font(showsWidgetLabel ? .largeTitle : .body)
+                        .widgetAccentable(!showsWidgetLabel)
+                        .monospacedDigit()
+                }.widgetLabel {
+                    InlineDateEntryView(today: today)
+                }
+            }
+        case .accessoryCorner:
+            #if os(watchOS)
+                Group {
+                    let label = Text(entry.time, format: .decimalTime.hour().minute())
+                        .minimumScaleFactor(0.6)
+                        .monospacedDigit()
+                    if #available(watchOS 10, *) {
+                        label.widgetCurvesContent()
+                    } else {
+                        label
+                    }
+                }.widgetLabel {
+                    InlineDateEntryView(today: today)
+                }
+            #endif
         default: // systemSmall
             VStack(alignment: .leading) {
                 Text(today, format: .republicanDate.day(.preferred))
@@ -70,10 +108,10 @@ struct DateTimeWidget: Widget {
     
     var supported: [WidgetFamily] {
         #if os(watchOS)
-        return [.accessoryInline, .accessoryRectangular]
+        return [.accessoryInline, .accessoryRectangular, .accessoryCircular, .accessoryCorner]
         #else
         if #available(iOS 16, *) {
-            return [.systemSmall, .accessoryInline, .accessoryRectangular]
+            return [.systemSmall, .accessoryInline, .accessoryRectangular, .accessoryCircular]
         }
         return [.systemSmall]
         #endif
