@@ -20,17 +20,35 @@ struct DateTimeWidgetEntryView : View {
 
     var body: some View {
         let today = FrenchRepublicanDate(date: entry.date)
-        if #available(iOS 16.0, *), family == .accessoryInline {
-            Text("\(today, format: .republicanDate.day()) à \(entry.time, format: .decimalTime.hour().minute())")
+        switch family {
+        case .accessoryInline:
+            if #available(iOS 16, *) {
+                ViewThatFits(in: .horizontal) {
+                    Text("\(today, format: .republicanDate.day().year()), \(entry.time, format: .decimalTime.hour().minute())")
+                    Text("\(today, format: .republicanDate.day()) à \(entry.time, format: .decimalTime.hour().minute())")
+                    Text("\(today, format: .republicanDate.day().dayLength(.short)), \(entry.time, format: .decimalTime.hour().minute())")
+                }
                 .monospacedDigit()
-        } else if #available(iOS 16.0, *), family == .accessoryRectangular {
-            VStack(alignment: .leading) {
-                Text(today, format: .republicanDate.day(.preferred).year(today.isSansculottides ? .none : .long))
-                Text(today, format: today.isSansculottides ? .republicanDate.year() : .republicanDate.day(.dayName))
-                Text(entry.time, format: .decimalTime.hour().minute())
-                    .monospacedDigit()
             }
-        } else {
+        case .accessoryRectangular:
+            if #available(iOS 16, *) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        ViewThatFits(in: .horizontal) {
+                            Text(today, format: .republicanDate.day(.preferred).year(today.isSansculottides ? .none : .long))
+                            Text(today, format: .republicanDate.day(.preferred))
+                        }
+                        .font(.headline)
+                        .widgetAccentable()
+                        Text(today, format: today.isSansculottides ? .republicanDate.year() : .republicanDate.day(.dayName))
+                            .foregroundStyle(.secondary)
+                        Text(entry.time, format: .decimalTime.hour().minute())
+                            .monospacedDigit()
+                    }
+                    Spacer(minLength: 0)
+                }
+            }
+        default: // systemSmall
             VStack(alignment: .leading) {
                 Text(today, format: .republicanDate.day(.preferred))
                 Text(today, format: .republicanDate.year(.long))
@@ -51,15 +69,19 @@ struct DateTimeWidget: Widget {
     let kind: String = "DateTimeWidget"
     
     var supported: [WidgetFamily] {
+        #if os(watchOS)
+        return [.accessoryInline, .accessoryRectangular]
+        #else
         if #available(iOS 16, *) {
             return [.systemSmall, .accessoryInline, .accessoryRectangular]
         }
         return [.systemSmall]
+        #endif
     }
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: TimeProvider()) { entry in
-            if #available(iOS 17.0, *) {
+            if #available(iOS 17.0, watchOS 10.0, *) {
                 DateTimeWidgetEntryView(entry: entry)
                     .containerBackground(.background, for: .widget)
             } else {
@@ -74,7 +96,12 @@ struct DateTimeWidget: Widget {
 
 struct DateTimeWidget_Previews: PreviewProvider {
     static var previews: some View {
+        #if os(watchOS)
+        DateTimeWidgetEntryView(entry: TimeEntry(date: Date(), time: DecimalTime(base: Date())))
+            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+        #else
         DateTimeWidgetEntryView(entry: TimeEntry(date: Date(), time: DecimalTime(base: Date())))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
+        #endif
     }
 }

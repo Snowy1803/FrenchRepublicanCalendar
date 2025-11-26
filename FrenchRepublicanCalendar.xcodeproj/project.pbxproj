@@ -70,6 +70,15 @@
 		FD6EBB602EB90E1300796761 /* RepublicanDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */; };
 		FD6EBB622EB90F6E00796761 /* FoldablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB612EB90F6E00796761 /* FoldablePicker.swift */; };
 		FD6EBB642EB98EBF00796761 /* WheelRepublicanDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */; };
+		FD7EB8CB2ED64847000A6FDB /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
+		FD7EB8CC2ED64847000A6FDB /* DecimalTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B64D8828E4F622006A0471 /* DecimalTimeWidget.swift */; };
+		FD7EB8CE2ED64847000A6FDB /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
+		FD7EB8D02ED64847000A6FDB /* FrenchRepublicanCalendarCore in Frameworks */ = {isa = PBXBuildFile; productRef = FD7EB8C82ED64847000A6FDB /* FrenchRepublicanCalendarCore */; };
+		FD7EB8D12ED64847000A6FDB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E0959C25404BB200383A31 /* SwiftUI.framework */; };
+		FD7EB8D22ED64847000A6FDB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E0959A25404BB200383A31 /* WidgetKit.framework */; };
+		FD7EB8D42ED64847000A6FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20E095A125404BEB00383A31 /* Assets.xcassets */; };
+		FD7EB8DA2ED648A1000A6FDB /* DateWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FD7EB8D82ED64847000A6FDB /* DateWatchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FD7EB8DF2ED6BCD9000A6FDB /* DateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0959F25404BB200383A31 /* DateWidget.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FDA5226D2ECE423A00210C75 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA5226C2ECE423A00210C75 /* WhatsNew.swift */; };
@@ -100,6 +109,13 @@
 			remoteGlobalIDString = 20E0959725404BB200383A31;
 			remoteInfo = DateWidgetExtension;
 		};
+		FD7EB8DB2ED648A1000A6FDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20418BB22412F3E700E0EE6E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD7EB8C72ED64847000A6FDB;
+			remoteInfo = DateWatchWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -122,6 +138,17 @@
 			files = (
 				20E095A625404BEB00383A31 /* DateWidgetExtension.appex in Embed Foundation Extensions */,
 				2061525F25728FCF007A214D /* Siri.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD7EB8DD2ED648A1000A6FDB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FD7EB8DA2ED648A1000A6FDB /* DateWatchWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,6 +222,9 @@
 		FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepublicanDatePicker.swift; sourceTree = "<group>"; };
 		FD6EBB612EB90F6E00796761 /* FoldablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldablePicker.swift; sourceTree = "<group>"; };
 		FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelRepublicanDatePicker.swift; sourceTree = "<group>"; };
+		FD7EB8D82ED64847000A6FDB /* DateWatchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DateWatchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD7EB8D92ED64847000A6FDB /* WatchInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = WatchInfo.plist; path = /Users/emilpedersen/Documents/FrenchRepublicanCalendar/Widget/WatchInfo.plist; sourceTree = "<absolute>"; };
+		FD7EB8DE2ED6566C000A6FDB /* FrenchRepublicanCalendar WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "FrenchRepublicanCalendar WatchKit App.entitlements"; sourceTree = "<group>"; };
 		FD8D50EA2E79E15000951805 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		FDA5226C2ECE423A00210C75 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		FDA5226E2ECE662C00210C75 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -237,12 +267,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FD7EB8CF2ED64847000A6FDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD7EB8D02ED64847000A6FDB /* FrenchRepublicanCalendarCore in Frameworks */,
+				FD7EB8D12ED64847000A6FDB /* SwiftUI.framework in Frameworks */,
+				FD7EB8D22ED64847000A6FDB /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		20418BB12412F3E700E0EE6E = {
 			isa = PBXGroup;
 			children = (
+				FD7EB8DE2ED6566C000A6FDB /* FrenchRepublicanCalendar WatchKit App.entitlements */,
 				2047A3482624B0AB00AA662C /* DateWidgetExtension.entitlements */,
 				2061524E25728F95007A214D /* FrenchRepublicanCalendar.entitlements */,
 				FD8D50EA2E79E15000951805 /* AppIcon.icon */,
@@ -267,6 +308,7 @@
 				20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */,
 				20E0959825404BB200383A31 /* DateWidgetExtension.appex */,
 				2061525825728FCF007A214D /* Siri.appex */,
+				FD7EB8D82ED64847000A6FDB /* DateWatchWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -395,6 +437,7 @@
 				20B64D8828E4F622006A0471 /* DecimalTimeWidget.swift */,
 				20E095A125404BEB00383A31 /* Assets.xcassets */,
 				20E095A325404BEB00383A31 /* Info.plist */,
+				FD7EB8D92ED64847000A6FDB /* WatchInfo.plist */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -422,10 +465,12 @@
 				20418BBA2412F3E700E0EE6E /* Resources */,
 				20418BC72412F3EB00E0EE6E /* Sources */,
 				20418BC82412F3EB00E0EE6E /* Frameworks */,
+				FD7EB8DD2ED648A1000A6FDB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FD7EB8DC2ED648A1000A6FDB /* PBXTargetDependency */,
 			);
 			name = "FrenchRepublicanCalendar WatchKit App";
 			productName = "FrenchRepublicanCalendar WatchKit App";
@@ -498,6 +543,26 @@
 			productReference = 20E0959825404BB200383A31 /* DateWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		FD7EB8C72ED64847000A6FDB /* DateWatchWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FD7EB8D52ED64847000A6FDB /* Build configuration list for PBXNativeTarget "DateWatchWidgetExtension" */;
+			buildPhases = (
+				FD7EB8CA2ED64847000A6FDB /* Sources */,
+				FD7EB8CF2ED64847000A6FDB /* Frameworks */,
+				FD7EB8D32ED64847000A6FDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DateWatchWidgetExtension;
+			packageProductDependencies = (
+				FD7EB8C82ED64847000A6FDB /* FrenchRepublicanCalendarCore */,
+			);
+			productName = DateWidgetExtension;
+			productReference = FD7EB8D82ED64847000A6FDB /* DateWatchWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -544,6 +609,7 @@
 				20418BBB2412F3E700E0EE6E /* FrenchRepublicanCalendar WatchKit App */,
 				20E0959725404BB200383A31 /* DateWidgetExtension */,
 				2061525725728FCF007A214D /* Siri */,
+				FD7EB8C72ED64847000A6FDB /* DateWatchWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -582,6 +648,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				20E095A225404BEB00383A31 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD7EB8D32ED64847000A6FDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD7EB8D42ED64847000A6FDB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +741,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FD7EB8CA2ED64847000A6FDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD7EB8CB2ED64847000A6FDB /* DateTimeWidget.swift in Sources */,
+				FD7EB8DF2ED6BCD9000A6FDB /* DateWidget.swift in Sources */,
+				FD7EB8CC2ED64847000A6FDB /* DecimalTimeWidget.swift in Sources */,
+				FD7EB8CE2ED64847000A6FDB /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -684,6 +769,11 @@
 			isa = PBXTargetDependency;
 			target = 20E0959725404BB200383A31 /* DateWidgetExtension */;
 			targetProxy = 20E095A425404BEB00383A31 /* PBXContainerItemProxy */;
+		};
+		FD7EB8DC2ED648A1000A6FDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FD7EB8C72ED64847000A6FDB /* DateWatchWidgetExtension */;
+			targetProxy = FD7EB8DB2ED648A1000A6FDB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1007,6 +1097,52 @@
 			};
 			name = Release;
 		};
+		FD7EB8D62ED64847000A6FDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DateWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Widget/WatchInfo.plist;
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendar.watchkitapp.DateWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		FD7EB8D72ED64847000A6FDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DateWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Widget/WatchInfo.plist;
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.FrenchRepublicanCalendar.watchkitapp.DateWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1055,6 +1191,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		FD7EB8D52ED64847000A6FDB /* Build configuration list for PBXNativeTarget "DateWatchWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD7EB8D62ED64847000A6FDB /* Debug */,
+				FD7EB8D72ED64847000A6FDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1067,6 +1212,14 @@
 			};
 		};
 		20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Snowy1803/FrenchRepublicanCalendarCore";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		FD7EB8C92ED64847000A6FDB /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Snowy1803/FrenchRepublicanCalendarCore";
 			requirement = {
@@ -1095,6 +1248,11 @@
 		20C18A5C260D250100967DF3 /* FrenchRepublicanCalendarCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */;
+			productName = FrenchRepublicanCalendarCore;
+		};
+		FD7EB8C82ED64847000A6FDB /* FrenchRepublicanCalendarCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD7EB8C92ED64847000A6FDB /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */;
 			productName = FrenchRepublicanCalendarCore;
 		};
 		FDA522722ECF70BE00210C75 /* SwiftUIIntrospect */ = {

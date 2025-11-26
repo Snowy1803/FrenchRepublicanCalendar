@@ -73,15 +73,19 @@ struct TimeWidget: Widget {
     let kind: String = "DecimalTimeWidget"
     
     var supported: [WidgetFamily] {
+        #if os(watchOS)
+        return [.accessoryInline, .accessoryCircular, .accessoryCorner]
+        #else
         if #available(iOS 16, *) {
             return [.systemSmall, .accessoryInline, .accessoryCircular]
         }
         return [.systemSmall]
+        #endif
     }
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: TimeProvider()) { entry in
-            if #available(iOS 17.0, *) {
+            if #available(iOS 17.0, watchOS 10.0, *) {
                 TimeWidgetEntryView(entry: entry)
                     .containerBackground(.background, for: .widget)
             } else {
@@ -96,7 +100,12 @@ struct TimeWidget: Widget {
 
 struct TimeWidget_Previews: PreviewProvider {
     static var previews: some View {
+        #if os(watchOS)
+        TimeWidgetEntryView(entry: TimeEntry(date: Date(), time: DecimalTime(base: Date())))
+            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+        #else
         TimeWidgetEntryView(entry: TimeEntry(date: Date(), time: DecimalTime(base: Date())))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
+        #endif
     }
 }

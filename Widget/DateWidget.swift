@@ -43,6 +43,20 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
 }
 
+@available(iOS 16.0, *)
+struct InlineDateEntryView: View {
+    var today: FrenchRepublicanDate
+    
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            Text(today.toVeryLongString())
+            Text(today.toLongString())
+            Text(today.toLongStringNoYear())
+            Text(today.toShortString())
+        }
+    }
+}
+
 struct DateWidgetEntryView : View {
     @Environment(\.widgetFamily) var family
     var entry: Provider.Entry
@@ -50,23 +64,58 @@ struct DateWidgetEntryView : View {
     var body: some View {
         let today = FrenchRepublicanDate(date: entry.date)
         Group {
-            if #available(iOSApplicationExtension 16, *), family == .accessoryInline {
-                ViewThatFits(in: .horizontal) {
-                    Text(today.toVeryLongString())
-                    Text(today.toLongString())
-                    Text(today.toLongStringNoYear())
-                    Text(today.toShortString())
+            switch family {
+            case .accessoryInline:
+                if #available(iOS 16.0, *) {
+                    InlineDateEntryView(today: today)
                 }
-            } else if #available(iOSApplicationExtension 16, *), family == .accessoryRectangular {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(today, format: .republicanDate.day(.preferred))
-                        Text(today, format: .republicanDate.year(.long))
-                        Text(today.isSansculottides ? today.weekdayName : today.dayName)
+            case .accessoryCircular:
+                if #available(iOS 16.0, *) {
+                    ZStack {
+                        AccessoryWidgetBackground()
+                        VStack {
+                            Text("\(today.components.day!)")
+                                .font(.title)
+                            ViewThatFits(in: .horizontal) {
+                                Text(today, format: .republicanDate.day(.monthOnly))
+                                Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
+                            }
+                            .font(.caption)
+                            .padding(.horizontal, 4)
+                        }
                     }
-                    Spacer(minLength: 0)
+                    .widgetLabel {
+                        InlineDateEntryView(today: today)
+                    }
                 }
-            } else if family == .systemSmall {
+            case .accessoryRectangular:
+                if #available(iOS 16.0, *) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(today, format: .republicanDate.day(.preferred))
+                                .font(.headline)
+                                .widgetAccentable()
+                            Text(today, format: .republicanDate.year(.long))
+                            Text(today.isSansculottides ? today.weekdayName : today.dayName)
+                        }
+                        Spacer(minLength: 0)
+                    }
+                }
+            case .accessoryCorner:
+                if #available(iOS 16.0, *) {
+                    Text("\(today.components.day!)")
+                        .font(.title)
+                        .widgetLabel {
+                            ViewThatFits(in: .horizontal) {
+                                Text(today, format: .republicanDate.day().year())
+                                Text(today, format: .republicanDate.day(.monthOnly).year())
+                                Text(today, format: .republicanDate.day(.monthOnly).year(.short))
+                                Text(today, format: .republicanDate.day(.monthOnly))
+                                Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
+                            }
+                        }
+                }
+            case .systemSmall:
                 VStack(alignment: .leading) {
                     SimpleDateStack(today: today)
                     Spacer()
@@ -76,7 +125,7 @@ struct DateWidgetEntryView : View {
                     }
                     Spacer()
                 }
-            } else {
+            case .systemMedium:
                 VStack {
                     Spacer()
                     HStack {
@@ -98,6 +147,8 @@ struct DateWidgetEntryView : View {
                         }
                     }
                 }
+            default:
+                EmptyView() // unsupported
             }
         }
         .foregroundColor(.primary)
@@ -119,15 +170,19 @@ struct DateWidget: Widget {
     let kind: String = "DateWidget"
     
     var supported: [WidgetFamily] {
+        #if os(watchOS)
+        return [.accessoryInline, .accessoryRectangular, .accessoryCircular, .accessoryCorner]
+        #else
         if #available(iOS 16, *) {
-            return [.systemSmall, .systemMedium, .accessoryInline, .accessoryRectangular]
+            return [.systemSmall, .systemMedium, .accessoryInline, .accessoryRectangular, .accessoryCircular]
         }
         return [.systemSmall, .systemMedium]
+        #endif
     }
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
+            if #available(iOS 17.0, watchOS 10.0, *) {
                 DateWidgetEntryView(entry: entry)
                     .containerBackground(.background, for: .widget)
             } else {
@@ -149,9 +204,33 @@ struct FrenchRepublicanWidgets: WidgetBundle {
     }
 }
 
+@available(iOS 17, watchOS 10, *)
 struct DateWidget_Previews: PreviewProvider {
     static var previews: some View {
-        DateWidgetEntryView(entry: SimpleEntry(date: Date()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        let view = DateWidgetEntryView(entry: SimpleEntry(date: Date()))
+            .containerBackground(.background, for: .widget)
+        #if os(watchOS)
+        view.previewContext(WidgetPreviewContext(family: .accessoryCorner))
+        #else
+        view.previewContext(WidgetPreviewContext(family: .systemSmall))
+        view.previewContext(WidgetPreviewContext(family: .systemMedium))
+        #endif
+        view.previewContext(WidgetPreviewContext(family: .accessoryInline))
+        view.previewContext(WidgetPreviewContext(family: .accessoryCircular))
+        view.previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
+
+//@available(iOS 17, *)
+//#Preview(as: .accessoryRectangular) {
+//    DateWidget()
+//} timeline: {
+//    SimpleEntry(date: .now)
+//}
+//
+//@available(iOS 17, *)
+//#Preview(as: .accessoryInline) {
+//    DateWidget()
+//} timeline: {
+//    SimpleEntry(date: .now)
+//}

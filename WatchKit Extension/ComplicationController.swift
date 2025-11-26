@@ -13,7 +13,8 @@
 import ClockKit
 import FrenchRepublicanCalendarCore
 
-class ComplicationController: NSObject, CLKComplicationDataSource {
+@available(*, deprecated, message: "WidgetKit should be used on watchOS 9+ (this silences deprecation warnings on template initializers)")
+class ComplicationController: NSObject, CLKComplicationDataSource, CLKComplicationWidgetMigrator {
     
     // MARK: - Timeline Configuration
     
@@ -86,20 +87,20 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEntry(family: CLKComplicationFamily, date: Date) -> CLKComplicationTemplate? {
         let frd = FrenchRepublicanDate(date: date)
         switch (family) {
-        case .utilitarianSmall, .utilitarianSmallFlat:
+        case .utilitarianSmall, .utilitarianSmallFlat: // accessoryInline
             let template = CLKComplicationTemplateUtilitarianSmallFlat()
             template.textProvider = CLKSimpleTextProvider(text: frd.toShortString())
             return template
-        case .utilitarianLarge:
+        case .utilitarianLarge: // accessoryInline
             let template = CLKComplicationTemplateUtilitarianLargeFlat()
             template.textProvider = CLKSimpleTextProvider(text: frd.toLongString(), shortText: frd.toLongStringNoYear())
             return template
-        case .extraLarge:
+        case .extraLarge: // accessoryCircular
             let template = CLKComplicationTemplateExtraLargeStackText()
             template.line1TextProvider = CLKSimpleTextProvider(text: String(frd.components.day!))
             template.line2TextProvider = CLKSimpleTextProvider(text: frd.shortMonthName)
             return template
-        case .graphicBezel:
+        case .graphicBezel: // accessoryCircular + widgetLabel
             let template = CLKComplicationTemplateGraphicBezelCircularText()
             template.textProvider = CLKSimpleTextProvider(text: frd.toLongString())
             let smaller = CLKComplicationTemplateGraphicCircularStackText()
@@ -107,18 +108,18 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             smaller.line2TextProvider = CLKSimpleTextProvider(text: frd.shortMonthName)
             template.circularTemplate = smaller
             return template
-        case .graphicCorner:
+        case .graphicCorner: // accessoryCorner
             let template = CLKComplicationTemplateGraphicCornerStackText()
             template.outerTextProvider = CLKSimpleTextProvider(text: String(frd.components.day!))
             template.innerTextProvider = CLKSimpleTextProvider(text: "\(frd.monthName) \(frd.components.year!)")
             return template
-        case .graphicRectangular:
+        case .graphicRectangular: // accessoryRectangular
             let template = CLKComplicationTemplateGraphicRectangularStandardBody()
             template.headerTextProvider = CLKSimpleTextProvider(text: frd.toLongStringNoYear())
             template.body1TextProvider = CLKSimpleTextProvider(text: frd.isSansculottides ? frd.weekdayName : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
             template.body2TextProvider = CLKSimpleTextProvider(text: FRCFormat.republicanDate.year(.long).format(frd))
             return template
-        case .modularLarge:
+        case .modularLarge: // accessoryRectangular / removed
             let template = CLKComplicationTemplateModularLargeStandardBody()
             template.headerTextProvider = CLKSimpleTextProvider(text: frd.toLongStringNoYear())
             template.body1TextProvider = CLKSimpleTextProvider(text: frd.isSansculottides ? frd.weekdayName : "\(frd.weekdayName) \(frd.dayName)", shortText: frd.dayName)
@@ -137,19 +138,19 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getDecimalTimeEntry(family: CLKComplicationFamily, time: DecimalTime) -> CLKComplicationTemplate? {
         switch (family) {
-        case .utilitarianSmall, .utilitarianSmallFlat:
+        case .utilitarianSmall, .utilitarianSmallFlat: // accessoryInline
             let template = CLKComplicationTemplateUtilitarianSmallFlat()
             template.textProvider = CLKSimpleTextProvider(text: time.shortDescription)
             return template
-        case .utilitarianLarge:
+        case .utilitarianLarge: // accessoryInline
             let template = CLKComplicationTemplateUtilitarianLargeFlat()
             template.textProvider = CLKSimpleTextProvider(text: time.shortDescription)
             return template
-        case .extraLarge:
+        case .extraLarge: // accessoryCircular
             let template = CLKComplicationTemplateExtraLargeSimpleText()
             template.textProvider = CLKSimpleTextProvider(text: time.shortDescription)
             return template
-        case .graphicCorner:
+        case .graphicCorner: // accessoryCorner
             let template = CLKComplicationTemplateGraphicCornerStackText()
             template.outerTextProvider = CLKSimpleTextProvider(text: "")
             template.innerTextProvider = CLKSimpleTextProvider(text: time.shortDescription)
@@ -174,6 +175,28 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         handler([CLKComplicationDescriptor(identifier: "CurrentFRDate", displayName: "Aujourd'hui", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicBezel, .graphicCorner, .graphicRectangular, .modularLarge]), CLKComplicationDescriptor(identifier: "CurrentDecimalTime", displayName: "Temps Décimal", supportedFamilies: [.utilitarianSmall, .utilitarianSmallFlat, .utilitarianLarge, .extraLarge, .graphicCorner])])
+    }
+    
+    // MARK: - watchOS 9 - Migration to WidgetKit
+    
+    @available(watchOS 9.0, *)
+    var widgetMigrator: any CLKComplicationWidgetMigrator {
+        self
+    }
+    
+    @available(watchOS 9.0, *)
+    func widgetConfiguration(from complicationDescriptor: CLKComplicationDescriptor) async -> CLKComplicationWidgetMigrationConfiguration? {
+        if complicationDescriptor.identifier == "CurrentDecimalTime" {
+            return CLKComplicationStaticWidgetMigrationConfiguration(
+                kind: "DecimalTimeWidget",
+                extensionBundleIdentifier: "fr.orbisec.FrenchRepublicanCalendar.watchkitapp.DateWidget"
+            )
+        } else {
+            return CLKComplicationStaticWidgetMigrationConfiguration(
+                kind: "DateWidget",
+                extensionBundleIdentifier: "fr.orbisec.FrenchRepublicanCalendar.watchkitapp.DateWidget"
+            )
+        }
     }
 }
 
