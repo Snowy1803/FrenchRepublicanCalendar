@@ -22,7 +22,7 @@ struct WatchApp: App {
         WindowGroup {
             NavigationView {
                 ContentView(favorites: appDelegate.favorites)
-            }
+            }.environmentObject(Midnight.shared)
         }
     }
 }

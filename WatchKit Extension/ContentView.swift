@@ -15,6 +15,7 @@ import FrenchRepublicanCalendarCore
 
 struct ContentView: View {
     @ObservedObject var favorites: FavoritesPool
+    @EnvironmentObject var midnight: Midnight
     
     @State var shownDateGregorian = Date().toMyDateComponents
     @State var shownDateRepublican = Date().toMyDateComponents // Overridden before use
@@ -84,6 +85,12 @@ struct ContentView: View {
                 HStack {
                     Image(systemName: "clock").frame(width: 20, height: 20)
                     Text("Temps décimal")
+                }
+            }
+            NavigationLink(destination: SettingsView()) {
+                HStack {
+                    Image(systemName: "gear").frame(width: 20, height: 20)
+                    Text("Réglages")
                 }
             }
         }.navigationBarTitle("Cal Républicain")

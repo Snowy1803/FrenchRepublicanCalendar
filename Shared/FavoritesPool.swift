@@ -63,6 +63,9 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     #endif
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        #if DEBUG
+        print("Received keys: \(userInfo.keys)")
+        #endif
         var updateComplication = false
         for (key, value) in userInfo {
             switch key {
@@ -84,13 +87,19 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
                 print("unknown key \(key) in transfer")
             }
         }
-        #if os(watchOS)
         if updateComplication {
-            FrenchRepublicanDateOptions.reloadTimelines()
+            DispatchQueue.main.async {
+                FrenchRepublicanDateOptions.reloadTimelines()
+            }
         }
-        #endif
     }
 }
+
+/// ObservableObject for significant time changes (iOS) and settings changes
+class Midnight: ObservableObject {
+    static let shared = Midnight()
+}
+
 
 // UI-Specific Int because using Int as tags will use their value instead of the tag
 

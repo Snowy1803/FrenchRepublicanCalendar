@@ -32,7 +32,6 @@ struct SettingsView: View {
                 FrenchRepublicanDateOptions.current.romanYear
             } set: {
                 FrenchRepublicanDateOptions.current.romanYear = $0
-                midnight.objectWillChange.send()
             }) {
                 Text("Chiffres romains pour les années")
             }
@@ -61,60 +60,6 @@ struct SettingsView: View {
                 SKStoreReviewController.requestReview()
             }
         }
-    }
-}
-
-struct TimeZonePicker: View {
-    @EnvironmentObject var midnight: Midnight
-    
-    func timeZoneName(tz: TimeZone) -> String {
-        var formatter = Date.FormatStyle.dateTime.timeZone(.localizedGMT(.long))
-        formatter.locale = Locale(identifier: "fr-FR")
-        formatter.timeZone = tz
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.calendar.timeZone = tz
-        formatter.calendar.locale = formatter.locale
-        return formatter.format(Date())
-    }
-    
-    var body: some View {
-        Picker("Fuseau horaire", selection: Binding {
-            FrenchRepublicanDateOptions.current.timeZone
-        } set: {
-            FrenchRepublicanDateOptions.current.timeZone = $0
-            midnight.objectWillChange.send()
-        }) {
-            VStack(alignment: .leading) {
-                Text("Heure locale")
-                Text("Utiliser le fuseau horaire système (\(timeZoneName(tz: TimeZone.current)))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }.tag(nil as TimeZone?)
-            VStack(alignment: .leading) {
-                Text("Heure moyenne de Paris")
-                Text("Fuseau utilisé en France entre 1891 et 1911 (\(timeZoneName(tz: TimeZone.parisMeridian)))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }.tag(TimeZone.parisMeridian)
-            let gmt = TimeZone(identifier: "GMT")!
-            VStack(alignment: .leading) {
-                Text("Heure de Greenwich")
-                Text("Fuseau utilisé en France entre 1911 et 1940 (\(timeZoneName(tz: gmt)))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }.tag(gmt)
-            let paris = TimeZone(identifier: "Europe/Paris")!
-            VStack(alignment: .leading) {
-                Text("Heure à Paris")
-                Text("Fuseau utilisé en France actuellement (\(timeZoneName(tz: paris)))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }.tag(paris)
-            // Could add an "Other..." option
-        }
-        .pickerStyle(.inline)
-        .labelsHidden()
-
     }
 }
 

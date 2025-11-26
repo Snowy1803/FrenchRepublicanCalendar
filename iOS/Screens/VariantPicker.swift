@@ -124,7 +124,6 @@ struct VariantLink: View {
                                 .font(.title)
                                 .onTapGesture {
                                     FrenchRepublicanDateOptions.current.variant = variant
-                                    midnight.objectWillChange.send()
                                 }
                         }
                     }
@@ -162,7 +161,6 @@ struct VariantDetails: View {
             ToolbarItem(placement: .bottomBar) {
                 Button {
                     FrenchRepublicanDateOptions.current.variant = variant
-                    midnight.objectWillChange.send()
                     lastVersion = WhatsNew.currentVersion
                 } label: {
                     if #available(iOS 26.0, *) {

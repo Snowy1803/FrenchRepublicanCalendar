@@ -52,7 +52,7 @@ extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDate
                 timeZone: parseTimeZoneIdentifier(UserDefaults.shared.string(forKey: "frdo-timezone"))
             )
         }
-        set { // only called on iOS
+        set {
             UserDefaults.shared.set(newValue.romanYear, forKey: "frdo-roman")
             UserDefaults.shared.set(newValue.variant.rawValue, forKey: "frdo-variant")
             UserDefaults.shared.set(saveableTimeZoneIdentifier(newValue.timeZone), forKey: "frdo-timezone")
@@ -66,6 +66,12 @@ extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDate
     }
     
     static func reloadTimelines() {
+#if DEBUG
+        print("Reloading timelines")
+#endif
+#if MAIN_APP
+        Midnight.shared.objectWillChange.send()
+#endif
         if #available(watchOS 9, *) {
             WidgetCenter.shared.reloadAllTimelines()
         } else {

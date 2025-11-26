@@ -17,7 +17,7 @@ import EventKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var midnight = Midnight()
+    var midnight = Midnight.shared
     var favorites: FavoritesPool!
     let eventStore = EKEventStore()
 
@@ -44,8 +44,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationSignificantTimeChange(_ application: UIApplication) {
         midnight.objectWillChange.send()
     }
-}
-
-class Midnight: ObservableObject {
-    
 }
