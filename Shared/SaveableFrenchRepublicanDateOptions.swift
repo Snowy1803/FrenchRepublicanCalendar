@@ -13,8 +13,9 @@
 import Foundation
 import FrenchRepublicanCalendarCore
 import WatchConnectivity
-#if os(iOS)
 import WidgetKit
+#if os(watchOS)
+import ClockKit
 #endif
 
 extension UserDefaults {
@@ -60,9 +61,19 @@ extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDate
                 "frdo-variant": newValue.variant.rawValue,
                 "frdo-timezone": saveableTimeZoneIdentifier(newValue.timeZone)
             ])
-            #if os(iOS)
+            reloadTimelines()
+        }
+    }
+    
+    static func reloadTimelines() {
+        if #available(watchOS 9, *) {
             WidgetCenter.shared.reloadAllTimelines()
-            #endif
+        } else {
+#if os(watchOS)
+            CLKComplicationServer.sharedInstance().activeComplications?.forEach {
+                CLKComplicationServer.sharedInstance().reloadTimeline(for: $0)
+            }
+#endif
         }
     }
 }

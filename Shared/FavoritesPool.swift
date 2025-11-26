@@ -14,9 +14,6 @@ import Foundation
 import WatchConnectivity
 import Combine
 import FrenchRepublicanCalendarCore
-#if os(watchOS)
-import ClockKit
-#endif
 
 class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     @Published var favorites: [String]
@@ -89,9 +86,7 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
         }
         #if os(watchOS)
         if updateComplication {
-            CLKComplicationServer.sharedInstance().activeComplications?.forEach {
-                CLKComplicationServer.sharedInstance().reloadTimeline(for: $0)
-            }
+            FrenchRepublicanDateOptions.reloadTimelines()
         }
         #endif
     }
