@@ -62,6 +62,7 @@ struct SettingsView: View {
                 TimeZonePicker()
             }
         }.pickerStyle(.inline)
+        .navigationTitle(Text("Réglages"))
     }
 }
 
