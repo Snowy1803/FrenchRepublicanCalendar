@@ -102,6 +102,8 @@ struct DayNameButton: View {
                     Text("Définition en ligne")
                 }
             }
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
             .prominentButtonStyle()
         }
     }
