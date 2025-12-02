@@ -15,6 +15,9 @@ import FrenchRepublicanCalendarCore
 
 struct ScrollableCalendarView: View {
     @State private var selection = FrenchRepublicanDate(date: Date())
+    @State private var hasAppeared = false
+    @State private var scrollToToday = false
+    
     var body: some View {
         ScrollViewReader { reader in
             ScrollView(.vertical, showsIndicators: false) {
@@ -31,8 +34,28 @@ struct ScrollableCalendarView: View {
                         CalendarMonthView(month: month, selection: $selection, constantHeight: false)
                     }
                 }
+            }.onChange(of: scrollToToday) { newVal in
+                if newVal {
+                    selection = FrenchRepublicanDate(date: Date())
+                    withAnimation {
+                        reader.scrollTo(selection.monthIndex, anchor: .top)
+                    }
+                    scrollToToday = false
+                }
             }.onAppear {
-                reader.scrollTo(selection.monthIndex, anchor: .top)
+                if hasAppeared { return }
+                hasAppeared = true
+                DispatchQueue.main.async {
+                    reader.scrollTo(selection.monthIndex, anchor: .top)
+                }
+            }
+        }.toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    scrollToToday = true
+                } label: {
+                    Text("Aujourd'hui")
+                }
             }
         }
     }
