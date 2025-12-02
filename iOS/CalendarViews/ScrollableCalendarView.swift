@@ -17,6 +17,14 @@ struct ScrollableCalendarView: View {
     @State private var selection = FrenchRepublicanDate(date: Date())
     @State private var hasAppeared = false
     @State private var scrollToToday = false
+    @State private var visible: Set<Int> = []
+    
+    var firstVisibleMonth: FrenchRepublicanDate {
+        guard let smallestId = visible.min() else {
+            return FrenchRepublicanDate(date: .now)
+        }
+        return MonthCollection()[smallestId]
+    }
     
     var body: some View {
         ScrollViewReader { reader in
@@ -31,6 +39,12 @@ struct ScrollableCalendarView: View {
                         }
                         .padding(.top)
                         .padding()
+                        .onAppear {
+                            visible.insert(month.monthIndex)
+                        }
+                        .onDisappear {
+                            visible.remove(month.monthIndex)
+                        }
                         CalendarMonthView(month: month, selection: $selection, constantHeight: false)
                     }
                 }
@@ -50,6 +64,16 @@ struct ScrollableCalendarView: View {
                 }
             }
         }.toolbar {
+            ToolbarItem(placement: .navigation) {
+                Button {
+                    scrollToToday = true
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text(firstVisibleMonth, format: .republicanDate.year())
+                    }
+                }
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     scrollToToday = true
@@ -58,6 +82,7 @@ struct ScrollableCalendarView: View {
                 }
             }
         }
+        .navigationTitle(Text(firstVisibleMonth, format: .republicanDate.day(.monthOnly)))
     }
 }
 
