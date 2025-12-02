@@ -33,6 +33,11 @@ struct ContentView: View {
                     Image(systemName: "house")
                     Text("Accueil")
                 }
+                ScrollableCalendarView()
+                .tabItem {
+                    Image(systemName: "calendar")
+                    Text("Calendrier")
+                }
                 NavigationView {
                     SettingsView()
                 }
