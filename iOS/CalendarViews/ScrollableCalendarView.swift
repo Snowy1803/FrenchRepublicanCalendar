@@ -12,6 +12,7 @@
 
 import SwiftUI
 import FrenchRepublicanCalendarCore
+@_spi(Advanced) import SwiftUIIntrospect
 
 struct ScrollableCalendarView: View {
     @State private var selection = FrenchRepublicanDate(date: Date())
@@ -48,6 +49,8 @@ struct ScrollableCalendarView: View {
                         CalendarMonthView(month: month, selection: $selection, constantHeight: false)
                     }
                 }
+            }.introspect(.scrollView, on: .iOS(.v15...)) { scrollView in
+                scrollView.scrollsToTop = false
             }.onChange(of: scrollToToday) { newVal in
                 if newVal {
                     selection = FrenchRepublicanDate(date: Date())
