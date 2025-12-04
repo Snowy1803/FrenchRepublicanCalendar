@@ -36,6 +36,7 @@ struct ContentView: View {
                 NavigationView {
                     ScrollableCalendarView()
                 }
+                .navigationViewStyle(.stack)
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Calendrier")

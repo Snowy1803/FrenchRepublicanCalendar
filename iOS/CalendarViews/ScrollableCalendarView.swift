@@ -15,6 +15,7 @@ import FrenchRepublicanCalendarCore
 @_spi(Advanced) import SwiftUIIntrospect
 
 struct ScrollableCalendarView: View {
+    @Environment(\.horizontalSizeClass) var sizeClass
     @State private var selection = FrenchRepublicanDate(date: Date())
     @State private var hasAppeared = false
     @State private var scrollToToday = false
@@ -46,7 +47,7 @@ struct ScrollableCalendarView: View {
                         .onDisappear {
                             visible.remove(month.monthIndex)
                         }
-                        CalendarMonthView(month: month, selection: $selection, constantHeight: false)
+                        CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: false)
                     }
                 }
             }.introspect(.scrollView, on: .iOS(.v15...)) { scrollView in
@@ -77,6 +78,12 @@ struct ScrollableCalendarView: View {
                     }
                 }
             }
+            ToolbarItem(placement: .navigation) {
+                if sizeClass == .regular { // In this size class, the navigation title isn't shown
+                    Text(firstVisibleMonth, format: .republicanDate.day(.monthOnly))
+                        .font(.headline)
+                }
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     scrollToToday = true
@@ -96,9 +103,9 @@ fileprivate extension FrenchRepublicanDate {
 }
 
 struct MonthCollection: RandomAccessCollection {
-    var startIndex: Int = {
+    var startIndex: Int {
         0
-    }()
+    }
     var endIndex: Int {
         let max = FrenchRepublicanDate(date: FrenchRepublicanDate.maxSafeDate)
         return max.monthIndex
