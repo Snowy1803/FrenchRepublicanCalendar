@@ -21,7 +21,7 @@ struct VariantExplanation: View {
             Group {
                 switch variant {
                 case .original:
-                    Text("TODO")
+                    OriginalVariantExplanation()
                 case .romme:
                     RommeVariantExplanation()
                 case .delambre:
@@ -66,7 +66,7 @@ struct DelambreVariantExplanation: View {
             Text("Le 1er Vendémiaire est déterminé par l'instant précis où le soleil traverse l'équateur céleste en automne. Si cet événement a lieu à 23h58 à Paris, l'année commence ce jour-là. S'il a lieu à 00h02, elle commence le lendemain.")
             Text("Ainsi, **les années sextiles** (les années à 366 jours, l'équivalent des années bissextiles dans le calendrier républicain) ne sont **pas régulières**. Elles interviennent généralement tous les 4 ans (une Franciade), mais peuvent parfois attendre une année de plus pour s'aligner parfaitement avec le Soleil.")
 
-            Text("Sources")
+            Text("Limites")
                 .font(.headline)
 
             Text("Pour garantir une exactitude scientifique absolue, nous utilisons les éphémérides fournies par l'IMCCE (Institut de mécanique céleste et de calcul des éphémérides).")
@@ -106,6 +106,43 @@ struct RommeVariantExplanation: View {
             
             Text("Ce modèle est idéal pour ceux qui cherchent une projection facile dans le futur, sans dépendre de calculs astronomiques, et ce à l'infini. Cependant, comme cette réforme applique une logique mathématique stricte rétroactivement, elle peut créer des **décalages avec la réalité** historique. En effet, la première année sextile telle qu'appliquée par l'administration fut l'\(firstSextilDelambre, format: .republicanDate.year()), or, si on applique la Réforme de Romme, la première année sextile est l'\(firstSextilRomme, format: .republicanDate.year()).")
             Text("Les dates calculées par ce modèle pour la période historique vont donc parfois différer d'un jour par rapport aux dates réellement vécues par les citoyens de la Révolution.")
+        }
+    }
+}
+
+struct OriginalVariantExplanation: View {
+    var end: FrenchRepublicanDate {
+        FrenchRepublicanDate(dayInYear: 1, year: 14)
+    }
+    var shift: FrenchRepublicanDate {
+        FrenchRepublicanDate(dayInYear: 1, year: 19)
+    }
+    var commune: FrenchRepublicanDate {
+        FrenchRepublicanDate(dayInYear: 1, year: 79)
+    }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Cette variante tranche le conflit juridique originel en favorisant la simplicité arithmétique sur l'astronomie. En effet, si l'article III du décret du 5 octobre 1793 demandait de suivre l'équinoxe, l'**Article X** disposait simplement que la Franciade (la période de quatre ans) devait avoir un jour supplémentaire:")
+            Text("En mémoire de la révolution qui, après quatre ans, a conduit la France au Gouvernement républicain, la période bissextile de quatre ans est appelée « la Franciade ».\nLe jour intercalaire qui doit terminer cette période est appelé le jour de « la Révolution ». Ce jour est placé après les cinq jours complémentaires.")
+                .foregroundStyle(.secondary)
+                .font(.callout)
+                .padding(.leading, 16)
+                
+            Text("C'est cette méthode simplifiée qui fut utilisée *de facto* par l'administration et les tribunaux jusqu'à l'\(end, format: .republicanDate.year()) (1805), car elle permettait de prévoir les dates futures sans avoir besoin de consulter des astronomes chaque année. Le premier décalage entre cette variante et le modèle de Delambre, étant à partir de la fin de l'\(shift, format: .republicanDate.year()), ce ne fut pas un problème.")
+            Text("Pendant la Commune de Paris, par contre, c'est le Modèle Delambre (l'article III) qui fut privilégié par rapport à l'article X, afin de garder un modèle basé sur l'astronomie.")
+
+            Text("Comment nous calculons la date")
+                .font(.headline)
+
+            Text("Ce modèle fonctionne exactement comme le calendrier Julien (celui de Jules César). Il définit une année sextile **tous les 4 ans**, sans exception. Le point de départ est fixé à l'an III (première année sextile historique), puis l'an VII, l'an XI, et ainsi de suite indéfiniment.")
+            Text("C'est mathématiquement la variante la moins précise. En ajoutant un jour tous les 4 ans systématiquement, une année dure en moyenne **365,25** jours. Or, comme la Terre met en réalité 365,242 19 jours pour faire le tour du Soleil, ce calendrier prend un retard d'environ 3 jours tous les 400 ans.")
+            Text("Ainsi, par rapport au calendrier Grégorien, ce modèle **se décale durablement** d'un jour à partir de 1800, 1900, 2100, etc.")
+
+            Text("Limites")
+                .font(.headline)
+
+            Text("Ce modèle est un choix tout aussi **authentique** pour consulter des documents de la période 1792-1806 que le modèle Delambre, car il correspond aux dates utilisées officiellement à l'époque. Cependant, à cause de sa dérive temporelle à partir de 1800, il est **incompatible** avec la période de la Commune de Paris en l'\(commune, format: .republicanDate.year()) (1871).")
+            Text("Ce modèle n'est pas vraiment adapté pour la postérité, car elle est actuellement décalée d'environ 2 jours par rapport au Soleil.")
         }
     }
 }
