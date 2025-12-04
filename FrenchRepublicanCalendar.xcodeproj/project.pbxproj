@@ -64,6 +64,7 @@
 		FD12A1902ED7527E00BD8E69 /* TimeZonePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD12A18F2ED7527E00BD8E69 /* TimeZonePicker.swift */; };
 		FD12A1912ED752D800BD8E69 /* TimeZonePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD12A18F2ED7527E00BD8E69 /* TimeZonePicker.swift */; };
 		FD4BA0F12EDE85B6008551C5 /* ScrollableCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4BA0F02EDE85B2008551C5 /* ScrollableCalendarView.swift */; };
+		FD4BA0F32EE14BD8008551C5 /* VariantExplanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */; };
 		FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */; };
 		FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
 		FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventVC.swift */; };
@@ -219,6 +220,7 @@
 		FD12A18D2ED74BB500BD8E69 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FD12A18F2ED7527E00BD8E69 /* TimeZonePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePicker.swift; sourceTree = "<group>"; };
 		FD4BA0F02EDE85B2008551C5 /* ScrollableCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCalendarView.swift; sourceTree = "<group>"; };
+		FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantExplanation.swift; sourceTree = "<group>"; };
 		FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWidget.swift; sourceTree = "<group>"; };
 		FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeWidget.swift; sourceTree = "<group>"; };
 		FD6EBB512EB7F19A00796761 /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				FDA522702ECE720A00210C75 /* VariantPicker.swift */,
+				FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */,
 				FDA5226C2ECE423A00210C75 /* WhatsNew.swift */,
 				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
 				FDA5226E2ECE662C00210C75 /* HomeView.swift */,
@@ -741,6 +744,7 @@
 				208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */,
 				20E0958B2540465500383A31 /* ContactsList.swift in Sources */,
 				FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */,
+				FD4BA0F32EE14BD8008551C5 /* VariantExplanation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -89,16 +89,3 @@ struct SettingsView: View {
         }
     }
 }
-
-extension FrenchRepublicanDateOptions.Variant {
-    var name: String {
-        switch self {
-        case .romme:
-            return "Réforme de Romme"
-        case .delambre:
-            return "Modèle Delambre"
-        case .original:
-            return "Article X original"
-        }
-    }
-}

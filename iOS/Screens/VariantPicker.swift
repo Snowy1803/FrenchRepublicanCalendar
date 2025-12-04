@@ -96,7 +96,13 @@ struct VariantLink: View {
 
     var body: some View {
         Section {
-            NavigationLink(destination: VariantDetails(variant: variant)) {
+            NavigationLink {
+                if firstShown {
+                    VariantDetails(variant: variant)
+                } else {
+                    VariantExplanation(variant: variant)
+                }
+            } label: {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(alignment: .center, spacing: 16) {
                         Image(systemName: icon)
@@ -156,7 +162,7 @@ struct VariantDetails: View {
     var variant: FrenchRepublicanDateOptions.Variant
 
     var body: some View {
-        Text("TODO")
+        VariantExplanation(variant: variant)
         .toolbar {
             ToolbarItem(placement: .bottomBar) {
                 Button {
