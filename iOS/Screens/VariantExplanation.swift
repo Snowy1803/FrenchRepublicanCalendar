@@ -98,8 +98,9 @@ struct RommeVariantExplanation: View {
             Text("Comment nous calculons la date")
                 .font(.headline)
             
-            Text("Contrairement au modèle Delambre qui dépend de l'orbite terrestre, ce modèle définit les années sextiles selon un algorithme fixe, assurant une régularité absolue. Une année est sextile si elle est divisible par 4. Elle redevient commune si elle est divisible par 100, sauf si elle est divisible par 400. Romme y ajouta une règle inédite pour corriger les dérives millénaires : une année divisible par **4000** ne sera **pas** sextile.")
-            Text("Cela rend cette variante théoriquement plus précise que notre calendrier Grégorien actuel, si le calendrier républicain avait survécu pendant plusieurs millénaires, ce qui était optimiste de sa part. En effet, une année dure 365,242 **50** jours d'après le calendrier grégorien, 365,242 **25** jours d'après la Réforme de Romme, mais dans la réalité, la Terre met en moyenne 365,242 **19** jours entre deux équinoxes.")
+            Text("Ce modèle définit les années sextiles selon un algorithme fixe, assurant une régularité absolue. Une année est sextile si elle est divisible par 4. Elle redevient commune si elle est divisible par 100, sauf si elle est divisible par 400. Romme y ajouta une règle inédite pour corriger les dérives millénaires : une année divisible par **4000** ne sera **pas** sextile.")
+            Text("Cela rend cette variante théoriquement plus précise que notre calendrier Grégorien actuel, si le calendrier républicain avait survécu pendant plusieurs millénaires (ce qui était optimiste de sa part). En effet, une année dure 365,242 **50** jours d'après le calendrier grégorien, 365,242 **25** jours d'après la Réforme de Romme, mais dans la réalité, la Terre met en moyenne 365,242 **19** jours entre deux équinoxes.")
+            Text("Contrairement au modèle Delambre qui place le Jour de la Révolution (le jour ajouté au calendrier les années sextiles) tous les 4 à 5 ans, le modèle Romme les a tous les 4 ou 8 ans.")
             
             Text("Limites")
                 .font(.headline)
