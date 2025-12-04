@@ -24,7 +24,7 @@ struct VariantPicker: View {
                 firstShown: firstShown,
                 variant: .delambre,
                 icon: "sun.and.horizon.fill",
-                text: Text("Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 16).formattedYear), ainsi que pendant la commune de Paris. Basé sur l'astronomie.")
+                text: Text("Version originelle, utilisée entre l'an \(FrenchRepublicanDate(dayInYear: 1, year: 2).formattedYear) et l'an \(FrenchRepublicanDate(dayInYear: 1, year: 14).formattedYear), ainsi que pendant la commune de Paris. Basé sur l'astronomie.")
             )
             VariantLink(
                 firstShown: firstShown,
