@@ -23,11 +23,11 @@ struct VariantExplanation: View {
                 case .original:
                     Text("TODO")
                 case .romme:
-                    Text("TODO")
+                    RommeVariantExplanation()
                 case .delambre:
                     DelambreVariantExplanation()
                 }
-            }.notTooWide()
+            }.padding().notTooWide()
         }.navigationTitle(variant.name)
     }
 }
@@ -46,8 +46,10 @@ struct DelambreVariantExplanation: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Ce modèle représente l'essence la plus pure du projet révolutionnaire : un calendrier fondé non pas sur la tradition religieuse ou des cycles arithmétiques fixes, mais directement sur l'observation de la **Nature** et de la **Science**.")
             Text("C'est cette variante qui a été utilisée par l'administration Française jusqu'à ce qu'il soit aboli par Napoléon Ier, environ 12 ans plus tard. C'est également cette variante qui a été privilégiée pendant la Commune de Paris.")
+
             Text("Basé sur le Soleil")
                 .font(.headline)
+
             Text("Contrairement au calendrier Grégorien, ou à d'autres variantes républicaines, le Modèle Delambre ne prédéfinit pas les années bissextiles selon une règle mathématique (comme \"tous les 4 ans\").")
             Text("Il respecte à la lettre l'**article III** du 5 octobre 1793 (\(creation, format: .republicanDate.day().year())), publié par la Convention Nationale :")
             Text("\"Le commencement de chaque année est fixé à minuit, commençant le jour où tombe l’équinoxe vrai d’automne pour l’observatoire de Paris\"")
@@ -55,20 +57,56 @@ struct DelambreVariantExplanation: View {
                 .font(.callout)
                 .padding(.leading, 16)
             Text("Le calendrier commence ainsi à l'**équinoxe d'automne** (moment où la durée du jour égale celle de la nuit). Le \(origin, format: .republicanDate.day().year()), symboliquement, est aussi le premier jour après l'abolition de la monarchie.")
+
             Text("Comment nous calculons la date")
                 .font(.headline)
+
             Text("Cette application utilise des données astronomiques, tout comme **Jean-Baptiste Delambre** le faisait à l'époque.")
             Text("Le calcul est basé sur le temps solaire vrai au **méridien de Paris** (à l'Observatoire de Paris), soit 9min et 21s après l'heure de Greenwich (GMT).")
             Text("Le 1er Vendémiaire est déterminé par l'instant précis où le soleil traverse l'équateur céleste en automne. Si cet événement a lieu à 23h58 à Paris, l'année commence ce jour-là. S'il a lieu à 00h02, elle commence le lendemain.")
             Text("Ainsi, **les années sextiles** (les années à 366 jours, l'équivalent des années bissextiles dans le calendrier républicain) ne sont **pas régulières**. Elles interviennent généralement tous les 4 ans (une Franciade), mais peuvent parfois attendre une année de plus pour s'aligner parfaitement avec le Soleil.")
+
             Text("Sources")
                 .font(.headline)
+
             Text("Pour garantir une exactitude scientifique absolue, nous utilisons les éphémérides fournies par l'IMCCE (Institut de mécanique céleste et de calcul des éphémérides).")
             Text("**Période couverte** : De l'\(origin, format: .republicanDate.year()) à l'\(limit, format: .republicanDate.year()) (soit en grégorien, de 1792 à 2999).")
             Text("**Source** : [Équinoxe d'automne de 1583 à 2999](https://www.imcce.fr/newsletter/docs/Equinoxe_automne_1583_2999.pdf) (P. ROCHER, IMCCE, Observatoire de Paris)")
             Text("Au-delà du millénaire actuel, les incertitudes sur la rotation de la Terre et les perturbations gravitationnelles rendent les prédictions à la seconde près (nécessaires pour les cas limites proches de minuit) moins fiables. C'est aussi une des raisons pour laquelle le Calendrier Républicain n'a pas tenu dans le temps : il était difficile pour l'époque de prédire avec certitude, quelles années allaient être sextiles.")
         }
-        .padding()
+    }
+}
+
+struct RommeVariantExplanation: View {
+    var creation: FrenchRepublicanDate {
+        FrenchRepublicanDate(day: 19, month: 8, year: 3)
+    }
+    var death: FrenchRepublicanDate {
+        FrenchRepublicanDate(day: 29, month: 9, year: 3)
+    }
+    var firstSextilDelambre: FrenchRepublicanDate {
+        FrenchRepublicanDate(dayInYear: 1, year: 3)
+    }
+    var firstSextilRomme: FrenchRepublicanDate {
+        FrenchRepublicanDate(dayInYear: 1, year: 4)
+    }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Cette variante représente l'évolution rationnelle du calendrier : une tentative de remplacer une définition ambigüe du calendrier, par une **règle arithmétique** prévisible et perpétuelle. En effet, l'article X du décret du 5 octobre 1793, prévoyait qu'une Franciade, période entre deux années sextiles, dure 4 ans. Or, cela contredit directement l'article III de ce même décret, qui est suivi par le modèle Delambre.")
+            Text("Conçue par **Gilbert Romme**, le mathématicien et principal concepteur du calendrier républicain, cette réforme fut proposée le \(creation, format: .republicanDate.day().year()) (\(creation.date, format: .dateTime.day().month().year())). Elle ne fut **jamais appliquée**. Condamné à mort le \(death, format: .republicanDate.day().year()) (\(death.date, format: .dateTime.day().month().year())) à la suite des émeutes de Prairial, Romme se suicida juste avant son exécution, laissant sa réforme inachevée et l'administration rester sur une définition ambigüe.")
+            
+            Text("Comment nous calculons la date")
+                .font(.headline)
+            
+            Text("Contrairement au modèle Delambre qui dépend de l'orbite terrestre, ce modèle définit les années sextiles selon un algorithme fixe, assurant une régularité absolue. Une année est sextile si elle est divisible par 4. Elle redevient commune si elle est divisible par 100, sauf si elle est divisible par 400. Romme y ajouta une règle inédite pour corriger les dérives millénaires : une année divisible par **4000** ne sera **pas** sextile.")
+            Text("Cela rend cette variante théoriquement plus précise que notre calendrier Grégorien actuel, si le calendrier républicain avait survécu pendant plusieurs millénaires, ce qui était optimiste de sa part. En effet, une année dure 365,242 **50** jours d'après le calendrier grégorien, 365,242 **25** jours d'après la Réforme de Romme, mais dans la réalité, la Terre met en moyenne 365,242 **19** jours entre deux équinoxes.")
+            
+            Text("Limites")
+                .font(.headline)
+            
+            Text("Ce modèle est idéal pour ceux qui cherchent une projection facile dans le futur, sans dépendre de calculs astronomiques, et ce à l'infini. Cependant, comme cette réforme applique une logique mathématique stricte rétroactivement, elle peut créer des **décalages avec la réalité** historique. En effet, la première année sextile telle qu'appliquée par l'administration fut l'\(firstSextilDelambre, format: .republicanDate.year()), or, si on applique la Réforme de Romme, la première année sextile est l'\(firstSextilRomme, format: .republicanDate.year()).")
+            Text("Les dates calculées par ce modèle pour la période historique vont donc parfois différer d'un jour par rapport aux dates réellement vécues par les citoyens de la Révolution.")
+        }
     }
 }
 
