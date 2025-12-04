@@ -1,6 +1,8 @@
 # Calendrier Républicain Moderne
 ## (ou French Republican Calendar)
 
+BETA: La Version 7 est en cours de développement. Rejoignez la beta ici: [Invitation TestFlight](https://testflight.apple.com/join/azg1Gdyr)
+
 [English version](README.md)  
 Pour le convertisseur en lui-même : [code source du convertisseur](https://github.com/Snowy1803/FrenchRepublicanCalendarCore/)
 

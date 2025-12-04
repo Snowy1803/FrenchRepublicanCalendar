@@ -12,7 +12,6 @@
 
 import SwiftUI
 import FrenchRepublicanCalendarCore
-import Introspect
 
 struct HomeView: View {
     @EnvironmentObject var favoritesPool: FavoritesPool

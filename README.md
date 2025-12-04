@@ -1,6 +1,8 @@
 #  French Republican Calendar
 ## (aka Calendrier Républicain Moderne)
 
+BETA: Version 7 Development is currently underway. Join the beta here: [TestFlight Invite](https://testflight.apple.com/join/azg1Gdyr)
+
 [Version Française](LISEZMOI.md)  
 For the converter itself : [core repository](https://github.com/Snowy1803/FrenchRepublicanCalendarCore/)
 
