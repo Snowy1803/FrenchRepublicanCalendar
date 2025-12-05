@@ -45,7 +45,7 @@ struct DelambreVariantExplanation: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Ce modèle représente l'essence la plus pure du projet révolutionnaire : un calendrier fondé non pas sur la tradition religieuse ou des cycles arithmétiques fixes, mais directement sur l'observation de la **Nature** et de la **Science**.")
-            Text("C'est cette variante qui a été utilisée par l'administration Française jusqu'à ce qu'il soit aboli par Napoléon Ier, environ 12 ans plus tard. C'est également cette variante qui a été privilégiée pendant la Commune de Paris.")
+            Text("C'est cette variante qui a été utilisée par l'administration française jusqu'à ce qu'il soit aboli par Napoléon Ier, environ 12 ans plus tard. C'est également cette variante qui a été privilégiée pendant la Commune de Paris.")
 
             Text("Basé sur le Soleil")
                 .font(.headline)

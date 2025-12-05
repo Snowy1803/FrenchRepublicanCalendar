@@ -53,7 +53,7 @@ struct SettingsView: View {
             }
             #endif
             
-            Section(header: Text("Légal"), footer: Text("Nous ne traitons pas vos données personelles. Vos données restent en sécurité sur votre appareil.")) {
+            Section(header: Text("Légal"), footer: Text("Nous ne traitons pas vos données personnelles. Vos données restent en sécurité sur votre appareil.")) {
                 NavigationLink {
                     Form {
                         Link("swiftui-introspect", destination: URL(string: "https://github.com/siteline/swiftui-introspect/blob/main/LICENSE")!)
