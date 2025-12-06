@@ -48,7 +48,7 @@ extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDate
         get {
             FrenchRepublicanDateOptions(
                 romanYear: UserDefaults.shared.bool(forKey: "frdo-roman"),
-                variant: Variant(rawValue: UserDefaults.shared.integer(forKey: "frdo-variant")) ?? .original,
+                variant: Variant(rawValue: UserDefaults.shared.integer(forKey: "frdo-variant")) ?? .delambre,
                 timeZone: parseTimeZoneIdentifier(UserDefaults.shared.string(forKey: "frdo-timezone"))
             )
         }
