@@ -68,25 +68,24 @@ struct WhatsNew: View {
             .notTooWide()
         }
         .navigationTitle("Bienvenue")
-        .modifier(BottomButtonModifier {
+        .bottomBar {
             NavigationLink(destination: VariantPicker(firstShown: true)) {
                 Text("Continuer")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 4)
-            }
-        })
+            }.prominentButtonStyle()
+        }
     }
 }
 
-struct BottomButtonModifier<Button: View>: ViewModifier {
+struct BottomBarModifier<Button: View>: ViewModifier {
     @ViewBuilder var button: Button
 
     func body(content: Content) -> some View {
         if #available(iOS 26.0, *) {
             content.safeAreaBar(edge: .bottom) {
                 button
-                    .prominentButtonStyle()
                     .padding(.horizontal)
             }
         } else {
@@ -94,10 +93,15 @@ struct BottomButtonModifier<Button: View>: ViewModifier {
                 ToolbarItem(placement: .bottomBar) {
                     button
                         .frame(maxWidth: .infinity)
-                        .prominentButtonStyle()
                 }
             }
         }
+    }
+}
+
+extension View {
+    func bottomBar(@ViewBuilder view: () -> some View) -> some View {
+        self.modifier(BottomBarModifier(button: view))
     }
 }
 

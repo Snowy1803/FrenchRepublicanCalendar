@@ -39,8 +39,12 @@ struct VariantPicker: View {
                 text: Text("Version originelle, mais privilégiant l'article X sur l'article III: il y a une année sextile tous les 4 ans.\nCe calendrier se décale sur le temps, et n'est donc pas recommandé.")
             )
         }
-        .navigationTitle(Text("Variantes"))
         .listNotTooWide()
+        .navigationTitle(Text("Variantes"))
+        .bottomBar {
+            Text("Touchez une variante pour lire plus d'informations")
+                .minimumScaleFactor(0.7)
+        }
     }
 }
 
@@ -163,7 +167,7 @@ struct VariantDetails: View {
 
     var body: some View {
         VariantExplanation(variant: variant)
-            .modifier(BottomButtonModifier {
+            .bottomBar {
                 Button {
                     FrenchRepublicanDateOptions.current.variant = variant
                     lastVersion = WhatsNew.currentVersion
@@ -172,8 +176,8 @@ struct VariantDetails: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 4)
-                }
-            })
+                }.prominentButtonStyle()
+            }
     }
 }
 
