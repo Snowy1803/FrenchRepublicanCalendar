@@ -109,17 +109,22 @@ struct DayNameButton: View {
     }
 }
 
-extension View {
-    @ViewBuilder
-    func prominentButtonStyle() -> some View {
+struct ProminentButtonStyleModifier: ViewModifier {
+    func body(content: Content) -> some View {
         if #available(iOS 26.0, *) {
-            self
+            content
                 .buttonStyle(.glassProminent)
         } else {
-            self
+            content
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.capsule)
         }
+    }
+}
+
+extension View {
+    func prominentButtonStyle() -> some View {
+        self.modifier(ProminentButtonStyleModifier())
     }
 }
 

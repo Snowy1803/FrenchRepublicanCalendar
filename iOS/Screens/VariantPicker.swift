@@ -163,26 +163,17 @@ struct VariantDetails: View {
 
     var body: some View {
         VariantExplanation(variant: variant)
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
+            .modifier(BottomButtonModifier {
                 Button {
                     FrenchRepublicanDateOptions.current.variant = variant
                     lastVersion = WhatsNew.currentVersion
                 } label: {
-                    if #available(iOS 26.0, *) {
-                        Text("Sélectionner")
-                            .font(.headline)
-                    } else {
-                        Text("Sélectionner")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 4)
-                    }
+                    Text("Sélectionner")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 4)
                 }
-                .frame(maxWidth: .infinity)
-                .prominentButtonStyle()
-            }
-        }
+            })
     }
 }
 

@@ -62,27 +62,42 @@ struct WhatsNew: View {
                     title: Text("Gratuit, privé, et sans publicité"),
                     text: Text("L'application restera toujours gratuite, privée, et sans publicité. Aucune connexion internet n'est requise car toutes vos données restent en sécurité sur votre appareil.")
                 )
-            }.padding(32)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .notTooWide()
         }
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                NavigationLink(destination: VariantPicker(firstShown: true)) {
-                    if #available(iOS 26.0, *) {
-                        Text("Continuer")
-                            .font(.headline)
-                    } else {
-                        Text("Continuer")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 4)
-                    }
+        .navigationTitle("Bienvenue")
+        .modifier(BottomButtonModifier {
+            NavigationLink(destination: VariantPicker(firstShown: true)) {
+                Text("Continuer")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 4)
+            }
+        })
+    }
+}
+
+struct BottomButtonModifier<Button: View>: ViewModifier {
+    @ViewBuilder var button: Button
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.safeAreaBar(edge: .bottom) {
+                button
+                    .prominentButtonStyle()
+                    .padding(.horizontal)
+            }
+        } else {
+            content.toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    button
+                        .frame(maxWidth: .infinity)
+                        .prominentButtonStyle()
                 }
-                .frame(maxWidth: .infinity)
-                .prominentButtonStyle()
             }
         }
-        .navigationTitle(Text("Bienvenue"))
-        .notTooWide()
     }
 }
 
