@@ -31,7 +31,7 @@ struct MonthCollection: RandomAccessCollection {
     
     typealias Element = FrenchRepublicanDate
     typealias Index = Int
-    typealias SubSequence = Array
+//    typealias SubSequence = Array
     typealias Indices = Range<Int>
     
     subscript(position: Int) -> FrenchRepublicanDate {

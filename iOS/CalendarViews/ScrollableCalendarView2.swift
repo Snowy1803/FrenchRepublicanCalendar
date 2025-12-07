@@ -171,6 +171,10 @@ class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, 
         collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: collection[indexPath.item])
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateNavigationItem()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !initialScroll {
