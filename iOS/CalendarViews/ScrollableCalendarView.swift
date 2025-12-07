@@ -14,6 +14,7 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 @_spi(Advanced) import SwiftUIIntrospect
 
+// - Note: Currently unused. Might be used as replacement for ScrollableCalendarView2 on iOS 15. Need to test this.
 struct ScrollableCalendarView: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     @State private var selection = FrenchRepublicanDate(date: Date())
@@ -33,21 +34,13 @@ struct ScrollableCalendarView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack {
                     ForEach(MonthCollection(), id: \.monthIndex) { month in
-                        HStack {
-                            Text(month, format: .republicanDate.day(.monthOnly).year(.long))
-                                .lineLimit(1)
-                                .font(.headline)
-                            Spacer(minLength: 0)
-                        }
-                        .padding(.top)
-                        .padding()
+                        ScrollableCalendarCell(month: month, selection: $selection)
                         .onAppear {
                             visible.insert(month.monthIndex)
                         }
                         .onDisappear {
                             visible.remove(month.monthIndex)
                         }
-                        CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: false)
                     }
                 }
             }.introspect(.scrollView, on: .iOS(.v15...)) { scrollView in

@@ -33,13 +33,23 @@ struct ContentView: View {
                     Image(systemName: "house")
                     Text("Accueil")
                 }
-                NavigationView {
-                    ScrollableCalendarView()
-                }
-                .navigationViewStyle(.stack)
-                .tabItem {
-                    Image(systemName: "calendar")
-                    Text("Calendrier")
+//                NavigationView {
+//                    ScrollableCalendarView()
+//                }
+//                .navigationViewStyle(.stack)
+//                .tabItem {
+//                    Image(systemName: "calendar")
+//                    Text("SwiftUI")
+//                }
+                if #available(iOS 16.0, *) {
+                    NavigationView {
+                        ScrollableCalendarView2()
+                    }
+                    .navigationViewStyle(.stack)
+                    .tabItem {
+                        Image(systemName: "calendar")
+                        Text("Calendrier")
+                    }
                 }
                 NavigationView {
                     SettingsView()
