@@ -16,7 +16,6 @@ import FrenchRepublicanCalendarCore
 
 @available(iOS 16.0, *)
 struct ScrollableYearView: View {
-    @Environment(\.horizontalSizeClass) var sizeClass
     @State private var scrollToToday = false
 
     var body: some View {
@@ -70,6 +69,7 @@ struct ScrollableYearMonthView: View {
                     Spacer(minLength: 0)
                 }
                 .padding(.top)
+                .padding(.horizontal, 4)
                 CalendarMonthView(month: month, halfWeek: month.components.month != 13, constantHeight: false, scale: 0) { date in
                     var isWeekend: Bool {
                         if let date {
@@ -91,7 +91,7 @@ struct ScrollableYearMonthView: View {
                         date != nil
                     }
                     Text(isValid ? "\(date!.components.day!)" : "0")
-                        .font(.system(size: 20 / 3, weight: .semibold))
+                        .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(
                             !isValid ? .clear
                             : isToday ? .white
@@ -99,7 +99,7 @@ struct ScrollableYearMonthView: View {
                             : .primary)
                         .frame(maxWidth: .infinity)
                         .padding(4)
-                        .minimumScaleFactor(0.5)
+                        .minimumScaleFactor(1/3)
                         .aspectRatio(1, contentMode: .fill)
                         .background(Circle().fill(
                             Color.accentColor.opacity(
@@ -116,27 +116,40 @@ struct ScrollableYearMonthView: View {
 
 @available(iOS 16.0, *)
 struct ScrollableYearCell: View {
+    @Environment(\.horizontalSizeClass) var sizeClass
     var year: FrenchRepublicanDate
+    
+    var colCount: Int {
+        if sizeClass == .regular {
+            6
+        } else {
+            3
+        }
+    }
 
     var body: some View {
+        let padding: CGFloat = sizeClass == .regular ? 32 : 8
         VStack(alignment: .leading, spacing: 0) {
             Text(year, format: .republicanDate.year())
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundStyle(FrenchRepublicanDate(date: .now).year == year.year ? Color.accentColor : .primary)
             Divider()
-            ForEach(0..<4, id: \.self) { j in
-                HStack {
-                    ForEach(0..<3, id: \.self) { i in
-                        ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: j * 3 + i + 1, year: year.year))
+            ForEach(0..<(12 / colCount), id: \.self) { j in
+                HStack(spacing: padding) {
+                    ForEach(0..<colCount, id: \.self) { i in
+                        ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: j * colCount + i + 1, year: year.year))
                     }
                 }
             }
-            HStack {
-                ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: 13, year: year.year))
-                Spacer()
+            HStack(spacing: padding) {
+                GeometryReader { proxy in
+                    ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: 13, year: year.year))
+                        .frame(width: (proxy.size.width - padding * CGFloat(colCount)) * 2 / CGFloat(colCount))
+                }.frame(height: 50)
             }
-        }.padding()
+        }.padding(.horizontal, padding)
+            .padding(.vertical)
     }
 }
 
@@ -191,6 +204,10 @@ class ScrollableYearController: UIViewController, UICollectionViewDelegate, UICo
         if !initialScroll {
             initialScroll = true
             scrollToToday(animate: false)
+        }
+        if #available(iOS 17.0, *) {
+            let regular = collectionView.frame.width > 800
+            traitOverrides.horizontalSizeClass = regular ? .regular : .compact
         }
     }
     
