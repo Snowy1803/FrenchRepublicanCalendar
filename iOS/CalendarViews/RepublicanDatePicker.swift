@@ -208,7 +208,6 @@ struct RepublicanDatePicker: View {
                 } else {
                     month = prevMonth
                 }
-                print("month: ", month)
             }
         }
         if #available(iOS 17.0, *) {

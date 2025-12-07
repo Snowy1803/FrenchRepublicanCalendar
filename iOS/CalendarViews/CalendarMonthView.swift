@@ -13,13 +13,13 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
-struct CalendarMonthView: View {
+struct CalendarMonthView<Item: View>: View {
     var month: FrenchRepublicanDate
-    @Binding var selection: FrenchRepublicanDate
     // true: show 5 columns, false: show 10 columns
     var halfWeek: Bool = true
     // true: show 3/6 rows, false: show less rows for Sansculottides
     var constantHeight: Bool = true
+    @ViewBuilder var itemProvider: (FrenchRepublicanDate?) -> Item
     
     var rowCount: Int {
         if !constantHeight && month.isSansculottides {
@@ -40,17 +40,25 @@ struct CalendarMonthView: View {
     var body: some View {
         VStack {
             ForEach(0..<rowCount, id: \.self) { row in
-                CalendarMonthRow(month: month, row: row, selection: $selection, halfWeek: halfWeek)
+                CalendarMonthRow(month: month, row: row, halfWeek: halfWeek, itemProvider: itemProvider)
             }
         }
     }
 }
 
-struct CalendarMonthRow: View {
+extension CalendarMonthView where Item == CalendarMonthItem {
+    init(month: FrenchRepublicanDate, selection: Binding<FrenchRepublicanDate>, halfWeek: Bool = true, constantHeight: Bool = true) {
+        self.init(month: month, halfWeek: halfWeek, constantHeight: constantHeight) {
+            CalendarMonthItem(date: $0, selection: selection)
+        }
+    }
+}
+
+struct CalendarMonthRow<Item: View>: View {
     var month: FrenchRepublicanDate
     var row: Int
-    @Binding var selection: FrenchRepublicanDate
     var halfWeek: Bool = false
+    @ViewBuilder var itemProvider: (FrenchRepublicanDate?) -> Item
     
     var colCount: Int {
         if halfWeek {
@@ -66,7 +74,7 @@ struct CalendarMonthRow: View {
                 Spacer(minLength: 0)
                 let dayInYear = (month.components.month! - 1) * 30 + row * colCount + col + 1
                 let date = dayInYear <= month.dayCountThisYear ? FrenchRepublicanDate(dayInYear: dayInYear, year: month.year) : nil
-                CalendarMonthItem(date: date, selection: $selection)
+                itemProvider(date)
             }
             Spacer(minLength: 0)
         }
