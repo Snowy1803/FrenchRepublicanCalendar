@@ -73,9 +73,8 @@ struct CalendarMonthRow<Item: View>: View {
         HStack(spacing: 0) {
             ForEach(0..<colCount, id: \.self) { col in
                 Spacer(minLength: 0)
-                let dayInYear = (month.components.month! - 1) * 30 + row * colCount + col + 1
-                let date = dayInYear <= month.dayCountThisYear ? FrenchRepublicanDate(dayInYear: dayInYear, year: month.year) : nil
-                itemProvider(date)
+                let date = FrenchRepublicanDate(day: row * colCount + col + 1, month: month.components.month!, year: month.year)
+                itemProvider(date.year == month.year ? date : nil)
             }
             Spacer(minLength: 0)
         }

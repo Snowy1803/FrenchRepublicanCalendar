@@ -12,7 +12,6 @@
 
 import SwiftUI
 import FrenchRepublicanCalendarCore
-@_spi(Advanced) import SwiftUIIntrospect
 
 @available(iOS 16.0, *)
 struct ScrollableYearView: View {
@@ -49,107 +48,6 @@ struct ScrollableYearUIView: UIViewControllerRepresentable {
                 scrollToToday = false
             }
         }
-    }
-}
-
-@available(iOS 16.0, *)
-struct ScrollableYearMonthView: View {
-    var month: FrenchRepublicanDate
-
-    var body: some View {
-        NavigationLink {
-            ScrollableCalendarView2()
-        } label: {
-            VStack {
-                HStack {
-                    Text(month, format: .republicanDate.day(.monthOnly))
-                        .lineLimit(1)
-                        .font(.headline)
-                        .foregroundStyle(FrenchRepublicanDate(date: .now).monthIndex == month.monthIndex ? Color.accentColor : .primary)
-                    Spacer(minLength: 0)
-                }
-                .padding(.top)
-                .padding(.horizontal, 4)
-                CalendarMonthView(month: month, halfWeek: month.components.month != 13, constantHeight: false, scale: 0) { date in
-                    var isWeekend: Bool {
-                        if let date {
-                            date.isSansculottides || date.components.day! % 10 == 0
-                        } else {
-                            false
-                        }
-                    }
-                    
-                    var isToday: Bool {
-                        if let date {
-                            Calendar.gregorian.isDateInToday(date.date)
-                        } else {
-                            false
-                        }
-                    }
-                    
-                    var isValid: Bool {
-                        date != nil
-                    }
-                    Text(isValid ? "\(date!.components.day!)" : "0")
-                        .font(.system(size: 20, weight: .semibold))
-                        .foregroundStyle(
-                            !isValid ? .clear
-                            : isToday ? .white
-                            : isWeekend ? .secondary
-                            : .primary)
-                        .frame(maxWidth: .infinity)
-                        .padding(4)
-                        .minimumScaleFactor(1/3)
-                        .aspectRatio(1, contentMode: .fill)
-                        .background(Circle().fill(
-                            Color.accentColor.opacity(
-                                isToday ? 1 : 0
-                            )
-                        ))
-                }
-            }
-            .padding(.horizontal, 4)
-            .foregroundStyle(.foreground)
-        }
-    }
-}
-
-@available(iOS 16.0, *)
-struct ScrollableYearCell: View {
-    @Environment(\.horizontalSizeClass) var sizeClass
-    var year: FrenchRepublicanDate
-    
-    var colCount: Int {
-        if sizeClass == .regular {
-            6
-        } else {
-            3
-        }
-    }
-
-    var body: some View {
-        let padding: CGFloat = sizeClass == .regular ? 32 : 8
-        VStack(alignment: .leading, spacing: 0) {
-            Text(year, format: .republicanDate.year())
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundStyle(FrenchRepublicanDate(date: .now).year == year.year ? Color.accentColor : .primary)
-            Divider()
-            ForEach(0..<(12 / colCount), id: \.self) { j in
-                HStack(spacing: padding) {
-                    ForEach(0..<colCount, id: \.self) { i in
-                        ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: j * colCount + i + 1, year: year.year))
-                    }
-                }
-            }
-            HStack(spacing: padding) {
-                GeometryReader { proxy in
-                    ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: 13, year: year.year))
-                        .frame(width: (proxy.size.width - padding * CGFloat(colCount)) * 2 / CGFloat(colCount))
-                }.frame(height: 50)
-            }
-        }.padding(.horizontal, padding)
-            .padding(.vertical)
     }
 }
 
