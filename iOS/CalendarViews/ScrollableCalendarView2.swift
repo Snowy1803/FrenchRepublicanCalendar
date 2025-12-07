@@ -25,11 +25,12 @@ struct ScrollableCalendarView2: View {
         ScrollableCalendarUIView(topItem: $topItem, selection: $selection, scrollToToday: $scrollToToday)
             .ignoresSafeArea()
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
             .navigationTitle(Text(topItem, format: .republicanDate.day(.monthOnly)))
             .toolbar {
                 ToolbarItem(placement: .navigation) {
-                    Button {
-                        scrollToToday = true
+                    NavigationLink {
+                        ScrollableYearView()
                     } label: {
                         HStack {
                             Image(systemName: "chevron.backward")
@@ -79,8 +80,10 @@ struct ScrollableCalendarUIView: UIViewControllerRepresentable {
         vc.topItem = topItem
         vc.selection = selection
         if scrollToToday {
-            scrollToToday = false
             vc.scrollToToday(animate: true)
+            DispatchQueue.main.async {
+                scrollToToday = false
+            }
         }
     }
 }
@@ -103,12 +106,16 @@ struct ScrollableCalendarCell: View {
     }
 }
 
+protocol ScrollableToToday {
+    func scrollToToday(animate: Bool)
+}
+
 @available(iOS 16.0, *)
 class CustomScrollToTopCollectionView: UICollectionView {
     override func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
         // catch "scroll to top" action from TabBar, and change to scroll to today
         if contentOffset.x == 0 && contentOffset.y == -adjustedContentInset.top {
-            (delegate as! ScrollableCalendarController).scrollToToday(animate: animated)
+            (delegate as! ScrollableToToday).scrollToToday(animate: animated)
             return
         }
         super.setContentOffset(contentOffset, animated: animated)
@@ -116,7 +123,7 @@ class CustomScrollToTopCollectionView: UICollectionView {
 }
 
 @available(iOS 16.0, *)
-class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ScrollableToToday {
     var collectionView: UICollectionView!
     let collection = MonthCollection()
     var registration: UICollectionView.CellRegistration<UICollectionViewCell, FrenchRepublicanDate>!

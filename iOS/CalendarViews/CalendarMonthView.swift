@@ -19,6 +19,7 @@ struct CalendarMonthView<Item: View>: View {
     var halfWeek: Bool = true
     // true: show 3/6 rows, false: show less rows for Sansculottides
     var constantHeight: Bool = true
+    var scale: CGFloat = 1
     @ViewBuilder var itemProvider: (FrenchRepublicanDate?) -> Item
     
     var rowCount: Int {
@@ -38,7 +39,7 @@ struct CalendarMonthView<Item: View>: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 8 * scale) {
             ForEach(0..<rowCount, id: \.self) { row in
                 CalendarMonthRow(month: month, row: row, halfWeek: halfWeek, itemProvider: itemProvider)
             }

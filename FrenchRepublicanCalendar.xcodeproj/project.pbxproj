@@ -66,6 +66,7 @@
 		FD4BA0F12EDE85B6008551C5 /* MonthCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4BA0F02EDE85B2008551C5 /* MonthCollection.swift */; };
 		FD4BA0F32EE14BD8008551C5 /* VariantExplanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */; };
 		FD653DB92EE501F600BC9802 /* ScrollableCalendarView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DB82EE501F600BC9802 /* ScrollableCalendarView2.swift */; };
+		FD653DBD2EE5341500BC9802 /* ScrollableYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */; };
 		FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */; };
 		FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
 		FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventVC.swift */; };
@@ -223,6 +224,7 @@
 		FD4BA0F02EDE85B2008551C5 /* MonthCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCollection.swift; sourceTree = "<group>"; };
 		FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantExplanation.swift; sourceTree = "<group>"; };
 		FD653DB82EE501F600BC9802 /* ScrollableCalendarView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCalendarView2.swift; sourceTree = "<group>"; };
+		FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableYearView.swift; sourceTree = "<group>"; };
 		FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWidget.swift; sourceTree = "<group>"; };
 		FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeWidget.swift; sourceTree = "<group>"; };
 		FD6EBB512EB7F19A00796761 /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				FD4BA0F02EDE85B2008551C5 /* MonthCollection.swift */,
+				FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */,
 				FD653DB82EE501F600BC9802 /* ScrollableCalendarView2.swift */,
 				FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */,
 				FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */,
@@ -748,6 +751,7 @@
 				208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */,
 				20E0958B2540465500383A31 /* ContactsList.swift in Sources */,
 				FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */,
+				FD653DBD2EE5341500BC9802 /* ScrollableYearView.swift in Sources */,
 				FD4BA0F32EE14BD8008551C5 /* VariantExplanation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
