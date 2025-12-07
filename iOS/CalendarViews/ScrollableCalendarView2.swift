@@ -189,9 +189,3 @@ class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, 
         collectionView.scrollToItem(at: IndexPath(item: today, section: 0), at: .top, animated: animate)
     }
 }
-
-fileprivate extension FrenchRepublicanDate {
-    var monthIndex: Int {
-        (self.year - 1) * 13 + self.components.month! - 1
-    }
-}
