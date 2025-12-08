@@ -27,12 +27,29 @@ struct ScrollableCalendarTab: View {
                 page = .month
             }
         case .month:
-            ScrollableMonthView(topItem: $topItem) { year in
+            ScrollableMonthView(topItem: $topItem, selection: Binding {
+                FrenchRepublicanDate(date: .now)
+            } set: {
+                topItem = $0
+                page = .day
+            }) { year in
                 topItem = year
                 page = .year
             }
         case .day:
             DateDetails(date: topItem)
+                .toolbar {
+                    ToolbarItem(placement: .navigation) {
+                        Button {
+                            page = .month
+                        } label: {
+                            HStack {
+                                Image(systemName: "chevron.backward")
+                                Text(topItem, format: .republicanDate.day(.monthOnly))
+                            }
+                        }.labelStyle(.titleAndIcon)
+                    }
+                }
         }
     }
 }

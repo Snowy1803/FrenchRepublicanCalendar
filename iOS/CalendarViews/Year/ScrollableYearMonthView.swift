@@ -40,16 +40,6 @@ struct ScrollableYearMonthView: View {
                 }
                 .padding(.top)
                 .padding(.horizontal, 4)
-//                Grid(alignment: .center, horizontalSpacing: 0, verticalSpacing: 0) {
-//                    ForEach(0..<rowCount, id: \.self) { row in
-//                        GridRow {
-//                            ForEach(0..<colCount, id: \.self) { col in
-//                                let date = FrenchRepublicanDate(day: row * colCount + col + 1, month: month.components.month!, year: month.year)
-//                                YearDateItem(date: date.year == month.year ? date : nil)
-//                            }
-//                        }
-//                    }
-//                }
                 FastGrid(rowCount: rowCount, colCount: colCount) {
                     ForEach(0..<(rowCount * colCount), id: \.self) { index in
                         let date = FrenchRepublicanDate(day: index + 1, month: month.components.month!, year: month.year)

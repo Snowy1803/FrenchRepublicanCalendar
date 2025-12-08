@@ -18,7 +18,7 @@ import FrenchRepublicanCalendarCore
 struct ScrollableMonthView: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     @Binding var topItem: FrenchRepublicanDate
-    @State private var selection = FrenchRepublicanDate(date: .now)
+    @Binding var selection: FrenchRepublicanDate
     @State private var scrollToToday = false
     var selectYear: (FrenchRepublicanDate) -> ()
 
