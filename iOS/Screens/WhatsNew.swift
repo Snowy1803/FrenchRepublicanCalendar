@@ -13,7 +13,7 @@
 import SwiftUI
 
 struct WhatsNew: View {
-    static let lastSignificantChange = 25 // build number for 7.0
+    static let lastSignificantChange = 26 // build number for 7.0
     static var currentVersion: Int {
         Int(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0") ?? 0
     }
