@@ -21,7 +21,6 @@ struct FastGrid: Layout {
         guard let lastSubview = subviews.last else {
             return .zero
         }
-        print("sizeThatFits \(rowCount) \(colCount)")
         let preferred = lastSubview.sizeThatFits(ProposedViewSize(
             width: proposal.width.map { $0 / CGFloat(colCount) },
             height: proposal.height.map { $0 / CGFloat(rowCount) }

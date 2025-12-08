@@ -43,7 +43,7 @@ struct ContentView: View {
 //                }
                 if #available(iOS 16.0, *) {
                     NavigationView {
-                        ScrollableCalendarView2()
+                        ScrollableCalendarTab()
                     }
                     .navigationViewStyle(.stack)
                     .tabItem {

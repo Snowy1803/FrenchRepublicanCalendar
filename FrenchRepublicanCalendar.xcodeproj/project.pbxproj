@@ -65,11 +65,12 @@
 		FD12A1912ED752D800BD8E69 /* TimeZonePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD12A18F2ED7527E00BD8E69 /* TimeZonePicker.swift */; };
 		FD4BA0F12EDE85B6008551C5 /* MonthCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4BA0F02EDE85B2008551C5 /* MonthCollection.swift */; };
 		FD4BA0F32EE14BD8008551C5 /* VariantExplanation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */; };
-		FD653DB92EE501F600BC9802 /* ScrollableCalendarView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DB82EE501F600BC9802 /* ScrollableCalendarView2.swift */; };
+		FD653DB92EE501F600BC9802 /* ScrollableMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */; };
 		FD653DBD2EE5341500BC9802 /* ScrollableYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */; };
 		FD653DBF2EE602D800BC9802 /* FastGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBE2EE602D600BC9802 /* FastGrid.swift */; };
 		FD653DC12EE603B600BC9802 /* ScrollableYearMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DC02EE603B600BC9802 /* ScrollableYearMonthView.swift */; };
 		FD653DC42EE603E400BC9802 /* ScrollableYearCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DC32EE603E400BC9802 /* ScrollableYearCell.swift */; };
+		FD653DC72EE61B8500BC9802 /* ScrollableCalendarTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DC62EE61B7C00BC9802 /* ScrollableCalendarTab.swift */; };
 		FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */; };
 		FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
 		FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventVC.swift */; };
@@ -226,11 +227,12 @@
 		FD12A18F2ED7527E00BD8E69 /* TimeZonePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePicker.swift; sourceTree = "<group>"; };
 		FD4BA0F02EDE85B2008551C5 /* MonthCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCollection.swift; sourceTree = "<group>"; };
 		FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantExplanation.swift; sourceTree = "<group>"; };
-		FD653DB82EE501F600BC9802 /* ScrollableCalendarView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCalendarView2.swift; sourceTree = "<group>"; };
+		FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableMonthView.swift; sourceTree = "<group>"; };
 		FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableYearView.swift; sourceTree = "<group>"; };
 		FD653DBE2EE602D600BC9802 /* FastGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastGrid.swift; sourceTree = "<group>"; };
 		FD653DC02EE603B600BC9802 /* ScrollableYearMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableYearMonthView.swift; sourceTree = "<group>"; };
 		FD653DC32EE603E400BC9802 /* ScrollableYearCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableYearCell.swift; sourceTree = "<group>"; };
+		FD653DC62EE61B7C00BC9802 /* ScrollableCalendarTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCalendarTab.swift; sourceTree = "<group>"; };
 		FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWidget.swift; sourceTree = "<group>"; };
 		FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeWidget.swift; sourceTree = "<group>"; };
 		FD6EBB512EB7F19A00796761 /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
@@ -475,12 +477,21 @@
 			path = Year;
 			sourceTree = "<group>";
 		};
+		FD653DC52EE61AA300BC9802 /* Month */ = {
+			isa = PBXGroup;
+			children = (
+				FD4BA0F02EDE85B2008551C5 /* MonthCollection.swift */,
+				FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */,
+			);
+			path = Month;
+			sourceTree = "<group>";
+		};
 		FD6EBB582EB7F24100796761 /* CalendarViews */ = {
 			isa = PBXGroup;
 			children = (
+				FD653DC62EE61B7C00BC9802 /* ScrollableCalendarTab.swift */,
+				FD653DC52EE61AA300BC9802 /* Month */,
 				FD653DC22EE603CE00BC9802 /* Year */,
-				FD4BA0F02EDE85B2008551C5 /* MonthCollection.swift */,
-				FD653DB82EE501F600BC9802 /* ScrollableCalendarView2.swift */,
 				FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */,
 				FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */,
 				FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */,
@@ -737,7 +748,7 @@
 				209C03B7257281DD00D8DF86 /* WheelConverterWidget.swift in Sources */,
 				20C645C62662D216001D7108 /* DecimalTimeDetails.swift in Sources */,
 				FDA5226D2ECE423A00210C75 /* WhatsNew.swift in Sources */,
-				FD653DB92EE501F600BC9802 /* ScrollableCalendarView2.swift in Sources */,
+				FD653DB92EE501F600BC9802 /* ScrollableMonthView.swift in Sources */,
 				2067271626F6294000562A62 /* LayoutGuidesSwiftUI.swift in Sources */,
 				20C645CA26639EC9001D7108 /* DecimalTimeConverterWidget.swift in Sources */,
 				FD4BA0F12EDE85B6008551C5 /* MonthCollection.swift in Sources */,
@@ -768,6 +779,7 @@
 				2047A34C2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */,
 				208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */,
+				FD653DC72EE61B8500BC9802 /* ScrollableCalendarTab.swift in Sources */,
 				FD653DC12EE603B600BC9802 /* ScrollableYearMonthView.swift in Sources */,
 				20E0958B2540465500383A31 /* ContactsList.swift in Sources */,
 				FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */,

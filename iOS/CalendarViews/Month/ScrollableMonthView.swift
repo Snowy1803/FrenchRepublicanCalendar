@@ -15,11 +15,12 @@ import FrenchRepublicanCalendarCore
 @_spi(Advanced) import SwiftUIIntrospect
 
 @available(iOS 16.0, *)
-struct ScrollableCalendarView2: View {
+struct ScrollableMonthView: View {
     @Environment(\.horizontalSizeClass) var sizeClass
-    @State private var topItem = FrenchRepublicanDate(date: .now)
+    @Binding var topItem: FrenchRepublicanDate
     @State private var selection = FrenchRepublicanDate(date: .now)
     @State private var scrollToToday = false
+    var selectYear: (FrenchRepublicanDate) -> ()
 
     var body: some View {
         ScrollableCalendarUIView(topItem: $topItem, selection: $selection, scrollToToday: $scrollToToday)
@@ -29,8 +30,8 @@ struct ScrollableCalendarView2: View {
             .navigationTitle(Text(topItem, format: .republicanDate.day(.monthOnly)))
             .toolbar {
                 ToolbarItem(placement: .navigation) {
-                    NavigationLink {
-                        ScrollableYearView()
+                    Button {
+                        selectYear(topItem)
                     } label: {
                         HStack {
                             Image(systemName: "chevron.backward")
@@ -107,7 +108,13 @@ struct ScrollableCalendarCell: View {
 }
 
 protocol ScrollableToToday {
-    func scrollToToday(animate: Bool)
+    func scrollTo(date: FrenchRepublicanDate, animate: Bool)
+}
+
+extension ScrollableToToday {
+    func scrollToToday(animate: Bool) {
+        scrollTo(date: FrenchRepublicanDate(date: .now), animate: animate)
+    }
 }
 
 @available(iOS 16.0, *)
@@ -179,7 +186,7 @@ class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, 
         super.viewDidLayoutSubviews()
         if !initialScroll {
             initialScroll = true
-            scrollToToday(animate: false)
+            scrollTo(date: topItem.wrappedValue, animate: false)
         }
     }
     
@@ -195,8 +202,7 @@ class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, 
         }
     }
     
-    func scrollToToday(animate: Bool) {
-        let today = FrenchRepublicanDate(date: .now).monthIndex
-        collectionView.scrollToItem(at: IndexPath(item: today, section: 0), at: .top, animated: animate)
+    func scrollTo(date: FrenchRepublicanDate, animate: Bool) {
+        collectionView.scrollToItem(at: IndexPath(item: date.monthIndex, section: 0), at: .top, animated: animate)
     }
 }

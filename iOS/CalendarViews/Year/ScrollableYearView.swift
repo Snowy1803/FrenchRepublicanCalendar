@@ -15,10 +15,12 @@ import FrenchRepublicanCalendarCore
 
 @available(iOS 16.0, *)
 struct ScrollableYearView: View {
+    var initialLocation: FrenchRepublicanDate
     @State private var scrollToToday = false
+    var selectMonth: (FrenchRepublicanDate) -> ()
 
     var body: some View {
-        ScrollableYearUIView(scrollToToday: $scrollToToday)
+        ScrollableYearUIView(initialLocation: initialLocation, scrollToToday: $scrollToToday, selectMonth: selectMonth)
             .ignoresSafeArea()
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -36,12 +38,17 @@ struct ScrollableYearView: View {
 
 @available(iOS 16.0, *)
 struct ScrollableYearUIView: UIViewControllerRepresentable {
+    var initialLocation: FrenchRepublicanDate
     @Binding var scrollToToday: Bool
+    var selectMonth: (FrenchRepublicanDate) -> ()
 
     func makeUIViewController(context: Context) -> ScrollableYearController {
-        ScrollableYearController()
+        ScrollableYearController(initialLocation: initialLocation)
     }
+
     func updateUIViewController(_ vc: ScrollableYearController, context: Context) {
+        vc.initialLocation = initialLocation
+        vc.selectMonth = selectMonth
         if scrollToToday {
             vc.scrollToToday(animate: true)
             DispatchQueue.main.async {
@@ -56,8 +63,11 @@ class ScrollableYearController: UIViewController, UICollectionViewDelegate, UICo
     var collectionView: UICollectionView!
     var registration: UICollectionView.CellRegistration<UICollectionViewCell, FrenchRepublicanDate>!
     var initialScroll = false
+    var initialLocation: FrenchRepublicanDate
+    var selectMonth: (FrenchRepublicanDate) -> () = { _ in }
     
-    init() {
+    init(initialLocation: FrenchRepublicanDate) {
+        self.initialLocation = initialLocation
         super.init(nibName: nil, bundle: nil)
         self.setup()
     }
@@ -71,7 +81,7 @@ class ScrollableYearController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.delegate = self
         registration = UICollectionView.CellRegistration { cell, indexPath, year in
             cell.contentConfiguration = UIHostingConfiguration {
-                ScrollableYearCell(year: year)
+                ScrollableYearCell(year: year, selectMonth: self.selectMonth)
             }
         }
         collectionView.dataSource = self
@@ -101,16 +111,16 @@ class ScrollableYearController: UIViewController, UICollectionViewDelegate, UICo
         super.viewDidLayoutSubviews()
         if !initialScroll {
             initialScroll = true
-            scrollToToday(animate: false)
+            scrollTo(date: initialLocation, animate: false)
         }
         if #available(iOS 17.0, *) {
             let regular = collectionView.frame.width > 800
             traitOverrides.horizontalSizeClass = regular ? .regular : .compact
         }
     }
-    
-    func scrollToToday(animate: Bool) {
-        let today = FrenchRepublicanDate(date: .now).year - 1
+        
+    func scrollTo(date: FrenchRepublicanDate, animate: Bool) {
+        let today = date.year - 1
         collectionView.scrollToItem(at: IndexPath(item: today, section: 0), at: .top, animated: animate)
     }
 }

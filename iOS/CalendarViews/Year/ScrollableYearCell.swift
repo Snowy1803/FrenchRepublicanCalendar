@@ -17,6 +17,7 @@ import FrenchRepublicanCalendarCore
 struct ScrollableYearCell: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     var year: FrenchRepublicanDate
+    var selectMonth: (FrenchRepublicanDate) -> ()
     
     var colCount: Int {
         if sizeClass == .regular {
@@ -36,12 +37,12 @@ struct ScrollableYearCell: View {
             Divider()
             FastGrid(rowCount: 12 / colCount, colCount: colCount) {
                 ForEach(0..<12) { index in
-                    ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: index + 1, year: year.year))
+                    ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: index + 1, year: year.year), selectMonth: selectMonth)
                 }
             }
             HStack(spacing: padding) {
                 GeometryReader { proxy in
-                    ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: 13, year: year.year))
+                    ScrollableYearMonthView(month: FrenchRepublicanDate(day: 1, month: 13, year: year.year), selectMonth: selectMonth)
                         .frame(width: (proxy.size.width - padding * CGFloat(colCount)) * 2 / CGFloat(colCount))
                 }.frame(height: 50)
             }

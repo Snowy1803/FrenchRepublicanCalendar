@@ -16,6 +16,7 @@ import FrenchRepublicanCalendarCore
 @available(iOS 16.0, *)
 struct ScrollableYearMonthView: View {
     var month: FrenchRepublicanDate
+    var selectMonth: (FrenchRepublicanDate) -> ()
     
     var rowCount: Int {
         month.isSansculottides ? 1 : 6
@@ -26,8 +27,8 @@ struct ScrollableYearMonthView: View {
     }
 
     var body: some View {
-        NavigationLink {
-            ScrollableCalendarView2()
+        Button {
+            selectMonth(month)
         } label: {
             VStack {
                 HStack {
