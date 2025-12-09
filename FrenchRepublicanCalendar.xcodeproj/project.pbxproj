@@ -385,9 +385,10 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		20C645C72662DA64001D7108 /* Widgets */ = {
+		20C645C72662DA64001D7108 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				FDA5226E2ECE662C00210C75 /* HomeView.swift */,
 				208A0DCD2586732E00D635CE /* TodayWidget.swift */,
 				20C645C32662BECF001D7108 /* DecimalTimeWidget.swift */,
 				208A0DD52586734B00D635CE /* ConverterWidget.swift */,
@@ -395,24 +396,19 @@
 				20C645C926639EC9001D7108 /* DecimalTimeConverterWidget.swift */,
 				FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */,
 			);
-			path = Widgets;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		20C645C82662DA91001D7108 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				FDA522702ECE720A00210C75 /* VariantPicker.swift */,
-				FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */,
-				FDA5226C2ECE423A00210C75 /* WhatsNew.swift */,
 				20D9DCB2253F23BB00B5A9FA /* ContentView.swift */,
-				FDA5226E2ECE662C00210C75 /* HomeView.swift */,
 				20AEE4EB257170620015FFC6 /* DateDetails.swift */,
 				FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */,
 				FD6EBB512EB7F19A00796761 /* EventVC.swift */,
 				20C645C52662D216001D7108 /* DecimalTimeDetails.swift */,
 				20E0958A2540465500383A31 /* ContactsList.swift */,
 				20E0957C253F990C00383A31 /* FavoriteList.swift */,
-				2047A3462624A6FC00AA662C /* SettingsView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -421,8 +417,9 @@
 			isa = PBXGroup;
 			children = (
 				2067271526F6294000562A62 /* LayoutGuidesSwiftUI.swift */,
-				20C645C72662DA64001D7108 /* Widgets */,
+				20C645C72662DA64001D7108 /* Home */,
 				FD6EBB582EB7F24100796761 /* CalendarViews */,
+				FD653DC82EE7DCE400BC9802 /* Settings */,
 				20C645C82662DA91001D7108 /* Screens */,
 				20D9DCAE253F23BB00B5A9FA /* AppDelegate.swift */,
 				20D9DCB0253F23BB00B5A9FA /* SceneDelegate.swift */,
@@ -484,6 +481,17 @@
 				FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */,
 			);
 			path = Month;
+			sourceTree = "<group>";
+		};
+		FD653DC82EE7DCE400BC9802 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2047A3462624A6FC00AA662C /* SettingsView.swift */,
+				FDA522702ECE720A00210C75 /* VariantPicker.swift */,
+				FD4BA0F22EE14BD8008551C5 /* VariantExplanation.swift */,
+				FDA5226C2ECE423A00210C75 /* WhatsNew.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		FD6EBB582EB7F24100796761 /* CalendarViews */ = {
