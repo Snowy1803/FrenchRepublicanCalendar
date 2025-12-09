@@ -14,6 +14,7 @@ import FrenchRepublicanCalendarCore
 import SwiftUI
 
 struct VariantExplanation: View {
+    @EnvironmentObject var midnight: Midnight
     var variant: FrenchRepublicanDateOptions.Variant
 
     var body: some View {
@@ -27,17 +28,27 @@ struct VariantExplanation: View {
                 case .delambre:
                     DelambreVariantExplanation()
                 }
-            }.padding().notTooWide()
+            }.frame(maxWidth: .infinity).padding().notTooWide()
         }.navigationTitle(variant.name)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    FrenchRepublicanDateOptions.current.romanYear.toggle()
+                } label: {
+                    Label("Chiffres romains", systemImage: FrenchRepublicanDateOptions.current.romanYear ? "123.rectangle" : "123.rectangle.fill")
+                }
+            }
+        }
     }
 }
 
 struct DelambreVariantExplanation: View {
+    @EnvironmentObject var midnight: Midnight
     var origin: FrenchRepublicanDate {
         FrenchRepublicanDate(date: FrenchRepublicanDate.origin)
     }
     var creation: FrenchRepublicanDate {
-        FrenchRepublicanDate(date: Date(timeIntervalSince1970: -5561532000))
+        FrenchRepublicanDate(day: 14, month: 1, year: 2)
     }
     var limit: FrenchRepublicanDate {
         FrenchRepublicanDate(date: FrenchRepublicanDateOptions.Variant.delambre.maxSafeDate)
@@ -78,6 +89,7 @@ struct DelambreVariantExplanation: View {
 }
 
 struct RommeVariantExplanation: View {
+    @EnvironmentObject var midnight: Midnight
     var creation: FrenchRepublicanDate {
         FrenchRepublicanDate(day: 19, month: 8, year: 3)
     }
@@ -106,6 +118,7 @@ struct RommeVariantExplanation: View {
 }
 
 struct OriginalVariantExplanation: View {
+    @EnvironmentObject var midnight: Midnight
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Cette variante tranche le conflit juridique dans le décret originel en favorisant la simplicité arithmétique sur l'astronomie. En effet, si l'article III du décret du 5 octobre 1793 demandait de suivre l'équinoxe, l'**Article X** disposait simplement qu'une période de quatre ans, appelée une Franciade, devait avoir un jour supplémentaire :")
