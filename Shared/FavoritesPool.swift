@@ -17,27 +17,22 @@ import FrenchRepublicanCalendarCore
 
 class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     @Published var favorites: [String]
-    
-    private var sub: AnyCancellable?
+    var needsTransfer: Bool
     
     override init() {
-        let defaults = UserDefaults.standard.array(forKey: "favorites") as? [String]
-        favorites = defaults ?? [String]()
+        let defaults = UserDefaults.standard.array(forKey: "favorites")
+        needsTransfer = defaults == nil
+        favorites = defaults as? [String] ?? [String]()
         super.init()
-        sub = $favorites.sink { fav in
-            UserDefaults.standard.set(fav, forKey: "favorites")
-        }
         if WCSession.isSupported() {
             let session = WCSession.default
             session.delegate = self
             session.activate()
-            if defaults == nil {
-                session.transferUserInfo(["gimme": true])
-            }
         }
     }
     
     func sync() {
+        UserDefaults.standard.set(favorites, forKey: "favorites")
         if WCSession.isSupported() {
             print("syncing")
             WCSession.default.transferUserInfo(["favorites": favorites])
@@ -47,7 +42,10 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     // MARK: WatchConnectivity session delegate
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
+        if activationState == .activated && needsTransfer {
+            session.transferUserInfo(["gimme": true])
+            needsTransfer = false
+        }
     }
     
     #if os(iOS)
@@ -57,7 +55,7 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     }
     
     func sessionDidDeactivate(_ session: WCSession) {
-        
+        WCSession.default.activate()
     }
     
     #endif
