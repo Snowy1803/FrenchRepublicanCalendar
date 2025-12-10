@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		20024496244DD70E00A89D79 /* FavoriteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20024495244DD70E00A89D79 /* FavoriteList.swift */; };
-		20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20024497244DE3EC00A89D79 /* ContactsList.swift */; };
 		201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201A51C1244D2C8800C9867B /* DateDetails.swift */; };
 		20418BBD2412F3E700E0EE6E /* FrenchRepublicanCalendar.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20418BD12412F3EB00E0EE6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20418BD02412F3EB00E0EE6E /* ContentView.swift */; };
@@ -71,6 +70,7 @@
 		FD653DC12EE603B600BC9802 /* ScrollableYearMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DC02EE603B600BC9802 /* ScrollableYearMonthView.swift */; };
 		FD653DC42EE603E400BC9802 /* ScrollableYearCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DC32EE603E400BC9802 /* ScrollableYearCell.swift */; };
 		FD653DC72EE61B8500BC9802 /* ScrollableCalendarTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DC62EE61B7C00BC9802 /* ScrollableCalendarTab.swift */; };
+		FD653DC92EE921BC00BC9802 /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0958A2540465500383A31 /* ContactsList.swift */; };
 		FD6C2D1A2E78D5FA00659AB6 /* LinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6C2D192E78D5F900659AB6 /* LinkWidget.swift */; };
 		FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
 		FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventVC.swift */; };
@@ -168,7 +168,6 @@
 
 /* Begin PBXFileReference section */
 		20024495244DD70E00A89D79 /* FavoriteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteList.swift; sourceTree = "<group>"; };
-		20024497244DE3EC00A89D79 /* ContactsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsList.swift; sourceTree = "<group>"; };
 		201A51C1244D2C8800C9867B /* DateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDetails.swift; sourceTree = "<group>"; };
 		20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchRepublicanCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20418BC62412F3EB00E0EE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -343,7 +342,6 @@
 				208A0DF8258675AA00D635CE /* GregorianToRepublicanView.swift */,
 				208A0E00258675C900D635CE /* RepublicanToGregorianView.swift */,
 				20C645CD2663B968001D7108 /* DecimalTimeView.swift */,
-				20024497244DE3EC00A89D79 /* ContactsList.swift */,
 				20024495244DD70E00A89D79 /* FavoriteList.swift */,
 				201A51C1244D2C8800C9867B /* DateDetails.swift */,
 				FD12A18D2ED74BB500BD8E69 /* SettingsView.swift */,
@@ -721,12 +719,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20024498244DE3EC00A89D79 /* ContactsList.swift in Sources */,
 				20024496244DD70E00A89D79 /* FavoriteList.swift in Sources */,
 				20E095BD254059CC00383A31 /* FavoritesPool.swift in Sources */,
 				20418BD32412F3EB00E0EE6E /* WatchApp.swift in Sources */,
 				FD12A1912ED752D800BD8E69 /* TimeZonePicker.swift in Sources */,
 				20C645CF2663BAA3001D7108 /* DecimalTimeView.swift in Sources */,
+				FD653DC92EE921BC00BC9802 /* ContactsList.swift in Sources */,
 				201A51C2244D2C8800C9867B /* DateDetails.swift in Sources */,
 				20418BD72412F3EB00E0EE6E /* ComplicationController.swift in Sources */,
 				FD12A18E2ED74BB800BD8E69 /* SettingsView.swift in Sources */,

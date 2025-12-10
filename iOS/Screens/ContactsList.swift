@@ -15,7 +15,6 @@ import FrenchRepublicanCalendarCore
 import Contacts
 
 struct ContactsList: View {
-    
     @State var contacts = [CNContact]()
     @State var errorMessage: String = "Chargement"
 
@@ -72,7 +71,10 @@ struct ContactsList: View {
                         self.imageOf(data: c.thumbnailImageData)
                         Text(self.stringOf(contact: c))
                     }
-                }.listNotTooWide()
+                }
+                #if !os(watchOS)
+                .listNotTooWide()
+                #endif
             }
         }.onAppear {
             Task.detached {
@@ -81,12 +83,18 @@ struct ContactsList: View {
         }.navigationBarTitle("Contacts")
     }
     
-    func imageOf(data: Data?) -> AnyView {
+    @ViewBuilder func imageOf(data: Data?) -> some View {
         if let imgData = data,
             let img = UIImage(data: imgData) {
-            return AnyView(Image(uiImage: img).resizable().frame(width: 20, height: 20).clipShape(Circle()))
+            Image(uiImage: img)
+                .resizable()
+                .frame(width: 20, height: 20)
+                .clipShape(Circle())
+        } else {
+            Image(systemName: "person.circle")
+                .resizable()
+                .frame(width: 20, height: 20)
         }
-        return AnyView(Image(systemName: "person.circle").resizable().frame(width: 20, height: 20))
     }
     
     func stringOf(contact: CNContact) -> String {
@@ -101,13 +109,11 @@ struct ContactDetails: View {
     var body: some View {
         Form {
             if contact.birthday != nil {
-                Section(header: Text("Anniversaire")) {
-                    BirthdaySection(birthday: FrenchRepublicanDate(date: contact.birthday!.date!))
-                }
+                BirthdaySection(dateComponents: contact.birthday!)
             }
             if !contact.dates.isEmpty {
                 Section(header: Text("Dates")) {
-                    ForEach(contact.dates, id: \.self) { d in
+                    ForEach(contact.dates, id: \.identifier) { d in
                         if let date = d.value.date {
                             let label = d.label == "_$!<Anniversary>!$_" ? "Fête" : d.label
                             DateRow(frd: FrenchRepublicanDate(date: date), desc: label)
@@ -117,7 +123,9 @@ struct ContactDetails: View {
                 }
             }
         }.navigationBarTitle(contact.givenName)
+        #if !os(watchOS)
         .listNotTooWide()
+        #endif
     }
 }
 
@@ -128,15 +136,31 @@ struct ContactsList_Previews: PreviewProvider {
 }
 
 struct BirthdaySection: View {
-    var birthday: FrenchRepublicanDate
+    var dateComponents: DateComponents
     
     var body: some View {
-        Group {
-            DateRow(frd: birthday)
-                .accessibility(label: Text("Anniversaire"))
-            let age = birthday.nextAnniversary.components.year! - birthday.components.year!
-            DateRow(frd: birthday.nextAnniversary, desc: "🎂 \(age) ans")
-                .accessibility(label: Text("Anniversaire des \(age) ans"))
+        Section {
+            if dateComponents.year != nil {
+                let birthday = FrenchRepublicanDate(date: dateComponents.date!)
+                DateRow(frd: birthday)
+                    .accessibility(label: Text("Anniversaire"))
+                let next = birthday.nextAnniversary
+                let age = next.components.year! - birthday.components.year!
+                DateRow(frd: next, desc: "🎂 \(age) ans")
+                    .accessibility(label: Text("Anniversaire des \(age) ans"))
+            } else if let nextYear = Calendar.gregorian.nextDate(after: Date(), matching: dateComponents, matchingPolicy: .nextTime) {
+                // No year specified, use next occurrence
+                DateRow(frd: FrenchRepublicanDate(date: nextYear))
+                    .accessibility(label: Text("Anniversaire"))
+            }
+        } header: {
+            Text("Anniversaire")
+        } footer: {
+            if dateComponents.year != nil {
+                Text("Ceci représente l'anniversaire républicain de ce contact")
+            } else {
+                Text("Ceci représente l'anniversaire grégorien de ce contact, car l'année de naissance n'a pas été renseignée")
+            }
         }
     }
 }

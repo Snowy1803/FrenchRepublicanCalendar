@@ -34,3 +34,33 @@ struct FavoriteList: View {
         return df.date(from: fav)!
     }
 }
+
+struct DateRow: View {
+    var frd: FrenchRepublicanDate
+    var desc: String?
+    
+    var human: String {
+        if Calendar.gregorian.isDateInToday(frd.date) {
+            return "Aujourd'hui"
+        }
+        let df = DateFormatter()
+        df.dateFormat = "d MMMM yyyy"
+        return df.string(from: frd.date)
+    }
+    
+    var body: some View {
+        NavigationLink(destination: DateDetails(components: frd.date.toMyDateComponents, date: frd)) {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(frd.toLongStringNoYear())
+                    Spacer()
+                    Text("\(frd.components.year!)")
+                }
+                Text(human).foregroundColor(.secondary)
+                if desc != nil {
+                    Text(desc!)
+                }
+            }.padding([.top, .bottom], 2)
+        }
+    }
+}
