@@ -13,12 +13,11 @@
 import SwiftUI
 
 struct GregorianToRepublicanView: View {
-    @ObservedObject var favoritesPool: FavoritesPool
     @Binding var shownDate: MyDateComponents
     
     var body: some View {
         VStack {
-            NavigationLink(destination: DateDetails(favoritesPool: favoritesPool, components: shownDate, date: shownDate.tofrd!)) {
+            NavigationLink(destination: DateDetails(components: shownDate, date: shownDate.tofrd!)) {
                 Text(shownDate.tofrd!.toLongString())
             }
             HStack {

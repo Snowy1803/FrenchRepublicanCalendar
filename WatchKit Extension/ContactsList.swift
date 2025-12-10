@@ -15,8 +15,6 @@ import FrenchRepublicanCalendarCore
 import Contacts
 
 struct ContactsList: View {
-    @ObservedObject var favoritesPool: FavoritesPool
-    
     @State var contacts = [CNContact]()
     @State var errorMessage: String = "Chargement"
     
@@ -59,7 +57,7 @@ struct ContactsList: View {
                     .multilineTextAlignment(.center)
             } else {
                 List(contacts, id: \.identifier) { c in
-                    NavigationLink(destination: ContactDetails(favoritesPool: favoritesPool, contact: c)) {
+                    NavigationLink(destination: ContactDetails(contact: c)) {
                         self.imageOf(data: c.thumbnailImageData)
                         Text(self.stringOf(contact: c))
                     }
@@ -86,21 +84,20 @@ struct ContactsList: View {
 }
 
 struct ContactDetails: View {
-    @ObservedObject var favoritesPool: FavoritesPool
     var contact: CNContact
     
     var body: some View {
         List {
             if contact.birthday != nil {
                 Section(header: Text("Anniversaire")) {
-                    BirthdaySection(favoritesPool: favoritesPool, birthday: FrenchRepublicanDate(date: contact.birthday!.date!))
+                    BirthdaySection(birthday: FrenchRepublicanDate(date: contact.birthday!.date!))
                 }
             }
             if !contact.dates.isEmpty {
                 Section(header: Text("Dates")) {
                     ForEach(contact.dates, id: \.self) { d in
                         if let date = d.value.date {
-                            DateRow(favoritesPool: favoritesPool, frd: FrenchRepublicanDate(date: date), desc: d.label == "_$!<Anniversary>!$_" ? "Fête" : d.label)
+                            DateRow(frd: FrenchRepublicanDate(date: date), desc: d.label == "_$!<Anniversary>!$_" ? "Fête" : d.label)
                         }
                     }
                 }
@@ -110,7 +107,6 @@ struct ContactDetails: View {
 }
 
 struct DateRow: View {
-    @ObservedObject var favoritesPool: FavoritesPool
     var frd: FrenchRepublicanDate
     var desc: String?
     
@@ -124,7 +120,7 @@ struct DateRow: View {
     }
     
     var body: some View {
-        NavigationLink(destination: DateDetails(favoritesPool: favoritesPool, components: frd.date.toMyDateComponents, date: frd)) {
+        NavigationLink(destination: DateDetails(components: frd.date.toMyDateComponents, date: frd)) {
             VStack(alignment: .leading) {
                 HStack {
                     Text(frd.toLongStringNoYear())
@@ -141,13 +137,12 @@ struct DateRow: View {
 }
 
 struct BirthdaySection: View {
-    @ObservedObject var favoritesPool: FavoritesPool
     var birthday: FrenchRepublicanDate
     
     var body: some View {
         Group {
-            DateRow(favoritesPool: favoritesPool, frd: birthday)
-            DateRow(favoritesPool: favoritesPool, frd: birthday.nextAnniversary, desc: "🎂 \(birthday.nextAnniversary.components.year! - birthday.components.year!) ans")
+            DateRow(frd: birthday)
+            DateRow(frd: birthday.nextAnniversary, desc: "🎂 \(birthday.nextAnniversary.components.year! - birthday.components.year!) ans")
         }
     }
 }

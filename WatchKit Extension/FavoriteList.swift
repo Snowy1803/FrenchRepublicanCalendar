@@ -14,7 +14,7 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 
 struct FavoriteList: View {
-    @ObservedObject var pool: FavoritesPool
+    @EnvironmentObject var pool: FavoritesPool
     
     var body: some View {
         Group {
@@ -22,7 +22,7 @@ struct FavoriteList: View {
                 Text("Aucun favori")
             } else {
                 List(pool.favorites.reversed(), id: \.self) { fav in
-                    DateRow(favoritesPool: pool, frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
+                    DateRow(frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
                 }
             }
         }.navigationBarTitle("Favoris")

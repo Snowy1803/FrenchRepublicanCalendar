@@ -14,7 +14,7 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 
 struct ContentView: View {
-    @ObservedObject var favorites: FavoritesPool
+    @EnvironmentObject var favorites: FavoritesPool
     @EnvironmentObject var midnight: Midnight
     
     @State var shownDateGregorian = Date().toMyDateComponents
@@ -29,7 +29,7 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            NavigationLink(destination: DateDetails(favoritesPool: favorites, components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date())), isActive: Binding<Bool>(get: { self.todayActive }, set: {
+            NavigationLink(destination: DateDetails(components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date())), isActive: Binding<Bool>(get: { self.todayActive }, set: {
                 if $0 {
                     self.shownDateGregorian = Date().toMyDateComponents
                     self.shownDateRepublican = FrenchRepublicanDate(date: Date()).toMyDateComponents
@@ -43,7 +43,7 @@ struct ContentView: View {
                     Text("Aujourd'hui")
                 }
             }
-            NavigationLink(destination: GregorianToRepublicanView(favoritesPool: favorites, shownDate: $shownDateGregorian), isActive: Binding<Bool>(get: { self.gtrActive }, set: {
+            NavigationLink(destination: GregorianToRepublicanView(shownDate: $shownDateGregorian), isActive: Binding<Bool>(get: { self.gtrActive }, set: {
                 if $0 {
                     self.gtrActive = true
                 } else {
@@ -69,13 +69,13 @@ struct ContentView: View {
                     Text("Vers Grégorien")
                 }
             }
-            NavigationLink(destination: FavoriteList(pool: favorites)) {
+            NavigationLink(destination: FavoriteList()) {
                 HStack {
                     Image(systemName: "text.badge.star").frame(width: 20, height: 20)
                     Text("Mes favoris (\(favorites.favorites.count))")
                 }
             }
-            NavigationLink(destination: ContactsList(favoritesPool: favorites)) {
+            NavigationLink(destination: ContactsList()) {
                 HStack {
                     Image(systemName: "person.2").frame(width: 20, height: 20)
                     Text("Mes contacts")
@@ -99,6 +99,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(favorites: FavoritesPool())
+        ContentView().environmentObject(Midnight.shared).environmentObject(FavoritesPool())
     }
 }

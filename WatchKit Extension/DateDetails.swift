@@ -15,8 +15,7 @@ import FrenchRepublicanCalendarCore
 import Combine
 
 struct DateDetails: View {
-    
-    @ObservedObject var favoritesPool: FavoritesPool
+    @EnvironmentObject var favoritesPool: FavoritesPool
     
     var components: MyDateComponents
     var date: FrenchRepublicanDate

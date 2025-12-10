@@ -21,8 +21,10 @@ struct WatchApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView(favorites: appDelegate.favorites)
-            }.environmentObject(Midnight.shared)
+                ContentView()
+            }
+            .environmentObject(Midnight.shared)
+            .environmentObject(appDelegate.favorites)
         }
     }
 }
