@@ -254,15 +254,15 @@ struct FoldableDatePicker: View {
     var body: some View {
         FoldablePicker(label: label, value: value, showPicker: $showPicker) {
             if si {
-                if date > Date.distantFuture {
+                if !FrenchRepublicanDate.safeRange.contains(date) {
                     HStack(alignment: .firstTextBaseline) {
                         Image.decorative(systemName: "exclamationmark.circle.fill")
                             .imageScale(.large)
                             .foregroundStyle(.red)
-                        Text("La date sélectionnée n'est pas supportée par le sélecteur de date système\n\(Text("Date maximale : \(Date.distantFuture, format: .dateTime.day().month().year())").foregroundColor(.secondary))")
+                        Text("La date sélectionnée est en dehors de la plage autorisée pour cette variante\n\(Text("Date maximale : \(FrenchRepublicanDate.maxSafeDate, format: .dateTime.day().month().year())").foregroundColor(.secondary))")
                     }.frame(alignment: .leading)
                 } else {
-                    DatePicker(selection: $date, in: FrenchRepublicanDate.origin..., displayedComponents: .date) {
+                    DatePicker(selection: $date, in: FrenchRepublicanDate.safeRange, displayedComponents: .date) {
                         label
                     }.frame(maxWidth: .infinity, alignment: .leading)
                         .environment(\.locale, Locale(identifier: "fr"))
