@@ -108,7 +108,7 @@ struct RepublicanDatePicker: View {
                 if showMonthWheel {
                     ZStack {
                         Rectangle()
-                            .fill(.background)
+                            .fill(Color(.widgetBackground))
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         WheelRepublicanDatePicker(precision: .republicanDate.day(.monthOnly).year(), selection: $month)
                     }.transition(.opacity)
