@@ -100,7 +100,7 @@ class ScrollableYearController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        FrenchRepublicanDate(date: FrenchRepublicanDate.maxSafeDate).year - 1
+        FrenchRepublicanDate(date: FrenchRepublicanDate.maxSafeDate).year
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -26,7 +26,7 @@ struct MonthCollection: RandomAccessCollection {
     }
     var endIndex: Int {
         let max = FrenchRepublicanDate(date: FrenchRepublicanDate.maxSafeDate)
-        return max.monthIndex
+        return max.monthIndex + 1 // endIndex is one past last
     }
     
     typealias Element = FrenchRepublicanDate
