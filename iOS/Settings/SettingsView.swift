@@ -57,6 +57,7 @@ struct SettingsView: View {
                 NavigationLink {
                     Form {
                         Link("swiftui-introspect", destination: URL(string: "https://github.com/siteline/swiftui-introspect/blob/main/LICENSE")!)
+                        Link("Eventually", destination: URL(string: "https://github.com/claustrofob/Eventually/blob/main/LICENSE")!)
                     }.navigationTitle(Text("Licenses open source"))
                 } label: {
                     Text("Licenses open source")

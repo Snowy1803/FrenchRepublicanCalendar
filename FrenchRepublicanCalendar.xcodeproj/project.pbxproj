@@ -96,6 +96,8 @@
 		FDA5226F2ECE662C00210C75 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA5226E2ECE662C00210C75 /* HomeView.swift */; };
 		FDA522712ECE720F00210C75 /* VariantPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA522702ECE720A00210C75 /* VariantPicker.swift */; };
 		FDA522732ECF70BE00210C75 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = FDA522722ECF70BE00210C75 /* SwiftUIIntrospect */; };
+		FDAAED212F0C319900AEC60F /* Eventually in Frameworks */ = {isa = PBXBuildFile; productRef = FDAAED202F0C319900AEC60F /* Eventually */; };
+		FDAAED232F0C345200AEC60F /* ScrollableDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAAED222F0C344D00AEC60F /* ScrollableDayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,6 +251,7 @@
 		FDA5226C2ECE423A00210C75 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		FDA5226E2ECE662C00210C75 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FDA522702ECE720A00210C75 /* VariantPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantPicker.swift; sourceTree = "<group>"; };
+		FDAAED222F0C344D00AEC60F /* ScrollableDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableDayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDAAED212F0C319900AEC60F /* Eventually in Frameworks */,
 				20C18A57260D24A600967DF3 /* FrenchRepublicanCalendarCore in Frameworks */,
 				FDA522732ECF70BE00210C75 /* SwiftUIIntrospect in Frameworks */,
 			);
@@ -468,6 +472,7 @@
 				FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */,
 				FD653DC32EE603E400BC9802 /* ScrollableYearCell.swift */,
 				FD653DC02EE603B600BC9802 /* ScrollableYearMonthView.swift */,
+				FDAAED222F0C344D00AEC60F /* ScrollableDayView.swift */,
 			);
 			path = Year;
 			sourceTree = "<group>";
@@ -571,6 +576,7 @@
 			packageProductDependencies = (
 				20C18A56260D24A600967DF3 /* FrenchRepublicanCalendarCore */,
 				FDA522722ECF70BE00210C75 /* SwiftUIIntrospect */,
+				FDAAED202F0C319900AEC60F /* Eventually */,
 			);
 			productName = FrenchRepublicanCal;
 			productReference = 20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */;
@@ -653,6 +659,7 @@
 			packageReferences = (
 				20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */,
 				2067271726F6580F00562A62 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				FDAAED1F2F0C319900AEC60F /* XCRemoteSwiftPackageReference "Eventually" */,
 			);
 			productRefGroup = 20418BB92412F3E700E0EE6E /* Products */;
 			projectDirPath = "";
@@ -785,6 +792,7 @@
 				2047A34C2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				2069C04A253F2F9500E46721 /* OrbisecUI.swift in Sources */,
 				208A0DCE2586732E00D635CE /* TodayWidget.swift in Sources */,
+				FDAAED232F0C345200AEC60F /* ScrollableDayView.swift in Sources */,
 				FD653DC72EE61B8500BC9802 /* ScrollableCalendarTab.swift in Sources */,
 				FD653DC12EE603B600BC9802 /* ScrollableYearMonthView.swift in Sources */,
 				20E0958B2540465500383A31 /* ContactsList.swift in Sources */,
@@ -1079,7 +1087,7 @@
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1107,7 +1115,7 @@
 				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1295,6 +1303,14 @@
 				kind = branch;
 			};
 		};
+		FDAAED1F2F0C319900AEC60F /* XCRemoteSwiftPackageReference "Eventually" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/claustrofob/Eventually";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1327,6 +1343,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2067271726F6580F00562A62 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = SwiftUIIntrospect;
+		};
+		FDAAED202F0C319900AEC60F /* Eventually */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDAAED1F2F0C319900AEC60F /* XCRemoteSwiftPackageReference "Eventually" */;
+			productName = Eventually;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
