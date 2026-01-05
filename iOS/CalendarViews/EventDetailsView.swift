@@ -22,20 +22,19 @@ struct EventDetailsView: View {
 
     var body: some View {
         let eventAccess = EKEventStore.authorizationStatus(for: .event)
-        let reminderAccess = EKEventStore.authorizationStatus(for: .reminder)
-        if eventAccess == .denied && reminderAccess == .denied {
+        if eventAccess == .denied {
             VStack(alignment: .leading) {
                 Text("Accès refusé")
                     .font(.headline)
-                Text("Autorisez l'accès au Calendrier et/ou aux Rappels dans les Réglages iOS")
+                Text("Autorisez l'accès au Calendrier dans les Réglages iOS")
             }
-        } else if eventAccess == .restricted && reminderAccess == .restricted {
+        } else if eventAccess == .restricted {
             VStack(alignment: .leading) {
                 Text("Accès restreint")
                     .font(.headline)
-                Text("Autorisez l'accès au Calendrier et/ou aux Rappels dans les Réglages iOS")
+                Text("Autorisez l'accès au Calendrier dans les Réglages iOS")
             }
-        } else if eventAccess == .notDetermined || reminderAccess == .notDetermined {
+        } else if eventAccess == .notDetermined {
             VStack(alignment: .leading) {
                 Text("Autorisez l'accès au Calendrier afin d'afficher tous vos évènements dans le Calendrier Républicain")
                 HStack {
@@ -45,11 +44,6 @@ struct EventDetailsView: View {
                                 try await store.requestFullAccessToEvents()
                             } else {
                                 try await store.requestAccess(to: .event)
-                            }
-                            if #available(iOS 17.0, *) {
-                                try await store.requestFullAccessToReminders()
-                            } else {
-                                try await store.requestAccess(to: .reminder)
                             }
                             midnight.objectWillChange.send()
                         }
