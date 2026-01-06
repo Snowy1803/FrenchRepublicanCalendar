@@ -27,6 +27,7 @@ struct ScrollableDayView: View {
     @EnvironmentObject var midnight: Midnight
     var date: FrenchRepublicanDate
     @State private var showDetails: Bool = false
+    @State private var createEvent: Bool = false
 
     var body: some View {
         EventPermissionWrapperView { store in
@@ -43,9 +44,23 @@ struct ScrollableDayView: View {
                     .padding(.vertical, 32)
                 }
             }
+            .sheet(isPresented: $createEvent) {
+                NavigationView {
+                    CreateEventVC(store: store, date: date)
+                        .ignoresSafeArea()
+                        .interactiveDismissDisabled()
+                }
+            }
         }
         .navigationTitle(Text("\(date, format: .republicanDate.day(.preferred))"))
         .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    createEvent = true
+                } label: {
+                    Label("Nouvel évènement", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     showDetails = true
