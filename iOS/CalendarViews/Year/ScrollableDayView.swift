@@ -26,6 +26,7 @@ fileprivate var decHourSlotHeight: CGFloat {
 struct ScrollableDayView: View {
     @EnvironmentObject var midnight: Midnight
     var date: FrenchRepublicanDate
+    @State private var showDetails: Bool = false
 
     var body: some View {
         EventPermissionWrapperView { store in
@@ -44,6 +45,20 @@ struct ScrollableDayView: View {
             }
         }
         .navigationTitle(Text("\(date, format: .republicanDate.day(.preferred))"))
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showDetails = true
+                } label: {
+                    Label("Détails sur la date républicaine", systemImage: "info.circle")
+                }
+            }
+        }
+        .sheet(isPresented: $showDetails) {
+            NavigationView {
+                DateDetails(date: date)
+            }.presentationDetents([.medium, .large])
+        }
     }
 }
 
