@@ -33,7 +33,7 @@ struct ScrollableDayView: View {
                 ScrollView(.vertical) {
                     ZStack {
                         DecimalTimeMarkers()
-                        EventuallyLayout(startOfDay: date.date, hourSlotHeight: siHourSlotHeight) {
+                        EventuallyLayout(startOfDay: date.date, hourSlotHeight: siHourSlotHeight, config: .init(titleHeight: 40)) {
                             ForEach(events, id: \.calendarItemIdentifier) { event in
                                 SingleEventBlobView(event: event)
                             }
@@ -43,6 +43,7 @@ struct ScrollableDayView: View {
                 }
             }
         }
+        .navigationTitle(Text("\(date, format: .republicanDate.day(.preferred))"))
     }
 }
 
@@ -78,7 +79,7 @@ struct SingleEventBlobView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(cgColor: event.calendar.cgColor).opacity(0.1))
+                .fill(Color(cgColor: event.calendar.cgColor).opacity(0.2))
         )
         .eventuallyDateIntervalLayout(DateInterval(start: event.startDate, end: event.endDate))
     }
