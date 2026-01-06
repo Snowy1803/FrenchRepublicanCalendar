@@ -41,15 +41,13 @@ struct ContentView: View {
 //                    Image(systemName: "calendar")
 //                    Text("SwiftUI")
 //                }
-                if #available(iOS 16.0, *) {
-                    NavigationView {
-                        ScrollableCalendarTab()
-                    }
-                    .navigationViewStyle(.stack)
-                    .tabItem {
-                        Image(systemName: "calendar")
-                        Text("Calendrier")
-                    }
+                NavigationView {
+                    ScrollableCalendarTab()
+                }
+                .navigationViewStyle(.stack)
+                .tabItem {
+                    Image(systemName: "calendar")
+                    Text("Calendrier")
                 }
                 NavigationView {
                     SettingsView()
@@ -77,14 +75,8 @@ extension View {
     }
     
     func listNotTooWide() -> some View {
-        self.introspect(.list, on: .iOS(.v15)) { tableView in
-            // iOS 15
-            tableView.cellLayoutMarginsFollowReadableWidth = true
-        }.introspect(.list, on: .iOS(.v16...)) { collectionView in
+        self.introspect(.list, on: .iOS(.v16...)) { collectionView in
             // iOS 16
-            guard #available(iOS 16, *) else {
-                return
-            }
             guard let layout = collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout,
                   layout.responds(to: Selector(("layoutSectionProvider"))) else {
                 return // impl changed, abort

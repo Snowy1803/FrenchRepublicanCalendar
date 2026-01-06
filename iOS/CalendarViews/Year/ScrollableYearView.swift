@@ -13,7 +13,6 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
-@available(iOS 16.0, *)
 struct ScrollableYearView: View {
     var initialLocation: FrenchRepublicanDate
     @State private var scrollToToday = false
@@ -36,7 +35,6 @@ struct ScrollableYearView: View {
     }
 }
 
-@available(iOS 16.0, *)
 struct ScrollableYearUIView: UIViewControllerRepresentable {
     var initialLocation: FrenchRepublicanDate
     @Binding var scrollToToday: Bool
@@ -58,7 +56,6 @@ struct ScrollableYearUIView: UIViewControllerRepresentable {
     }
 }
 
-@available(iOS 16.0, *)
 class ScrollableYearController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ScrollableToToday {
     var collectionView: UICollectionView!
     var registration: UICollectionView.CellRegistration<UICollectionViewCell, FrenchRepublicanDate>!

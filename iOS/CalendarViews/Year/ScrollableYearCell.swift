@@ -13,7 +13,6 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
-@available(iOS 16.0, *)
 struct ScrollableYearCell: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     var year: FrenchRepublicanDate

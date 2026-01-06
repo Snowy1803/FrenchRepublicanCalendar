@@ -74,20 +74,11 @@ struct VariantLink: View {
                 TagLabel(text: "Sélectionné avant la MàJ", color: .gray)
             }
         }
-        if #available(iOS 16.0, *) {
-            ViewThatFits(in: .horizontal) {
-                HStack {
-                    baseLabels
-                    extraLabel
-                }
-                VStack(alignment: .leading) {
-                    HStack {
-                        baseLabels
-                    }
-                    extraLabel
-                }
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                baseLabels
+                extraLabel
             }
-        } else {
             VStack(alignment: .leading) {
                 HStack {
                     baseLabels
@@ -95,7 +86,6 @@ struct VariantLink: View {
                 extraLabel
             }
         }
-
     }
 
     var body: some View {

@@ -14,7 +14,6 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 @_spi(Advanced) import SwiftUIIntrospect
 
-@available(iOS 16.0, *)
 struct ScrollableMonthView: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     @Binding var topItem: FrenchRepublicanDate
@@ -57,7 +56,6 @@ struct ScrollableMonthView: View {
     }
 }
 
-@available(iOS 16.0, *)
 extension ToolbarItem {
     @ToolbarContentBuilder func hideGroup() -> some ToolbarContent {
         if #available(iOS 26.0, *) {
@@ -68,7 +66,6 @@ extension ToolbarItem {
     }
 }
 
-@available(iOS 16.0, *)
 struct ScrollableCalendarUIView: UIViewControllerRepresentable {
     var topItem: Binding<FrenchRepublicanDate>
     var selection: Binding<FrenchRepublicanDate>
@@ -117,7 +114,6 @@ extension ScrollableToToday {
     }
 }
 
-@available(iOS 16.0, *)
 class CustomScrollToTopCollectionView: UICollectionView {
     override func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
         // catch "scroll to top" action from TabBar, and change to scroll to today
@@ -129,7 +125,6 @@ class CustomScrollToTopCollectionView: UICollectionView {
     }
 }
 
-@available(iOS 16.0, *)
 class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ScrollableToToday {
     var collectionView: UICollectionView!
     let collection = MonthCollection()

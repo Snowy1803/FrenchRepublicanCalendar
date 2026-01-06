@@ -76,10 +76,7 @@ struct TimeWidget: Widget {
         #if os(watchOS)
         return [.accessoryInline, .accessoryCircular, .accessoryCorner]
         #else
-        if #available(iOS 16, *) {
-            return [.systemSmall, .accessoryInline, .accessoryCircular]
-        }
-        return [.systemSmall]
+        return [.systemSmall, .accessoryInline, .accessoryCircular]
         #endif
     }
 

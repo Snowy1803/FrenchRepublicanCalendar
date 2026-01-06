@@ -27,49 +27,43 @@ struct DateTimeWidgetEntryView : View {
         let today = FrenchRepublicanDate(date: entry.date)
         switch family {
         case .accessoryInline:
-            if #available(iOS 16, *) {
-                ViewThatFits(in: .horizontal) {
-                    Text("\(today, format: .republicanDate.day().year()), \(entry.time, format: .decimalTime.hour().minute())")
-                    Text("\(today, format: .republicanDate.day()) à \(entry.time, format: .decimalTime.hour().minute())")
-                    Text("\(today, format: .republicanDate.day().dayLength(.short)), \(entry.time, format: .decimalTime.hour().minute())")
-                }
-                .monospacedDigit()
+            ViewThatFits(in: .horizontal) {
+                Text("\(today, format: .republicanDate.day().year()), \(entry.time, format: .decimalTime.hour().minute())")
+                Text("\(today, format: .republicanDate.day()) à \(entry.time, format: .decimalTime.hour().minute())")
+                Text("\(today, format: .republicanDate.day().dayLength(.short)), \(entry.time, format: .decimalTime.hour().minute())")
             }
+            .monospacedDigit()
         case .accessoryRectangular:
-            if #available(iOS 16, *) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        ViewThatFits(in: .horizontal) {
-                            Text(today, format: .republicanDate.day(.preferred).year(today.isSansculottides ? .none : .long))
-                            Text(today, format: .republicanDate.day(.preferred))
-                        }
-                        .font(.headline)
-                        .widgetAccentable()
-                        Text(today, format: today.isSansculottides ? .republicanDate.year() : .republicanDate.day(.dayName))
-                            .foregroundStyle(.secondary)
-                        Text(entry.time, format: .decimalTime.hour().minute())
-                            .monospacedDigit()
+            HStack {
+                VStack(alignment: .leading) {
+                    ViewThatFits(in: .horizontal) {
+                        Text(today, format: .republicanDate.day(.preferred).year(today.isSansculottides ? .none : .long))
+                        Text(today, format: .republicanDate.day(.preferred))
                     }
-                    Spacer(minLength: 0)
+                    .font(.headline)
+                    .widgetAccentable()
+                    Text(today, format: today.isSansculottides ? .republicanDate.year() : .republicanDate.day(.dayName))
+                        .foregroundStyle(.secondary)
+                    Text(entry.time, format: .decimalTime.hour().minute())
+                        .monospacedDigit()
                 }
+                Spacer(minLength: 0)
             }
         case .accessoryCircular: // mostly useful on Infograph bezel (when showsWidgetLabel)
-            if #available(iOS 16, *) {
-                VStack {
-                    if !showsWidgetLabel {
-                        ViewThatFits(in: .horizontal) {
-                            Text(today, format: .republicanDate.day())
-                            Text(today, format: .republicanDate.day().dayLength(.short))
-                            Text("\(today.components.day!)")
-                        }.font(.caption)
-                    }
-                    Text(entry.time, format: .decimalTime.hour().minute())
-                        .font(showsWidgetLabel ? .largeTitle : .body)
-                        .widgetAccentable(!showsWidgetLabel)
-                        .monospacedDigit()
-                }.widgetLabel {
-                    InlineDateEntryView(today: today)
+            VStack {
+                if !showsWidgetLabel {
+                    ViewThatFits(in: .horizontal) {
+                        Text(today, format: .republicanDate.day())
+                        Text(today, format: .republicanDate.day().dayLength(.short))
+                        Text("\(today.components.day!)")
+                    }.font(.caption)
                 }
+                Text(entry.time, format: .decimalTime.hour().minute())
+                    .font(showsWidgetLabel ? .largeTitle : .body)
+                    .widgetAccentable(!showsWidgetLabel)
+                    .monospacedDigit()
+            }.widgetLabel {
+                InlineDateEntryView(today: today)
             }
         case .accessoryCorner:
             #if os(watchOS)
@@ -110,10 +104,7 @@ struct DateTimeWidget: Widget {
         #if os(watchOS)
         return [.accessoryInline, .accessoryRectangular, .accessoryCircular, .accessoryCorner]
         #else
-        if #available(iOS 16, *) {
-            return [.systemSmall, .accessoryInline, .accessoryRectangular, .accessoryCircular]
-        }
-        return [.systemSmall]
+        return [.systemSmall, .accessoryInline, .accessoryRectangular, .accessoryCircular]
         #endif
     }
 

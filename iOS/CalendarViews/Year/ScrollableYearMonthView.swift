@@ -13,7 +13,6 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
-@available(iOS 16.0, *)
 struct ScrollableYearMonthView: View {
     var month: FrenchRepublicanDate
     var selectMonth: (FrenchRepublicanDate) -> ()

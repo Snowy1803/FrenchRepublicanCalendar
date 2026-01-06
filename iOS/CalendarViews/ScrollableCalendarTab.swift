@@ -13,7 +13,6 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
-@available(iOS 16.0, *)
 struct ScrollableCalendarTab: View {
     enum Page { case year, month, day }
     @State private var page: Page = .month

@@ -146,14 +146,10 @@ struct DateCollection: RandomAccessCollection {
     var startDate = Calendar.gregorian.startOfDay(for: FrenchRepublicanDate.origin)
     
     var startIndex: Int = {
-        if #available(iOS 16, *) {
-            // workaround FB11396644 (ScrollViewReader for LazyHStack is not lazy anymore)
-            // Been a problem since iOS 16 and still in iOS 26:
-            // All views are calculated during scrollTo, not lazily
-            return 84000 // 18 September 2023 (can go back ~2 years as of 2025)
-        } else {
-            return 0
-        }
+        // workaround FB11396644 (ScrollViewReader for LazyHStack is not lazy anymore)
+        // Been a problem since iOS 16 and still in iOS 26:
+        // All views are calculated during scrollTo, not lazily
+        return 84000 // 18 September 2023 (can go back ~2 years as of 2025)
     }()
     var endIndex: Int = 4933795 // maxSafeDate, year 15300
     

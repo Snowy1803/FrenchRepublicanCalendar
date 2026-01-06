@@ -43,7 +43,6 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
 }
 
-@available(iOS 16.0, *)
 struct InlineDateEntryView: View {
     var today: FrenchRepublicanDate
     
@@ -66,57 +65,49 @@ struct DateWidgetEntryView : View {
         Group {
             switch family {
             case .accessoryInline:
-                if #available(iOS 16.0, *) {
+                InlineDateEntryView(today: today)
+            case .accessoryCircular:
+                ZStack {
+                    AccessoryWidgetBackground()
+                    VStack {
+                        Text("\(today.components.day!)")
+                            .font(.title)
+                        ViewThatFits(in: .horizontal) {
+                            Text(today, format: .republicanDate.day(.monthOnly))
+                            Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
+                        }
+                        .font(.caption)
+                        .widgetAccentable()
+                        .padding(.horizontal, 4)
+                    }
+                }
+                .widgetLabel {
                     InlineDateEntryView(today: today)
                 }
-            case .accessoryCircular:
-                if #available(iOS 16.0, *) {
-                    ZStack {
-                        AccessoryWidgetBackground()
-                        VStack {
-                            Text("\(today.components.day!)")
-                                .font(.title)
-                            ViewThatFits(in: .horizontal) {
-                                Text(today, format: .republicanDate.day(.monthOnly))
-                                Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
-                            }
-                            .font(.caption)
-                            .widgetAccentable()
-                            .padding(.horizontal, 4)
-                        }
-                    }
-                    .widgetLabel {
-                        InlineDateEntryView(today: today)
-                    }
-                }
             case .accessoryRectangular:
-                if #available(iOS 16.0, *) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(today, format: .republicanDate.day(.preferred))
-                                .font(.headline)
-                                .widgetAccentable()
-                            Text(today, format: .republicanDate.year(.long))
-                                .foregroundStyle(.secondary)
-                            Text(today.isSansculottides ? today.weekdayName : today.dayName)
-                        }
-                        Spacer(minLength: 0)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(today, format: .republicanDate.day(.preferred))
+                            .font(.headline)
+                            .widgetAccentable()
+                        Text(today, format: .republicanDate.year(.long))
+                            .foregroundStyle(.secondary)
+                        Text(today.isSansculottides ? today.weekdayName : today.dayName)
                     }
+                    Spacer(minLength: 0)
                 }
             case .accessoryCorner:
-                if #available(iOS 16.0, *) {
-                    Text("\(today.components.day!)")
-                        .font(.title)
-                        .widgetLabel {
-                            ViewThatFits(in: .horizontal) {
-                                Text(today, format: .republicanDate.day().year())
-                                Text(today, format: .republicanDate.day(.monthOnly).year())
-                                Text(today, format: .republicanDate.day(.monthOnly).year(.short))
-                                Text(today, format: .republicanDate.day(.monthOnly))
-                                Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
-                            }
+                Text("\(today.components.day!)")
+                    .font(.title)
+                    .widgetLabel {
+                        ViewThatFits(in: .horizontal) {
+                            Text(today, format: .republicanDate.day().year())
+                            Text(today, format: .republicanDate.day(.monthOnly).year())
+                            Text(today, format: .republicanDate.day(.monthOnly).year(.short))
+                            Text(today, format: .republicanDate.day(.monthOnly))
+                            Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
                         }
-                }
+                    }
             case .systemSmall:
                 VStack(alignment: .leading) {
                     SimpleDateStack(today: today)
@@ -175,10 +166,7 @@ struct DateWidget: Widget {
         #if os(watchOS)
         return [.accessoryInline, .accessoryRectangular, .accessoryCircular, .accessoryCorner]
         #else
-        if #available(iOS 16, *) {
-            return [.systemSmall, .systemMedium, .accessoryInline, .accessoryRectangular, .accessoryCircular]
-        }
-        return [.systemSmall, .systemMedium]
+        return [.systemSmall, .systemMedium, .accessoryInline, .accessoryRectangular, .accessoryCircular]
         #endif
     }
 
