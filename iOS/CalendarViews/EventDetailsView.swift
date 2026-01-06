@@ -15,10 +15,10 @@ import FrenchRepublicanCalendarCore
 import Combine
 import EventKit
 
-struct EventDetailsView: View {
+struct EventPermissionWrapperView<Content: View>: View {
     @EnvironmentObject var midnight: Midnight
-    var date: FrenchRepublicanDate
     let store = (UIApplication.shared.delegate as! AppDelegate).eventStore
+    @ViewBuilder var wrapped: (EKEventStore) -> Content
 
     var body: some View {
         let eventAccess = EKEventStore.authorizationStatus(for: .event)
@@ -54,29 +54,21 @@ struct EventDetailsView: View {
                 .prominentButtonStyle()
             }
         } else {
-            AccessEventDetailsView(date: date, store: store)
+            wrapped(store)
         }
     }
 }
 
-struct AccessEventDetailsView: View {
+struct DayEventWrapperView<Content: View>: View {
     var date: FrenchRepublicanDate
     var store: EKEventStore
     @State var events: [EKEvent] = []
     @State var loading: Bool = true
+    @ViewBuilder var wrapped: (Bool, [EKEvent]) -> Content
 
     var body: some View {
-        Group {
-            if loading {
-                ProgressView()
-            } else if events.isEmpty {
-                Text("Aucun évènement ce jour-là")
-            }
-            ForEach(events, id: \.calendarItemIdentifier) { event in
-                SingleEventView(event: event)
-            }
-            CreateEventButton(store: store, date: date)
-        }.task {
+        wrapped(loading, events)
+        .task {
             reloadEvents()
         }.onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged, object: store)) { _ in
             reloadEvents()
@@ -93,6 +85,26 @@ struct AccessEventDetailsView: View {
                 lhs.compareStartDate(with: rhs) == .orderedAscending
             })
             self.loading = false
+        }
+    }
+}
+
+struct EventDetailsView: View {
+    var date: FrenchRepublicanDate
+
+    var body: some View {
+        EventPermissionWrapperView { store in
+            DayEventWrapperView(date: date, store: store) { loading, events in
+                if loading {
+                    ProgressView()
+                } else if events.isEmpty {
+                    Text("Aucun évènement ce jour-là")
+                }
+                ForEach(events, id: \.calendarItemIdentifier) { event in
+                    SingleEventView(event: event)
+                }
+                CreateEventButton(store: store, date: date)
+            }
         }
     }
 }
