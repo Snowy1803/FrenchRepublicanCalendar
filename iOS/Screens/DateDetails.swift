@@ -51,7 +51,7 @@ struct DateDetails: View {
                     .accessibility(value: Text(date.toShortenedString().replacingOccurrences(of: "/", with: "-")))
             }
             Section(header: Text("Évènements")) {
-                EventDetailsView(date: date)
+                EventDetailsListView(date: date)
             }
         }.navigationBarTitle(date.toLongString())
         .navigationBarItems(trailing: Button(action: {

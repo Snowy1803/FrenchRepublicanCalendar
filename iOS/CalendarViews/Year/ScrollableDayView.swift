@@ -64,39 +64,50 @@ struct ScrollableDayView: View {
 
 struct SingleEventBlobView: View {
     let event: EKEvent
+    @State private var tap: Bool = false
 
     var body: some View {
-        HStack(alignment: .top, spacing: 4) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(Color(cgColor: event.calendar.cgColor))
-                .frame(width: 4)
-                .padding(.vertical, 4)
-            VStack(alignment: .leading) {
-                Text(event.title)
-                    .font(.subheadline)
-                Group {
-                    if event.isAllDay {
-                        Text("Toute la journée")
-                    } else {
-                        let singleDay = Calendar.gregorian.isDate(event.startDate, inSameDayAs: event.endDate)
-                        
-                        let format = FRCFormat.republicanDate
-                            .day(singleDay ? .none : .preferred)
-                            .hour().minute()
-                        Text("\(FrenchRepublicanDate(date: event.startDate), format: format) - \(FrenchRepublicanDate(date: event.endDate), format: format)")
-                        
-                    }
-                }.foregroundStyle(.secondary)
-                    .font(.caption)
+        Button {
+            tap = true
+        } label: {
+            HStack(alignment: .top, spacing: 4) {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color(cgColor: event.calendar.cgColor))
+                    .frame(width: 4)
+                    .padding(.vertical, 4)
+                VStack(alignment: .leading) {
+                    Text(event.title)
+                        .font(.subheadline)
+                    Group {
+                        if event.isAllDay {
+                            Text("Toute la journée")
+                        } else {
+                            let singleDay = Calendar.gregorian.isDate(event.startDate, inSameDayAs: event.endDate)
+                            
+                            let format = FRCFormat.republicanDate
+                                .day(singleDay ? .none : .preferred)
+                                .hour().minute()
+                            Text("\(FrenchRepublicanDate(date: event.startDate), format: format) - \(FrenchRepublicanDate(date: event.endDate), format: format)")
+                            
+                        }
+                    }.foregroundStyle(.secondary)
+                        .font(.caption)
+                }
             }
+            .padding(4)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(cgColor: event.calendar.cgColor).opacity(0.2))
+            )
         }
-        .padding(4)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color(cgColor: event.calendar.cgColor).opacity(0.2))
-        )
+        .buttonStyle(.plain)
         .eventuallyDateIntervalLayout(DateInterval(start: event.startDate, end: event.endDate))
+        .sheet(isPresented: $tap) {
+            NavigationView {
+                EventDetailsView(event: event)
+            }.presentationDetents([.medium])
+        }
     }
 }
 

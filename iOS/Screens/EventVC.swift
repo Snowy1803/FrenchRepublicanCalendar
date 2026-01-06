@@ -15,6 +15,17 @@ import FrenchRepublicanCalendarCore
 import EventKit
 import EventKitUI
 
+struct EventDetailsView: View {
+    var event: EKEvent
+
+    var body: some View {
+        EventVC(event: event)
+            .ignoresSafeArea()
+            .navigationTitle("Détails de l'évènement")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
 struct EventVC: UIViewControllerRepresentable {
     typealias UIViewControllerType = EKEventViewController
     

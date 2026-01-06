@@ -89,7 +89,7 @@ struct DayEventWrapperView<Content: View>: View {
     }
 }
 
-struct EventDetailsView: View {
+struct EventDetailsListView: View {
     var date: FrenchRepublicanDate
 
     var body: some View {
@@ -113,7 +113,7 @@ struct SingleEventView: View {
     let event: EKEvent
 
     var body: some View {
-        NavigationLink(destination: EventVC(event: event)) {
+        NavigationLink(destination: EventDetailsView(event: event)) {
             HStack(alignment: .firstTextBaseline) {
                 Image.decorative(systemName: "circle.fill")
                     .foregroundStyle(Color(cgColor: event.calendar.cgColor))

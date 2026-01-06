@@ -75,7 +75,7 @@
 		FD6EBB502EB6DF7E00796761 /* DateTimeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */; };
 		FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventVC.swift */; };
 		FD6EBB542EB7F1B600796761 /* CreateEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */; };
-		FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */; };
+		FD6EBB572EB7F1F900796761 /* EventDetailsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB562EB7F1F900796761 /* EventDetailsListView.swift */; };
 		FD6EBB5A2EB8015D00796761 /* DecimalTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */; };
 		FD6EBB5E2EB8331C00796761 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */; };
 		FD6EBB602EB90E1300796761 /* RepublicanDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */; };
@@ -238,7 +238,7 @@
 		FD6EBB4F2EB6DF7E00796761 /* DateTimeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeWidget.swift; sourceTree = "<group>"; };
 		FD6EBB512EB7F19A00796761 /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventVC.swift; sourceTree = "<group>"; };
-		FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
+		FD6EBB562EB7F1F900796761 /* EventDetailsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsListView.swift; sourceTree = "<group>"; };
 		FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTimePicker.swift; sourceTree = "<group>"; };
 		FD6EBB5D2EB8330F00796761 /* CalendarMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
 		FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepublicanDatePicker.swift; sourceTree = "<group>"; };
@@ -508,7 +508,7 @@
 				FD6EBB592EB8015700796761 /* DecimalTimePicker.swift */,
 				FD6EBB632EB98EBF00796761 /* WheelRepublicanDatePicker.swift */,
 				FD6EBB612EB90F6E00796761 /* FoldablePicker.swift */,
-				FD6EBB562EB7F1F900796761 /* EventDetailsView.swift */,
+				FD6EBB562EB7F1F900796761 /* EventDetailsListView.swift */,
 			);
 			path = CalendarViews;
 			sourceTree = "<group>";
@@ -767,7 +767,7 @@
 				FD4BA0F12EDE85B6008551C5 /* MonthCollection.swift in Sources */,
 				FD6EBB5E2EB8331C00796761 /* CalendarMonthView.swift in Sources */,
 				FDA522712ECE720F00210C75 /* VariantPicker.swift in Sources */,
-				FD6EBB572EB7F1F900796761 /* EventDetailsView.swift in Sources */,
+				FD6EBB572EB7F1F900796761 /* EventDetailsListView.swift in Sources */,
 				FD6EBB642EB98EBF00796761 /* WheelRepublicanDatePicker.swift in Sources */,
 				20E0956D253F8A7200383A31 /* Date+iso.swift in Sources */,
 				20E0957D253F990C00383A31 /* FavoriteList.swift in Sources */,
