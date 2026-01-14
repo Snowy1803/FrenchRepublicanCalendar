@@ -26,6 +26,7 @@ struct CreateEventView: View {
     @State private var isAllDay: Bool = false
     @State private var startDate: Date
     @State private var endDate: Date
+    @State private var travelTime: DecimalTime = .midnight
     
     
     init(store: EKEventStore, date: FrenchRepublicanDate) {
@@ -63,7 +64,27 @@ struct CreateEventView: View {
                     showDatePicker: $shownPicker[is: 3],
                     showTimePicker: $shownPicker[is: 4]
                 ).transition(.identity)
-            }.buttonStyle(.borderless)
+                if !isAllDay {
+                    Picker("Temps de trajet", selection: $travelTime) {
+                        Text("Aucun").tag(DecimalTime.midnight)
+                        Text("5 minutes").tag(DecimalTime(hour: 0, minute: 5, second: 0, remainder: 0))
+                        Text("10 minutes").tag(DecimalTime(hour: 0, minute: 10, second: 0, remainder: 0))
+                        Text("20 minutes").tag(DecimalTime(hour: 0, minute: 20, second: 0, remainder: 0))
+                        Text("40 minutes").tag(DecimalTime(hour: 0, minute: 40, second: 0, remainder: 0))
+                        Text("60 minutes").tag(DecimalTime(hour: 0, minute: 60, second: 0, remainder: 0))
+                        Text("80 minutes").tag(DecimalTime(hour: 0, minute: 80, second: 0, remainder: 0))
+                        Text("1 heure").tag(DecimalTime(hour: 1, minute: 0, second: 0, remainder: 0))
+                    }
+                }
+            } footer: {
+                if startDate > endDate {
+                    Text("L'évènement ne peut pas finir avant d'avoir commencé.")
+                        .foregroundStyle(.red)
+                } else {
+                    Text("Tous les temps utilisent le temps décimal.")
+                }
+            }
+            .buttonStyle(.borderless)
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -75,9 +96,12 @@ struct CreateEventView: View {
                     event.endDate = endDate
                     event.isAllDay = isAllDay
                     event.calendar = store.defaultCalendarForNewEvents
+                    if !isAllDay {
+                        event.setValue(Int(travelTime.timeSinceMidnight), forKey: "travelTime")
+                    }
                     try? store.save(event, span: .futureEvents)
                     dismiss()
-                }
+                }.disabled(startDate > endDate)
             }
             ToolbarItem(placement: .cancellationAction) {
                 Button("Annuler") {
@@ -86,6 +110,7 @@ struct CreateEventView: View {
             }
         }
         .navigationTitle("Nouvel évènement")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
