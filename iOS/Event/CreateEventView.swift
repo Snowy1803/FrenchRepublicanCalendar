@@ -27,6 +27,8 @@ struct CreateEventView: View {
     @State private var startDate: Date
     @State private var endDate: Date
     @State private var travelTime: DecimalTime = .midnight
+    @State private var recurrence: Int? = nil
+    @State private var recurrenceEnd: Date? = nil
     
     
     init(store: EKEventStore, date: FrenchRepublicanDate) {
@@ -85,6 +87,32 @@ struct CreateEventView: View {
                 }
             }
             .buttonStyle(.borderless)
+            Section {
+                Picker("Récurrence", selection: $recurrence) {
+                    Text("Jamais").tag(nil as Int?)
+                    Text("Tous les jours").tag(1)
+                    Text("Tous les 5 jours (démie-décade)").tag(5)
+                    Text("Tous les 10 jours (décade)").tag(10)
+                    Text("Tous les 15 jours (2 fois par mois)").tag(15)
+                    Text("Tous les 30 jours (1 fois par mois)").tag(30)
+                    Text("Tous les ans").tag(365)
+                }
+                if recurrence != nil {
+                    Picker("Fin de la récurrence", selection: Binding { recurrenceEnd != nil } set: { recurrenceEnd = $0 ? startDate : nil }) {
+                        Text("Jamais").tag(false)
+                        Text("Le").tag(true)
+                    }
+                    if recurrenceEnd != nil {
+                        FoldableDateTimePicker(
+                            label: Text("Date de fin"),
+                            precision: .decimalTime,
+                            date: Binding { recurrenceEnd ?? startDate } set: { recurrenceEnd = $0 },
+                            showDatePicker: $shownPicker[is: 5], showTimePicker: .constant(false)
+                        )
+                    }
+                }
+            }
+            .buttonStyle(.borderless)
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -98,6 +126,9 @@ struct CreateEventView: View {
                     event.calendar = store.defaultCalendarForNewEvents
                     if !isAllDay {
                         event.setValue(Int(travelTime.timeSinceMidnight), forKey: "travelTime")
+                    }
+                    if let recurrence {
+                        event.addRecurrenceRule(EKRecurrenceRule(recurrenceWith: .daily, interval: recurrence, end: recurrenceEnd.flatMap { EKRecurrenceEnd(end: $0)} ))
                     }
                     try? store.save(event, span: .futureEvents)
                     dismiss()
