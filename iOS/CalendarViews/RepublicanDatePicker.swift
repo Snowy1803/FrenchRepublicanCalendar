@@ -236,7 +236,7 @@ struct RepublicanDatePicker: View {
 }
 
 struct FoldableDatePicker: View {
-    var si: Bool
+    var si: Bool = false
     var label: Text
     @Binding var date: Date
     @Binding var showPicker: Bool
