@@ -120,7 +120,7 @@ struct SingleEventBlobView: View {
         .sheet(isPresented: $tap) {
             NavigationView {
                 EventDetailsView(event: event)
-            }.presentationDetents([.medium])
+            }.presentationDetents([.medium, .large])
         }
     }
 }

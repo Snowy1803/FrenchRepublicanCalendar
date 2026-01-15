@@ -25,8 +25,7 @@ struct EventDetailsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        EventVC(event: event)
-            .ignoresSafeArea()
+        EventDetailsContent(store: store, event: event)
             .navigationTitle("Détails de l'évènement")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -65,6 +64,128 @@ struct EventDetailsView: View {
                     EditEventView(store: store, event: event)
                 }
             }
+    }
+}
+
+struct EventDetailsContent: View {
+    var store: EKEventStore
+    var event: EKEvent
+    @StateObject var model: EventModel
+    
+    init(store: EKEventStore, event: EKEvent) {
+        self.store = store
+        self.event = event
+        self._model = StateObject(wrappedValue: EventModel(event: event))
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
+                    Text(event.title)
+                        .lineLimit(2)
+                        .font(.title)
+                    if let location = event.location {
+                        Text(location)
+                    }
+                }.padding([.top, .horizontal])
+                
+                VStack(alignment: .leading) {
+                    let start = FrenchRepublicanDate(date: event.startDate)
+                    let end = FrenchRepublicanDate(date: event.endDate)
+                    if Calendar.gregorian.isDate(event.startDate, inSameDayAs: event.endDate) {
+                        Text("\(start, format: .republicanDate.day().year())")
+                        if event.isAllDay {
+                            Text("Toute la journée")
+                        } else {
+                            Text("de \(start.decimalTime, format: .decimalTime.hour().minute()) à \(end.decimalTime, format: .decimalTime.hour().minute())")
+                        }
+                    } else {
+                        Text("Du \(start, format: .republicanDate.day().year().hour().minute())")
+                        Text("au \(end, format: .republicanDate.day().year().hour().minute())")
+                    }
+                    if let recc = event.recurrenceRules?.first {
+                        switch recc.frequency {
+                        case .daily:
+                            if recc.interval == 1 {
+                                Text("Se répète tous les jours")
+                            } else {
+                                Text("Se répète tous les \(recc.interval) jours")
+                            }
+                        case .weekly:
+                            if recc.interval == 1 {
+                                Text("Se répète toutes les semaines grégoriennes")
+                            } else {
+                                Text("Se répète toutes les \(recc.interval) semaines grégoriennes")
+                            }
+                        case .monthly:
+                            if recc.interval == 1 {
+                                Text("Se répète tous les mois grégoriens")
+                            } else {
+                                Text("Se répète tous les \(recc.interval) mois grégoriens")
+                            }
+                        case .yearly:
+                            if recc.interval == 1 {
+                                Text("Se répète tous les ans grégoriens")
+                            } else {
+                                Text("Se répète tous les \(recc.interval) ans")
+                            }
+                        @unknown default:
+                            Text("Se répète")
+                        }
+                    }
+                }.foregroundStyle(.secondary)
+                    .padding()
+                
+                List {
+                    CalendarPicker(store: store, calendar: Binding {
+                        event.calendar
+                    } set: { newValue in
+                        event.calendar = newValue
+                        try? store.save(event, span: .futureEvents)
+                    })
+                    AlarmPicker(alarms: $model.alarms, index: 0)
+                    if !model.alarms.isEmpty {
+                        AlarmPicker(alarms: $model.alarms, index: 1)
+                    }
+                    if let url = event.url {
+                        VStack(alignment: .leading) {
+                            Text("URL")
+                            Link(destination: url) {
+                                Text(url.absoluteString)
+                            }.foregroundStyle(.tint)
+                        }
+                    }
+                    if event.hasNotes, let notes = event.notes {
+                        let notesText = Text((try? AttributedString(markdown: notes, options: .init(allowsExtendedAttributes: false, interpretedSyntax: .inlineOnlyPreservingWhitespace, failurePolicy: .returnPartiallyParsedIfPossible))) ?? AttributedString(notes))
+                        VStack(alignment: .leading) {
+                            NavigationLink(destination: ScrollView {
+                                VStack(alignment: .leading) {
+                                    notesText
+                                        .multilineTextAlignment(.leading)
+                                        .navigationTitle("Notes")
+                                    Spacer()
+                                }
+                            }) {
+                                HStack {
+                                    Text("Notes")
+                                    Spacer()
+                                    Text("Afficher plus")
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            notesText
+                                .lineLimit(8)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                .listStyle(.plain)
+                .frame(height: 400)
+                .scrollDisabled(true)
+            }
+        }
+        .multilineTextAlignment(.leading)
     }
 }
 
