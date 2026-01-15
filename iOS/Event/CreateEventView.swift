@@ -117,18 +117,7 @@ struct EventEditorView: View {
                     showTimePicker: $shownPicker[is: 4]
                 ).transition(.identity)
                 if !event.isAllDay {
-                    Picker("Temps de trajet", selection: $event.travelTime) {
-                        Section {
-                            Text("Aucun").tag(DecimalTime.midnight)
-                        }
-                        Text("5 minutes").tag(DecimalTime(hour: 0, minute: 5, second: 0, remainder: 0))
-                        Text("10 minutes").tag(DecimalTime(hour: 0, minute: 10, second: 0, remainder: 0))
-                        Text("20 minutes").tag(DecimalTime(hour: 0, minute: 20, second: 0, remainder: 0))
-                        Text("40 minutes").tag(DecimalTime(hour: 0, minute: 40, second: 0, remainder: 0))
-                        Text("60 minutes").tag(DecimalTime(hour: 0, minute: 60, second: 0, remainder: 0))
-                        Text("80 minutes").tag(DecimalTime(hour: 0, minute: 80, second: 0, remainder: 0))
-                        Text("1 heure").tag(DecimalTime(hour: 1, minute: 0, second: 0, remainder: 0))
-                    }
+                    TravelTimePicker(travelTime: $event.travelTime)
                 }
             } footer: {
                 if event.startDate > event.endDate {

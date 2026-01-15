@@ -38,26 +38,6 @@ struct AlarmPicker: View {
         }
     }
     
-    struct AlarmChoice: Identifiable {
-        var name: String
-        var time: TimeInterval
-        
-        var id: TimeInterval { time }
-        
-        init(name: String, time: TimeInterval) {
-            self.name = name
-            self.time = time
-        }
-        
-        init(name: String, days: TimeInterval) {
-            self.init(name: name, time: days * 24 * 3600)
-        }
-        
-        init(name: String, hours: Int = 0, minutes: Int) {
-            self.init(name: name, time: DecimalTime(hour: hours, minute: minutes, second: 0, remainder: 0).timeSinceMidnight)
-        }
-    }
-    
     static let defaultChoices: [AlarmChoice] = [
         AlarmChoice(name: "À l'heure de l'évènement", time: 0),
         AlarmChoice(name: "5 minutes avant", minutes: 5),
@@ -89,5 +69,53 @@ struct AlarmPicker: View {
                 Text(choice.name).tag(choice.time)
             }
         }
+    }
+}
+
+struct TravelTimePicker: View {
+    @Binding var travelTime: DecimalTime
+    
+    static let defaultChoices: [AlarmChoice] = [
+        AlarmChoice(name: "5 minutes", minutes: 5),
+        AlarmChoice(name: "10 minutes", minutes: 10),
+        AlarmChoice(name: "20 minutes", minutes: 20),
+        AlarmChoice(name: "40 minutes", minutes: 40),
+        AlarmChoice(name: "60 minutes", minutes: 60),
+        AlarmChoice(name: "80 minutes", minutes: 80),
+        AlarmChoice(name: "1 heure", hours: 1, minutes: 0),
+    ]
+
+    var body: some View {
+        Picker("Temps de trajet", selection: $travelTime) {
+            Section {
+                Text("Aucun").tag(DecimalTime.midnight)
+            }
+            if !TravelTimePicker.defaultChoices.contains(where: { $0.time == travelTime.timeSinceMidnight }) {
+                Text("\(travelTime, format: .decimalTime.hour().minute().second())").tag(travelTime)
+            }
+            ForEach(TravelTimePicker.defaultChoices) { choice in
+                Text(choice.name).tag(DecimalTime(timeSinceMidnight: choice.time))
+            }
+        }
+    }
+}
+
+struct AlarmChoice: Identifiable {
+    var name: String
+    var time: TimeInterval
+    
+    var id: TimeInterval { time }
+    
+    init(name: String, time: TimeInterval) {
+        self.name = name
+        self.time = time
+    }
+    
+    init(name: String, days: TimeInterval) {
+        self.init(name: name, time: days * 24 * 3600)
+    }
+    
+    init(name: String, hours: Int = 0, minutes: Int) {
+        self.init(name: name, time: DecimalTime(hour: hours, minute: minutes, second: 0, remainder: 0).timeSinceMidnight)
     }
 }
