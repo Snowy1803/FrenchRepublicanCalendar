@@ -23,31 +23,26 @@ struct DoubleFoldablePicker<PickerView: View>: View {
     @ViewBuilder var pickerView: (Bool) -> PickerView
     
     var body: some View {
-        VStack {
-            HStack {
-                label
-                    .lineLimit(1)
-                    .layoutPriority(1)
-                Spacer()
-                PickerButton(label: value1, showDetails: $showPicker1)
+        HStack {
+            label
+                .lineLimit(1)
+                .layoutPriority(1)
+            Spacer()
+            PickerButton(label: value1, showDetails: $showPicker1)
+                .lineLimit(1)
+                .layoutPriority(5)
+            if showSecond {
+                PickerButton(label: value2, showDetails: $showPicker2)
                     .lineLimit(1)
                     .layoutPriority(5)
-                if showSecond {
-                    PickerButton(label: value2, showDetails: $showPicker2)
-                        .lineLimit(1)
-                        .layoutPriority(5)
-                }
-            }.animation(nil, value: showPicker1 || showPicker2)
-            ZStack {
-                if showPicker1 || showPicker2 {
-                    pickerView(showPicker2)
-                        .transition(.move(edge: .top).combined(with: .opacity))
-                }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.top, 0.01) // need > 0 for the view to exist but want 0
-            .clipped()
-            .animation(.default, value: showPicker1 || showPicker2)
-        }.padding(.bottom, showPicker1 || showPicker2 ? 0 : -8)
+        }
+        
+        if showPicker1 || showPicker2 {
+            pickerView(showPicker2)
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .frame(maxWidth: .infinity)
+                .clipped()
+        }
     }
 }
