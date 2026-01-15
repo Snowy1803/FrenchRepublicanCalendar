@@ -32,6 +32,7 @@ struct CreateEventView: View {
     @State private var calendar: EKCalendar? = nil
     @State private var url: String = ""
     @State private var notes: String = ""
+    @State private var alarms: [TimeInterval] = []
     
     
     init(store: EKEventStore, date: FrenchRepublicanDate) {
@@ -71,7 +72,9 @@ struct CreateEventView: View {
                 ).transition(.identity)
                 if !isAllDay {
                     Picker("Temps de trajet", selection: $travelTime) {
-                        Text("Aucun").tag(DecimalTime.midnight)
+                        Section {
+                            Text("Aucun").tag(DecimalTime.midnight)
+                        }
                         Text("5 minutes").tag(DecimalTime(hour: 0, minute: 5, second: 0, remainder: 0))
                         Text("10 minutes").tag(DecimalTime(hour: 0, minute: 10, second: 0, remainder: 0))
                         Text("20 minutes").tag(DecimalTime(hour: 0, minute: 20, second: 0, remainder: 0))
@@ -92,7 +95,9 @@ struct CreateEventView: View {
             .buttonStyle(.borderless)
             Section {
                 Picker("Récurrence", selection: $recurrence) {
-                    Text("Jamais").tag(nil as Int?)
+                    Section {
+                        Text("Jamais").tag(nil as Int?)
+                    }
                     Text("Tous les jours").tag(1)
                     Text("Tous les 5 jours (démie-décade)").tag(5)
                     Text("Tous les 10 jours (décade)").tag(10)
@@ -119,6 +124,13 @@ struct CreateEventView: View {
             
             Section {
                 CalendarPicker(store: store, calendar: Binding { calendar ?? store.defaultCalendarForNewEvents } set: { calendar = $0 })
+            }
+            
+            Section {
+                AlarmPicker(alarms: $alarms, index: 0)
+                if !alarms.isEmpty {
+                    AlarmPicker(alarms: $alarms, index: 1)
+                }
             }
             
             Section {
@@ -149,6 +161,9 @@ struct CreateEventView: View {
                     }
                     if !notes.isEmpty {
                         event.notes = notes
+                    }
+                    for alarm in alarms {
+                        event.addAlarm(EKAlarm(relativeOffset: -alarm))
                     }
                     try? store.save(event, span: .futureEvents)
                     dismiss()
@@ -188,6 +203,59 @@ struct CalendarPicker: View {
                     }
                 }
             }
+        }
+    }
+}
+
+struct AlarmPicker: View {
+    @Binding var alarms: [TimeInterval]
+    var index: Int
+    
+    var selection: Binding<TimeInterval?> {
+        Binding {
+            if alarms.indices.contains(index) {
+                alarms[index]
+            } else {
+                nil
+            }
+        } set: { newValue in
+            if alarms.indices.contains(index) {
+                if let newValue {
+                    alarms[index] = newValue
+                } else {
+                    alarms.remove(at: index)
+                }
+            } else if let newValue {
+                alarms.append(newValue)
+            }
+            alarms.sort()
+        }
+    }
+
+    var body: some View {
+        Picker(index == 0 ? "Alerte" : "Deuxième alerte", selection: selection) {
+            Section {
+                Text("Aucune").tag(nil as TimeInterval?)
+            }
+            Text("À l'heure de l'évènement").tag(0 as TimeInterval)
+            Text("5 minutes avant")
+                .tag(DecimalTime(hour: 0, minute: 5, second: 0, remainder: 0).timeSinceMidnight)
+            Text("10 minutes avant")
+                .tag(DecimalTime(hour: 0, minute: 10, second: 0, remainder: 0).timeSinceMidnight)
+            Text("15 minutes avant")
+                .tag(DecimalTime(hour: 0, minute: 15, second: 0, remainder: 0).timeSinceMidnight)
+            Text("20 minutes avant")
+                .tag(DecimalTime(hour: 0, minute: 20, second: 0, remainder: 0).timeSinceMidnight)
+            Text("40 minutes avant")
+                .tag(DecimalTime(hour: 0, minute: 40, second: 0, remainder: 0).timeSinceMidnight)
+            Text("80 minutes avant")
+                .tag(DecimalTime(hour: 0, minute: 80, second: 0, remainder: 0).timeSinceMidnight)
+            Text("1 heure avant")
+                .tag(DecimalTime(hour: 1, minute: 0, second: 0, remainder: 0).timeSinceMidnight)
+            Text("1 jour avant").tag(24 * 3600 as TimeInterval)
+            Text("2 jours avant").tag(2 * 24 * 3600 as TimeInterval)
+            Text("5 jours avant").tag(5 * 24 * 3600 as TimeInterval)
+            Text("10 jours avant").tag(10 * 24 * 3600 as TimeInterval)
         }
     }
 }
