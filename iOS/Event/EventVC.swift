@@ -40,12 +40,23 @@ struct EventDetailsView: View {
                         showDelete = true
                     }
                     .confirmationDialog("Supprimer", isPresented: $showDelete, titleVisibility: .hidden) {
-                        Button("Supprimer l'évènement", role: .destructive) {
-                            try? store.remove(event, span: .thisEvent)
-                            dismiss()
+                        if event.hasRecurrenceRules {
+                            Button("Supprimer celui-ci seulement", role: .destructive) {
+                                try? store.remove(event, span: .thisEvent)
+                                dismiss()
+                            }
+                            Button("Supprimer tous les évènements", role: .destructive) {
+                                try? store.remove(event, span: .futureEvents)
+                                dismiss()
+                            }
+                        } else {
+                            Button("Supprimer l'évènement", role: .destructive) {
+                                try? store.remove(event, span: .thisEvent)
+                                dismiss()
+                            }
                         }
                     } message: {
-                        Text("Voulez-vous vraiment supprimer cet évènement ?")
+                        Text("Voulez-vous vraiment supprimer cet évènement\(event.hasRecurrenceRules ? " récurrent" : "") ?")
                     }
                 }
             }
