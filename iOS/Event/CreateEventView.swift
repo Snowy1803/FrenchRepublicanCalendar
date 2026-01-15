@@ -30,6 +30,8 @@ struct CreateEventView: View {
     @State private var recurrence: Int? = nil
     @State private var recurrenceEnd: Date? = nil
     @State private var calendar: EKCalendar? = nil
+    @State private var url: String = ""
+    @State private var notes: String = ""
     
     
     init(store: EKEventStore, date: FrenchRepublicanDate) {
@@ -118,6 +120,13 @@ struct CreateEventView: View {
             Section {
                 CalendarPicker(store: store, calendar: Binding { calendar ?? store.defaultCalendarForNewEvents } set: { calendar = $0 })
             }
+            
+            Section {
+                TextField("URL", text: $url)
+                    .textContentType(.URL)
+                TextField("Notes", text: $notes, axis: .vertical)
+                    .lineLimit(7...7)
+            }
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -134,6 +143,12 @@ struct CreateEventView: View {
                     }
                     if let recurrence {
                         event.addRecurrenceRule(EKRecurrenceRule(recurrenceWith: .daily, interval: recurrence, end: recurrenceEnd.flatMap { EKRecurrenceEnd(end: $0)} ))
+                    }
+                    if !url.isEmpty {
+                        event.url = URL(string: url)
+                    }
+                    if !notes.isEmpty {
+                        event.notes = notes
                     }
                     try? store.save(event, span: .futureEvents)
                     dismiss()
