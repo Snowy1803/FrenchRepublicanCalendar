@@ -46,6 +46,7 @@ struct CreateEventView: View {
             Section {
                 TextField("Titre", text: $title)
                 TextField("Lieu ou appel vidéo", text: $location)
+                    .textContentType(.location)
             }
             Section {
                 Toggle(isOn: Binding {
@@ -136,6 +137,9 @@ struct CreateEventView: View {
             Section {
                 TextField("URL", text: $url)
                     .textContentType(.URL)
+                    .keyboardType(.URL)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
                 TextField("Notes", text: $notes, axis: .vertical)
                     .lineLimit(7...7)
             }
