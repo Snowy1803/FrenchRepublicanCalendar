@@ -52,6 +52,7 @@ struct EditEventView: View {
     @Environment(\.dismiss) var dismiss
     
     @StateObject private var event: EventModel
+    @State private var recurringConfirm = false
     
     init(store: EKEventStore, event: EKEvent) {
         self.store = store
@@ -64,9 +65,25 @@ struct EditEventView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("OK") {
-                    event.saveChanges(event: backingEvent, store: store, span: .thisEvent)
-                    dismiss()
+                    if backingEvent.hasRecurrenceRules {
+                        recurringConfirm = true
+                    } else {
+                        event.saveChanges(event: backingEvent, store: store, span: .thisEvent)
+                        dismiss()
+                    }
                 }.disabled(event.startDate > event.endDate)
+                .confirmationDialog("Modifier", isPresented: $recurringConfirm, titleVisibility: .hidden) {
+                    Button("Modifier celui-ci seulement") {
+                        event.saveChanges(event: backingEvent, store: store, span: .thisEvent)
+                        dismiss()
+                    }
+                    Button("Modifier tous ceux à venir") {
+                        event.saveChanges(event: backingEvent, store: store, span: .futureEvents)
+                        dismiss()
+                    }
+                } message: {
+                    Text("Cet évènement est récurrent.")
+                }
             }
             ToolbarItem(placement: .cancellationAction) {
                 Button("Annuler") {
