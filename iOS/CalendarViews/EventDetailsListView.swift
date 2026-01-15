@@ -152,8 +152,9 @@ struct CreateEventButton: View {
                 Text("Nouvel évènement")
             }
         }.sheet(isPresented: $sheet) {
-            CreateEventView(store: store, date: date)
-                .interactiveDismissDisabled()
+            NavigationView {
+                CreateEventView(store: store, date: date)
+            }
         }
     }
 }
