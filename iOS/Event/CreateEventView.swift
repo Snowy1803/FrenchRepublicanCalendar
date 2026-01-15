@@ -18,61 +18,73 @@ import EventKit
 struct CreateEventView: View {
     var store: EKEventStore
     @Environment(\.dismiss) var dismiss
-    @State private var shownPicker: Int = 0
     
-    // Properties
-    @State private var title: String = ""
-    @State private var location: String = ""
-    @State private var isAllDay: Bool = false
-    @State private var startDate: Date
-    @State private var endDate: Date
-    @State private var travelTime: DecimalTime = .midnight
-    @State private var recurrence: Int? = nil
-    @State private var recurrenceEnd: Date? = nil
-    @State private var calendar: EKCalendar? = nil
-    @State private var url: String = ""
-    @State private var notes: String = ""
-    @State private var alarms: [TimeInterval] = []
-    
+    @StateObject private var event: EventModel
     
     init(store: EKEventStore, date: FrenchRepublicanDate) {
         self.store = store
-        self.startDate = date.date.addingTimeInterval(DecimalTime(hour: 4, minute: 0, second: 0, remainder: 0).timeSinceMidnight)
-        self.endDate = date.date.addingTimeInterval(DecimalTime(hour: 4, minute: 50, second: 0, remainder: 0).timeSinceMidnight)
+        self._event = StateObject(wrappedValue: EventModel(date: date))
     }
+    
+    var body: some View {
+        EventEditorView(store: store, event: event)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Ajouter") {
+                    event.createNewEvent(store: store)
+                    dismiss()
+                }.disabled(event.startDate > event.endDate)
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Annuler") {
+                    dismiss()
+                }
+            }
+        }
+        .navigationTitle("Nouvel évènement")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct EventEditorView: View {
+    var store: EKEventStore
+    @State private var shownPicker: Int = 0
+    
+    // Properties
+    @ObservedObject var event: EventModel
     
     var body: some View {
         Form {
             Section {
-                TextField("Titre", text: $title)
-                TextField("Lieu ou appel vidéo", text: $location)
+                TextField("Titre", text: $event.title)
+                TextField("Lieu ou appel vidéo", text: $event.location)
                     .textContentType(.location)
             }
             Section {
                 Toggle(isOn: Binding {
-                    isAllDay
+                    event.isAllDay
                 } set: {
-                    isAllDay = $0
+                    event.isAllDay = $0
                     shownPicker = 0
                 }) {
                     Text("Jour entier")
                 }
                 FoldableDateTimePicker(
                     label: Text("Début"),
-                    precision: isAllDay ? .decimalTime : .decimalTime.hour().minute(),
-                    date: $startDate,
+                    precision: event.isAllDay ? .decimalTime : .decimalTime.hour().minute(),
+                    date: $event.startDate,
                     showDatePicker: $shownPicker[is: 1],
                     showTimePicker: $shownPicker[is: 2]
                 ).transition(.identity)
                 FoldableDateTimePicker(
                     label: Text("Fin"),
-                    precision: isAllDay ? .decimalTime : .decimalTime.hour().minute(),
-                    date: $endDate,
+                    precision: event.isAllDay ? .decimalTime : .decimalTime.hour().minute(),
+                    date: $event.endDate,
                     showDatePicker: $shownPicker[is: 3],
                     showTimePicker: $shownPicker[is: 4]
                 ).transition(.identity)
-                if !isAllDay {
-                    Picker("Temps de trajet", selection: $travelTime) {
+                if !event.isAllDay {
+                    Picker("Temps de trajet", selection: $event.travelTime) {
                         Section {
                             Text("Aucun").tag(DecimalTime.midnight)
                         }
@@ -86,7 +98,7 @@ struct CreateEventView: View {
                     }
                 }
             } footer: {
-                if startDate > endDate {
+                if event.startDate > event.endDate {
                     Text("L'évènement ne peut pas finir avant d'avoir commencé.")
                         .foregroundStyle(.red)
                 } else {
@@ -95,7 +107,7 @@ struct CreateEventView: View {
             }
             .buttonStyle(.borderless)
             Section {
-                Picker("Récurrence", selection: $recurrence) {
+                Picker("Récurrence", selection: $event.recurrence) {
                     Section {
                         Text("Jamais").tag(nil as Int?)
                     }
@@ -106,16 +118,16 @@ struct CreateEventView: View {
                     Text("Tous les 30 jours (1 fois par mois)").tag(30)
                     Text("Tous les ans").tag(365)
                 }
-                if recurrence != nil {
-                    Picker("Fin de la récurrence", selection: Binding { recurrenceEnd != nil } set: { recurrenceEnd = $0 ? startDate : nil }) {
+                if event.recurrence != nil {
+                    Picker("Fin de la récurrence", selection: Binding { event.recurrenceEnd != nil } set: { event.recurrenceEnd = $0 ? event.startDate : nil }) {
                         Text("Jamais").tag(false)
                         Text("Le").tag(true)
                     }
-                    if recurrenceEnd != nil {
+                    if event.recurrenceEnd != nil {
                         FoldableDateTimePicker(
                             label: Text("Date de fin"),
                             precision: .decimalTime,
-                            date: Binding { recurrenceEnd ?? startDate } set: { recurrenceEnd = $0 },
+                            date: Binding { event.recurrenceEnd ?? event.startDate } set: { event.recurrenceEnd = $0 },
                             showDatePicker: $shownPicker[is: 5], showTimePicker: .constant(false)
                         )
                     }
@@ -124,62 +136,26 @@ struct CreateEventView: View {
             .buttonStyle(.borderless)
             
             Section {
-                CalendarPicker(store: store, calendar: Binding { calendar ?? store.defaultCalendarForNewEvents } set: { calendar = $0 })
+                CalendarPicker(store: store, calendar: Binding { event.calendar ?? store.defaultCalendarForNewEvents } set: { event.calendar = $0 })
             }
             
             Section {
-                AlarmPicker(alarms: $alarms, index: 0)
-                if !alarms.isEmpty {
-                    AlarmPicker(alarms: $alarms, index: 1)
+                AlarmPicker(alarms: $event.alarms, index: 0)
+                if !event.alarms.isEmpty {
+                    AlarmPicker(alarms: $event.alarms, index: 1)
                 }
             }
             
             Section {
-                TextField("URL", text: $url)
+                TextField("URL", text: $event.url)
                     .textContentType(.URL)
                     .keyboardType(.URL)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
-                TextField("Notes", text: $notes, axis: .vertical)
+                TextField("Notes", text: $event.notes, axis: .vertical)
                     .lineLimit(7...7)
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Ajouter") {
-                    let event = EKEvent(eventStore: store)
-                    event.title = title
-                    event.location = location.isEmpty ? nil : location
-                    event.startDate = startDate
-                    event.endDate = endDate
-                    event.isAllDay = isAllDay
-                    event.calendar = calendar ?? store.defaultCalendarForNewEvents
-                    if !isAllDay {
-                        event.setValue(Int(travelTime.timeSinceMidnight), forKey: "travelTime")
-                    }
-                    if let recurrence {
-                        event.addRecurrenceRule(EKRecurrenceRule(recurrenceWith: .daily, interval: recurrence, end: recurrenceEnd.flatMap { EKRecurrenceEnd(end: $0)} ))
-                    }
-                    if !url.isEmpty {
-                        event.url = URL(string: url)
-                    }
-                    if !notes.isEmpty {
-                        event.notes = notes
-                    }
-                    for alarm in alarms {
-                        event.addAlarm(EKAlarm(relativeOffset: -alarm))
-                    }
-                    try? store.save(event, span: .futureEvents)
-                    dismiss()
-                }.disabled(startDate > endDate)
-            }
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Annuler") {
-                    dismiss()
-                }
-            }
-        }
-        .navigationTitle("Nouvel évènement")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

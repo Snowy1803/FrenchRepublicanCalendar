@@ -1,0 +1,138 @@
+//
+//  EventModel.swift
+//  FrenchRepublicanCalendar
+// 
+//  Created by Emil Pedersen on 15/01/2026.
+//  Copyright © 2026 Snowy_1803. All rights reserved.
+// 
+//  This Source Code Form is subject to the terms of the Mozilla Public
+//  License, v. 2.0. If a copy of the MPL was not distributed with this
+//  file, You can obtain one at https://mozilla.org/MPL/2.0/.
+//
+
+import FrenchRepublicanCalendarCore
+import EventKit
+import Combine
+
+class EventModel: ObservableObject {
+    @EventProp var title: String = ""
+    @EventProp var location: String = ""
+    @EventProp var isAllDay: Bool = false
+    @EventProp var startDate: Date
+    @EventProp var endDate: Date
+    @EventProp var travelTime: DecimalTime = .midnight
+    @EventProp var recurrence: Int? = nil
+    @EventProp var recurrenceEnd: Date? = nil
+    @EventProp var calendar: EKCalendar? = nil
+    @EventProp var url: String = ""
+    @EventProp var notes: String = ""
+    @EventProp var alarms: [TimeInterval] = []
+    
+    init(date: FrenchRepublicanDate) {
+        self.startDate = date.date.addingTimeInterval(DecimalTime(hour: 4, minute: 0, second: 0, remainder: 0).timeSinceMidnight)
+        self.endDate = date.date.addingTimeInterval(DecimalTime(hour: 4, minute: 50, second: 0, remainder: 0).timeSinceMidnight)
+        self._startDate.changed = true
+        self._endDate.changed = true
+    }
+    
+    init(event: EKEvent) {
+        self.title = event.title
+        assert(_title.changed == false)
+        self.location = event.location ?? ""
+        self.isAllDay = event.isAllDay
+        self.startDate = event.startDate
+        self.endDate = event.endDate
+        if let travelTimeValue = event.value(forKey: "travelTime") as? Int {
+            self.travelTime = DecimalTime(timeSinceMidnight: TimeInterval(travelTimeValue))
+        }
+        if let recurrenceRule = event.recurrenceRules?.first {
+            self.recurrence = recurrenceRule.interval
+            if let recurrenceEnd = recurrenceRule.recurrenceEnd?.endDate {
+                self.recurrenceEnd = recurrenceEnd
+            }
+        }
+        self.calendar = event.calendar
+        self.url = event.url?.absoluteString ?? ""
+        self.notes = event.notes ?? ""
+        if let eventAlarms = event.alarms {
+            self.alarms = eventAlarms.map { -$0.relativeOffset }
+        }
+    }
+    
+    func applyChanges(event: EKEvent, store: EKEventStore) {
+        if _title.changed {
+            event.title = title
+        }
+        if _location.changed {
+            event.location = location.isEmpty ? nil : location
+        }
+        if _startDate.changed {
+            event.startDate = startDate
+        }
+        if _endDate.changed {
+            event.endDate = endDate
+        }
+        if _isAllDay.changed {
+            event.isAllDay = isAllDay
+        }
+        if _calendar.changed || event.calendar == nil {
+            event.calendar = calendar ?? store.defaultCalendarForNewEvents
+        }
+        if _travelTime.changed && !isAllDay {
+            event.setValue(Int(travelTime.timeSinceMidnight), forKey: "travelTime")
+        }
+        if _recurrence.changed || _recurrenceEnd.changed {
+            event.recurrenceRules = []
+            if let recurrence {
+                event.addRecurrenceRule(EKRecurrenceRule(recurrenceWith: .daily, interval: recurrence, end: recurrenceEnd.flatMap { EKRecurrenceEnd(end: $0)} ))
+            }
+        }
+        if _url.changed {
+            event.url = url.isEmpty ? nil : URL(string: url)
+        }
+        if _notes.changed {
+            event.notes = notes.isEmpty ? nil : notes
+        }
+        if _alarms.changed {
+            event.alarms = []
+            for alarm in alarms {
+                event.addAlarm(EKAlarm(relativeOffset: -alarm))
+            }
+        }
+    }
+    
+    func createNewEvent(store: EKEventStore) {
+        let event = EKEvent(eventStore: store)
+        applyChanges(event: event, store: store)
+        try? store.save(event, span: .thisEvent)
+    }
+    
+    func saveChanges(event: EKEvent, store: EKEventStore, span: EKSpan) {
+        applyChanges(event: event, store: store)
+        try? store.save(event, span: span)
+    }
+}
+
+@propertyWrapper struct EventProp<WrappedValue> {
+    var value: WrappedValue
+    var changed: Bool = false
+    
+    @available(*, unavailable, message: "Only classes supported")
+    var wrappedValue: WrappedValue {
+        get { fatalError() }
+        set { fatalError() }
+    }
+    
+    init(wrappedValue value: WrappedValue) {
+        self.value = value
+    }
+    
+    public static subscript<EnclosingSelf>(_enclosingInstance object: EnclosingSelf, wrapped wrappedKeyPath: Swift.ReferenceWritableKeyPath<EnclosingSelf, WrappedValue>, storage storageKeyPath: Swift.ReferenceWritableKeyPath<EnclosingSelf, Self>) -> WrappedValue where EnclosingSelf : ObservableObject, EnclosingSelf.ObjectWillChangePublisher == ObservableObjectPublisher {
+        get { object[keyPath: storageKeyPath].value }
+        set {
+            object.objectWillChange.send()
+            object[keyPath: storageKeyPath].changed = true
+            object[keyPath: storageKeyPath].value = newValue
+        }
+    }
+}

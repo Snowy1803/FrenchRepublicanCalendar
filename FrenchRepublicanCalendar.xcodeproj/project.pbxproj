@@ -67,6 +67,7 @@
 		FD4D117A2F17EB83009035D5 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D11792F17EB83009035D5 /* CreateEventView.swift */; };
 		FD4D117C2F17F110009035D5 /* DoubleFoldablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D117B2F17F110009035D5 /* DoubleFoldablePicker.swift */; };
 		FD4D117E2F17F230009035D5 /* FoldableDateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D117D2F17F224009035D5 /* FoldableDateTimePicker.swift */; };
+		FD4D11802F1908EB009035D5 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D117F2F1908EB009035D5 /* EventModel.swift */; };
 		FD653DB92EE501F600BC9802 /* ScrollableMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */; };
 		FD653DBD2EE5341500BC9802 /* ScrollableYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */; };
 		FD653DBF2EE602D800BC9802 /* FastGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBE2EE602D600BC9802 /* FastGrid.swift */; };
@@ -234,6 +235,7 @@
 		FD4D11792F17EB83009035D5 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		FD4D117B2F17F110009035D5 /* DoubleFoldablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleFoldablePicker.swift; sourceTree = "<group>"; };
 		FD4D117D2F17F224009035D5 /* FoldableDateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldableDateTimePicker.swift; sourceTree = "<group>"; };
+		FD4D117F2F1908EB009035D5 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableMonthView.swift; sourceTree = "<group>"; };
 		FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableYearView.swift; sourceTree = "<group>"; };
 		FD653DBE2EE602D600BC9802 /* FastGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastGrid.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */,
 				FD6EBB512EB7F19A00796761 /* EventVC.swift */,
 				FD4D11792F17EB83009035D5 /* CreateEventView.swift */,
+				FD4D117F2F1908EB009035D5 /* EventModel.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -803,6 +806,7 @@
 				208A0DD62586734B00D635CE /* ConverterWidget.swift in Sources */,
 				FD6EBB622EB90F6E00796761 /* FoldablePicker.swift in Sources */,
 				FD4D117E2F17F230009035D5 /* FoldableDateTimePicker.swift in Sources */,
+				FD4D11802F1908EB009035D5 /* EventModel.swift in Sources */,
 				FD12A1902ED7527E00BD8E69 /* TimeZonePicker.swift in Sources */,
 				20D9DCB3253F23BB00B5A9FA /* ContentView.swift in Sources */,
 				FD653DBF2EE602D800BC9802 /* FastGrid.swift in Sources */,
