@@ -46,6 +46,39 @@ struct CreateEventView: View {
     }
 }
 
+struct EditEventView: View {
+    var store: EKEventStore
+    var backingEvent: EKEvent
+    @Environment(\.dismiss) var dismiss
+    
+    @StateObject private var event: EventModel
+    
+    init(store: EKEventStore, event: EKEvent) {
+        self.store = store
+        self.backingEvent = event
+        self._event = StateObject(wrappedValue: EventModel(event: event))
+    }
+    
+    var body: some View {
+        EventEditorView(store: store, event: event)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("OK") {
+                    event.saveChanges(event: backingEvent, store: store, span: .thisEvent)
+                    dismiss()
+                }.disabled(event.startDate > event.endDate)
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Annuler") {
+                    dismiss()
+                }
+            }
+        }
+        .navigationTitle("Modifier l'évènement")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
 struct EventEditorView: View {
     var store: EKEventStore
     @State private var shownPicker: Int = 0

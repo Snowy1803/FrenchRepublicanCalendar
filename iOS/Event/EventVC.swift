@@ -17,12 +17,26 @@ import EventKitUI
 
 struct EventDetailsView: View {
     var event: EKEvent
+    
+    @State private var showEdit: Bool = false
 
     var body: some View {
         EventVC(event: event)
             .ignoresSafeArea()
             .navigationTitle("Détails de l'évènement")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Modifier") {
+                        showEdit = true
+                    }
+                }
+            }
+            .sheet(isPresented: $showEdit) {
+                NavigationView {
+                    EditEventView(store: (UIApplication.shared.delegate as! AppDelegate).eventStore, event: event)
+                }
+            }
     }
 }
 
