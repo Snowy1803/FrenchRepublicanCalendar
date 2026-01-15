@@ -16,9 +16,13 @@ import EventKit
 import EventKitUI
 
 struct EventDetailsView: View {
+    let store = (UIApplication.shared.delegate as! AppDelegate).eventStore
     var event: EKEvent
     
     @State private var showEdit: Bool = false
+    @State private var showDelete: Bool = false
+    
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         EventVC(event: event)
@@ -31,10 +35,23 @@ struct EventDetailsView: View {
                         showEdit = true
                     }
                 }
+                ToolbarItem(placement: .bottomBar) {
+                    Button("Supprimer l'évènement", role: .destructive) {
+                        showDelete = true
+                    }
+                    .confirmationDialog("Supprimer", isPresented: $showDelete, titleVisibility: .hidden) {
+                        Button("Supprimer l'évènement", role: .destructive) {
+                            try? store.remove(event, span: .thisEvent)
+                            dismiss()
+                        }
+                    } message: {
+                        Text("Voulez-vous vraiment supprimer cet évènement ?")
+                    }
+                }
             }
             .sheet(isPresented: $showEdit) {
                 NavigationView {
-                    EditEventView(store: (UIApplication.shared.delegate as! AppDelegate).eventStore, event: event)
+                    EditEventView(store: store, event: event)
                 }
             }
     }
