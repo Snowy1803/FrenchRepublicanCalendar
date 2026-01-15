@@ -29,6 +29,7 @@ struct CreateEventView: View {
     @State private var travelTime: DecimalTime = .midnight
     @State private var recurrence: Int? = nil
     @State private var recurrenceEnd: Date? = nil
+    @State private var calendar: EKCalendar? = nil
     
     
     init(store: EKEventStore, date: FrenchRepublicanDate) {
@@ -113,6 +114,10 @@ struct CreateEventView: View {
                 }
             }
             .buttonStyle(.borderless)
+            
+            Section {
+                CalendarPicker(store: store, calendar: Binding { calendar ?? store.defaultCalendarForNewEvents } set: { calendar = $0 })
+            }
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -123,7 +128,7 @@ struct CreateEventView: View {
                     event.startDate = startDate
                     event.endDate = endDate
                     event.isAllDay = isAllDay
-                    event.calendar = store.defaultCalendarForNewEvents
+                    event.calendar = calendar ?? store.defaultCalendarForNewEvents
                     if !isAllDay {
                         event.setValue(Int(travelTime.timeSinceMidnight), forKey: "travelTime")
                     }
@@ -142,6 +147,33 @@ struct CreateEventView: View {
         }
         .navigationTitle("Nouvel évènement")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct CalendarPicker: View {
+    var store: EKEventStore
+    @Binding var calendar: EKCalendar?
+
+    var body: some View {
+        Picker("Calendrier", selection: $calendar) {
+            ForEach(store.sources, id: \.sourceIdentifier) { source in
+                Section(source.title) {
+                    let calendars: [EKCalendar] = store.calendars(for: .event).filter { calendar in
+                        calendar.source == source && calendar.allowsContentModifications
+                    }
+                    ForEach(calendars, id: \.calendarIdentifier) { calendar in
+                        Label {
+                            Text(calendar.title)
+                        } icon: {
+                            Image(systemName: "circlebadge.fill")
+                                .imageScale(.small)
+                                .foregroundStyle(Color(cgColor: calendar.cgColor), .white)
+                        }
+                        .tag(calendar)
+                    }
+                }
+            }
+        }
     }
 }
 
