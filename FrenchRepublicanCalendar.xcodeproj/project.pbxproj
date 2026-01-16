@@ -1335,10 +1335,10 @@
 		};
 		FDAAED1F2F0C319900AEC60F /* XCRemoteSwiftPackageReference "Eventually" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/claustrofob/Eventually";
+			repositoryURL = "https://github.com/Snowy1803/Eventually";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
