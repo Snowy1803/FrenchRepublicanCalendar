@@ -24,4 +24,19 @@ class EventStore: ObservableObject {
             self.objectWillChange.send()
         }
     }
+    
+    func shouldShow(calendar: EKCalendar) -> Bool {
+        let filtered = UserDefaults.standard.stringArray(forKey: "filteredCalendars") ?? []
+        return !filtered.contains(where: { $0 == calendar.calendarIdentifier })
+    }
+    
+    func setFiltered(calendar: EKCalendar, show: Bool) {
+        objectWillChange.send()
+        var filtered = UserDefaults.standard.stringArray(forKey: "filteredCalendars") ?? []
+        filtered.removeAll(where: { $0 == calendar.calendarIdentifier })
+        if !show {
+            filtered.append(calendar.calendarIdentifier)
+        }
+        UserDefaults.standard.set(filtered, forKey: "filteredCalendars")
+    }
 }

@@ -70,6 +70,7 @@
 		FD4D11802F1908EB009035D5 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D117F2F1908EB009035D5 /* EventModel.swift */; };
 		FD4D11822F1926BC009035D5 /* AlarmPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D11812F1926BC009035D5 /* AlarmPicker.swift */; };
 		FD4D118E2F1A649C009035D5 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D118D2F1A649A009035D5 /* EventStore.swift */; };
+		FD4D11A42F1A972D009035D5 /* CalendarFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D11A32F1A9722009035D5 /* CalendarFilterView.swift */; };
 		FD653DB92EE501F600BC9802 /* ScrollableMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */; };
 		FD653DBD2EE5341500BC9802 /* ScrollableYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */; };
 		FD653DBF2EE602D800BC9802 /* FastGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBE2EE602D600BC9802 /* FastGrid.swift */; };
@@ -240,6 +241,7 @@
 		FD4D117F2F1908EB009035D5 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		FD4D11812F1926BC009035D5 /* AlarmPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPicker.swift; sourceTree = "<group>"; };
 		FD4D118D2F1A649A009035D5 /* EventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
+		FD4D11A32F1A9722009035D5 /* CalendarFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFilterView.swift; sourceTree = "<group>"; };
 		FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableMonthView.swift; sourceTree = "<group>"; };
 		FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableYearView.swift; sourceTree = "<group>"; };
 		FD653DBE2EE602D600BC9802 /* FastGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastGrid.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 		FD4D11782F17EB69009035D5 /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				FD4D11A32F1A9722009035D5 /* CalendarFilterView.swift */,
 				FD4D118D2F1A649A009035D5 /* EventStore.swift */,
 				FD4D117F2F1908EB009035D5 /* EventModel.swift */,
 				FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */,
@@ -830,6 +833,7 @@
 				20E0958B2540465500383A31 /* ContactsList.swift in Sources */,
 				FD6EBB522EB7F19A00796761 /* EventVC.swift in Sources */,
 				FD653DBD2EE5341500BC9802 /* ScrollableYearView.swift in Sources */,
+				FD4D11A42F1A972D009035D5 /* CalendarFilterView.swift in Sources */,
 				FD4BA0F32EE14BD8008551C5 /* VariantExplanation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

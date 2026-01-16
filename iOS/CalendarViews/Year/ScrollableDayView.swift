@@ -28,6 +28,7 @@ struct ScrollableDayView: View {
     @EnvironmentObject var midnight: Midnight
     var date: FrenchRepublicanDate
     @State private var showDetails: Bool = false
+    @State private var showCalendars: Bool = false
     @State private var createEvent: Bool = false
 
     var body: some View {
@@ -38,7 +39,9 @@ struct ScrollableDayView: View {
                         DecimalTimeMarkers()
                         EventuallyLayout(startOfDay: date.date, hourSlotHeight: siHourSlotHeight, config: .init(titleHeight: 40)) {
                             ForEach(events) { event in
-                                SingleEventBlobView(event: event)
+                                if let calendar = event.calendar, store.shouldShow(calendar: calendar) {
+                                    SingleEventBlobView(event: event)
+                                }
                             }
                         }.padding(.leading, 48)
                         if Calendar.gregorian.isDate(date.date, inSameDayAs: Date()) {
@@ -66,6 +69,13 @@ struct ScrollableDayView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    showCalendars = true
+                } label: {
+                    Label("Calendriers", systemImage: "calendar")
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
                     showDetails = true
                 } label: {
                     Label("Détails sur la date républicaine", systemImage: "info.circle")
@@ -76,6 +86,28 @@ struct ScrollableDayView: View {
             NavigationView {
                 DateDetails(date: date)
             }.presentationDetents([.medium, .large])
+        }
+        .sheet(isPresented: $showCalendars) {
+            NavigationView {
+                CalendarFilterView()
+                    .navigationTitle("Calendriers")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        if #available(iOS 26.0, *) {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button(role: .close) {
+                                    showCalendars = false
+                                }
+                            }
+                        } else {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("OK") {
+                                    showCalendars = false
+                                }
+                            }
+                        }
+                    }
+            }
         }
     }
 }
