@@ -60,7 +60,9 @@ class EventModel: ObservableObject {
         self.url = event.url?.absoluteString ?? ""
         self.notes = event.notes ?? ""
         if let eventAlarms = event.alarms {
-            self.alarms = eventAlarms.map { -$0.relativeOffset }
+            var alarms = eventAlarms.map { -$0.relativeOffset }
+            alarms.sort()
+            self.alarms = alarms
         }
         self.store = store
         self.event = event
@@ -144,6 +146,7 @@ class EventModel: ObservableObject {
         self._notes.backingValue = event.notes ?? ""
         if let eventAlarms = event.alarms {
             self._alarms.backingValue = eventAlarms.map { -$0.relativeOffset }
+            self._alarms.backingValue.sort()
         } else {
             self._alarms.backingValue = []
         }
