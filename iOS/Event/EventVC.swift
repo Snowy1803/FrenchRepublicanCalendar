@@ -145,6 +145,11 @@ struct EventDetailsContent: View {
                         try? store.save(event, span: .futureEvents)
                     })
                     AlarmPicker(alarms: $model.alarms, index: 0)
+                        .onReceive(model.objectWillChange) {
+                            DispatchQueue.main.async {
+                                model.saveChanges(event: event, store: store, span: .thisEvent)
+                            }
+                        }
                     if !model.alarms.isEmpty {
                         AlarmPicker(alarms: $model.alarms, index: 1)
                     }
