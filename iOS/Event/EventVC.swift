@@ -16,7 +16,7 @@ import EventKit
 import EventKitUI
 
 struct EventDetailsView: View {
-    let store = (UIApplication.shared.delegate as! AppDelegate).eventStore
+    @EnvironmentObject var store: EventStore
     var event: EKEvent
     
     @State private var showEdit: Bool = false
@@ -25,9 +25,14 @@ struct EventDetailsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        EventDetailsContent(store: store, event: event)
+        EventDetailsContent(event: event)
             .navigationTitle("Détails de l'évènement")
             .navigationBarTitleDisplayMode(.inline)
+            .onReceive(store.objectWillChange) {
+                if !event.refresh() {
+                    dismiss()
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Modifier") {
@@ -41,16 +46,16 @@ struct EventDetailsView: View {
                     .confirmationDialog("Supprimer", isPresented: $showDelete, titleVisibility: .hidden) {
                         if event.hasRecurrenceRules {
                             Button("Supprimer celui-ci seulement", role: .destructive) {
-                                try? store.remove(event, span: .thisEvent)
+                                try? store.store.remove(event, span: .thisEvent)
                                 dismiss()
                             }
                             Button("Supprimer tous les évènements", role: .destructive) {
-                                try? store.remove(event, span: .futureEvents)
+                                try? store.store.remove(event, span: .futureEvents)
                                 dismiss()
                             }
                         } else {
                             Button("Supprimer l'évènement", role: .destructive) {
-                                try? store.remove(event, span: .thisEvent)
+                                try? store.store.remove(event, span: .thisEvent)
                                 dismiss()
                             }
                         }
@@ -61,19 +66,18 @@ struct EventDetailsView: View {
             }
             .sheet(isPresented: $showEdit) {
                 NavigationView {
-                    EditEventView(store: store, event: event)
+                    EditEventView(event: event)
                 }
             }
     }
 }
 
 struct EventDetailsContent: View {
-    var store: EKEventStore
+    @EnvironmentObject var store: EventStore
     var event: EKEvent
     @StateObject var model: EventModel
     
-    init(store: EKEventStore, event: EKEvent) {
-        self.store = store
+    init(event: EKEvent) {
         self.event = event
         self._model = StateObject(wrappedValue: EventModel(event: event))
     }
@@ -138,16 +142,16 @@ struct EventDetailsContent: View {
                     .padding()
                 
                 List {
-                    CalendarPicker(store: store, calendar: Binding {
+                    CalendarPicker(calendar: Binding {
                         event.calendar
                     } set: { newValue in
                         event.calendar = newValue
-                        try? store.save(event, span: .futureEvents)
+                        try? store.store.save(event, span: .futureEvents)
                     })
                     AlarmPicker(alarms: $model.alarms, index: 0)
                         .onReceive(model.objectWillChange) {
                             DispatchQueue.main.async {
-                                model.saveChanges(event: event, store: store, span: .thisEvent)
+                                model.saveChanges(event: event, store: store.store, span: .thisEvent)
                             }
                         }
                     if !model.alarms.isEmpty {

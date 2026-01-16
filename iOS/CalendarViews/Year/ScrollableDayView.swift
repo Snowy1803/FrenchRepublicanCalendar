@@ -24,14 +24,15 @@ fileprivate var decHourSlotHeight: CGFloat {
 }
 
 struct ScrollableDayView: View {
+    @EnvironmentObject var store: EventStore
     @EnvironmentObject var midnight: Midnight
     var date: FrenchRepublicanDate
     @State private var showDetails: Bool = false
     @State private var createEvent: Bool = false
 
     var body: some View {
-        EventPermissionWrapperView { store in
-            DayEventWrapperView(date: date, store: store) { _, events in
+        EventPermissionWrapperView {
+            DayEventWrapperView(date: date) { _, events in
                 ScrollView(.vertical) {
                     ZStack {
                         DecimalTimeMarkers()
@@ -46,7 +47,7 @@ struct ScrollableDayView: View {
             }
             .sheet(isPresented: $createEvent) {
                 NavigationView {
-                    CreateEventView(store: store, date: date)
+                    CreateEventView(date: date)
                         .interactiveDismissDisabled()
                 }
             }

@@ -17,8 +17,8 @@ import EventKit
 
 struct EventPermissionWrapperView<Content: View>: View {
     @EnvironmentObject var midnight: Midnight
-    let store = (UIApplication.shared.delegate as! AppDelegate).eventStore
-    @ViewBuilder var wrapped: (EKEventStore) -> Content
+    @EnvironmentObject var store: EventStore
+    @ViewBuilder var wrapped: () -> Content
 
     var body: some View {
         let eventAccess = EKEventStore.authorizationStatus(for: .event)
@@ -41,9 +41,9 @@ struct EventPermissionWrapperView<Content: View>: View {
                     Button {
                         Task {
                             if #available(iOS 17.0, *) {
-                                try await store.requestFullAccessToEvents()
+                                try await store.store.requestFullAccessToEvents()
                             } else {
-                                try await store.requestAccess(to: .event)
+                                try await store.store.requestAccess(to: .event)
                             }
                             midnight.objectWillChange.send()
                         }
@@ -54,14 +54,14 @@ struct EventPermissionWrapperView<Content: View>: View {
                 .prominentButtonStyle()
             }
         } else {
-            wrapped(store)
+            wrapped()
         }
     }
 }
 
 struct DayEventWrapperView<Content: View>: View {
     var date: FrenchRepublicanDate
-    var store: EKEventStore
+    @EnvironmentObject var store: EventStore
     @State var events: [EKEvent] = []
     @State var loading: Bool = true
     @ViewBuilder var wrapped: (Bool, [EKEvent]) -> Content
@@ -70,7 +70,7 @@ struct DayEventWrapperView<Content: View>: View {
         wrapped(loading, events)
         .task {
             reloadEvents()
-        }.onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged, object: store)) { _ in
+        }.onReceive(store.objectWillChange) { _ in
             reloadEvents()
         }
     }
@@ -78,8 +78,8 @@ struct DayEventWrapperView<Content: View>: View {
     func reloadEvents() {
         let start = Calendar.gregorian.startOfDay(for: date.date)
         let end = Calendar.gregorian.date(byAdding: .day, value: 1, to: start)!
-        let evPred = store.predicateForEvents(withStart: start, end: end, calendars: nil)
-        let resultingEvents = store.events(matching: evPred)
+        let evPred = store.store.predicateForEvents(withStart: start, end: end, calendars: nil)
+        let resultingEvents = store.store.events(matching: evPred)
         Task { @MainActor in
             self.events = resultingEvents.sorted(by: { lhs, rhs in
                 lhs.compareStartDate(with: rhs) == .orderedAscending
@@ -90,11 +90,12 @@ struct DayEventWrapperView<Content: View>: View {
 }
 
 struct EventDetailsListView: View {
+    @EnvironmentObject var store: EventStore
     var date: FrenchRepublicanDate
 
     var body: some View {
-        EventPermissionWrapperView { store in
-            DayEventWrapperView(date: date, store: store) { loading, events in
+        EventPermissionWrapperView {
+            DayEventWrapperView(date: date) { loading, events in
                 if loading {
                     ProgressView()
                 } else if events.isEmpty {
@@ -103,13 +104,14 @@ struct EventDetailsListView: View {
                 ForEach(events, id: \.calendarItemIdentifier) { event in
                     SingleEventView(event: event)
                 }
-                CreateEventButton(store: store, date: date)
+                CreateEventButton(date: date)
             }
         }
     }
 }
 
 struct SingleEventView: View {
+    @EnvironmentObject var store: EventStore
     let event: EKEvent
 
     var body: some View {
@@ -139,7 +141,7 @@ struct SingleEventView: View {
 }
 
 struct CreateEventButton: View {
-    let store: EKEventStore
+    @EnvironmentObject var store: EventStore
     let date: FrenchRepublicanDate
     @State var sheet: Bool = false
 
@@ -153,7 +155,7 @@ struct CreateEventButton: View {
             }
         }.sheet(isPresented: $sheet) {
             NavigationView {
-                CreateEventView(store: store, date: date)
+                CreateEventView(date: date)
             }
         }
     }

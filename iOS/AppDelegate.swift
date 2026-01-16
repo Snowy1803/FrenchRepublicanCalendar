@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var midnight = Midnight.shared
     var favorites: FavoritesPool!
-    let eventStore = EKEventStore()
+    let eventStore = EventStore(store: EKEventStore())
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

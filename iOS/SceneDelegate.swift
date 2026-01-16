@@ -28,6 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = ContentView()
                             .environmentObject(appDelegate.favorites)
                             .environmentObject(appDelegate.midnight)
+                            .environmentObject(appDelegate.eventStore)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

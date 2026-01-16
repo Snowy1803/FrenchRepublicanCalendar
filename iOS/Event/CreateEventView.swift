@@ -16,22 +16,21 @@ import Combine
 import EventKit
 
 struct CreateEventView: View {
-    var store: EKEventStore
+    @EnvironmentObject var store: EventStore
     @Environment(\.dismiss) var dismiss
     
     @StateObject private var event: EventModel
     
-    init(store: EKEventStore, date: FrenchRepublicanDate) {
-        self.store = store
+    init(date: FrenchRepublicanDate) {
         self._event = StateObject(wrappedValue: EventModel(date: date))
     }
     
     var body: some View {
-        EventEditorView(store: store, event: event)
+        EventEditorView(event: event)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Ajouter") {
-                    event.createNewEvent(store: store)
+                    event.createNewEvent(store: store.store)
                     dismiss()
                 }.disabled(event.startDate > event.endDate)
             }
@@ -47,38 +46,44 @@ struct CreateEventView: View {
 }
 
 struct EditEventView: View {
-    var store: EKEventStore
+    @EnvironmentObject var store: EventStore
     var backingEvent: EKEvent
     @Environment(\.dismiss) var dismiss
     
     @StateObject private var event: EventModel
     @State private var recurringConfirm = false
     
-    init(store: EKEventStore, event: EKEvent) {
-        self.store = store
+    init(event: EKEvent) {
         self.backingEvent = event
         self._event = StateObject(wrappedValue: EventModel(event: event))
     }
     
     var body: some View {
-        EventEditorView(store: store, event: event)
+        EventEditorView(event: event)
+            .onReceive(store.objectWillChange) {
+                if backingEvent.refresh() {
+                    // TODO: refresh EventModel
+                } else {
+                    dismiss()
+                }
+            }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("OK") {
                     if backingEvent.hasRecurrenceRules {
                         recurringConfirm = true
                     } else {
-                        event.saveChanges(event: backingEvent, store: store, span: .thisEvent)
+                        event.saveChanges(event: backingEvent, store: store.store, span: .thisEvent)
                         dismiss()
                     }
                 }.disabled(event.startDate > event.endDate)
                 .confirmationDialog("Modifier", isPresented: $recurringConfirm, titleVisibility: .hidden) {
                     Button("Modifier celui-ci seulement") {
-                        event.saveChanges(event: backingEvent, store: store, span: .thisEvent)
+                        event.saveChanges(event: backingEvent, store: store.store, span: .thisEvent)
                         dismiss()
                     }
                     Button("Modifier tous ceux à venir") {
-                        event.saveChanges(event: backingEvent, store: store, span: .futureEvents)
+                        event.saveChanges(event: backingEvent, store: store.store, span: .futureEvents)
                         dismiss()
                     }
                 } message: {
@@ -97,7 +102,7 @@ struct EditEventView: View {
 }
 
 struct EventEditorView: View {
-    var store: EKEventStore
+    @EnvironmentObject var store: EventStore
     @State private var shownPicker: Int = 0
     
     // Properties
@@ -175,7 +180,7 @@ struct EventEditorView: View {
             .buttonStyle(.borderless)
             
             Section {
-                CalendarPicker(store: store, calendar: Binding { event.calendar ?? store.defaultCalendarForNewEvents } set: { event.calendar = $0 })
+                CalendarPicker(calendar: Binding { event.calendar ?? store.store.defaultCalendarForNewEvents } set: { event.calendar = $0 })
             }
             
             Section {
@@ -200,14 +205,14 @@ struct EventEditorView: View {
 }
 
 struct CalendarPicker: View {
-    var store: EKEventStore
+    @EnvironmentObject var store: EventStore
     @Binding var calendar: EKCalendar?
 
     var body: some View {
         Picker("Calendrier", selection: $calendar) {
-            ForEach(store.sources, id: \.sourceIdentifier) { source in
+            ForEach(store.store.sources, id: \.sourceIdentifier) { source in
                 Section(source.title) {
-                    let calendars: [EKCalendar] = store.calendars(for: .event).filter { calendar in
+                    let calendars: [EKCalendar] = store.store.calendars(for: .event).filter { calendar in
                         calendar.source == source && calendar.allowsContentModifications
                     }
                     ForEach(calendars, id: \.calendarIdentifier) { calendar in
