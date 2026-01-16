@@ -37,7 +37,7 @@ struct ScrollableDayView: View {
                     ZStack {
                         DecimalTimeMarkers()
                         EventuallyLayout(startOfDay: date.date, hourSlotHeight: siHourSlotHeight, config: .init(titleHeight: 40)) {
-                            ForEach(events, id: \.calendarItemIdentifier) { event in
+                            ForEach(events) { event in
                                 SingleEventBlobView(event: event)
                             }
                         }.padding(.leading, 40)
@@ -78,7 +78,7 @@ struct ScrollableDayView: View {
 }
 
 struct SingleEventBlobView: View {
-    let event: EKEvent
+    let event: EventModel
     @State private var tap: Bool = false
 
     var body: some View {
@@ -87,7 +87,7 @@ struct SingleEventBlobView: View {
         } label: {
             HStack(alignment: .top, spacing: 4) {
                 RoundedRectangle(cornerRadius: 2)
-                    .fill(Color(cgColor: event.calendar.cgColor))
+                    .fill(Color(cgColor: event.calendar!.cgColor))
                     .frame(width: 4)
                     .padding(.vertical, 4)
                 VStack(alignment: .leading) {
@@ -113,7 +113,7 @@ struct SingleEventBlobView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color(cgColor: event.calendar.cgColor).opacity(0.2))
+                    .fill(Color(cgColor: event.calendar!.cgColor).opacity(0.2))
             )
         }
         .buttonStyle(.plain)

@@ -163,6 +163,12 @@ class EventModel: ObservableObject {
     }
 }
 
+extension EventModel: Identifiable {
+    var id: String {
+        self.event?.calendarItemIdentifier ?? ""
+    }
+}
+
 @propertyWrapper struct EventProp<WrappedValue> {
     var value: WrappedValue
     var changed: Bool = false

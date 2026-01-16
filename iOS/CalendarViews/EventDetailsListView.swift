@@ -62,9 +62,9 @@ struct EventPermissionWrapperView<Content: View>: View {
 struct DayEventWrapperView<Content: View>: View {
     var date: FrenchRepublicanDate
     @EnvironmentObject var store: EventStore
-    @State var events: [EKEvent] = []
+    @State var events: [EventModel] = []
     @State var loading: Bool = true
-    @ViewBuilder var wrapped: (Bool, [EKEvent]) -> Content
+    @ViewBuilder var wrapped: (Bool, [EventModel]) -> Content
 
     var body: some View {
         wrapped(loading, events)
@@ -83,7 +83,9 @@ struct DayEventWrapperView<Content: View>: View {
         Task { @MainActor in
             self.events = resultingEvents.sorted(by: { lhs, rhs in
                 lhs.compareStartDate(with: rhs) == .orderedAscending
-            })
+            }).map {
+                EventModel(store: store, event: $0)
+            }
             self.loading = false
         }
     }
@@ -101,7 +103,7 @@ struct EventDetailsListView: View {
                 } else if events.isEmpty {
                     Text("Aucun évènement ce jour-là")
                 }
-                ForEach(events, id: \.calendarItemIdentifier) { event in
+                ForEach(events) { event in
                     SingleEventView(event: event)
                 }
                 CreateEventButton(date: date)
@@ -112,13 +114,13 @@ struct EventDetailsListView: View {
 
 struct SingleEventView: View {
     @EnvironmentObject var store: EventStore
-    let event: EKEvent
+    let event: EventModel
 
     var body: some View {
         NavigationLink(destination: EventDetailsView(event: event)) {
             HStack(alignment: .firstTextBaseline) {
                 Image.decorative(systemName: "circle.fill")
-                    .foregroundStyle(Color(cgColor: event.calendar.cgColor))
+                    .foregroundStyle(Color(cgColor: event.calendar!.cgColor))
                 VStack(alignment: .leading) {
                     Text(event.title)
                     Group {

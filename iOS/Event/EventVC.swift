@@ -17,7 +17,7 @@ import EventKitUI
 
 struct EventDetailsView: View {
     @EnvironmentObject var store: EventStore
-    var event: EKEvent
+    @ObservedObject var event: EventModel
     
     @State private var showEdit: Bool = false
     @State private var showDelete: Bool = false
@@ -25,11 +25,11 @@ struct EventDetailsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        EventDetailsContent(store: store, event: event)
+        EventDetailsContent(event: event)
             .navigationTitle("Détails de l'évènement")
             .navigationBarTitleDisplayMode(.inline)
             .onReceive(store.objectWillChange) {
-                if !event.refresh() {
+                if !event.event!.refresh() {
                     dismiss()
                 }
             }
@@ -44,29 +44,30 @@ struct EventDetailsView: View {
                         showDelete = true
                     }
                     .confirmationDialog("Supprimer", isPresented: $showDelete, titleVisibility: .hidden) {
-                        if event.hasRecurrenceRules {
+                        if event.event!.hasRecurrenceRules {
                             Button("Supprimer celui-ci seulement", role: .destructive) {
-                                try? store.store.remove(event, span: .thisEvent)
+                                try? store.store.remove(event.event!, span: .thisEvent)
                                 dismiss()
                             }
                             Button("Supprimer tous les évènements", role: .destructive) {
-                                try? store.store.remove(event, span: .futureEvents)
+                                try? store.store.remove(event.event!, span: .futureEvents)
                                 dismiss()
                             }
                         } else {
                             Button("Supprimer l'évènement", role: .destructive) {
-                                try? store.store.remove(event, span: .thisEvent)
+                                try? store.store.remove(event.event!, span: .thisEvent)
                                 dismiss()
                             }
                         }
                     } message: {
-                        Text("Voulez-vous vraiment supprimer cet évènement\(event.hasRecurrenceRules ? " récurrent" : "") ?")
+                        Text("Voulez-vous vraiment supprimer cet évènement\(event.event!.hasRecurrenceRules ? " récurrent" : "") ?")
                     }
                 }
             }
             .sheet(isPresented: $showEdit) {
                 NavigationView {
-                    EditEventView(store: store, event: event)
+                    // Creates Model copy to edit
+                    EditEventView(store: store, event: event.event!)
                 }
             }
     }
@@ -74,13 +75,7 @@ struct EventDetailsView: View {
 
 struct EventDetailsContent: View {
     @EnvironmentObject var store: EventStore
-    var event: EKEvent
-    @StateObject var model: EventModel
-    
-    init(store: EventStore, event: EKEvent) {
-        self.event = event
-        self._model = StateObject(wrappedValue: EventModel(store: store, event: event))
-    }
+    @ObservedObject var event: EventModel
 
     var body: some View {
         ScrollView {
@@ -89,8 +84,8 @@ struct EventDetailsContent: View {
                     Text(event.title)
                         .lineLimit(2)
                         .font(.title)
-                    if let location = event.location {
-                        Text(location)
+                    if !event.location.isEmpty {
+                        Text(event.location)
                     }
                 }.padding([.top, .horizontal])
                 
@@ -108,7 +103,7 @@ struct EventDetailsContent: View {
                         Text("Du \(start, format: .republicanDate.day().year().hour().minute())")
                         Text("au \(end, format: .republicanDate.day().year().hour().minute())")
                     }
-                    if let recc = event.recurrenceRules?.first {
+                    if let recc = event.event!.recurrenceRules?.first {
                         switch recc.frequency {
                         case .daily:
                             if recc.interval == 1 {
@@ -146,18 +141,18 @@ struct EventDetailsContent: View {
                         event.calendar
                     } set: { newValue in
                         event.calendar = newValue
-                        try? store.store.save(event, span: .futureEvents)
+                        try? store.store.save(event.event!, span: .futureEvents)
                     })
-                    AlarmPicker(alarms: $model.alarms, index: 0)
-                        .onReceive(model.objectWillChange) {
+                    AlarmPicker(alarms: $event.alarms, index: 0)
+                        .onReceive(event.objectWillChange) {
                             DispatchQueue.main.async {
-                                model.saveChanges(span: .thisEvent)
+                                event.saveChanges(span: .thisEvent)
                             }
                         }
-                    if !model.alarms.isEmpty {
-                        AlarmPicker(alarms: $model.alarms, index: 1)
+                    if !event.alarms.isEmpty {
+                        AlarmPicker(alarms: $event.alarms, index: 1)
                     }
-                    if let url = event.url {
+                    if let url = event.event!.url {
                         VStack(alignment: .leading) {
                             Text("URL")
                             Link(destination: url) {
@@ -165,8 +160,8 @@ struct EventDetailsContent: View {
                             }.foregroundStyle(.tint)
                         }
                     }
-                    if event.hasNotes, let notes = event.notes {
-                        let notesText = Text((try? AttributedString(markdown: notes, options: .init(allowsExtendedAttributes: false, interpretedSyntax: .inlineOnlyPreservingWhitespace, failurePolicy: .returnPartiallyParsedIfPossible))) ?? AttributedString(notes))
+                    if !event.notes.isEmpty {
+                        let notesText = Text((try? AttributedString(markdown: event.notes, options: .init(allowsExtendedAttributes: false, interpretedSyntax: .inlineOnlyPreservingWhitespace, failurePolicy: .returnPartiallyParsedIfPossible))) ?? AttributedString(event.notes))
                         VStack(alignment: .leading) {
                             NavigationLink(destination: ScrollView {
                                 VStack(alignment: .leading) {
