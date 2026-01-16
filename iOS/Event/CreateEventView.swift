@@ -62,7 +62,7 @@ struct EditEventView: View {
         EventEditorView(event: event)
             .onReceive(store.objectWillChange) {
                 if backingEvent.refresh() {
-                    // TODO: refresh EventModel
+                    event.refreshUnchanged(event: backingEvent, store: store.store)
                 } else {
                     dismiss()
                 }

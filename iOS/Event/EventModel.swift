@@ -101,6 +101,41 @@ class EventModel: ObservableObject {
         }
     }
     
+    // Refresh locally cached values from a given EKEvent
+    func refreshUnchanged(event: EKEvent, store: EKEventStore) {
+        objectWillChange.send()
+        self._title.backingValue = event.title
+        self._location.backingValue = event.location ?? ""
+        self._isAllDay.backingValue = event.isAllDay
+        self._startDate.backingValue = event.startDate
+        self._endDate.backingValue = event.endDate
+        if let travelTimeValue = event.value(forKey: "travelTime") as? Int {
+            self._travelTime.backingValue = DecimalTime(timeSinceMidnight: TimeInterval(travelTimeValue))
+        } else {
+            self._travelTime.backingValue = .midnight
+        }
+        if let recurrenceRule = event.recurrenceRules?.first {
+            self._recurrence.backingValue = recurrenceRule.interval
+            if let recurrenceEnd = recurrenceRule.recurrenceEnd?.endDate {
+                self._recurrenceEnd.backingValue = recurrenceEnd
+            } else {
+                self._recurrenceEnd.backingValue = nil
+            }
+        } else {
+            self._recurrence.backingValue = nil
+            self._recurrenceEnd.backingValue = nil
+        }
+        self._calendar.backingValue = event.calendar
+        self._url.backingValue = event.url?.absoluteString ?? ""
+        self._notes.backingValue = event.notes ?? ""
+        if let eventAlarms = event.alarms {
+            self._alarms.backingValue = eventAlarms.map { -$0.relativeOffset }
+        } else {
+            self._alarms.backingValue = []
+        }
+        
+    }
+    
     func createNewEvent(store: EKEventStore) {
         let event = EKEvent(eventStore: store)
         applyChanges(event: event, store: store)
@@ -121,6 +156,15 @@ class EventModel: ObservableObject {
     var wrappedValue: WrappedValue {
         get { fatalError() }
         set { fatalError() }
+    }
+
+    var backingValue: WrappedValue {
+        get { value }
+        set {
+            if !changed {
+                value = newValue
+            }
+        }
     }
     
     init(wrappedValue value: WrappedValue) {
