@@ -40,7 +40,10 @@ struct ScrollableDayView: View {
                             ForEach(events) { event in
                                 SingleEventBlobView(event: event)
                             }
-                        }.padding(.leading, 40)
+                        }.padding(.leading, 48)
+                        if Calendar.gregorian.isDate(date.date, inSameDayAs: Date()) {
+                            DecimalTimeTodayMarker()
+                        }
                     }
                     .padding(.vertical, 32)
                 }
@@ -147,10 +150,36 @@ struct DecimalTimeMarker: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .fixedSize()
-                .frame(width: 32, alignment: .trailing)
+                .frame(width: 40, alignment: .trailing)
             VStack {
                 Divider()
             }.frame(maxWidth: .infinity)
         }.frame(height: 0)
+    }
+}
+
+struct DecimalTimeTodayMarker: View {
+    @State private var progress: CGFloat = DecimalTime().decimalTime / 100000
+    let timer = Timer.publish(every: DecimalTime.decimalSecond, on: .main, in: .common).autoconnect()
+
+    var body: some View {
+        HStack(spacing: 0) {
+            Text("\(DecimalTime(base: Date()), format: .decimalTime.hour().minute())")
+                .font(.caption.bold())
+                .foregroundStyle(.white)
+                .fixedSize()
+                .padding(EdgeInsets(top: 1, leading: 4, bottom: 1, trailing: 4))
+                .background(RoundedRectangle(cornerRadius: 6).fill(Color.accentColor))
+                .frame(width: 40, alignment: .trailing)
+            Rectangle()
+                .fill(Color.accentColor)
+                .frame(height: 2)
+                .frame(maxWidth: .infinity)
+        }.frame(height: 0)
+        .padding(.top, decHourSlotHeight * 10 * progress)
+        .padding(.bottom, decHourSlotHeight * 10 * (1 - progress))
+        .onReceive(timer) { _ in
+            self.progress = DecimalTime().decimalTime / 100000
+        }
     }
 }
