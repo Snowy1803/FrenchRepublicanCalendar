@@ -25,7 +25,7 @@ struct EventDetailsView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        EventDetailsContent(event: event)
+        EventDetailsContent(store: store, event: event)
             .navigationTitle("Détails de l'évènement")
             .navigationBarTitleDisplayMode(.inline)
             .onReceive(store.objectWillChange) {
@@ -66,7 +66,7 @@ struct EventDetailsView: View {
             }
             .sheet(isPresented: $showEdit) {
                 NavigationView {
-                    EditEventView(event: event)
+                    EditEventView(store: store, event: event)
                 }
             }
     }
@@ -77,9 +77,9 @@ struct EventDetailsContent: View {
     var event: EKEvent
     @StateObject var model: EventModel
     
-    init(event: EKEvent) {
+    init(store: EventStore, event: EKEvent) {
         self.event = event
-        self._model = StateObject(wrappedValue: EventModel(event: event))
+        self._model = StateObject(wrappedValue: EventModel(store: store, event: event))
     }
 
     var body: some View {
@@ -151,7 +151,7 @@ struct EventDetailsContent: View {
                     AlarmPicker(alarms: $model.alarms, index: 0)
                         .onReceive(model.objectWillChange) {
                             DispatchQueue.main.async {
-                                model.saveChanges(event: event, store: store.store, span: .thisEvent)
+                                model.saveChanges(span: .thisEvent)
                             }
                         }
                     if !model.alarms.isEmpty {

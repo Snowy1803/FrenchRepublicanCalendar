@@ -28,14 +28,19 @@ class EventModel: ObservableObject {
     @EventProp var notes: String = ""
     @EventProp var alarms: [TimeInterval] = []
     
-    init(date: FrenchRepublicanDate) {
+    var store: EventStore
+    var event: EKEvent?
+    
+    init(store: EventStore, date: FrenchRepublicanDate) {
         self.startDate = date.date.addingTimeInterval(DecimalTime(hour: 4, minute: 0, second: 0, remainder: 0).timeSinceMidnight)
         self.endDate = date.date.addingTimeInterval(DecimalTime(hour: 4, minute: 50, second: 0, remainder: 0).timeSinceMidnight)
         self._startDate.changed = true
         self._endDate.changed = true
+        self.store = store
+        self.event = nil
     }
     
-    init(event: EKEvent) {
+    init(store: EventStore, event: EKEvent) {
         self.title = event.title
         assert(_title.changed == false)
         self.location = event.location ?? ""
@@ -57,9 +62,15 @@ class EventModel: ObservableObject {
         if let eventAlarms = event.alarms {
             self.alarms = eventAlarms.map { -$0.relativeOffset }
         }
+        self.store = store
+        self.event = event
     }
     
-    func applyChanges(event: EKEvent, store: EKEventStore) {
+    // Apply local changes to backing EKEvent, without saving
+    func applyChanges() {
+        guard let event else {
+            preconditionFailure()
+        }
         if _title.changed {
             event.title = title
         }
@@ -76,7 +87,7 @@ class EventModel: ObservableObject {
             event.isAllDay = isAllDay
         }
         if _calendar.changed || event.calendar == nil {
-            event.calendar = calendar ?? store.defaultCalendarForNewEvents
+            event.calendar = calendar ?? store.store.defaultCalendarForNewEvents
         }
         if _travelTime.changed && !isAllDay {
             event.setValue(Int(travelTime.timeSinceMidnight), forKey: "travelTime")
@@ -102,7 +113,10 @@ class EventModel: ObservableObject {
     }
     
     // Refresh locally cached values from a given EKEvent
-    func refreshUnchanged(event: EKEvent, store: EKEventStore) {
+    func refreshUnchanged() {
+        guard let event else {
+            preconditionFailure()
+        }
         objectWillChange.send()
         self._title.backingValue = event.title
         self._location.backingValue = event.location ?? ""
@@ -136,15 +150,16 @@ class EventModel: ObservableObject {
         
     }
     
-    func createNewEvent(store: EKEventStore) {
-        let event = EKEvent(eventStore: store)
-        applyChanges(event: event, store: store)
-        try? store.save(event, span: .thisEvent)
+    func createNewEvent() {
+        assert(self.event == nil)
+        self.event = EKEvent(eventStore: store.store)
+        applyChanges()
+        try? store.store.save(self.event!, span: .thisEvent)
     }
     
-    func saveChanges(event: EKEvent, store: EKEventStore, span: EKSpan) {
-        applyChanges(event: event, store: store)
-        try? store.save(event, span: span)
+    func saveChanges(span: EKSpan) {
+        applyChanges()
+        try? store.store.save(event!, span: span)
     }
 }
 

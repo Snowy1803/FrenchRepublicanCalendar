@@ -155,7 +155,7 @@ struct CreateEventButton: View {
             }
         }.sheet(isPresented: $sheet) {
             NavigationView {
-                CreateEventView(date: date)
+                CreateEventView(store: store, date: date)
             }
         }
     }

@@ -21,8 +21,8 @@ struct CreateEventView: View {
     
     @StateObject private var event: EventModel
     
-    init(date: FrenchRepublicanDate) {
-        self._event = StateObject(wrappedValue: EventModel(date: date))
+    init(store: EventStore, date: FrenchRepublicanDate) {
+        self._event = StateObject(wrappedValue: EventModel(store: store, date: date))
     }
     
     var body: some View {
@@ -30,7 +30,7 @@ struct CreateEventView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Ajouter") {
-                    event.createNewEvent(store: store.store)
+                    event.createNewEvent()
                     dismiss()
                 }.disabled(event.startDate > event.endDate)
             }
@@ -47,22 +47,20 @@ struct CreateEventView: View {
 
 struct EditEventView: View {
     @EnvironmentObject var store: EventStore
-    var backingEvent: EKEvent
     @Environment(\.dismiss) var dismiss
     
     @StateObject private var event: EventModel
     @State private var recurringConfirm = false
     
-    init(event: EKEvent) {
-        self.backingEvent = event
-        self._event = StateObject(wrappedValue: EventModel(event: event))
+    init(store: EventStore, event: EKEvent) {
+        self._event = StateObject(wrappedValue: EventModel(store: store, event: event))
     }
     
     var body: some View {
         EventEditorView(event: event)
             .onReceive(store.objectWillChange) {
-                if backingEvent.refresh() {
-                    event.refreshUnchanged(event: backingEvent, store: store.store)
+                if event.event!.refresh() {
+                    event.refreshUnchanged()
                 } else {
                     dismiss()
                 }
@@ -70,20 +68,20 @@ struct EditEventView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("OK") {
-                    if backingEvent.hasRecurrenceRules {
+                    if event.event!.hasRecurrenceRules {
                         recurringConfirm = true
                     } else {
-                        event.saveChanges(event: backingEvent, store: store.store, span: .thisEvent)
+                        event.saveChanges(span: .thisEvent)
                         dismiss()
                     }
                 }.disabled(event.startDate > event.endDate)
                 .confirmationDialog("Modifier", isPresented: $recurringConfirm, titleVisibility: .hidden) {
                     Button("Modifier celui-ci seulement") {
-                        event.saveChanges(event: backingEvent, store: store.store, span: .thisEvent)
+                        event.saveChanges(span: .thisEvent)
                         dismiss()
                     }
                     Button("Modifier tous ceux à venir") {
-                        event.saveChanges(event: backingEvent, store: store.store, span: .futureEvents)
+                        event.saveChanges(span: .futureEvents)
                         dismiss()
                     }
                 } message: {

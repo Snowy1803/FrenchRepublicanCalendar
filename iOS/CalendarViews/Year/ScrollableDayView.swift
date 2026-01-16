@@ -47,7 +47,7 @@ struct ScrollableDayView: View {
             }
             .sheet(isPresented: $createEvent) {
                 NavigationView {
-                    CreateEventView(date: date)
+                    CreateEventView(store: store, date: date)
                         .interactiveDismissDisabled()
                 }
             }

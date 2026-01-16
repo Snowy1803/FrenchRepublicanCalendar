@@ -480,11 +480,11 @@
 			isa = PBXGroup;
 			children = (
 				FD4D118D2F1A649A009035D5 /* EventStore.swift */,
+				FD4D117F2F1908EB009035D5 /* EventModel.swift */,
 				FD6EBB532EB7F1B600796761 /* CreateEventVC.swift */,
 				FD6EBB512EB7F19A00796761 /* EventVC.swift */,
 				FD4D11792F17EB83009035D5 /* CreateEventView.swift */,
 				FD4D11812F1926BC009035D5 /* AlarmPicker.swift */,
-				FD4D117F2F1908EB009035D5 /* EventModel.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
