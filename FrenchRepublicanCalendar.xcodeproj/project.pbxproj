@@ -72,6 +72,7 @@
 		FD4D118E2F1A649C009035D5 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D118D2F1A649A009035D5 /* EventStore.swift */; };
 		FD4D11A42F1A972D009035D5 /* CalendarFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D11A32F1A9722009035D5 /* CalendarFilterView.swift */; };
 		FD4D11A62F1D339C009035D5 /* CalendarPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D11A52F1D339C009035D5 /* CalendarPicker.swift */; };
+		FD4D11A92F1D695A009035D5 /* ScrollableWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4D11A82F1D695A009035D5 /* ScrollableWeekView.swift */; };
 		FD653DB92EE501F600BC9802 /* ScrollableMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */; };
 		FD653DBD2EE5341500BC9802 /* ScrollableYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */; };
 		FD653DBF2EE602D800BC9802 /* FastGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD653DBE2EE602D600BC9802 /* FastGrid.swift */; };
@@ -244,6 +245,7 @@
 		FD4D118D2F1A649A009035D5 /* EventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
 		FD4D11A32F1A9722009035D5 /* CalendarFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFilterView.swift; sourceTree = "<group>"; };
 		FD4D11A52F1D339C009035D5 /* CalendarPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPicker.swift; sourceTree = "<group>"; };
+		FD4D11A82F1D695A009035D5 /* ScrollableWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableWeekView.swift; sourceTree = "<group>"; };
 		FD653DB82EE501F600BC9802 /* ScrollableMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableMonthView.swift; sourceTree = "<group>"; };
 		FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableYearView.swift; sourceTree = "<group>"; };
 		FD653DBE2EE602D600BC9802 /* FastGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastGrid.swift; sourceTree = "<group>"; };
@@ -495,6 +497,15 @@
 			path = Event;
 			sourceTree = "<group>";
 		};
+		FD4D11A72F1D67B7009035D5 /* Day */ = {
+			isa = PBXGroup;
+			children = (
+				FDAAED222F0C344D00AEC60F /* ScrollableDayView.swift */,
+				FD4D11A82F1D695A009035D5 /* ScrollableWeekView.swift */,
+			);
+			path = Day;
+			sourceTree = "<group>";
+		};
 		FD653DC22EE603CE00BC9802 /* Year */ = {
 			isa = PBXGroup;
 			children = (
@@ -502,7 +513,6 @@
 				FD653DBC2EE5341500BC9802 /* ScrollableYearView.swift */,
 				FD653DC32EE603E400BC9802 /* ScrollableYearCell.swift */,
 				FD653DC02EE603B600BC9802 /* ScrollableYearMonthView.swift */,
-				FDAAED222F0C344D00AEC60F /* ScrollableDayView.swift */,
 			);
 			path = Year;
 			sourceTree = "<group>";
@@ -531,6 +541,7 @@
 			isa = PBXGroup;
 			children = (
 				FD653DC62EE61B7C00BC9802 /* ScrollableCalendarTab.swift */,
+				FD4D11A72F1D67B7009035D5 /* Day */,
 				FD653DC52EE61AA300BC9802 /* Month */,
 				FD653DC22EE603CE00BC9802 /* Year */,
 				FD6EBB5F2EB90E1300796761 /* RepublicanDatePicker.swift */,
@@ -817,6 +828,7 @@
 				FD4D11822F1926BC009035D5 /* AlarmPicker.swift in Sources */,
 				2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */,
 				20E095BC254059CC00383A31 /* FavoritesPool.swift in Sources */,
+				FD4D11A92F1D695A009035D5 /* ScrollableWeekView.swift in Sources */,
 				208A0DD62586734B00D635CE /* ConverterWidget.swift in Sources */,
 				FD6EBB622EB90F6E00796761 /* FoldablePicker.swift in Sources */,
 				FD4D117E2F17F230009035D5 /* FoldableDateTimePicker.swift in Sources */,

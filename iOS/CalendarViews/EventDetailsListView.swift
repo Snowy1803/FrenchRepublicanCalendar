@@ -69,13 +69,16 @@ struct DayEventWrapperView<Content: View>: View {
     var body: some View {
         wrapped(loading, events)
         .task {
-            reloadEvents()
+            reloadEvents(date: date)
         }.onReceive(store.objectWillChange) { _ in
-            reloadEvents()
+            reloadEvents(date: date)
+        }.onChange(of: date) { newValue in
+            self.events = []
+            reloadEvents(date: newValue)
         }
     }
     
-    func reloadEvents() {
+    func reloadEvents(date: FrenchRepublicanDate) {
         let start = Calendar.gregorian.startOfDay(for: date.date)
         let end = Calendar.gregorian.date(byAdding: .day, value: 1, to: start)!
         let evPred = store.store.predicateForEvents(withStart: start, end: end, calendars: nil)

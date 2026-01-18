@@ -39,7 +39,7 @@ struct ScrollableCalendarTab: View {
                 }
                 .transition(.opacity)
             case .day:
-                ScrollableDayView(date: topItem)
+                ScrollableDayView(date: $topItem)
                     .transition(.move(edge: .trailing))
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {

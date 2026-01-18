@@ -26,7 +26,7 @@ fileprivate var decHourSlotHeight: CGFloat {
 struct ScrollableDayView: View {
     @EnvironmentObject var store: EventStore
     @EnvironmentObject var midnight: Midnight
-    var date: FrenchRepublicanDate
+    @Binding var date: FrenchRepublicanDate
     @State private var showDetails: Bool = false
     @State private var showCalendars: Bool = false
     @State private var createEvent: Bool = false
@@ -57,6 +57,9 @@ struct ScrollableDayView: View {
                         .interactiveDismissDisabled()
                 }
             }
+        }
+        .topSafeAreaBar {
+            ScrollableWeekView(selection: $date)
         }
         .navigationTitle(Text("\(date, format: .republicanDate.day(.preferred))"))
         .toolbar {
@@ -108,6 +111,20 @@ struct ScrollableDayView: View {
                         }
                     }
             }
+        }
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func topSafeAreaBar(@ViewBuilder content: () -> some View) -> some View {
+        self.safeAreaInset(edge: .top) {
+            VStack(spacing: 0) {
+                content()
+                    .padding(.vertical, 8)
+                Divider()
+            }
+            .background(Material.bar)
         }
     }
 }
