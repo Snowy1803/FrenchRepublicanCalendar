@@ -29,19 +29,50 @@ struct CreateEventView: View {
         EventEditorView(event: event)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Ajouter") {
+                SheetButton(confirm: "Ajouter") {
                     event.createNewEvent()
                     dismiss()
                 }.disabled(event.startDate > event.endDate)
             }
             ToolbarItem(placement: .cancellationAction) {
-                Button("Annuler") {
+                SheetButton(cancel: "Annuler") {
                     dismiss()
                 }
             }
         }
         .navigationTitle("Nouvel évènement")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct SheetButton: View {
+    var title: LocalizedStringKey
+    var role: ButtonRole?
+    var action: @MainActor () -> Void
+
+    var body: some View {
+        if #available(iOS 26.0, *), let role {
+            Button(role: role, action: action)
+                .accessibilityLabel(title)
+        } else {
+            Button(title, action: action)
+        }
+    }
+}
+
+extension SheetButton {
+    init(confirm title: LocalizedStringKey, action: @escaping @MainActor () -> Void) {
+        self.init(title: title, role: {
+            if #available(iOS 26.0, *) {
+                return .confirm
+            } else {
+                return nil
+            }
+        }(), action: action)
+    }
+
+    init(cancel title: LocalizedStringKey, action: @escaping @MainActor () -> Void) {
+        self.init(title: title, role: .cancel, action: action)
     }
 }
 
@@ -67,7 +98,7 @@ struct EditEventView: View {
             }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("OK") {
+                SheetButton(confirm: "OK") {
                     if event.event!.hasRecurrenceRules {
                         recurringConfirm = true
                     } else {
@@ -89,7 +120,7 @@ struct EditEventView: View {
                 }
             }
             ToolbarItem(placement: .cancellationAction) {
-                Button("Annuler") {
+                SheetButton(cancel: "Annuler") {
                     dismiss()
                 }
             }
