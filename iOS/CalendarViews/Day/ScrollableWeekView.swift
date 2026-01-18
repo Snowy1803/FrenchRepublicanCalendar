@@ -11,15 +11,28 @@ struct ScrollableWeekView: View {
         sizeClass == .compact
     }
     
-    var row: Int {
-        let number = selection.components.day! - 1
-        let count = halfWeek ? 5 : 10
-        return number / count
+    var daysPerPage: Int {
+        halfWeek ? 5 : 10
+    }
+    
+    var previous: FrenchRepublicanDate {
+        FrenchRepublicanDate(dayInYear: selection.dayInYear - daysPerPage, year: selection.year)
+    }
+    
+    var next: FrenchRepublicanDate {
+        FrenchRepublicanDate(dayInYear: selection.dayInYear + daysPerPage, year: selection.year)
     }
 
     var body: some View {
-        CalendarMonthRow(month: selection, row: row, halfWeek: halfWeek) {
-            CalendarMonthItem(date: $0, selection: $selection)
+        SwipeableView(current: $selection, previousItem: previous, nextItem: next, previousValid: FrenchRepublicanDate.safeRange.contains(previous.date), nextValid: FrenchRepublicanDate.safeRange.contains(next.date)) { week in
+            CalendarMonthRow(month: week, row: row(item: week), halfWeek: halfWeek) {
+                CalendarMonthItem(date: $0, selection: $selection)
+            }
         }
+    }
+    
+    func row(item: FrenchRepublicanDate) -> Int {
+        let number = item.components.day! - 1
+        return number / daysPerPage
     }
 }
