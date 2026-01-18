@@ -208,11 +208,8 @@ struct CalendarPicker: View {
 
     var body: some View {
         Picker("Calendrier", selection: $calendar) {
-            ForEach(store.store.sources, id: \.sourceIdentifier) { source in
+            ForEach(store.groupedCalendars(editableCalendarsOnly: true), id: \.0.sourceIdentifier) { (source, calendars) in
                 Section(source.title) {
-                    let calendars: [EKCalendar] = store.store.calendars(for: .event).filter { calendar in
-                        calendar.source == source && calendar.allowsContentModifications
-                    }
                     ForEach(calendars, id: \.calendarIdentifier) { calendar in
                         Label {
                             Text(calendar.title)

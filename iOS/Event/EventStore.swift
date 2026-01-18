@@ -39,4 +39,18 @@ class EventStore: ObservableObject {
         }
         UserDefaults.standard.set(filtered, forKey: "filteredCalendars")
     }
+    
+    func groupedCalendars(editableCalendarsOnly: Bool) -> [(EKSource, [EKCalendar])] {
+        store.sources.map { source in
+            (source, source.calendars(for: .event).filter { calendar in
+                !editableCalendarsOnly || calendar.allowsContentModifications
+            }.sorted { lhs, rhs in
+                lhs.title.localizedStandardCompare(rhs.title) == .orderedAscending
+            })
+        }.filter {
+            !$0.1.isEmpty
+        }.sorted { lhs, rhs in
+            lhs.0.title.localizedStandardCompare(rhs.0.title) == .orderedAscending
+        }
+    }
 }

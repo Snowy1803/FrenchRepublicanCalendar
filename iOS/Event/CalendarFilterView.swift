@@ -18,11 +18,8 @@ struct CalendarFilterView: View {
     
     var body: some View {
         Form {
-            ForEach(store.store.sources, id: \.sourceIdentifier) { source in
+            ForEach(store.groupedCalendars(editableCalendarsOnly: false), id: \.0.sourceIdentifier) { (source, calendars) in
                 Section(source.title) {
-                    let calendars: [EKCalendar] = store.store.calendars(for: .event).filter { calendar in
-                        calendar.source == source && calendar.allowsContentModifications
-                    }
                     ForEach(calendars, id: \.calendarIdentifier) { calendar in
                         Button {
                             store.setFiltered(calendar: calendar, show: !store.shouldShow(calendar: calendar))
