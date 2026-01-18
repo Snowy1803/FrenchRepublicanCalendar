@@ -202,30 +202,6 @@ struct EventEditorView: View {
     }
 }
 
-struct CalendarPicker: View {
-    @EnvironmentObject var store: EventStore
-    @Binding var calendar: EKCalendar?
-
-    var body: some View {
-        Picker("Calendrier", selection: $calendar) {
-            ForEach(store.groupedCalendars(editableCalendarsOnly: true), id: \.0.sourceIdentifier) { (source, calendars) in
-                Section(source.title) {
-                    ForEach(calendars, id: \.calendarIdentifier) { calendar in
-                        Label {
-                            Text(calendar.title)
-                        } icon: {
-                            Image(systemName: "circlebadge.fill")
-                                .imageScale(.small)
-                                .foregroundStyle(Color(cgColor: calendar.cgColor), .white)
-                        }
-                        .tag(calendar)
-                    }
-                }
-            }
-        }
-    }
-}
-
 fileprivate extension Int {
     subscript(is expected: Int) -> Bool {
         get {
