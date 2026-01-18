@@ -34,9 +34,11 @@ struct EventDetailsView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Modifier") {
-                        showEdit = true
+                if event.calendar?.allowsContentModifications ?? true {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Modifier") {
+                            showEdit = true
+                        }
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
@@ -143,14 +145,16 @@ struct EventDetailsContent: View {
                         event.calendar = newValue
                         try? store.store.save(event.event!, span: .futureEvents)
                     })
-                    AlarmPicker(alarms: $event.alarms, index: 0)
-                        .onReceive(event.objectWillChange) {
-                            DispatchQueue.main.async {
-                                event.saveChanges(span: .thisEvent)
+                    if event.calendar?.allowsContentModifications ?? true {
+                        AlarmPicker(alarms: $event.alarms, index: 0)
+                            .onReceive(event.objectWillChange) {
+                                DispatchQueue.main.async {
+                                    event.saveChanges(span: .thisEvent)
+                                }
                             }
+                        if !event.alarms.isEmpty {
+                            AlarmPicker(alarms: $event.alarms, index: 1)
                         }
-                    if !event.alarms.isEmpty {
-                        AlarmPicker(alarms: $event.alarms, index: 1)
                     }
                     if let url = event.event!.url {
                         VStack(alignment: .leading) {
