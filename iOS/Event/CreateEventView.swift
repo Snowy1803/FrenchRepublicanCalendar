@@ -151,14 +151,18 @@ struct EventEditorView: View {
             Section {
                 Picker("Récurrence", selection: $event.recurrence) {
                     Section {
-                        Text("Jamais").tag(nil as Int?)
+                        Text("Jamais").tag(nil as RecurrenceModel?)
                     }
-                    Text("Tous les jours").tag(1)
-                    Text("Tous les 5 jours (démie-décade)").tag(5)
-                    Text("Tous les 10 jours (décade)").tag(10)
-                    Text("Tous les 15 jours (2 fois par mois)").tag(15)
-                    Text("Tous les 30 jours (1 fois par mois)").tag(30)
-                    Text("Tous les ans").tag(365)
+                    if event.recurrence == .unsupported {
+                        RecurrenceText(recc: event.event!.recurrenceRules?.first)
+                            .tag(RecurrenceModel.unsupported)
+                    }
+                    Text("Tous les jours").tag(RecurrenceModel.daily(interval: 1))
+                    Text("Tous les 5 jours (démie-décade)").tag(RecurrenceModel.daily(interval: 5))
+                    Text("Tous les 10 jours (décade)").tag(RecurrenceModel.daily(interval: 10))
+                    Text("Tous les 15 jours (2 fois par mois)").tag(RecurrenceModel.daily(interval: 15))
+                    Text("Tous les 30 jours (1 fois par mois)").tag(RecurrenceModel.daily(interval: 30))
+                    Text("Tous les ans").tag(RecurrenceModel.yearly)
                 }
                 if event.recurrence != nil {
                     Picker("Fin de la récurrence", selection: Binding { event.recurrenceEnd != nil } set: { event.recurrenceEnd = $0 ? event.startDate : nil }) {

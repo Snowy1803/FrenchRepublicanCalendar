@@ -21,7 +21,7 @@ class EventModel: ObservableObject {
     @EventProp var startDate: Date
     @EventProp var endDate: Date
     @EventProp var travelTime: DecimalTime = .midnight
-    @EventProp var recurrence: Int? = nil
+    @EventProp var recurrence: RecurrenceModel? = nil
     @EventProp var recurrenceEnd: Date? = nil
     @EventProp var calendar: EKCalendar? = nil
     @EventProp var url: String = ""
@@ -51,7 +51,7 @@ class EventModel: ObservableObject {
             self.travelTime = DecimalTime(timeSinceMidnight: TimeInterval(travelTimeValue))
         }
         if let recurrenceRule = event.recurrenceRules?.first {
-            self.recurrence = recurrenceRule.interval
+            self.recurrence = .init(rule: recurrenceRule)
             if let recurrenceEnd = recurrenceRule.recurrenceEnd?.endDate {
                 self.recurrenceEnd = recurrenceEnd
             }
@@ -95,9 +95,23 @@ class EventModel: ObservableObject {
             event.setValue(Int(travelTime.timeSinceMidnight), forKey: "travelTime")
         }
         if _recurrence.changed || _recurrenceEnd.changed {
-            event.recurrenceRules = []
-            if let recurrence {
-                event.addRecurrenceRule(EKRecurrenceRule(recurrenceWith: .daily, interval: recurrence, end: recurrenceEnd.flatMap { EKRecurrenceEnd(end: $0)} ))
+            let end = recurrenceEnd.flatMap { EKRecurrenceEnd(end: $0) }
+            if recurrence == .unsupported {
+                // only the end changed
+                event.recurrenceRules?[0].recurrenceEnd = end
+            } else {
+                // reset it all
+                event.recurrenceRules = []
+                switch recurrence {
+                case nil:
+                    break
+                case .daily(let interval):
+                    event.addRecurrenceRule(EKRecurrenceRule(recurrenceWith: .daily, interval: interval, end: end))
+                case .yearly:
+                    event.addRecurrenceRule(EKRecurrenceRule(recurrenceWith: .yearly, interval: 1, end: end))
+                case .unsupported:
+                    preconditionFailure()
+                }
             }
         }
         if _url.changed {
@@ -131,12 +145,8 @@ class EventModel: ObservableObject {
             self._travelTime.backingValue = .midnight
         }
         if let recurrenceRule = event.recurrenceRules?.first {
-            self._recurrence.backingValue = recurrenceRule.interval
-            if let recurrenceEnd = recurrenceRule.recurrenceEnd?.endDate {
-                self._recurrenceEnd.backingValue = recurrenceEnd
-            } else {
-                self._recurrenceEnd.backingValue = nil
-            }
+            self._recurrence.backingValue = .init(rule: recurrenceRule)
+            self._recurrenceEnd.backingValue = recurrenceRule.recurrenceEnd?.endDate
         } else {
             self._recurrence.backingValue = nil
             self._recurrenceEnd.backingValue = nil
@@ -163,6 +173,24 @@ class EventModel: ObservableObject {
     func saveChanges(span: EKSpan) {
         applyChanges()
         try? store.store.save(event!, span: span)
+    }
+}
+
+enum RecurrenceModel: Hashable {
+    case daily(interval: Int)
+    case yearly
+    case unsupported
+}
+
+extension RecurrenceModel {
+    init(rule: EKRecurrenceRule) {
+        if rule.frequency == .daily {
+            self = .daily(interval: rule.interval)
+        } else if rule.frequency == .yearly && rule.interval == 1 {
+            self = .yearly
+        } else {
+            self = .unsupported
+        }
     }
 }
 

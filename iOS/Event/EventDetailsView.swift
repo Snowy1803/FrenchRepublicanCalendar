@@ -105,36 +105,7 @@ struct EventDetailsContent: View {
                         Text("Du \(start, format: .republicanDate.day().year().hour().minute())")
                         Text("au \(end, format: .republicanDate.day().year().hour().minute())")
                     }
-                    if let recc = event.event!.recurrenceRules?.first {
-                        switch recc.frequency {
-                        case .daily:
-                            if recc.interval == 1 {
-                                Text("Se répète tous les jours")
-                            } else {
-                                Text("Se répète tous les \(recc.interval) jours")
-                            }
-                        case .weekly:
-                            if recc.interval == 1 {
-                                Text("Se répète toutes les semaines grégoriennes")
-                            } else {
-                                Text("Se répète toutes les \(recc.interval) semaines grégoriennes")
-                            }
-                        case .monthly:
-                            if recc.interval == 1 {
-                                Text("Se répète tous les mois grégoriens")
-                            } else {
-                                Text("Se répète tous les \(recc.interval) mois grégoriens")
-                            }
-                        case .yearly:
-                            if recc.interval == 1 {
-                                Text("Se répète tous les ans grégoriens")
-                            } else {
-                                Text("Se répète tous les \(recc.interval) ans")
-                            }
-                        @unknown default:
-                            Text("Se répète")
-                        }
-                    }
+                    RecurrenceText(recc: event.event!.recurrenceRules?.first)
                 }.foregroundStyle(.secondary)
                     .padding()
                 
@@ -194,6 +165,44 @@ struct EventDetailsContent: View {
             }
         }
         .multilineTextAlignment(.leading)
+    }
+}
+
+struct RecurrenceText: View {
+    var recc: EKRecurrenceRule?
+
+    var body: some View {
+        if let recc {
+            switch recc.frequency {
+            case .daily:
+                if recc.interval == 1 {
+                    Text("Se répète tous les jours")
+                } else {
+                    Text("Se répète tous les \(recc.interval) jours")
+                }
+            case .weekly:
+                if recc.interval == 1 {
+                    Text("Se répète toutes les semaines grégoriennes")
+                } else {
+                    Text("Se répète toutes les \(recc.interval) semaines grégoriennes")
+                }
+            case .monthly:
+                if recc.interval == 1 {
+                    Text("Se répète tous les mois grégoriens")
+                } else {
+                    Text("Se répète tous les \(recc.interval) mois grégoriens")
+                }
+            case .yearly:
+                if recc.interval == 1 {
+                    Text("Se répète tous les ans grégoriens")
+                } else {
+                    Text("Se répète tous les \(recc.interval) ans")
+                }
+            @unknown default:
+                Text("Se répète")
+            }
+        }
+
     }
 }
 
