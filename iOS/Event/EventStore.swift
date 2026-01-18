@@ -12,6 +12,7 @@
 
 import Combine
 import EventKit
+import UIKit
 
 class EventStore: ObservableObject {
     var store: EKEventStore
@@ -40,17 +41,64 @@ class EventStore: ObservableObject {
         UserDefaults.standard.set(filtered, forKey: "filteredCalendars")
     }
     
-    func groupedCalendars(editableCalendarsOnly: Bool) -> [(EKSource, [EKCalendar])] {
+    func groupedCalendars(editableCalendarsOnly: Bool) -> [SourceStore] {
         store.sources.map { source in
-            (source, source.calendars(for: .event).filter { calendar in
-                !editableCalendarsOnly || calendar.allowsContentModifications
-            }.sorted { lhs, rhs in
-                lhs.title.localizedStandardCompare(rhs.title) == .orderedAscending
-            })
+            SourceStore(
+                id: source.sourceIdentifier,
+                type: sourceType(source: source),
+                title: localizedTitle(source: source),
+                content: source.calendars(for: .event).filter { calendar in
+                    !editableCalendarsOnly || calendar.allowsContentModifications
+                }.sorted { lhs, rhs in
+                    lhs.title.localizedStandardCompare(rhs.title) == .orderedAscending
+                }
+            )
         }.filter {
-            !$0.1.isEmpty
-        }.sorted { lhs, rhs in
-            lhs.0.title.localizedStandardCompare(rhs.0.title) == .orderedAscending
+            !$0.content.isEmpty
+        }.sorted()
+    }
+    
+    func sourceType(source: EKSource) -> SourceStore.SourceType {
+        if source.sourceType == .birthdays {
+            return .other
+        } else if source.sourceType == .subscribed {
+            return .subscribed
+        } else {
+            return .regular
         }
+    }
+    
+    func localizedTitle(source: EKSource) -> String {
+        if source.sourceType == .birthdays {
+            return "Autres"
+        } else if source.sourceType == .subscribed {
+            return "Abonnements"
+        } else if source.sourceType == .local && source.title == "Default" {
+            return "Sur mon \(UIDevice.current.localizedModel)"
+        } else {
+            return source.title
+        }
+    }
+}
+
+struct SourceStore: Hashable, Identifiable {
+    var id: String
+    var type: SourceType
+    var title: String
+    var content: [EKCalendar]
+    
+    enum SourceType: Comparable {
+        case regular
+        case subscribed
+        case other
+    }
+}
+
+extension SourceStore: Comparable {
+    static func < (lhs: SourceStore, rhs: SourceStore) -> Bool {
+        if lhs.type == rhs.type {
+            return lhs.title.localizedStandardCompare(rhs.title) == .orderedAscending
+        }
+        return lhs.type < rhs.type
     }
 }

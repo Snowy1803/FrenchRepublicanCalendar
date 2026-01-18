@@ -18,9 +18,9 @@ struct CalendarFilterView: View {
     
     var body: some View {
         Form {
-            ForEach(store.groupedCalendars(editableCalendarsOnly: false), id: \.0.sourceIdentifier) { (source, calendars) in
+            ForEach(store.groupedCalendars(editableCalendarsOnly: false)) { source in
                 Section(source.title) {
-                    ForEach(calendars, id: \.calendarIdentifier) { calendar in
+                    ForEach(source.content, id: \.calendarIdentifier) { calendar in
                         Button {
                             store.setFiltered(calendar: calendar, show: !store.shouldShow(calendar: calendar))
                         } label: {

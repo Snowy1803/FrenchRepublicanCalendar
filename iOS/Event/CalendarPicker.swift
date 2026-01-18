@@ -21,9 +21,9 @@ struct CalendarPicker: View {
     var body: some View {
         if calendar?.allowsContentModifications ?? true {
             Picker("Calendrier", selection: $calendar) {
-                ForEach(store.groupedCalendars(editableCalendarsOnly: true), id: \.0.sourceIdentifier) { (source, calendars) in
+                ForEach(store.groupedCalendars(editableCalendarsOnly: true)) { source in
                     Section(source.title) {
-                        ForEach(calendars, id: \.calendarIdentifier) { calendar in
+                        ForEach(source.content, id: \.calendarIdentifier) { calendar in
                             CalendarItem(calendar: calendar)
                         }
                     }
