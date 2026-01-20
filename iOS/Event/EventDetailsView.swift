@@ -41,30 +41,37 @@ struct EventDetailsView: View {
                         }
                     }
                 }
-                ToolbarItem(placement: .bottomBar) {
-                    Button("Supprimer l'évènement", role: .destructive) {
-                        showDelete = true
-                    }
-                    .confirmationDialog("Supprimer", isPresented: $showDelete, titleVisibility: .hidden) {
-                        if event.event!.hasRecurrenceRules {
-                            Button("Supprimer celui-ci seulement", role: .destructive) {
-                                try? store.store.remove(event.event!, span: .thisEvent)
-                                dismiss()
-                            }
-                            Button("Supprimer tous les évènements", role: .destructive) {
-                                try? store.store.remove(event.event!, span: .futureEvents)
-                                dismiss()
-                            }
-                        } else {
-                            Button("Supprimer l'évènement", role: .destructive) {
-                                try? store.store.remove(event.event!, span: .thisEvent)
-                                dismiss()
-                            }
-                        }
-                    } message: {
-                        Text("Voulez-vous vraiment supprimer cet évènement\(event.event!.hasRecurrenceRules ? " récurrent" : "") ?")
-                    }
+            }
+            .bottomBar {
+                Button(role: .destructive) {
+                    showDelete = true
+                } label: {
+                    Text("Supprimer l'évènement")
+                        .foregroundStyle(.red)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 6)
                 }
+                .confirmationDialog("Supprimer", isPresented: $showDelete, titleVisibility: .hidden) {
+                    if event.event!.hasRecurrenceRules {
+                        Button("Supprimer celui-ci seulement", role: .destructive) {
+                            try? store.store.remove(event.event!, span: .thisEvent)
+                            dismiss()
+                        }
+                        Button("Supprimer tous les évènements", role: .destructive) {
+                            try? store.store.remove(event.event!, span: .futureEvents)
+                            dismiss()
+                        }
+                    } else {
+                        Button("Supprimer l'évènement", role: .destructive) {
+                            try? store.store.remove(event.event!, span: .thisEvent)
+                            dismiss()
+                        }
+                    }
+                } message: {
+                    Text("Voulez-vous vraiment supprimer cet évènement\(event.event!.hasRecurrenceRules ? " récurrent" : "") ?")
+                }
+                .glassButtonStyle()
+                .padding()
             }
             .sheet(isPresented: $showEdit) {
                 NavigationView {
@@ -72,6 +79,18 @@ struct EventDetailsView: View {
                     EditEventView(store: store, event: event.event!)
                 }
             }
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func glassButtonStyle() -> some View {
+        if #available(iOS 26.0, *) {
+            self.buttonStyle(.glass)
+        } else {
+            // default is unbordered and right
+            self
+        }
     }
 }
 
