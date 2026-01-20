@@ -26,7 +26,7 @@ struct ScrollableWeekView: View {
     var body: some View {
         SwipeableView(current: $selection, previousItem: previous, nextItem: next, previousValid: FrenchRepublicanDate.safeRange.contains(previous.date), nextValid: FrenchRepublicanDate.safeRange.contains(next.date)) { week in
             CalendarMonthRow(month: week, row: row(item: week), halfWeek: halfWeek) {
-                CalendarMonthItem(date: $0, selection: $selection)
+                CalendarMonthItem(date: $0, selection: $selection, hardSelection: true)
             }
         }
     }

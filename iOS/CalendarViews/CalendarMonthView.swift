@@ -84,6 +84,7 @@ struct CalendarMonthRow<Item: View>: View {
 struct CalendarMonthItem: View {
     var date: FrenchRepublicanDate?
     @Binding var selection: FrenchRepublicanDate
+    var hardSelection = false
     
     var isSelected: Bool {
         if let date {
@@ -124,11 +125,12 @@ struct CalendarMonthItem: View {
                 .foregroundStyle(
                     !isValid ? .clear
                     : isSelected && isToday ? .white
+                    : isSelected && hardSelection ? .fullBackground
                     : isSelected || isToday ? .accentColor
                     : isWeekend ? .secondary
                     : .primary)
         }
-        .buttonStyle(CalendarDayButtonStyle(isSelected: isSelected, isToday: isToday))
+        .buttonStyle(CalendarDayButtonStyle(isSelected: isSelected, isToday: isToday, hardSelection: hardSelection))
         .disabled(!isValid)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityLabel(isValid ? Text("\(isToday ? "Aujourd'hui, " : "")\(date!, format: .republicanDate.day(.preferred).year(.long))") : Text(""))
@@ -139,6 +141,7 @@ struct CalendarMonthItem: View {
 struct CalendarDayButtonStyle: ButtonStyle {
     var isSelected: Bool
     var isToday: Bool
+    var hardSelection: Bool
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -147,7 +150,8 @@ struct CalendarDayButtonStyle: ButtonStyle {
             .aspectRatio(1, contentMode: .fill)
             .frame(maxWidth: .infinity)
             .background(Circle().fill(
-                Color.accentColor.opacity(
+                hardSelection && !isToday && isSelected ? Color.fullForeground
+                : Color.accentColor.opacity(
                     isSelected && isToday ? 1
                     : isSelected ? 0.12
                     : configuration.isPressed ? 0.06
