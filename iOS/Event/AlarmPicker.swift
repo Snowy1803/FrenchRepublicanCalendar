@@ -90,7 +90,7 @@ struct TravelTimePicker: View {
             Section {
                 Text("Aucun").tag(DecimalTime.midnight)
             }
-            if !TravelTimePicker.defaultChoices.contains(where: { $0.time == travelTime.timeSinceMidnight }) {
+            if !TravelTimePicker.defaultChoices.contains(where: { $0.time == travelTime.timeSinceMidnight }) && travelTime != .midnight {
                 Text("\(travelTime, format: .decimalTime.hour().minute().second())").tag(travelTime)
             }
             ForEach(TravelTimePicker.defaultChoices) { choice in
