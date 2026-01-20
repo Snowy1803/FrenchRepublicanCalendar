@@ -118,7 +118,11 @@ struct ScrollableDayView: View {
 extension View {
     @ViewBuilder
     func topSafeAreaBar(@ViewBuilder content: () -> some View) -> some View {
-        self.safeAreaInset(edge: .top) {
+        VStack {
+            Spacer(minLength: 0)
+            self
+            Spacer(minLength: 0)
+        }.safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
                 content()
                     .padding(.vertical, 8)
