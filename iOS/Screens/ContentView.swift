@@ -46,7 +46,7 @@ struct ContentView: View {
                 }
                 .navigationViewStyle(.stack)
                 .tabItem {
-                    Image(systemName: "calendar")
+                    Image(systemName: "calendar.day.timeline.leading")
                     Text("Calendrier")
                 }
                 NavigationView {

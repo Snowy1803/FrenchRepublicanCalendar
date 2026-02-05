@@ -108,6 +108,7 @@
 		FDA522732ECF70BE00210C75 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = FDA522722ECF70BE00210C75 /* SwiftUIIntrospect */; };
 		FDAAED212F0C319900AEC60F /* Eventually in Frameworks */ = {isa = PBXBuildFile; productRef = FDAAED202F0C319900AEC60F /* Eventually */; };
 		FDAAED232F0C345200AEC60F /* ScrollableDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAAED222F0C344D00AEC60F /* ScrollableDayView.swift */; };
+		FDE5E6052F34DCFF00A7A8DF /* WatchCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE5E6042F34DCFF00A7A8DF /* WatchCalendarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -272,6 +273,7 @@
 		FDA5226E2ECE662C00210C75 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FDA522702ECE720A00210C75 /* VariantPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantPicker.swift; sourceTree = "<group>"; };
 		FDAAED222F0C344D00AEC60F /* ScrollableDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableDayView.swift; sourceTree = "<group>"; };
+		FDE5E6042F34DCFF00A7A8DF /* WatchCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCalendarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +370,7 @@
 				20C645CD2663B968001D7108 /* DecimalTimeView.swift */,
 				20024495244DD70E00A89D79 /* FavoriteList.swift */,
 				201A51C1244D2C8800C9867B /* DateDetails.swift */,
+				FDE5E6042F34DCFF00A7A8DF /* WatchCalendarView.swift */,
 				FD12A18D2ED74BB500BD8E69 /* SettingsView.swift */,
 				20418BD22412F3EB00E0EE6E /* WatchApp.swift */,
 				20418BD42412F3EB00E0EE6E /* ExtensionDelegate.swift */,
@@ -785,6 +788,7 @@
 				20418BD12412F3EB00E0EE6E /* ContentView.swift in Sources */,
 				2047A34D2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				208A0DF9258675AA00D635CE /* GregorianToRepublicanView.swift in Sources */,
+				FDE5E6052F34DCFF00A7A8DF /* WatchCalendarView.swift in Sources */,
 				20418BD52412F3EB00E0EE6E /* ExtensionDelegate.swift in Sources */,
 				208A0DF1258673E300D635CE /* MyDateComponents.swift in Sources */,
 			);
@@ -1050,6 +1054,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "FrenchRepublicanCalendar WatchKit App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -1074,6 +1079,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "FrenchRepublicanCalendar WatchKit App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
