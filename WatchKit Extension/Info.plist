@@ -24,6 +24,10 @@
 	<string>$(PRODUCT_MODULE_NAME).ComplicationController</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Pour afficher vos évènements dans le calendrier républicain. Vos données restent en sécurité sur votre appareil.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Pour afficher vos évènements dans le calendrier républicain. Vos données restent en sécurité sur votre appareil.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Pour convertir les dates de naissance de vos contacts</string>
 	<key>UISupportedInterfaceOrientations</key>
