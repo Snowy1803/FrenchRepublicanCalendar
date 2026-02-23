@@ -163,6 +163,7 @@ class EventModel: ObservableObject {
         
     }
     
+    #if !os(watchOS)
     func createNewEvent() {
         assert(self.event == nil)
         self.event = EKEvent(eventStore: store.store)
@@ -174,6 +175,7 @@ class EventModel: ObservableObject {
         applyChanges()
         try? store.store.save(event!, span: span)
     }
+    #endif
 }
 
 enum RecurrenceModel: Hashable {

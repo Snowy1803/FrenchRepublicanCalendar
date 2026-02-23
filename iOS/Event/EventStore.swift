@@ -1,10 +1,10 @@
 //
 //  EventStore.swift
 //  FrenchRepublicanCalendar
-// 
+//
 //  Created by Emil Pedersen on 16/01/2026.
 //  Copyright © 2026 Snowy_1803. All rights reserved.
-// 
+//
 //  This Source Code Form is subject to the terms of the Mozilla Public
 //  License, v. 2.0. If a copy of the MPL was not distributed with this
 //  file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -12,7 +12,11 @@
 
 import Combine
 import EventKit
+#if os(watchOS)
+import WatchKit
+#else
 import UIKit
+#endif
 
 class EventStore: ObservableObject {
     var store: EKEventStore
@@ -74,7 +78,11 @@ class EventStore: ObservableObject {
         } else if source.sourceType == .subscribed {
             return "Abonnements"
         } else if source.sourceType == .local && source.title == "Default" {
+            #if os(watchOS)
+            return "Sur mon Apple Watch"
+            #else
             return "Sur mon \(UIDevice.current.localizedModel)"
+            #endif
         } else {
             return source.title
         }

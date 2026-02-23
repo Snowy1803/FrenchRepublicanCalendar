@@ -136,7 +136,7 @@ struct WatchCalendarDayCell: View {
     
     var body: some View {
         if let date {
-            NavigationLink(destination: DateDetails(components: date.toMyDateComponents, date: date)) {
+            NavigationLink(destination: ScrollableDayView(date: date)) {
                 Text("\(date.components.day!)")
                     .font(.system(size: 14))
                     .foregroundStyle(
