@@ -314,9 +314,10 @@ struct DecimalTimeMarker: View {
                 .foregroundStyle(.secondary)
                 .fixedSize()
                 .frame(width: markerWidth, alignment: .trailing)
-            VStack {
-                Divider()
-            }.frame(maxWidth: .infinity)
+            Rectangle()
+                .fill(Color.primary.opacity(0.15))
+                .frame(height: 0.5)
+                .frame(maxWidth: .infinity)
         }.frame(height: 0)
     }
     
