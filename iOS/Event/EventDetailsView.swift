@@ -1,10 +1,10 @@
 //
 //  EventVC.swift
 //  FrenchRepublicanCalendar
-// 
+//
 //  Created by Emil Pedersen on 02/11/2025.
 //  Copyright © 2025 Snowy_1803. All rights reserved.
-// 
+//
 //  This Source Code Form is subject to the terms of the Mozilla Public
 //  License, v. 2.0. If a copy of the MPL was not distributed with this
 //  file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -13,8 +13,21 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 import EventKit
+#if !os(watchOS)
 import EventKitUI
+#endif
 
+#if os(watchOS)
+struct EventDetailsView: View {
+    @EnvironmentObject var store: EventStore
+    @ObservedObject var event: EventModel
+
+    var body: some View {
+        EventDetailsContent(event: event)
+            .navigationTitle("Détails")
+    }
+}
+#else
 struct EventDetailsView: View {
     @EnvironmentObject var store: EventStore
     @ObservedObject var event: EventModel
@@ -93,6 +106,7 @@ extension View {
         }
     }
 }
+#endif
 
 struct EventDetailsContent: View {
     @EnvironmentObject var store: EventStore
@@ -104,7 +118,11 @@ struct EventDetailsContent: View {
                 VStack(alignment: .leading) {
                     Text(event.title)
                         .lineLimit(2)
+                    #if os(watchOS)
+                        .font(.headline)
+                    #else
                         .font(.title)
+                    #endif
                     if !event.location.isEmpty {
                         Text(event.location)
                     }
@@ -128,6 +146,29 @@ struct EventDetailsContent: View {
                 }.foregroundStyle(.secondary)
                     .padding()
                 
+                #if os(watchOS)
+                if let calendar = event.calendar {
+                    HStack(spacing: 6) {
+                        Circle()
+                            .fill(Color(cgColor: calendar.cgColor))
+                            .frame(width: 10, height: 10)
+                        Text(calendar.title)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }.padding(.horizontal)
+                }
+                // No URL — can't open them on watchOS
+                if !event.notes.isEmpty {
+                    VStack(alignment: .leading) {
+                        Text("Notes")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        Text(event.notes)
+                            .font(.caption)
+                            .lineLimit(10)
+                    }.padding(.horizontal)
+                }
+                #else
                 List {
                     CalendarPicker(calendar: Binding {
                         event.calendar
@@ -181,7 +222,8 @@ struct EventDetailsContent: View {
                 .listStyle(.plain)
                 .frame(height: 400)
                 .scrollDisabled(true)
-            }
+                #endif
+            }.frame(maxWidth: .infinity, alignment: .leading)
         }
         .multilineTextAlignment(.leading)
     }
@@ -225,6 +267,7 @@ struct RecurrenceText: View {
     }
 }
 
+#if !os(watchOS)
 struct EventVC: UIViewControllerRepresentable {
     typealias UIViewControllerType = EKEventViewController
     
@@ -238,3 +281,4 @@ struct EventVC: UIViewControllerRepresentable {
         uiViewController.event = event
     }
 }
+#endif

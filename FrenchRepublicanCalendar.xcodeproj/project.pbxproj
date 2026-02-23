@@ -106,6 +106,7 @@
 		FD7EB8DF2ED6BCD9000A6FDB /* DateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0959F25404BB200383A31 /* DateWidget.swift */; };
 		FD853BF22F4CEC7300870E77 /* EventPermissionWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD853BF12F4CEC7300870E77 /* EventPermissionWrapperView.swift */; };
 		FD853BF32F4CEC8800870E77 /* EventPermissionWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD853BF12F4CEC7300870E77 /* EventPermissionWrapperView.swift */; };
+		FD853BF42F4D097400870E77 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6EBB512EB7F19A00796761 /* EventDetailsView.swift */; };
 		FD8D50EB2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FD8D50EC2E79E15000951805 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = FD8D50EA2E79E15000951805 /* AppIcon.icon */; };
 		FDA5226D2ECE423A00210C75 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA5226C2ECE423A00210C75 /* WhatsNew.swift */; };
@@ -797,6 +798,7 @@
 				FD12A18E2ED74BB800BD8E69 /* SettingsView.swift in Sources */,
 				208A0E01258675C900D635CE /* RepublicanToGregorianView.swift in Sources */,
 				20418BD12412F3EB00E0EE6E /* ContentView.swift in Sources */,
+				FD853BF42F4D097400870E77 /* EventDetailsView.swift in Sources */,
 				2047A34D2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */,
 				208A0DF9258675AA00D635CE /* GregorianToRepublicanView.swift in Sources */,
 				FDE5E6052F34DCFF00A7A8DF /* WatchCalendarView.swift in Sources */,

@@ -195,8 +195,13 @@ struct SingleEventBlobView: View {
 
     var body: some View {
         #if os(watchOS)
-        eventContent
-            .eventuallyDateIntervalLayout(DateInterval(start: event.startDate, end: event.endDate))
+        NavigationLink {
+            EventDetailsView(event: event)
+        } label: {
+            eventContent
+        }
+        .buttonStyle(.plain)
+        .eventuallyDateIntervalLayout(DateInterval(start: event.startDate, end: event.endDate))
         #else
         Button {
             tap = true
@@ -222,13 +227,6 @@ struct SingleEventBlobView: View {
             VStack(alignment: .leading) {
                 Text(event.title)
                     .font(titleFont)
-                #if os(watchOS)
-                if !event.isAllDay {
-                    Text("\(FrenchRepublicanDate(date: event.startDate), format: .republicanDate.hour().minute())")
-                        .font(.system(size: 10))
-                        .foregroundStyle(.secondary)
-                }
-                #else
                 Group {
                     if event.isAllDay {
                         Text("Toute la journée")
@@ -243,7 +241,6 @@ struct SingleEventBlobView: View {
                     }
                 }.foregroundStyle(.secondary)
                     .font(.caption)
-                #endif
             }
         }
         .padding(blobPadding)
