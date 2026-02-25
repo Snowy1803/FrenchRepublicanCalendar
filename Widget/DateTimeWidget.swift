@@ -42,7 +42,7 @@ struct DateTimeWidgetEntryView : View {
                     }
                     .font(.headline)
                     .widgetAccentable()
-                    Text(today, format: today.isSansculottides ? .republicanDate.year() : .republicanDate.day(.dayName))
+                    ShortenableDateText(today, format: today.isSansculottides ? .republicanDate.year() : .republicanDate.day(.dayName))
                         .foregroundStyle(.secondary)
                     Text(entry.time, format: .decimalTime.hour().minute())
                         .monospacedDigit()
@@ -91,7 +91,10 @@ struct DateTimeWidgetEntryView : View {
                         .font(.system(.largeTitle).monospacedDigit())
                 }
                 Spacer(minLength: 0)
-                Text(today.isSansculottides ? today.weekdayName : today.dayName)
+                ShortenableDateText(today, format: .republicanDate
+                    .day(today.isSansculottides ? .none : .dayName)
+                    .weekday(today.isSansculottides ? .long : .none)
+                )
             }.foregroundColor(.primary)
         }
     }

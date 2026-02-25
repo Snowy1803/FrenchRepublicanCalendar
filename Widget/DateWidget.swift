@@ -56,6 +56,23 @@ struct InlineDateEntryView: View {
     }
 }
 
+struct ShortenableDateText: View {
+    var today: FrenchRepublicanDate
+    var format: FRCFormat
+    
+    init(_ today: FrenchRepublicanDate, format: FRCFormat) {
+        self.today = today
+        self.format = format
+    }
+    
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            Text(today, format: format.dayLength(.long))
+            Text(today, format: format.dayLength(.short))
+        }
+    }
+}
+
 struct DateWidgetEntryView : View {
     @Environment(\.widgetFamily) var family
     var entry: Provider.Entry
@@ -72,10 +89,7 @@ struct DateWidgetEntryView : View {
                     VStack {
                         Text("\(today.components.day!)")
                             .font(.title)
-                        ViewThatFits(in: .horizontal) {
-                            Text(today, format: .republicanDate.day(.monthOnly))
-                            Text(today, format: .republicanDate.day(.monthOnly).dayLength(.short))
-                        }
+                        ShortenableDateText(today, format: .republicanDate.day(.monthOnly))
                         .font(.caption)
                         .widgetAccentable()
                         .padding(.horizontal, 4)
@@ -92,7 +106,10 @@ struct DateWidgetEntryView : View {
                             .widgetAccentable()
                         Text(today, format: .republicanDate.year(.long))
                             .foregroundStyle(.secondary)
-                        Text(today.isSansculottides ? today.weekdayName : today.dayName)
+                        ShortenableDateText(today, format: .republicanDate
+                            .day(today.isSansculottides ? .none : .dayName)
+                            .weekday(today.isSansculottides ? .long : .none)
+                        )
                     }
                     Spacer(minLength: 0)
                 }
@@ -114,7 +131,7 @@ struct DateWidgetEntryView : View {
                     Spacer()
                     HStack {
                         Spacer()
-                        Text(today.dayName)
+                        ShortenableDateText(today, format: .republicanDate.day(.dayName))
                     }
                     Spacer()
                 }
@@ -124,7 +141,7 @@ struct DateWidgetEntryView : View {
                     HStack {
                         Text(today.weekdayName)
                         Spacer()
-                        Text(today.dayName)
+                        ShortenableDateText(today, format: .republicanDate.day(.dayName))
                     }
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading) {
