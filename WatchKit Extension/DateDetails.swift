@@ -35,9 +35,20 @@ struct DateDetails: View {
         ScrollView {
             VStack {
                 VStack {
-                    Text(date.toLongStringNoYear())
-                    Row(value: "\(date.formattedYear)", title: "An :")
-                    Row(value: date.dayName, title: date.weekdayName)
+                    Text(date, format: .republicanDate.day())
+                        .font(.headline)
+                    Text(date, format: .republicanDate.year())
+                        .foregroundStyle(.secondary)
+                    Divider()
+                    VStack(alignment: .leading) {
+                        Text(date, format: .republicanDate.day(.dayName))
+                        Text(date.dayNameGrammaticalNature.natureDescription)
+                            .foregroundColor(.secondary)
+                        Text(date.dayNameExplanation)
+                            .multilineTextAlignment(.leading)
+                    }
+                    Divider()
+                    Row(value: date.weekdayName, title: "Jour :")
                     Row(value: date.quarter, title: "Saison :")
                     Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                     Row(value: "\(date.dayInYear)/\(date.isYearSextil ? 366 : 365)", title: "Jour :")
@@ -74,6 +85,21 @@ struct Row: View {
             Text(title).lineLimit(1).layoutPriority(2)
             Spacer()
             Text(value).layoutPriority(3)
+        }
+    }
+}
+
+extension FrenchRepublicanDate.DayNameNature {
+    var natureDescription: LocalizedStringKey {
+        switch self {
+        case .nm:
+            "nom masculin"
+        case .nf:
+            "nom féminin"
+        case .nmpl:
+            "nom masculin pluriel"
+        case .nfpl:
+            "nom féminin pluriel"
         }
     }
 }

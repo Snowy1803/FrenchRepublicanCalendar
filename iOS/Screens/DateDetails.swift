@@ -86,6 +86,7 @@ struct DayNameButton: View {
                 ) \(
                     Text(date.dayNameGrammaticalNature.natureDescription)
                         .font(.caption)
+                        .foregroundColor(.secondary)
                 )
                 """)
                 
