@@ -79,11 +79,21 @@ struct DayNameButton: View {
     var body: some View {
         VStack(alignment: .leading) {
             VStack(spacing: 0) {
-                Text(date, format: .republicanDate.day(.dayName))
-                    .font(.title)
+                Text("""
+                \(
+                    Text(date, format: .republicanDate.day(.dayName))
+                        .font(.title)
+                ) \(
+                    Text(date.dayNameGrammaticalNature.natureDescription)
+                        .font(.caption)
+                )
+                """)
+                
                 DayNameDefiner(showDefinePopup: $showDefinePopup, date: date)
                     .frame(width: 0, height: 0)
             }
+            Text(date.dayNameExplanation)
+                .multilineTextAlignment(.leading)
             HStack {
                 Button {
                     showDefinePopup = true
@@ -179,5 +189,20 @@ struct Row: View {
         .accessibilityElement()
         .accessibility(label: Text(title))
         .accessibility(value: Text(value))
+    }
+}
+
+extension FrenchRepublicanDate.DayNameNature {
+    var natureDescription: LocalizedStringKey {
+        switch self {
+        case .nm:
+            "(nom masculin)"
+        case .nf:
+            "(nom féminin)"
+        case .nmpl:
+            "(nom masculin pluriel)"
+        case .nfpl:
+            "(nom féminin pluriel)"
+        }
     }
 }

@@ -29,7 +29,7 @@ struct TodayWidget: View {
                         .font(.largeTitle)
                     VStack(alignment: .leading) {
                         Text(today.monthName)
-                        Text(today.dayName)
+                        Text(today, format: .republicanDate.day(.dayName).dayLength(.long))
                     }
                     Spacer()
                     Image.decorative(systemName: "chevron.right")
