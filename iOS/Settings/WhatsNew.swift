@@ -13,7 +13,7 @@
 import SwiftUI
 
 struct WhatsNew: View {
-    static let lastSignificantChange = 26 // build number for 7.0
+    static let lastSignificantChange = 36 // build number for 7.0
     static var currentVersion: Int {
         Int(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0") ?? 0
     }
@@ -52,11 +52,11 @@ struct WhatsNew: View {
                     title: Text("Widgets"),
                     text: Text("Ajoutez des widgets à votre écran d'accueil ou de verrouillage, pour toujours voir la date républicaine et/ou l'heure décimale")
                 )
-                WhatsNewRow(
-                    icon: "waveform.and.mic",
-                    title: Text("Demandez à Siri"),
-                    text: Text("Ajoutez des commandes à Siri pour consulter la date républicaine ou l'heure décimale")
-                )
+//                WhatsNewRow(
+//                    icon: "waveform.and.mic",
+//                    title: Text("Demandez à Siri"),
+//                    text: Text("Ajoutez des commandes à Siri pour consulter la date républicaine ou l'heure décimale")
+//                )
                 WhatsNewRow(
                     icon: "hand.raised",
                     title: Text("Gratuit, privé, et sans publicité"),
