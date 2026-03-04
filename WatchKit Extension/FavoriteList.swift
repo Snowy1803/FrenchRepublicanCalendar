@@ -49,7 +49,7 @@ struct DateRow: View {
     }
     
     var body: some View {
-        NavigationLink(destination: DateDetails(components: frd.date.toMyDateComponents, date: frd)) {
+        NavigationLink(destination: DateDetails(date: frd)) {
             VStack(alignment: .leading) {
                 HStack {
                     Text(frd.toLongStringNoYear())

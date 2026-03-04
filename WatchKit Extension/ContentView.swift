@@ -29,7 +29,7 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            NavigationLink(destination: DateDetails(components: Date().toMyDateComponents, date: FrenchRepublicanDate(date: Date())), isActive: Binding<Bool>(get: { self.todayActive }, set: {
+            NavigationLink(destination: DateDetails(date: FrenchRepublicanDate(date: Date())), isActive: Binding<Bool>(get: { self.todayActive }, set: {
                 if $0 {
                     self.shownDateGregorian = Date().toMyDateComponents
                     self.shownDateRepublican = FrenchRepublicanDate(date: Date()).toMyDateComponents

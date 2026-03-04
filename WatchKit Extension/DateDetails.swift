@@ -17,16 +17,17 @@ import Combine
 struct DateDetails: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
     
-    var components: MyDateComponents
     var date: FrenchRepublicanDate
     
     var gregorian: String {
-        let day = components.asdate!
         let df = DateFormatter()
         df.dateFormat = "d MMM yyyy"
-        return df.string(from: day)
+        return df.string(from: date.date)
     }
     
+    var components: MyDateComponents {
+        date.date.toMyDateComponents
+    }
     var added: Bool {
         favoritesPool.favorites.contains(self.components.string)
     }

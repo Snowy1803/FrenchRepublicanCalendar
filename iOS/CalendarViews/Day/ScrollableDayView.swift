@@ -82,7 +82,7 @@ struct ScrollableDayView: View {
             }
         }
         .sheet(isPresented: $showDetails) {
-            DateDetails(components: date.toMyDateComponents, date: date)
+            DateDetails(date: date)
         }
         #else
         .topSafeAreaBar {

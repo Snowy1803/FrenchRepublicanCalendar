@@ -17,7 +17,7 @@ struct GregorianToRepublicanView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: DateDetails(components: shownDate, date: shownDate.tofrd!)) {
+            NavigationLink(destination: DateDetails(date: shownDate.tofrd!)) {
                 Text(shownDate.tofrd!.toLongString())
             }
             HStack {
