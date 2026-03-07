@@ -40,6 +40,7 @@ struct DateDetails: View {
                         .font(.headline)
                     Text(date, format: .republicanDate.year())
                         .foregroundStyle(.secondary)
+                    Text(date, format: .republicanDate.day(.dayName).dayLength(.long))
                     Divider()
                     VStack(alignment: .leading) {
                         Text(date, format: .republicanDate.day(.dayName))

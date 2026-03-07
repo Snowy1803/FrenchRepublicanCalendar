@@ -25,17 +25,27 @@ struct TodayWidget: View {
             let today = FrenchRepublicanDate(date: Date())
             NavigationLink(destination: DateDetails(date: today)) {
                 HStack {
-                    Text(String(today.components.day!))
-                        .font(.largeTitle)
-                    VStack(alignment: .leading) {
-                        Text(today.monthName)
-                        Text(today, format: .republicanDate.day(.dayName).dayLength(.long))
-                    }
+                    TodayView(today: today)
                     Spacer()
                     Image.decorative(systemName: "chevron.right")
                         .foregroundColor(.gray)
                 }.foregroundColor(.primary)
             }.accessibility(label: Text("\((today.components.day!)) \(today.monthName) ; Associé à : \(today.dayName)"))
+        }
+    }
+}
+
+struct TodayView: View {
+    var today: FrenchRepublicanDate
+
+    var body: some View {
+        HStack {
+            Text(String(today.components.day!))
+                .font(.largeTitle)
+            VStack(alignment: .leading) {
+                Text(today, format: .republicanDate.day(.monthOnly).year())
+                Text(today, format: .republicanDate.day(.dayName).dayLength(.long))
+            }
         }
     }
 }

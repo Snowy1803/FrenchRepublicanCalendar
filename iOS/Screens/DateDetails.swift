@@ -35,12 +35,13 @@ struct DateDetails: View {
     var body: some View {
         Form {
             Section {
-                Text(date.toVeryLongString())
+                TodayView(today: date)
             }
             Section {
                 DayNameButton(date: date)
             }
             Section {
+                Row(value: date.weekdayName, title: "Jour de la décade :")
                 Row(value: date.quarter, title: "Saison :")
                 Row(value: "\(date.components.weekOfYear!)/37", title: "Décade :")
                     .accessibility(value: Text("\(date.components.weekOfYear!) sur 37"))
@@ -54,6 +55,7 @@ struct DateDetails: View {
                 EventDetailsListView(date: date)
             }
         }.navigationBarTitle(date.toLongString())
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Button(action: {
             if favoritesPool.favorites.contains(iso) {
                 favoritesPool.favorites.removeAll { date in
