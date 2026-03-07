@@ -87,8 +87,10 @@ struct ScrollableDayView: View {
         #else
         .topSafeAreaBar {
             ScrollableWeekView(selection: $date)
+        } secondaryBar: {
+            Text(date, format: .republicanDate.day(.dayName).dayLength(.long).year())
+                .font(.subheadline.weight(.semibold))
         }
-        .navigationTitle(Text("\(date, format: .republicanDate.day(.preferred))"))
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -170,18 +172,26 @@ struct ScrollableDayView: View {
 #if !os(watchOS)
 extension View {
     @ViewBuilder
-    func topSafeAreaBar(@ViewBuilder content: () -> some View) -> some View {
+    func topSafeAreaBar(@ViewBuilder content: () -> some View, @ViewBuilder secondaryBar: () -> some View) -> some View {
         VStack {
             Spacer(minLength: 0)
             self
             Spacer(minLength: 0)
         }.safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
-                content()
-                    .padding(.vertical, 8)
-                Divider()
+                VStack(spacing: 0) {
+                    content()
+                        .padding(.vertical, 8)
+                    Divider()
+                }
+                .background(Material.bar)
+                VStack(spacing: 0) {
+                    secondaryBar()
+                        .padding(.vertical, 8)
+                    Divider()
+                }
+                .background(Color.fullBackground)
             }
-            .background(Material.bar)
         }
     }
 }
