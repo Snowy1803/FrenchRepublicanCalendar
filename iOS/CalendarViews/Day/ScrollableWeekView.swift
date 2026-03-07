@@ -6,9 +6,10 @@ import EventKit
 struct ScrollableWeekView: View {
     @Binding var selection: FrenchRepublicanDate
     @Environment(\.horizontalSizeClass) var sizeClass
+    @AppStorage("frc-force-full-week", store: UserDefaults.shared) var forceFullWeek: Bool = false
     
     var halfWeek: Bool {
-        sizeClass == .compact
+        sizeClass == .compact && !forceFullWeek
     }
     
     var daysPerPage: Int {

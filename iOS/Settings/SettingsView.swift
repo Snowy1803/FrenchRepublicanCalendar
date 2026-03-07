@@ -18,6 +18,7 @@ struct SettingsView: View {
     /// This is separated to avoid GitHub scrapers. If you are looking for email addresses, please disregard this one.
     static let personalWebsite = "emil.codes"
     @EnvironmentObject var midnight: Midnight
+    @AppStorage("frc-force-full-week", store: UserDefaults.shared) var forceFullWeek: Bool = false
     
     var body: some View {
         Form {
@@ -36,6 +37,26 @@ struct SettingsView: View {
                 FrenchRepublicanDateOptions.current.romanYear = $0
             }) {
                 Text("Chiffres romains pour les années")
+            }
+            
+            Section {
+                Toggle(isOn: $forceFullWeek) {
+                    Text("Toujours afficher les décades entières")
+                }
+            } footer: {
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    if forceFullWeek {
+                        Text("Toujours afficher les décades entières de 10 jours dans l'onglet Calendrier, malgré le petit écran")
+                    } else {
+                        Text("L'onglet Calendrier affiche des demi-décades de 5 jours au lieu de décades entières de 10 jours")
+                    }
+                } else {
+                    if forceFullWeek {
+                        Text("Toujours afficher les décades entières de 10 jours dans l'onglet Calendrier, même lorsque la fenêtre est trop petite.")
+                    } else {
+                        Text("L'onglet Calendrier affiche des demi-décades de 5 jours au lieu de décades entières de 10 jours lorsque la fenêtre est trop petite.")
+                    }
+                }
             }
             
             Section(

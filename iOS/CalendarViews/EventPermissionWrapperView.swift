@@ -32,7 +32,7 @@ struct EventPermissionWrapperView<Content: View>: View {
                 #else
                 Text("Autorisez l'accès au Calendrier dans les Réglages iOS")
                 #endif
-            }
+            }.padding()
         } else if eventAccess == .restricted {
             VStack(alignment: .leading) {
                 Text("Accès restreint")
@@ -43,7 +43,7 @@ struct EventPermissionWrapperView<Content: View>: View {
                 #else
                 Text("Autorisez l'accès au Calendrier dans les Réglages iOS")
                 #endif
-            }
+            }.padding()
         } else if eventAccess == .notDetermined {
             VStack(alignment: .leading) {
                 #if os(watchOS)
@@ -69,7 +69,7 @@ struct EventPermissionWrapperView<Content: View>: View {
                 #if !os(watchOS)
                 .prominentButtonStyle()
                 #endif
-            }
+            }.padding()
         } else {
             wrapped()
         }

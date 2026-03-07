@@ -87,10 +87,16 @@ struct ScrollableCalendarUIView: UIViewControllerRepresentable {
 }
 
 struct ScrollableCalendarCell: View {
-    @Environment(\.horizontalSizeClass) var sizeClass
     var month: FrenchRepublicanDate
     @Binding var selection: FrenchRepublicanDate
 
+    @Environment(\.horizontalSizeClass) var sizeClass
+    @AppStorage("frc-force-full-week", store: UserDefaults.shared) var forceFullWeek: Bool = false
+    
+    var halfWeek: Bool {
+        sizeClass == .compact && !forceFullWeek
+    }
+    
     var body: some View {
         HStack {
             Text(month, format: .republicanDate.day(.monthOnly).year(.long))
@@ -100,7 +106,7 @@ struct ScrollableCalendarCell: View {
         }
         .padding(.top)
         .padding()
-        CalendarMonthView(month: month, selection: $selection, halfWeek: sizeClass == .compact, constantHeight: false)
+        CalendarMonthView(month: month, selection: $selection, halfWeek: halfWeek, constantHeight: false)
     }
 }
 

@@ -145,10 +145,11 @@ struct CalendarDayButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .lineLimit(1)
             .minimumScaleFactor(0.5)
             .padding(10)
             .aspectRatio(1, contentMode: .fill)
-            .frame(maxWidth: .infinity)
+            .frame(minWidth: 0, maxWidth: .infinity)
             .background(Circle().fill(
                 hardSelection && !isToday && isSelected ? Color.fullForeground
                 : Color.accentColor.opacity(
