@@ -77,7 +77,7 @@ struct YearDateItem: View {
 
     var body: some View {
         Text(isValid ? "\(date!.components.day!)" : "0")
-            .font(.system(size: 20, weight: .semibold))
+            .font(.system(size: 20, weight: .regular))
             .foregroundStyle(
                 !isValid ? .clear
                 : isToday ? .white
