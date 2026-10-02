@@ -14,6 +14,7 @@ import Eventually
 import SwiftUI
 import FrenchRepublicanCalendarCore
 import EventKit
+import Combine
 
 fileprivate var siHourSlotHeight: CGFloat {
     #if os(watchOS)

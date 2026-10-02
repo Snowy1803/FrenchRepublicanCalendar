@@ -12,6 +12,7 @@
 
 import SwiftUI
 import FrenchRepublicanCalendarCore
+import Combine
 
 struct DecimalTimeWidget: View {
     var link: Bool
