@@ -55,12 +55,16 @@ struct EventPermissionWrapperView<Content: View>: View {
                 HStack {
                     Button {
                         Task {
-                            if #available(iOS 17.0, watchOS 10.0, *) {
-                                try await store.store.requestFullAccessToEvents()
-                            } else {
-                                try await store.store.requestAccess(to: .event)
+                            do {
+                                if #available(iOS 17.0, watchOS 10.0, *) {
+                                    try await store.store.requestFullAccessToEvents()
+                                } else {
+                                    try await store.store.requestAccess(to: .event)
+                                }
+                                midnight.objectWillChange.send()
+                            } catch {
+                                print("EventStore Access Request failed: \(error)")
                             }
-                            midnight.objectWillChange.send()
                         }
                     } label: {
                         Text("Autoriser")
