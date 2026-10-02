@@ -39,7 +39,8 @@ struct ScrollableMonthView: View {
                     }
                 }
                 ToolbarItem(placement: .navigation) {
-                    if sizeClass == .regular { // In this size class, the navigation title isn't shown
+                    // In this size class, the navigation title isn't shown, except on iPhone Duo.
+                    if sizeClass == .regular && UIDevice.current.userInterfaceIdiom != .phone {
                         Text(topItem, format: .republicanDate.day(.monthOnly))
                             .font(.headline)
                             .fixedSize()
