@@ -48,7 +48,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FD7EB8C72ED64847000A6FDB"
             BuildableName = "DateWatchWidgetExtension.appex"
-            BlueprintName = "DateWatchWidgetExtension"
             ReferencedContainer = "container:FrenchRepublicanCalendar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -62,7 +62,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "20418BBB2412F3E700E0EE6E"
             BuildableName = "FrenchRepublicanCalendar.app"
-            BlueprintName = "FrenchRepublicanCalendar WatchKit App"
             ReferencedContainer = "container:FrenchRepublicanCalendar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -79,7 +78,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "20418BBB2412F3E700E0EE6E"
             BuildableName = "FrenchRepublicanCalendar.app"
-            BlueprintName = "FrenchRepublicanCalendar WatchKit App"
             ReferencedContainer = "container:FrenchRepublicanCalendar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
