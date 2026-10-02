@@ -104,15 +104,35 @@ class ScrollableYearController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: FrenchRepublicanDate(day: 1, month: 1, year: indexPath.item + 1))
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        updateHorizontalSizeClass(for: size.width)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHorizontalSizeClass(for: collectionView.bounds.width)
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !initialScroll {
             initialScroll = true
             scrollTo(date: initialLocation, animate: false)
         }
+    }
+    
+    private func updateHorizontalSizeClass(for width: CGFloat) {
+        guard width > 0 else { return }
         if #available(iOS 17.0, *) {
-            let regular = collectionView.frame.width > 800
-            traitOverrides.horizontalSizeClass = regular ? .regular : .compact
+            let targetSizeClass: UIUserInterfaceSizeClass = width > 800 ? .regular : .compact
+            if traitCollection.horizontalSizeClass != targetSizeClass {
+                traitOverrides.horizontalSizeClass = targetSizeClass
+                collectionView?.collectionViewLayout.invalidateLayout()
+            }
         }
     }
         
