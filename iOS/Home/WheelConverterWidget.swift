@@ -41,8 +41,9 @@ struct WheelConverterWidget: View {
                         ForEach(wheelContent, id: \.self) { date in
                             WheelDateView(date: date)
                         }
-                    }
-                }.onAppear {
+                    }.padding(.vertical, 10) // compensated below, avoids ScrollView clipping
+                }
+                .onAppear {
                     if !scrolled {
                         print("Starting at", wheelContent.first ?? "nil")
                         reader.scrollTo(Calendar.gregorian.startOfDay(for: Date()), anchor: .center)
@@ -60,15 +61,17 @@ struct WheelConverterWidget: View {
                         self.scrolled = true
                     }
                 }
-            }.mask(LinearGradient(
+            }.mask {
+                LinearGradient(
                     gradient: Gradient(stops: [
                         .init(color: .clear, location: 0),
                         .init(color: .white, location: 0.1),
                         .init(color: .white, location: 0.9),
                         .init(color: .clear, location: 1)
                     ]),
-                    startPoint: .leading, endPoint: .trailing)
-            )
+                    startPoint: .leading, endPoint: .trailing
+                )
+            }.padding(.vertical, -10) // compensates the ScrollView content
         }
     }
 }
@@ -132,6 +135,7 @@ struct WheelDateView: View {
                 Text(rep.monthName)
                 Text(rep, format: .republicanDate.year(.long))
                 Text(rep.dayName)
+                    .minimumScaleFactor(0.6)
             }.frame(width: 110)
             .padding()
             .foregroundColor(.primary)
