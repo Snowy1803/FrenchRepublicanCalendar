@@ -40,7 +40,12 @@ struct SettingsView: View {
             }
             
             Section {
-                Toggle(isOn: $forceFullWeek) {
+                Toggle(isOn: Binding {
+                    forceFullWeek
+                } set: {
+                    forceFullWeek = $0
+                    Midnight.shared.objectWillChange.send()
+                }) {
                     Text("Toujours afficher les décades entières")
                 }
             } footer: {

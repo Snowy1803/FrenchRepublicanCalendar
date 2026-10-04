@@ -11,6 +11,7 @@
 //
 
 import SwiftUI
+import Combine
 import FrenchRepublicanCalendarCore
 @_spi(Advanced) import SwiftUIIntrospect
 
@@ -132,17 +133,27 @@ class CustomScrollToTopCollectionView: UICollectionView {
     }
 }
 
-class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ScrollableToToday {
+class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ScrollableToToday {
+    enum MonthLayoutType: Hashable {
+        case standard
+        case sansculottidesRegular
+        case sansculottidesSextil
+    }
+
     var collectionView: UICollectionView!
     let collection = MonthCollection()
     var registration: UICollectionView.CellRegistration<UICollectionViewCell, FrenchRepublicanDate>!
     var topItem: Binding<FrenchRepublicanDate> = .constant(FrenchRepublicanDate(date: .now))
     var selection: Binding<FrenchRepublicanDate> = .constant(FrenchRepublicanDate(date: .now))
     var initialScroll = false
+    private var sizeCache: [MonthLayoutType: CGFloat] = [:]
+    private var cachedWidth: CGFloat = 0
+    private var cancellables = Set<AnyCancellable>()
     
     init() {
         super.init(nibName: nil, bundle: nil)
         self.setup()
+        self.setupObservers()
     }
     
     required init?(coder: NSCoder) {
@@ -165,11 +176,81 @@ class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, 
     }
     
     func setupLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(380))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        return UICollectionViewCompositionalLayout(section: section)
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        return layout
+    }
+    
+    private func layoutType(for month: FrenchRepublicanDate) -> MonthLayoutType {
+        if !month.isSansculottides {
+            return .standard
+        } else if month.isYearSextil {
+            return .sansculottidesSextil
+        } else {
+            return .sansculottidesRegular
+        }
+    }
+    
+    private func setupObservers() {
+        // Invalidate and reload when variant / midnight changes
+        Midnight.shared.objectWillChange
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.invalidateSizeCache()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func invalidateSizeCache() {
+        sizeCache.removeAll()
+        collectionView?.collectionViewLayout.invalidateLayout()
+        collectionView?.reloadData()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        invalidateSizeCache()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            invalidateSizeCache()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        guard width > 0 else {
+            return CGSize(width: 390, height: 380)
+        }
+        
+        if width != cachedWidth {
+            cachedWidth = width
+            sizeCache.removeAll()
+        }
+        
+        let month = collection[indexPath.item]
+        let type = layoutType(for: month)
+        
+        if let cachedHeight = sizeCache[type] {
+            return CGSize(width: width, height: cachedHeight)
+        }
+        
+        // Measure exact SwiftUI cell height using a prototype host controller
+        let hostView = UIHostingController(rootView: ScrollableCalendarCell(month: month, selection: selection)).view!
+        hostView.translatesAutoresizingMaskIntoConstraints = false
+        let targetSize = CGSize(width: width, height: UIView.layoutFittingCompressedSize.height)
+        let measuredSize = hostView.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+        
+        let height = measuredSize.height > 0 ? measuredSize.height : 380
+        sizeCache[type] = height
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -181,14 +262,15 @@ class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, 
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard initialScroll else { return }
         updateNavigationItem()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !initialScroll {
-            initialScroll = true
             scrollTo(date: topItem.wrappedValue, animate: false)
+            initialScroll = true
         }
     }
     
@@ -198,6 +280,7 @@ class ScrollableCalendarController: UIViewController, UICollectionViewDelegate, 
             return
         }
         let item = self.collectionView.bounds.inset(by: self.collectionView.safeAreaInsets).intersects(attr) ? path.item : path.item + 1
+        guard item < collection.count else { return }
         let month = collection[item]
         if topItem.wrappedValue != month {
             topItem.wrappedValue = month
