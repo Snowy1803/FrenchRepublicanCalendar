@@ -23,17 +23,17 @@ struct WheelConverterWidget: View {
             Image.decorative(systemName: "rectangle.on.rectangle.angled")
             Text("Roue de conversion")
             Spacer()
-            if userScrolled {
-                Button {
-                    scrolled = false
-                    userScrolled = false
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .accessibility(label: Text("Recentrer sur aujourd'hui"))
-                        .foregroundColor(.secondary)
-                        .font(.body)
-                }
+            Button {
+                scrolled = false
+                userScrolled = false
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .accessibility(label: Text("Recentrer sur aujourd'hui"))
+                    .foregroundColor(.secondary)
+                    .font(.body)
             }
+            .opacity(userScrolled ? 1 : 0)
+            .disabled(!userScrolled)
         } content: {
             ScrollViewReader { reader in
                 ScrollView(.horizontal, showsIndicators: false) {
