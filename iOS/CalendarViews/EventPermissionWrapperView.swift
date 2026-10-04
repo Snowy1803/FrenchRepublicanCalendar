@@ -89,28 +89,32 @@ struct DayEventWrapperView<Content: View>: View {
 
     var body: some View {
         wrapped(loading, events)
-        .task {
-            reloadEvents(date: date)
-        }.onReceive(store.objectWillChange) { _ in
-            reloadEvents(date: date)
-        }.onChange(of: date) { newValue in
-            self.events = []
-            reloadEvents(date: newValue)
-        }
+            .task(id: date) {
+                await reloadEvents(date: date)
+            }
+            .onReceive(store.objectWillChange) { _ in
+                Task {
+                    await reloadEvents(date: date)
+                }
+            }
     }
     
-    func reloadEvents(date: FrenchRepublicanDate) {
+    @MainActor
+    func reloadEvents(date: FrenchRepublicanDate) async {
+        let store = store
         let start = Calendar.gregorian.startOfDay(for: date.date)
         let end = Calendar.gregorian.date(byAdding: .day, value: 1, to: start)!
-        let evPred = store.store.predicateForEvents(withStart: start, end: end, calendars: nil)
-        let resultingEvents = store.store.events(matching: evPred)
-        Task { @MainActor in
-            self.events = resultingEvents.sorted(by: { lhs, rhs in
+        let models: [EventModel] = await Task.detached(priority: .userInitiated) {
+            let evPred = store.store.predicateForEvents(withStart: start, end: end, calendars: nil)
+            let resultingEvents = store.store.events(matching: evPred).sorted { lhs, rhs in
                 lhs.compareStartDate(with: rhs) == .orderedAscending
-            }).map {
+            }
+            return resultingEvents.map {
                 EventModel(store: store, event: $0)
             }
-            self.loading = false
-        }
+        }.value
+        guard !Task.isCancelled else { return }
+        self.events = models
+        self.loading = false
     }
 }

@@ -19,7 +19,7 @@ import UIKit
 #endif
 
 class EventStore: ObservableObject {
-    var store: EKEventStore
+    let store: EKEventStore
     
     var subscription: AnyCancellable?
     
