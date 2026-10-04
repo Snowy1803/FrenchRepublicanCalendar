@@ -43,19 +43,16 @@ struct DecimalTimeWidget: View {
 }
 
 struct CurrentDecimalTime: View {
-    let timer = Timer.publish(every: DecimalTime.decimalSecond / 10, on: .main, in: .common).autoconnect()
-    
-    @State private var time = DecimalTime()
-    
     var body: some View {
-        (
-            Text(time.description)
-                .font(.largeTitle.monospacedDigit())
-            + Text(String(format: "%.1f", time.remainder).dropFirst())
-                .font(.body.monospacedDigit())
-        ).onReceive(timer) { _ in
-            self.time = DecimalTime()
-        }.accessibility(label: Text("\(time.hour) heures, \(time.minute) minutes, et \(time.second) secondes"))
+        TimelineView(.periodic(from: .now, by: DecimalTime.decimalSecond / 10)) { timeline in
+            let time = DecimalTime(base: timeline.date)
+            (
+                Text(time.description)
+                    .font(.largeTitle.monospacedDigit())
+                + Text(String(format: "%.1f", time.remainder).dropFirst())
+                    .font(.body.monospacedDigit())
+            ).accessibility(label: Text("\(time.hour) heures, \(time.minute) minutes, et \(time.second) secondes"))
+        }
     }
 }
 
