@@ -13,13 +13,17 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
+private let repToGregFormatter: DateFormatter = {
+    let df = DateFormatter()
+    df.dateFormat = "EEE d MMM yyyy"
+    return df
+}()
+
 struct RepublicanToGregorianView: View {
     @Binding var shownDate: MyDateComponents
     
     var dateString: String {
-        let df = DateFormatter()
-        df.dateFormat = "EEE d MMM yyyy"
-        return df.string(from: shownDate.todate)
+        repToGregFormatter.string(from: shownDate.todate)
     }
     
     var body: some View {

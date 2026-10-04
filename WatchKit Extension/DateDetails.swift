@@ -14,15 +14,19 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 import Combine
 
+private let detailsGregorianFormatter: DateFormatter = {
+    let df = DateFormatter()
+    df.dateFormat = "d MMM yyyy"
+    return df
+}()
+
 struct DateDetails: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
     
     var date: FrenchRepublicanDate
     
     var gregorian: String {
-        let df = DateFormatter()
-        df.dateFormat = "d MMM yyyy"
-        return df.string(from: date.date)
+        detailsGregorianFormatter.string(from: date.date)
     }
     
     var components: MyDateComponents {
