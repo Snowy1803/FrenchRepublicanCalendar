@@ -26,6 +26,9 @@ struct ScrollableYearMonthView: View {
     }
 
     var body: some View {
+        let today = FrenchRepublicanDate(date: .now)
+        let isCurrentMonth = today.monthIndex == month.monthIndex
+        let todayDay = isCurrentMonth ? today.components.day : nil
         Button {
             selectMonth(month)
         } label: {
@@ -34,15 +37,19 @@ struct ScrollableYearMonthView: View {
                     Text(month, format: .republicanDate.day(.monthOnly))
                         .lineLimit(1)
                         .font(.headline)
-                        .foregroundStyle(FrenchRepublicanDate(date: .now).monthIndex == month.monthIndex ? Color.accentColor : .primary)
+                        .foregroundStyle(isCurrentMonth ? Color.accentColor : .primary)
                     Spacer(minLength: 0)
                 }
                 .padding(.top)
                 .padding(.horizontal, 4)
                 FastGrid(rowCount: rowCount, colCount: colCount) {
                     ForEach(0..<(rowCount * colCount), id: \.self) { index in
-                        let date = FrenchRepublicanDate(day: index + 1, month: month.components.month!, year: month.year)
-                        YearDateItem(date: date.year == month.year ? date : nil)
+                        let day = index + 1
+                        let date = FrenchRepublicanDate(day: day, month: month.components.month!, year: month.year)
+                        YearDateItem(
+                            date: date.year == month.year ? date : nil,
+                            isToday: day == todayDay
+                        )
                     }
                 }
             }
@@ -54,18 +61,11 @@ struct ScrollableYearMonthView: View {
 
 struct YearDateItem: View {
     var date: FrenchRepublicanDate?
+    var isToday: Bool = false
 
     var isWeekend: Bool {
         if let date {
             date.isSansculottides || date.components.day! % 10 == 0
-        } else {
-            false
-        }
-    }
-    
-    var isToday: Bool {
-        if let date {
-            Calendar.gregorian.isDateInToday(date.date)
         } else {
             false
         }

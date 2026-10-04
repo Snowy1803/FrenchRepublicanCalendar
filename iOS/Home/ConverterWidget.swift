@@ -23,7 +23,7 @@ struct ConverterWidget: View {
             Image.decorative(systemName: "arrow.right.arrow.left")
             Text("Convertir")
             Spacer()
-            if from.iso != Date().iso {
+            if !Calendar.gregorian.isDateInToday(from) {
                 Button {
                     from = Date()
                 } label: {

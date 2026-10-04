@@ -83,3 +83,9 @@ extension FrenchRepublicanDateOptions: @retroactive SaveableFrenchRepublicanDate
         }
     }
 }
+
+extension FrenchRepublicanDate {
+    public func inSameDay(as other: FrenchRepublicanDate) -> Bool {
+        self.year == other.year && self.dayInYear == other.dayInYear
+    }
+}

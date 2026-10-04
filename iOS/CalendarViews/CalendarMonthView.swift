@@ -88,7 +88,7 @@ struct CalendarMonthItem: View {
     
     var isSelected: Bool {
         if let date {
-            isValid && Calendar.gregorian.isDate(date.date, inSameDayAs: selection.date)
+            isValid && date.inSameDay(as: selection)
         } else {
             false
         }
