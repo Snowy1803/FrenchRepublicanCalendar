@@ -28,8 +28,9 @@ struct ScrollableCalendarTab: View {
                 }
                 .transition(.move(edge: .leading))
             case .month:
+                let today = FrenchRepublicanDate(date: .now)
                 ScrollableMonthView(topItem: $topItem, selection: Binding {
-                    FrenchRepublicanDate(date: .now)
+                    today
                 } set: {
                     topItem = $0
                     page = .day

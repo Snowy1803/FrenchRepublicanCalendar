@@ -58,9 +58,10 @@ struct ScrollableWeekView: View {
     var body: some View {
         let prev = previous
         let nxt = next
+        let today = FrenchRepublicanDate(date: .now)
         SwipeableView(current: $selection, previousItem: prev, nextItem: nxt, previousValid: FrenchRepublicanDate.safeRange.contains(prev.date), nextValid: FrenchRepublicanDate.safeRange.contains(nxt.date)) { week in
-            CalendarMonthRow(month: week, row: row(item: week), halfWeek: halfWeek) {
-                CalendarMonthItem(date: $0, selection: $selection, hardSelection: true)
+            CalendarMonthRow(month: week, row: row(item: week), halfWeek: halfWeek) { date in
+                CalendarMonthItem(date: date, selection: $selection, hardSelection: true, isToday: date?.inSameDay(as: today) ?? false)
             }
         }
     }

@@ -49,8 +49,12 @@ struct CalendarMonthView<Item: View>: View {
 
 extension CalendarMonthView where Item == CalendarMonthItem {
     init(month: FrenchRepublicanDate, selection: Binding<FrenchRepublicanDate>, halfWeek: Bool = true, constantHeight: Bool = true) {
-        self.init(month: month, halfWeek: halfWeek, constantHeight: constantHeight) {
-            CalendarMonthItem(date: $0, selection: selection)
+        let today = FrenchRepublicanDate(date: .now)
+        let isCurrentMonth = today.monthIndex == month.monthIndex
+        let todayDay = isCurrentMonth ? today.components.day : nil
+        self.init(month: month, halfWeek: halfWeek, constantHeight: constantHeight) { date in
+            let isToday = date.flatMap { $0.components.day == todayDay } ?? false
+            CalendarMonthItem(date: date, selection: selection, isToday: isToday)
         }
     }
 }
@@ -70,11 +74,13 @@ struct CalendarMonthRow<Item: View>: View {
     }
 
     var body: some View {
+        let daysInMonth = month.isSansculottides ? (month.isYearSextil ? 6 : 5) : 30
         HStack(spacing: 0) {
             ForEach(0..<colCount, id: \.self) { col in
                 Spacer(minLength: 0)
-                let date = FrenchRepublicanDate(day: row * colCount + col + 1, month: month.components.month!, year: month.year)
-                itemProvider(date.year == month.year ? date : nil)
+                let day = row * colCount + col + 1
+                let date = day <= daysInMonth ? FrenchRepublicanDate(day: day, month: month.components.month!, year: month.year) : nil
+                itemProvider(date)
             }
             Spacer(minLength: 0)
         }
@@ -85,6 +91,7 @@ struct CalendarMonthItem: View {
     var date: FrenchRepublicanDate?
     @Binding var selection: FrenchRepublicanDate
     var hardSelection = false
+    var isToday: Bool = false
     
     var isSelected: Bool {
         if let date {
@@ -97,14 +104,6 @@ struct CalendarMonthItem: View {
     var isWeekend: Bool {
         if let date {
             date.isSansculottides || date.components.day! % 10 == 0
-        } else {
-            false
-        }
-    }
-    
-    var isToday: Bool {
-        if let date {
-            Calendar.gregorian.isDateInToday(date.date)
         } else {
             false
         }
