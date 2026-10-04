@@ -13,6 +13,19 @@
 import SwiftUI
 import FrenchRepublicanCalendarCore
 
+private let favoriteDateFormatter: DateFormatter = {
+    let df = DateFormatter()
+    df.dateFormat = "yyyy-M-d"
+    return df
+}()
+
+private let frenchDateFormatter: DateFormatter = {
+    let df = DateFormatter()
+    df.dateFormat = "d MMMM yyyy"
+    df.locale = Locale(identifier: "fr")
+    return df
+}()
+
 struct FavoriteList: View {
     @EnvironmentObject var pool: FavoritesPool
     
@@ -42,9 +55,7 @@ struct FavoriteList: View {
     }
     
     func toDate(fav: String) -> Date {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-M-d"
-        return df.date(from: fav)!
+        favoriteDateFormatter.date(from: fav) ?? Date()
     }
 }
 
@@ -56,10 +67,7 @@ struct DateRow: View {
         if Calendar.gregorian.isDateInToday(frd.date) {
             return "Aujourd'hui"
         }
-        let df = DateFormatter()
-        df.dateFormat = "d MMMM yyyy"
-        df.locale = Locale(identifier: "fr")
-        return df.string(from: frd.date)
+        return frenchDateFormatter.string(from: frd.date)
     }
     
     var body: some View {

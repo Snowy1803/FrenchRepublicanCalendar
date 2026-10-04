@@ -110,17 +110,21 @@ struct WheelDateBackground: ViewModifier {
     }
 }
 
+private let wheelDateFormatter: DateFormatter = {
+    let format = DateFormatter()
+    format.dateStyle = .long
+    format.timeStyle = .none
+    format.doesRelativeDateFormatting = true
+    format.locale = Locale(identifier: "fr-FR")
+    return format
+}()
+
 struct WheelDateView: View {
     @EnvironmentObject var midnight: Midnight
     var date = Date()
     
     var dateString: String {
-        let format = DateFormatter()
-        format.dateStyle = .long
-        format.timeStyle = .none
-        format.doesRelativeDateFormatting = true
-        format.locale = Locale(identifier: "fr-FR")
-        return format.string(from: date)
+        wheelDateFormatter.string(from: date)
     }
     
     var body: some View {

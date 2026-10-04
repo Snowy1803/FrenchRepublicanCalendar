@@ -16,16 +16,20 @@ import Combine
 import EventKit
 import EventKitUI
 
+private let detailsGregorianFormatter: DateFormatter = {
+    let df = DateFormatter()
+    df.dateFormat = "EEEE d MMMM yyyy"
+    df.locale = Locale(identifier: "fr")
+    return df
+}()
+
 struct DateDetails: View {
     @EnvironmentObject var favoritesPool: FavoritesPool
     
     var date: FrenchRepublicanDate
     
     var gregorian: String {
-        let df = DateFormatter()
-        df.dateFormat = "EEEE d MMMM yyyy"
-        df.locale = Locale(identifier: "fr")
-        return df.string(from: date.date)
+        detailsGregorianFormatter.string(from: date.date)
     }
     
     var iso: String {
