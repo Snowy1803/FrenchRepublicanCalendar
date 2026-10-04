@@ -14,40 +14,53 @@ import SwiftUI
 import FrenchRepublicanCalendarCore
 import Contacts
 
+struct ContactItem: Identifiable, @unchecked Sendable {
+    var id: String { contact.identifier }
+    let contact: CNContact
+    let displayName: String
+    let thumbnailImage: UIImage?
+}
+
 struct ContactsList: View {
-    @State var contacts = [CNContact]()
+    @State var contacts = [ContactItem]()
     @State var errorMessage: String = "Chargement"
 
-    nonisolated func fetchContacts() {
-        let store = CNContactStore()
-        
-        var contacts: [CNContact] = []
-        var errorMessage: String = "Aucun contact"
-        
-        var keys = [CNContactThumbnailImageDataKey, CNContactBirthdayKey, CNContactDatesKey] as [CNKeyDescriptor]
-        keys.append(CNContactFormatter.descriptorForRequiredKeys(for: .fullName))
-        let request = CNContactFetchRequest(keysToFetch: keys)
+    func fetchContacts() async {
+        let (items, message) = await Task.detached(priority: .userInitiated) { () -> ([ContactItem], String) in
+            let store = CNContactStore()
+            var matchingContacts: [CNContact] = []
+            var errMessage: String = "Aucun contact"
 
-        do {
-            try store.enumerateContacts(with: request) { (contact, stop) in
-                if contact.birthday != nil || !contact.dates.isEmpty {
-                    contacts.append(contact)
-                } else {
-                    errorMessage = "Aucun contact avec un anniversaire"
+            var keys = [CNContactThumbnailImageDataKey, CNContactBirthdayKey, CNContactDatesKey] as [CNKeyDescriptor]
+            keys.append(CNContactFormatter.descriptorForRequiredKeys(for: .fullName))
+            let request = CNContactFetchRequest(keysToFetch: keys)
+
+            do {
+                try store.enumerateContacts(with: request) { (contact, stop) in
+                    if contact.birthday != nil || !contact.dates.isEmpty {
+                        matchingContacts.append(contact)
+                    } else {
+                        errMessage = "Aucun contact avec un anniversaire"
+                    }
                 }
+                let formatter = CNContactFormatter()
+                let items: [ContactItem] = matchingContacts.map { contact in
+                    let name = formatter.string(from: contact) ?? "-"
+                    let image = contact.thumbnailImageData.flatMap { UIImage(data: $0) }
+                    return ContactItem(contact: contact, displayName: name, thumbnailImage: image)
+                }.sorted {
+                    $0.displayName.localizedStandardCompare($1.displayName) == .orderedAscending
+                }
+                return (items, errMessage)
+            } catch {
+                print("Failed to fetch contact, error: \(error)")
+                return ([], error.localizedDescription)
             }
-            Task { @MainActor in
-                contacts.sort(by: { c1, c2 in self.stringOf(contact: c1) < self.stringOf(contact: c2) })
-                self.contacts = contacts
-                self.errorMessage = errorMessage
-            }
-        }
-        catch {
-            print("Failed to fetch contact, error: \(error)")
-            Task { @MainActor in
-                self.errorMessage = error.localizedDescription
-            }
-        }
+        }.value
+
+        guard !Task.isCancelled else { return }
+        self.contacts = items
+        self.errorMessage = message
     }
     
     var body: some View {
@@ -66,26 +79,23 @@ struct ContactsList: View {
                         .multilineTextAlignment(.center)
                 }
             } else {
-                List(contacts, id: \.identifier) { c in
-                    NavigationLink(destination: ContactDetails(contact: c)) {
-                        self.imageOf(data: c.thumbnailImageData)
-                        Text(self.stringOf(contact: c))
+                List(contacts) { c in
+                    NavigationLink(destination: ContactDetails(contact: c.contact)) {
+                        self.imageOf(item: c)
+                        Text(c.displayName)
                     }
                 }
                 #if !os(watchOS)
                 .listNotTooWide()
                 #endif
             }
-        }.onAppear {
-            Task.detached {
-                self.fetchContacts()
-            }
+        }.task {
+            await fetchContacts()
         }.navigationBarTitle("Contacts")
     }
     
-    @ViewBuilder func imageOf(data: Data?) -> some View {
-        if let imgData = data,
-            let img = UIImage(data: imgData) {
+    @ViewBuilder func imageOf(item: ContactItem) -> some View {
+        if let img = item.thumbnailImage {
             Image(uiImage: img)
                 .resizable()
                 .frame(width: 20, height: 20)
@@ -95,10 +105,6 @@ struct ContactsList: View {
                 .resizable()
                 .frame(width: 20, height: 20)
         }
-    }
-    
-    func stringOf(contact: CNContact) -> String {
-        CNContactFormatter.attributedString(from: contact, style: .fullName)?.string ?? "-"
     }
 }
 
