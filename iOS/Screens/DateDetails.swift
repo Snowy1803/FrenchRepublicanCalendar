@@ -62,11 +62,9 @@ struct DateDetails: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Button(action: {
             if favoritesPool.favorites.contains(iso) {
-                favoritesPool.favorites.removeAll { date in
-                    self.date.date.iso == date
-                }
+                favoritesPool.favorites.remove(iso)
             } else {
-                favoritesPool.favorites.append(self.date.date.iso)
+                favoritesPool.favorites.append(iso)
             }
             favoritesPool.sync()
         }) {

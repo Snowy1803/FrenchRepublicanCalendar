@@ -14,15 +14,16 @@ import Foundation
 import WatchConnectivity
 import Combine
 import FrenchRepublicanCalendarCore
+import OrderedCollections
 
 class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
-    @Published var favorites: [String]
+    @Published var favorites: OrderedSet<String>
     var needsTransfer: Bool
     
     override init() {
         let defaults = UserDefaults.standard.array(forKey: "favorites")
         needsTransfer = defaults == nil
-        favorites = defaults as? [String] ?? [String]()
+        favorites = OrderedSet(defaults as? [String] ?? [])
         super.init()
         if WCSession.isSupported() {
             let session = WCSession.default
@@ -32,10 +33,10 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
     }
     
     func sync() {
-        UserDefaults.standard.set(favorites, forKey: "favorites")
+        UserDefaults.standard.set(Array(favorites), forKey: "favorites")
         if WCSession.isSupported() {
             print("syncing")
-            WCSession.default.transferUserInfo(["favorites": favorites])
+            WCSession.default.transferUserInfo(["favorites": Array(favorites)])
         }
     }
     
@@ -70,14 +71,14 @@ class FavoritesPool: NSObject, ObservableObject, WCSessionDelegate {
             case "favorites":
                 if let favorites = value as? [String] {
                     DispatchQueue.main.async {
-                        self.favorites = favorites
+                        self.favorites = OrderedSet(favorites)
                         print("synced")
                     }
                 } else {
                     print("received invalid favorites data")
                 }
             case "gimme":
-                session.transferUserInfo(["favorites": favorites])
+                session.transferUserInfo(["favorites": Array(favorites)])
             case "frdo-roman", "frdo-variant", "frdo-timezone":
                 UserDefaults.shared.set(value, forKey: key)
                 updateComplication = true
@@ -115,3 +116,15 @@ extension Int {
 struct IntWrapper: Hashable {
     var value: Int
 }
+extension OrderedSet {
+    mutating func remove(atOffsets offsets: IndexSet) {
+        for index in offsets.sorted(by: >) {
+            remove(at: index)
+        }
+    }
+    
+    mutating func move(fromOffsets offsets: IndexSet, toOffset destination: Int) {
+        self.move(indices: offsets, to: destination)
+    }
+}
+

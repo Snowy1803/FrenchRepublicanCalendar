@@ -45,8 +45,10 @@ struct FavoriteList: View {
                         DateRow(frd: FrenchRepublicanDate(date: self.toDate(fav: fav)))
                     }.onDelete { indices in
                         pool.favorites.remove(atOffsets: IndexSet(indices.map { pool.favorites.count - 1 - $0 }))
+                        pool.sync()
                     }.onMove { indices, position in
                         pool.favorites.move(fromOffsets: IndexSet(indices.map { pool.favorites.count - 1 - $0 }), toOffset: pool.favorites.count - position)
+                        pool.sync()
                     }
                 }.editableList()
                 .listNotTooWide()

@@ -21,6 +21,8 @@
 		2047A34D2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
 		2047A34E2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
 		2047A34F2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047A34B2624B2CE00AA662C /* SaveableFrenchRepublicanDateOptions.swift */; };
+		205E0C5E30729E06000C57B3 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 205E0C5D30729E06000C57B3 /* OrderedCollections */; };
+		205E0C6030729E1B000C57B3 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 205E0C5F30729E1B000C57B3 /* OrderedCollections */; };
 		2061525B25728FCF007A214D /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2061525A25728FCF007A214D /* IntentHandler.swift */; };
 		2061525F25728FCF007A214D /* Siri.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2061525825728FCF007A214D /* Siri.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2061526A25728FF9007A214D /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 2061526925728FF9007A214D /* Intents.intentdefinition */; };
@@ -291,6 +293,7 @@
 			files = (
 				20C18A59260D24F100967DF3 /* FrenchRepublicanCalendarCore in Frameworks */,
 				FD3096A82F428A9A0089DE81 /* Eventually in Frameworks */,
+				205E0C6030729E1B000C57B3 /* OrderedCollections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +311,7 @@
 			files = (
 				FDAAED212F0C319900AEC60F /* Eventually in Frameworks */,
 				20C18A57260D24A600967DF3 /* FrenchRepublicanCalendarCore in Frameworks */,
+				205E0C5E30729E06000C57B3 /* OrderedCollections in Frameworks */,
 				FDA522732ECF70BE00210C75 /* SwiftUIIntrospect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -590,6 +594,9 @@
 				FD7EB8DC2ED648A1000A6FDB /* PBXTargetDependency */,
 			);
 			name = "FrenchRepublicanCalendar WatchKit App";
+			packageProductDependencies = (
+				205E0C5F30729E1B000C57B3 /* OrderedCollections */,
+			);
 			productName = "FrenchRepublicanCalendar WatchKit App";
 			productReference = 20418BBC2412F3E700E0EE6E /* FrenchRepublicanCalendar.app */;
 			productType = "com.apple.product-type.application";
@@ -636,6 +643,7 @@
 				20C18A56260D24A600967DF3 /* FrenchRepublicanCalendarCore */,
 				FDA522722ECF70BE00210C75 /* SwiftUIIntrospect */,
 				FDAAED202F0C319900AEC60F /* Eventually */,
+				205E0C5D30729E06000C57B3 /* OrderedCollections */,
 			);
 			productName = FrenchRepublicanCal;
 			productReference = 20D9DCAC253F23BA00B5A9FA /* FrenchRepublicanCalendar.app */;
@@ -719,6 +727,7 @@
 				20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */,
 				2067271726F6580F00562A62 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				FDAAED1F2F0C319900AEC60F /* XCRemoteSwiftPackageReference "Eventually" */,
+				205E0C5C30729E06000C57B3 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 20418BB92412F3E700E0EE6E /* Products */;
 			projectDirPath = "";
@@ -1355,6 +1364,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		205E0C5C30729E06000C57B3 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.1;
+			};
+		};
 		2067271726F6580F00562A62 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
@@ -1390,6 +1407,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		205E0C5D30729E06000C57B3 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 205E0C5C30729E06000C57B3 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+		205E0C5F30729E1B000C57B3 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 205E0C5C30729E06000C57B3 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
 		20C18A56260D24A600967DF3 /* FrenchRepublicanCalendarCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20C18A55260D24A600967DF3 /* XCRemoteSwiftPackageReference "FrenchRepublicanCalendarCore" */;

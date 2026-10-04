@@ -59,9 +59,7 @@ struct DateDetails: View {
                 }.scenePadding()
                 Button(action: {
                     if self.added {
-                        favoritesPool.favorites.removeAll { date in
-                            self.components.string == date
-                        }
+                        favoritesPool.favorites.remove(self.components.string)
                     } else {
                         favoritesPool.favorites.append(self.components.string)
                     }
