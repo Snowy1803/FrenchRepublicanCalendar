@@ -82,8 +82,10 @@ struct SettingsView: View {
             Section(header: Text("Légal"), footer: Text("Nous ne traitons pas vos données personnelles. Vos données restent en sécurité sur votre appareil.")) {
                 NavigationLink {
                     Form {
-                        Link("swiftui-introspect", destination: URL(string: "https://github.com/siteline/swiftui-introspect/blob/main/LICENSE")!)
                         Link("Eventually", destination: URL(string: "https://github.com/claustrofob/Eventually/blob/main/LICENSE")!)
+                        Link("swift-collections", destination: URL(string: "https://github.com/apple/swift-collections/blob/main/LICENSE.txt")!)
+                        Link("swiftui-introspect", destination: URL(string: "https://github.com/siteline/swiftui-introspect/blob/main/LICENSE")!)
+                        
                     }.navigationTitle(Text("Licenses open source"))
                 } label: {
                     Text("Licenses open source")
