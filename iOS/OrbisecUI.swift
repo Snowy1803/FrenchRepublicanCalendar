@@ -14,31 +14,20 @@ import SwiftUI
 
 struct ShadowBox: ViewModifier {
     @Environment(\.colorScheme) var scheme
-    var interactive: Bool
     
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
-            content
-                .padding()
-                .glassEffect(
-                    .regular.tint(Color(.widgetBackground)).interactive(interactive),
-                    in: ConcentricRectangle())
-                .containerShape(.rect(cornerRadius: 26))
-                .padding([.leading, .trailing, .top])
-        } else {
-            content
-                .padding()
-                .background(Color(.widgetBackground))
-                .cornerRadius(15)
-                .shadow(color: Color.gray.opacity(0.33), radius: scheme == .dark ? 0 : 5)
-                .padding([.leading, .trailing, .top])
-        }
+        content
+            .padding()
+            .background(Color(.widgetBackground))
+            .cornerRadius(26)
+            .shadow(color: Color.gray.opacity(0.33), radius: scheme == .dark ? 0 : 5)
+            .padding([.leading, .trailing, .top])
     }
 }
 
 extension View {
-    func shadowBox(interactive: Bool = false) -> some View {
-        self.modifier(ShadowBox(interactive: interactive))
+    func shadowBox() -> some View {
+        self.modifier(ShadowBox())
     }
 }
 

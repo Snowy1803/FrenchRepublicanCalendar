@@ -31,6 +31,6 @@ struct LinkWidget<Destination: View>: View {
                     .imageScale(.small)
                     .foregroundColor(.secondary)
             }.foregroundColor(.primary)
-        }.shadowBox(interactive: true)
+        }.shadowBox()
     }
 }
